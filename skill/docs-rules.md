@@ -21,7 +21,9 @@
 
 ## File Creation Rules
 
-- 파일명: 소문자, 하이픈 구분 (예: `ops-rules.md`, `wsl2-setup.md`)
+- 파일명: 소문자, 언더스코어 구분 (예: `claude_setup.md`, `window_wsl2_setup.md`)
+- 하이픈(`-`) 대신 언더스코어(`_`)를 구분자로 사용한다
+- 관련 문서 확장 시 기준 파일명을 prefix로 사용한다 (예: `claude.md` → `claude_setup.md`, `claude_mcp.md`)
 - 새 파일 생성 후 상위 README.md 또는 관련 인덱스에 링크를 추가한다
 - `docs/` 밖의 행동 규칙 파일(`skill/`, `context/`)은 docs 안에 넣지 않는다
 
