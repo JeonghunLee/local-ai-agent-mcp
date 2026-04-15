@@ -2,7 +2,8 @@
 
 ## Overview
 
-MCP(Model Context Protocol) 서버는 Orchestrator와 AI Agent 사이의 전송 레이어 역할을 합니다. 각 Agent는 Orchestrator가 호출할 수 있는 Tool로 등록됩니다.
+MCP(Model Context Protocol) 서버는 Orchestrator와 AI Agent 사이의 전송 레이어 역할을 합니다.   
+각 Agent는 Orchestrator가 호출할 수 있는 Tool로 등록됩니다.
 
 ## Server Setup
 
@@ -65,11 +66,25 @@ node mcp-server.js
 
 ## Protocol Flow
 
+```mermaid
+sequenceDiagram
+    participant O as Orchestrator
+    participant M as MCP Server
+    participant A as Agent (Claude / Codex / Ollama)
+
+    O->>M: POST /mcp/tool/call { name, args }
+    M->>A: Tool 호출 (HTTP / local)
+    A-->>M: 응답 반환
+    M-->>O: { result, tokens_used, latency_ms }
 ```
-오케스트레이터
-  → POST /mcp/tool/call { name: "claude.run", args: { prompt: "..." } }
-  ← { result: "...", tokens_used: 123, latency_ms: 450 }
-```
+
+| 필드 | 설명 |
+|------|------|
+| `name` | Tool 이름 (예: `claude.run`) |
+| `args` | Tool 인자 (예: `{ prompt: "..." }`) |
+| `result` | Agent 응답 텍스트 |
+| `tokens_used` | 소비된 Token 수 |
+| `latency_ms` | 응답 지연 시간 (ms) |
 
 ## Notes
 

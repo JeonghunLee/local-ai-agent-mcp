@@ -84,5 +84,5 @@ curl http://localhost:11434/api/tags
 
 ## Related
 
-- [wsl2-setup.md](wsl2-setup.md) — WSL2에서 OpenClaw 설치
+- [window_wsl2_setup.md](../environments/window_wsl2_setup.md) — WSL2에서 OpenClaw 설치
 - [../agents/ollama.md](../agents/ollama.md) — Ollama 에이전트 설정

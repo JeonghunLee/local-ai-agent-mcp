@@ -10,6 +10,23 @@
 5. 사용자 입력
 ```
 
+## Directory Skill Rules
+
+디렉토리마다 적용할 Skill 규칙을 지정한다.   
+작업 대상 디렉토리를 확인하고 해당 Skill을 우선 적용한다.
+
+| 디렉토리 | 적용 Skill |
+|---------|-----------|
+| `docs/` 전체 | `skill/docs-rules.md` |
+| `docs/environments/` | `skill/docs-rules.md` + `skill/install.md` |
+| `docs/agents/` | `skill/docs-rules.md` |
+| `docs/architecture/` | `skill/docs-rules.md` |
+| `docs/experiments/` | `skill/docs-rules.md` |
+| `docs/logs/` | `skill/docs-rules.md` |
+| `docs/mcp/` | `skill/docs-rules.md` |
+| 설치·실행 작업 | `skill/general.md` + `skill/install.md` |
+| 프로젝트 전체 | `skill/general.md` |
+
 ## Docs Access Rules
 
 - 작업과 직접 관련된 문서만 컨텍스트에 포함한다
@@ -18,10 +35,11 @@
 
 **docs/ 참조 우선순위:**
 ```
-docs/architecture/system-design.md  (구조 파악이 필요할 때)
-  → docs/agents/<agent>.md          (특정 에이전트 작업 시)
-  → docs/experiments/<file>.md      (실험 결과 확인 시)
-  → docs/logs/<file>.md             (실행 로그 확인 시)
+docs/architecture/system-design.md     (구조 파악이 필요할 때)
+  → docs/agents/<agent>.md             (특정 에이전트 작업 시)
+  → docs/environments/<file>.md        (환경 설정 확인 시)
+  → docs/experiments/<file>.md         (실험 결과 확인 시)
+  → docs/logs/<file>.md                (실행 로그 확인 시)
 ```
 
 ## Memory Rules
