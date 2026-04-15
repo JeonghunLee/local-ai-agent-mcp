@@ -7,6 +7,13 @@
 * Local AI Agent Orchestration with MCP
 OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude, Ollama)를 조율하는 로컬 멀티 Agent 시스템.
 
+
+* 추후 OpenClaw 사용   
+    - 나중에 자동채널 비롯하여, E-Mail 부터 Slack을 비롯하여, 관련부분을 연결  
+    - Github 의 자동연결    
+    - 별도의 Linux 기반 서버로 사용   
+    - 각 MCP Server 동작 확인 및 결과 문서 작성  
+
 ## Project Goals
 
 - 작업 유형과 맥락에 따라 최적의 Agent로 라우팅
