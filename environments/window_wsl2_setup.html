@@ -1,0 +1,1615 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Local AI Agent Orchestration with MCP">
+      
+      
+        <meta name="author" content="Jeonghun Lee">
+      
+      
+      
+        <link rel="prev" href="../mcp/mcp_server.html">
+      
+      
+        <link rel="next" href="../experiments/openclaw_test.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Windows WSL2 Setup - OpenClaw Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+        <script src="https://unpkg.com/iframe-worker/shim"></script>
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#experiment-openclaw-setup-on-wsl2" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../index.html" title="OpenClaw Docs" class="md-header__button md-logo" aria-label="OpenClaw Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenClaw Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Windows WSL2 Setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/JeonghunLee/local-ai-agent-mcp" title="저장소로 이동" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JeonghunLee/local-ai-agent-mcp
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="OpenClaw Docs" class="md-nav__button md-logo" aria-label="OpenClaw Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OpenClaw Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/JeonghunLee/local-ai-agent-mcp" title="저장소로 이동" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    JeonghunLee/local-ai-agent-mcp
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/system-design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agents
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/claude.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/claude_setup.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/claude_mcp.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude MCP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/codex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codex
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/ollama.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ollama
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agents/ollama_setup.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ollama Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MCP
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/mcp_server.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Environments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows WSL2 Setup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="window_wsl2_setup.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows WSL2 Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-enter-wsl2-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Enter WSL2 Ubuntu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-install-nodejs-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Install Node.js 24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-install-openclaw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Install OpenClaw
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-authenticate-claude-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Authenticate Claude CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-onboarding-model-provider-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Onboarding (Model Provider + API Key)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-verify-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Verify Gateway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-open-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Open Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Experiments
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments/openclaw_test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenClaw Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Logs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logs/run_001.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    run_001
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="네비게이션" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../index.html" class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="window_wsl2_setup.html" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Environments
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="experiment-openclaw-setup-on-wsl2">Experiment: OpenClaw Setup on WSL2</h1>
+<h2 id="goal">Goal</h2>
+<p>Windows 11 + WSL2(Ubuntu) 환경에서 OpenClaw를 설치하고 동작을 검증합니다.</p>
+<h2 id="environment">Environment</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS</td>
+<td>Windows 11 Pro</td>
+</tr>
+<tr>
+<td>WSL 버전</td>
+<td>WSL2</td>
+</tr>
+<tr>
+<td>배포판</td>
+<td>Ubuntu</td>
+</tr>
+<tr>
+<td>권장 이유</td>
+<td>Windows 네이티브보다 안정적 (공식 문서 권장)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="setup-steps">Setup Steps</h2>
+<h3 id="step-1-enter-wsl2-ubuntu">Step 1: Enter WSL2 Ubuntu</h3>
+<p><strong>Windows PowerShell:</strong>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="n">-d</span> <span class="n">Ubuntu</span>
+</code></pre></div></p>
+<h3 id="step-2-install-nodejs-24">Step 2: Install Node.js 24</h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://fnm.vercel.app/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
+
+fnm<span class="w"> </span>install<span class="w"> </span><span class="m">24</span>
+fnm<span class="w"> </span>use<span class="w"> </span><span class="m">24</span>
+node<span class="w"> </span>-v<span class="w">   </span><span class="c1"># v24.x.x 확인</span>
+npm<span class="w"> </span>-v
+</code></pre></div>
+<blockquote>
+<p>fnm을 쓰는 이유: WSL2에서 nvm보다 빠르고, <code>.node-version</code> 파일로 프로젝트별 버전 고정 가능</p>
+</blockquote>
+<h3 id="step-3-install-openclaw">Step 3: Install OpenClaw</h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openclaw.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<h3 id="step-4-authenticate-claude-cli">Step 4: Authenticate Claude CLI</h3>
+<p>OpenClaw에서 Claude CLI를 사용하는 경우 인증이 필요합니다. 자세한 인증 방법은 <a href="../agents/claude_setup.html#authentication">docs/agents/claude_setup.md - Authentication</a>을 참고하세요.</p>
+<p><strong>Option A: Windows Credentials 복사 (Claude Code 기존 사용자)</strong></p>
+<p>Windows에서 이미 <code>claude auth login</code>을 완료한 경우 credentials 파일을 복사합니다.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># WSL2 내에서 실행</span>
+cp<span class="w"> </span>/mnt/c/Users/ahyuo/.claude/.credentials<span class="w"> </span>~/.claude/.credentials
+</code></pre></div>
+<p><strong>Option B: API Key 환경변수</strong></p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export ANTHROPIC_API_KEY=&quot;sk-ant-...&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<h3 id="step-5-onboarding-model-provider-api-key">Step 5: Onboarding (Model Provider + API Key)</h3>
+<ul>
+<li>
+<p>General 
+<div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>onboard<span class="w"> </span>--install-daemon<span class="w"> </span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Skip-Channel 
+상위에서 skip channel하면 에러가 발생해서 Command 생략<br />
+<div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>onboard<span class="w"> </span>--install-daemon<span class="w"> </span>--skip-channels
+</code></pre></div></p>
+</li>
+<li>
+<p>설정 후 동작 
+반드시 Token 기반으로 Web에서 접속 <br />
+<div class="highlight"><pre><span></span><code>│
+◇<span class="w">  </span>I<span class="w"> </span>understand<span class="w"> </span>this<span class="w"> </span>is<span class="w"> </span>personal-by-default<span class="w"> </span>and<span class="w"> </span>shared/multi-user<span class="w"> </span>use<span class="w"> </span>requires<span class="w"> </span>lock-down.
+│<span class="w">   </span>Continue?
+│<span class="w">  </span>Yes
+│
+◇<span class="w">  </span>Setup<span class="w"> </span>mode
+│<span class="w">  </span>QuickStart
+│
+◇<span class="w">  </span>QuickStart<span class="w"> </span>─────────────────────────╮
+│<span class="w">                                      </span>│
+│<span class="w">  </span>Gateway<span class="w"> </span>port:<span class="w"> </span><span class="m">18789</span><span class="w">                 </span>│
+│<span class="w">  </span>Gateway<span class="w"> </span>bind:<span class="w"> </span>Loopback<span class="w"> </span><span class="o">(</span><span class="m">127</span>.0.0.1<span class="o">)</span><span class="w">  </span>│
+│<span class="w">  </span>Gateway<span class="w"> </span>auth:<span class="w"> </span>Token<span class="w"> </span><span class="o">(</span>default<span class="o">)</span><span class="w">       </span>│
+│<span class="w">  </span>Tailscale<span class="w"> </span>exposure:<span class="w"> </span>Off<span class="w">             </span>│
+│<span class="w">  </span>Direct<span class="w"> </span>to<span class="w"> </span>chat<span class="w"> </span>channels.<span class="w">            </span>│
+│<span class="w">                                      </span>│
+├──────────────────────────────────────╯
+│
+◇<span class="w">  </span>Model/auth<span class="w"> </span>provider
+│<span class="w">  </span>Anthropic
+│
+◇<span class="w">  </span>Anthropic<span class="w"> </span>auth<span class="w"> </span>method
+│<span class="w">  </span>Anthropic<span class="w"> </span>Claude<span class="w"> </span>CLI
+│
+◇<span class="w">  </span>Provider<span class="w"> </span>notes<span class="w"> </span>───────────────────────────────────────────────────────────────────────╮
+│<span class="w">                                                                                        </span>│
+│<span class="w">  </span>Claude<span class="w"> </span>CLI<span class="w"> </span>auth<span class="w"> </span>detected<span class="p">;</span><span class="w"> </span>switched<span class="w"> </span>Anthropic<span class="w"> </span>model<span class="w"> </span>selection<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span><span class="nb">local</span><span class="w"> </span>Claude<span class="w"> </span>CLI<span class="w">  </span>│
+│<span class="w">  </span>backend.<span class="w">                                                                              </span>│
+│<span class="w">  </span>Existing<span class="w"> </span>Anthropic<span class="w"> </span>auth<span class="w"> </span>profiles<span class="w"> </span>are<span class="w"> </span>kept<span class="w"> </span><span class="k">for</span><span class="w"> </span>rollback.<span class="w">                               </span>│
+│<span class="w">                                                                                        </span>│
+├────────────────────────────────────────────────────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Model<span class="w"> </span>configured<span class="w"> </span>──────────────────────────────────╮
+│<span class="w">                                                     </span>│
+│<span class="w">  </span>Default<span class="w"> </span>model<span class="w"> </span><span class="nb">set</span><span class="w"> </span>to<span class="w"> </span>claude-cli/claude-sonnet-4-6<span class="w">  </span>│
+│<span class="w">                                                     </span>│
+├─────────────────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Default<span class="w"> </span>model
+│<span class="w">  </span>Keep<span class="w"> </span>current<span class="w"> </span><span class="o">(</span>claude-cli/claude-sonnet-4-6<span class="o">)</span>
+│
+◇<span class="w">  </span>Model<span class="w"> </span>check<span class="w"> </span>────────────────────────────────────────────────────────────────────────╮
+│<span class="w">                                                                                      </span>│
+│<span class="w">  </span>Model<span class="w"> </span>not<span class="w"> </span>found:<span class="w"> </span>claude-cli/claude-sonnet-4-6.<span class="w"> </span>Update<span class="w"> </span>agents.defaults.model<span class="w"> </span>or<span class="w"> </span>run<span class="w">  </span>│
+│<span class="w">  </span>/models<span class="w"> </span>list.<span class="w">                                                                       </span>│
+│<span class="w">                                                                                      </span>│
+├──────────────────────────────────────────────────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Channels<span class="w"> </span>────────────────╮
+│<span class="w">                           </span>│
+│<span class="w">  </span>Skipping<span class="w"> </span>channel<span class="w"> </span>setup.<span class="w">  </span>│
+│<span class="w">                           </span>│
+├───────────────────────────╯
+Updated<span class="w"> </span>~/.openclaw/openclaw.json
+Workspace<span class="w"> </span>OK:<span class="w"> </span>~/.openclaw/workspace
+Sessions<span class="w"> </span>OK:<span class="w"> </span>~/.openclaw/agents/main/sessions
+│
+◇<span class="w">  </span>Web<span class="w"> </span>search<span class="w"> </span>─────────────────────────────────────────────────────────────────╮
+│<span class="w">                                                                              </span>│
+│<span class="w">  </span>Web<span class="w"> </span>search<span class="w"> </span>lets<span class="w"> </span>your<span class="w"> </span>agent<span class="w"> </span>look<span class="w"> </span>things<span class="w"> </span>up<span class="w"> </span>online.<span class="w">                           </span>│
+│<span class="w">  </span>Choose<span class="w"> </span>a<span class="w"> </span>provider.<span class="w"> </span>Some<span class="w"> </span>providers<span class="w"> </span>need<span class="w"> </span>an<span class="w"> </span>API<span class="w"> </span>key,<span class="w"> </span>and<span class="w"> </span>some<span class="w"> </span>work<span class="w"> </span>key-free.<span class="w">  </span>│
+│<span class="w">  </span>Docs:<span class="w"> </span>https://docs.openclaw.ai/tools/web<span class="w">                                    </span>│
+│<span class="w">                                                                              </span>│
+├──────────────────────────────────────────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Search<span class="w"> </span>provider
+│<span class="w">  </span>Ollama<span class="w"> </span>Web<span class="w"> </span>Search
+│
+◇<span class="w">  </span>Web<span class="w"> </span>search<span class="w"> </span>──────────────────────────────────────────────────────────────╮
+│<span class="w">                                                                           </span>│
+│<span class="w">  </span>Ollama<span class="w"> </span>Web<span class="w"> </span>Search<span class="w"> </span>works<span class="w"> </span>without<span class="w"> </span>an<span class="w"> </span>API<span class="w"> </span>key.<span class="w">                              </span>│
+│<span class="w">  </span>OpenClaw<span class="w"> </span>will<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>the<span class="w"> </span>plugin<span class="w"> </span>and<span class="w"> </span>use<span class="w"> </span>it<span class="w"> </span>as<span class="w"> </span>your<span class="w"> </span>web_search<span class="w"> </span>provider.<span class="w">  </span>│
+│<span class="w">  </span>Docs:<span class="w"> </span>https://docs.openclaw.ai/tools/web<span class="w">                                 </span>│
+│<span class="w">                                                                           </span>│
+├───────────────────────────────────────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Ollama<span class="w"> </span>Web<span class="w"> </span>Search<span class="w"> </span>────────────────────────────────╮
+│<span class="w">                                                    </span>│
+│<span class="w">  </span>Ollama<span class="w"> </span>Web<span class="w"> </span>Search<span class="w"> </span>requires<span class="w"> </span>Ollama<span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>running.<span class="w">  </span>│
+│<span class="w">  </span>Expected<span class="w"> </span>host:<span class="w"> </span>http://127.0.0.1:11434<span class="w">             </span>│
+│<span class="w">  </span>Start<span class="w"> </span>Ollama<span class="w"> </span>before<span class="w"> </span>using<span class="w"> </span>this<span class="w"> </span>provider.<span class="w">          </span>│
+│<span class="w">                                                    </span>│
+├────────────────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Skills<span class="w"> </span>status<span class="w"> </span>─────────────╮
+│<span class="w">                             </span>│
+│<span class="w">  </span>Eligible:<span class="w"> </span><span class="m">8</span><span class="w">                </span>│
+│<span class="w">  </span>Missing<span class="w"> </span>requirements:<span class="w"> </span><span class="m">37</span><span class="w">   </span>│
+│<span class="w">  </span>Unsupported<span class="w"> </span>on<span class="w"> </span>this<span class="w"> </span>OS:<span class="w"> </span><span class="m">7</span><span class="w">  </span>│
+│<span class="w">  </span>Blocked<span class="w"> </span>by<span class="w"> </span>allowlist:<span class="w"> </span><span class="m">0</span><span class="w">    </span>│
+│<span class="w">                             </span>│
+├─────────────────────────────╯
+│
+◇<span class="w">  </span>Configure<span class="w"> </span>skills<span class="w"> </span>now?<span class="w"> </span><span class="o">(</span>recommended<span class="o">)</span>
+│<span class="w">  </span>Yes
+│
+◇<span class="w">  </span>Install<span class="w"> </span>missing<span class="w"> </span>skill<span class="w"> </span>dependencies
+│<span class="w">  </span>Skip<span class="w"> </span><span class="k">for</span><span class="w"> </span>now
+│
+◇<span class="w">  </span>Set<span class="w"> </span>GOOGLE_PLACES_API_KEY<span class="w"> </span><span class="k">for</span><span class="w"> </span>goplaces?
+│<span class="w">  </span>No
+│
+◇<span class="w">  </span>Set<span class="w"> </span>NOTION_API_KEY<span class="w"> </span><span class="k">for</span><span class="w"> </span>notion?
+│<span class="w">  </span>No
+│
+◇<span class="w">  </span>Set<span class="w"> </span>OPENAI_API_KEY<span class="w"> </span><span class="k">for</span><span class="w"> </span>openai-whisper-api?
+│<span class="w">  </span>No
+│
+◇<span class="w">  </span>Set<span class="w"> </span>ELEVENLABS_API_KEY<span class="w"> </span><span class="k">for</span><span class="w"> </span>sag?
+│<span class="w">  </span>No
+│
+◇<span class="w">  </span>Hooks<span class="w"> </span>──────────────────────────────────────────────────────────────────╮
+│<span class="w">                                                                          </span>│
+│<span class="w">  </span>Hooks<span class="w"> </span><span class="nb">let</span><span class="w"> </span>you<span class="w"> </span>automate<span class="w"> </span>actions<span class="w"> </span>when<span class="w"> </span>agent<span class="w"> </span>commands<span class="w"> </span>are<span class="w"> </span>issued.<span class="w">          </span>│
+│<span class="w">  </span>Example:<span class="w"> </span>Save<span class="w"> </span>session<span class="w"> </span>context<span class="w"> </span>to<span class="w"> </span>memory<span class="w"> </span>when<span class="w"> </span>you<span class="w"> </span>issue<span class="w"> </span>/new<span class="w"> </span>or<span class="w"> </span>/reset.<span class="w">  </span>│
+│<span class="w">                                                                          </span>│
+│<span class="w">  </span>Learn<span class="w"> </span>more:<span class="w"> </span>https://docs.openclaw.ai/automation/hooks<span class="w">                   </span>│
+│<span class="w">                                                                          </span>│
+├──────────────────────────────────────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Enable<span class="w"> </span>hooks?
+│<span class="w">  </span>Skip<span class="w"> </span><span class="k">for</span><span class="w"> </span>now
+│
+◇<span class="w">  </span>Systemd<span class="w"> </span>────────────────────────────────────────────────────────────────────────────────╮
+│<span class="w">                                                                                          </span>│
+│<span class="w">  </span>Linux<span class="w"> </span>installs<span class="w"> </span>use<span class="w"> </span>a<span class="w"> </span>systemd<span class="w"> </span>user<span class="w"> </span>service<span class="w"> </span>by<span class="w"> </span>default.<span class="w"> </span>Without<span class="w"> </span>lingering,<span class="w"> </span>systemd<span class="w"> </span>stops<span class="w">  </span>│<span class="w">       </span>
+│<span class="w">  </span>the<span class="w"> </span>user<span class="w"> </span>session<span class="w"> </span>on<span class="w"> </span>logout/idle<span class="w"> </span>and<span class="w"> </span>kills<span class="w"> </span>the<span class="w"> </span>Gateway.<span class="w">                                  </span>│<span class="w">       </span>
+│<span class="w">  </span>Enabling<span class="w"> </span>lingering<span class="w"> </span>now<span class="w"> </span><span class="o">(</span>may<span class="w"> </span>require<span class="w"> </span>sudo<span class="p">;</span><span class="w"> </span>writes<span class="w"> </span>/var/lib/systemd/linger<span class="o">)</span>.<span class="w">              </span>│<span class="w">       </span>
+│<span class="w">                                                                                          </span>│<span class="w">       </span>
+├──────────────────────────────────────────────────────────────────────────────────────────╯<span class="w">       </span>
+│
+◇<span class="w">  </span>Systemd<span class="w"> </span>──────────────────────────────╮
+│<span class="w">                                        </span>│
+│<span class="w">  </span>Enabled<span class="w"> </span>systemd<span class="w"> </span>lingering<span class="w"> </span><span class="k">for</span><span class="w"> </span>ahyuo.<span class="w">  </span>│
+│<span class="w">                                        </span>│
+├────────────────────────────────────────╯
+│
+◇<span class="w">  </span>Gateway<span class="w"> </span>service<span class="w"> </span>runtime<span class="w"> </span>────────────────────────────────────────────╮
+│<span class="w">                                                                      </span>│
+│<span class="w">  </span>QuickStart<span class="w"> </span>uses<span class="w"> </span>Node<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>Gateway<span class="w"> </span>service<span class="w"> </span><span class="o">(</span>stable<span class="w"> </span>+<span class="w"> </span>supported<span class="o">)</span>.<span class="w">  </span>│
+│<span class="w">                                                                      </span>│
+....<span class="w">           </span>
+
+openclaw<span class="w"> </span>tui<span class="w"> </span>-<span class="w"> </span>ws://127.0.0.1:18789<span class="w"> </span>-<span class="w"> </span>agent<span class="w"> </span>main<span class="w"> </span>-<span class="w"> </span>session<span class="w"> </span>main
+
+<span class="w"> </span>session<span class="w"> </span>agent:main:main
+
+
+Wake<span class="w"> </span>up,<span class="w"> </span>my<span class="w"> </span>friend!
+
+
+<span class="w"> </span>⠇<span class="w"> </span>kerfuffling…<span class="w"> </span>•<span class="w"> </span>14m<span class="w"> </span>58s<span class="w"> </span><span class="p">|</span><span class="w"> </span>connected<span class="w">                                                                                                                                    </span>
+<span class="w"> </span>agent<span class="w"> </span>main<span class="w"> </span><span class="p">|</span><span class="w"> </span>session<span class="w"> </span>main<span class="w"> </span><span class="p">|</span><span class="w"> </span>unknown<span class="w"> </span><span class="p">|</span><span class="w"> </span>tokens<span class="w"> </span>?/200k
+</code></pre></div></p>
+</li>
+<li>
+<p>Model Provider 선택: Anthropic / OpenAI / Google</p>
+</li>
+<li>API 키 입력</li>
+<li>Gateway 자동 설정 (~2분 소요)</li>
+</ul>
+<h3 id="step-6-verify-gateway">Step 6: Verify Gateway</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Gateway 토큰 확인</span>
+openclaw<span class="w"> </span>config<span class="w"> </span>get<span class="w"> </span>gateway.token
+
+<span class="c1"># 토큰과 함께 상태 확인</span>
+openclaw<span class="w"> </span>gateway<span class="w"> </span>status<span class="w"> </span>--token<span class="w"> </span>&lt;위에서<span class="w"> </span>확인한<span class="w"> </span>토큰&gt;
+</code></pre></div>
+<blockquote>
+<p><code>unauthorized: gateway token missing</code> 오류 발생 시 위 순서로 토큰을 먼저 확인한다.</p>
+</blockquote>
+<h3 id="step-7-open-dashboard">Step 7: Open Dashboard</h3>
+<div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>dashboard
+</code></pre></div>
+<p>WSL2에서 실행해도 Windows 브라우저에서 <code>http://127.0.0.1:18789/</code> 로 접속 가능합니다.</p>
+<h2 id="checklist">Checklist</h2>
+<ul class="task-list">
+<li>[O] WSL2 Ubuntu 진입 확인</li>
+<li>[O] Node.js 24 설치 완료</li>
+<li>[O] OpenClaw 설치 완료</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Claude CLI 인증 완료 (Option A 또는 B)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>openclaw onboard</code> 완료 (API 키 설정)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>openclaw gateway status</code> → 정상 응답</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 대시보드 브라우저 접속 확인</li>
+</ul>
+<h2 id="result">Result</h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>설치</td>
+<td>대기 중</td>
+</tr>
+<tr>
+<td>Gateway 기동</td>
+<td>대기 중</td>
+</tr>
+<tr>
+<td>대시보드 접속</td>
+<td>대기 중</td>
+</tr>
+</tbody>
+</table>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><strong>Step 5</strong>: 채널이 없는 경우 <code>--skip-channels</code> 옵션으로 채널 설정을 건너뜀. "Skip for now" UI 선택 시 <code>TypeError: Cannot read properties of undefined (reading 'trim')</code> 버그 발생하므로 반드시 CLI 옵션으로 처리.</li>
+<li><strong>Step 6</strong>: <code>openclaw gateway status</code> 실행 시 <code>unauthorized: gateway token missing</code> 오류 발생 가능. <code>openclaw config get gateway.token</code>으로 토큰 확인 후 <code>--token</code> 옵션으로 전달 필요.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="하단/푸터" >
+        
+          
+          <a href="../mcp/mcp_server.html" class="md-footer__link md-footer__link--prev" aria-label="이전: MCP Server">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                이전
+              </span>
+              <div class="md-ellipsis">
+                MCP Server
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../experiments/openclaw_test.html" class="md-footer__link md-footer__link--next" aria-label="다음: OpenClaw Test">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                다음
+              </span>
+              <div class="md-ellipsis">
+                OpenClaw Test
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2025 Jeonghun Lee. All rights reserved.
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/JeonghunLee" target="_blank" rel="noopener" title="GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["toc.follow", "navigation.instant", "navigation.instant.progress", "navigation.path", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.tooltips", "content.code.copy", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
