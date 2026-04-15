@@ -1,7 +1,7 @@
 # OpenClaw 
 
 * RAG TEST          
-이전에 MCP Server로 좀 부족할 거 같아 openclaw 부분 테스트    
+이전에 MCP Server로 좀 부족할 거 같아, 다양한 부분 테스트    
     https://github.com/JeonghunLee/rag_test
 
 * Local AI Agent Orchestration with MCP
