@@ -90,4 +90,4 @@ node run-experiments.js --suite openclaw-test
 
 - 4개 테스트 케이스 모두 올바른 Agent로 라우팅
 - MCP 전송 오류 없음
-- `logs/run-001.md`에 로그 기록 완료
+- `logs/run_001.md`에 로그 기록 완료
