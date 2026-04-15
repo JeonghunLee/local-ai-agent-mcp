@@ -72,11 +72,16 @@ openclaw onboard --install-daemon
 ```
 
 * Skip-Channel 
+상위에서 skip channel하면 에러가 발생해서 Command 생략  
 ```bash
 openclaw onboard --install-daemon --skip-channels
 ```
 
-```
+
+* 설정 후 동작 
+반드시 Token 기반으로 Web에서 접속   
+```bash
+│
 ◇  I understand this is personal-by-default and shared/multi-user use requires lock-down.
 │   Continue?
 │  Yes
@@ -124,76 +129,111 @@ openclaw onboard --install-daemon --skip-channels
 │                                                                                      │
 ├──────────────────────────────────────────────────────────────────────────────────────╯
 │
-◇  Channel status ──────────────────────────────────────╮
-│                                                       │
-│  Discord: needs token                                 │
-│  WhatsApp: not linked                                 │
-│  QQ Bot: needs AppID + AppSecret                      │
-│  Google Chat: needs service account                   │
-│  MS Teams: needs app credentials                      │
-│  Mattermost: needs token + url                        │
-│  Nextcloud Talk: needs setup                          │
-│  Feishu: needs app credentials                        │
-│  Matrix: needs homeserver + access token or password  │
-│  BlueBubbles: needs setup                             │
-│  IRC: needs host + nick                               │
-│  Zalo: needs token                                    │
-│  Zalo Personal: needs QR login                        │
-│  Synology Chat: needs token + incoming webhook        │
-│  Accounts: 0                                          │
-│  Tlon: needs setup                                    │
-│  Nostr: needs private key                             │
-│  Relays: 2                                            │
-│  iMessage: needs setup                                │
-│  imsg: missing (imsg)                                 │
-│  LINE: needs token + secret                           │
-│  Accounts: 0                                          │
-│  Signal: needs setup                                  │
-│  signal-cli: missing (signal-cli)                     │
-│  Slack: needs tokens                                  │
-│  undefined: needs token                               │
-│  Twitch: installed                                    │
-│                                                       │
-├───────────────────────────────────────────────────────╯
+◇  Channels ────────────────╮
+│                           │
+│  Skipping channel setup.  │
+│                           │
+├───────────────────────────╯
+Updated ~/.openclaw/openclaw.json
+Workspace OK: ~/.openclaw/workspace
+Sessions OK: ~/.openclaw/agents/main/sessions
 │
-◇  How channels work ────────────────────────────────────────────────────────────────╮
-│                                                                                    │
-│  DM security: default is pairing; unknown DMs get a pairing code.                  │
-│  Approve with: openclaw pairing approve <channel> <code>                           │
-│  Public DMs require dmPolicy="open" + allowFrom=["*"].                             │
-│  Multi-user DMs: run: openclaw config set session.dmScope "per-channel-peer" (or   │
-│  "per-account-channel-peer" for multi-account channels) to isolate sessions.       │
-│  Docs: channels/pairing       │
-│                                                                                    │
-│  Feishu: 飞书/Lark enterprise messaging with doc/wiki/drive tools.                 │
-│  Nostr: Decentralized protocol; encrypted DMs via NIP-04.                          │
-│  Microsoft Teams: Teams SDK; enterprise support.                                   │
-│  Nextcloud Talk: Self-hosted chat via Nextcloud Talk webhook bots.                 │
-│  BlueBubbles: iMessage via the BlueBubbles mac app + REST API.                     │
-│  Zalo: Vietnam-focused messaging platform with Bot API.                            │
-│  Zalo Personal: Zalo personal account via QR code login.                           │
-│  Discord: very well supported right now.                                           │
-│  QQ Bot: connect to QQ via official QQ Bot API with group chat and direct message  │
-│  support.                                                                          │
-│  WhatsApp: works with your own number; recommend a separate phone + eSIM.          │
-│  Google Chat: Google Workspace Chat app with HTTP webhook.                         │
-│  Mattermost: self-hosted Slack-style chat; install the plugin to enable.           │
-│  Matrix: open protocol; configure a homeserver + access token.                     │
-│  IRC: classic IRC networks; host, nick, channels.                                  │
-│  Synology Chat: Connect your Synology NAS Chat to OpenClaw                         │
-│  Tlon: Decentralized messaging on Urbit                                            │
-│  undefined: undefined                                                              │
-│  LINE: LINE Messaging API bot for Japan/Taiwan/Thailand markets.                   │
-│  undefined: undefined                                                              │
-│  Slack: supports bot + app tokens, channels, threads, and interactive replies.     │
-│  undefined: undefined                                                              │
-│  Twitch: Twitch chat integration                                                   │
-│                                                                                    │
-├────────────────────────────────────────────────────────────────────────────────────╯
+◇  Web search ─────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Web search lets your agent look things up online.                           │
+│  Choose a provider. Some providers need an API key, and some work key-free.  │
+│  Docs: https://docs.openclaw.ai/tools/web                                    │
+│                                                                              │
+├──────────────────────────────────────────────────────────────────────────────╯
 │
-◇  Select channel (QuickStart)
+◇  Search provider
+│  Ollama Web Search
+│
+◇  Web search ──────────────────────────────────────────────────────────────╮
+│                                                                           │
+│  Ollama Web Search works without an API key.                              │
+│  OpenClaw will enable the plugin and use it as your web_search provider.  │
+│  Docs: https://docs.openclaw.ai/tools/web                                 │
+│                                                                           │
+├───────────────────────────────────────────────────────────────────────────╯
+│
+◇  Ollama Web Search ────────────────────────────────╮
+│                                                    │
+│  Ollama Web Search requires Ollama to be running.  │
+│  Expected host: http://127.0.0.1:11434             │
+│  Start Ollama before using this provider.          │
+│                                                    │
+├────────────────────────────────────────────────────╯
+│
+◇  Skills status ─────────────╮
+│                             │
+│  Eligible: 8                │
+│  Missing requirements: 37   │
+│  Unsupported on this OS: 7  │
+│  Blocked by allowlist: 0    │
+│                             │
+├─────────────────────────────╯
+│
+◇  Configure skills now? (recommended)
+│  Yes
+│
+◇  Install missing skill dependencies
 │  Skip for now
-TypeError: Cannot read properties of undefined (reading 'trim')
+│
+◇  Set GOOGLE_PLACES_API_KEY for goplaces?
+│  No
+│
+◇  Set NOTION_API_KEY for notion?
+│  No
+│
+◇  Set OPENAI_API_KEY for openai-whisper-api?
+│  No
+│
+◇  Set ELEVENLABS_API_KEY for sag?
+│  No
+│
+◇  Hooks ──────────────────────────────────────────────────────────────────╮
+│                                                                          │
+│  Hooks let you automate actions when agent commands are issued.          │
+│  Example: Save session context to memory when you issue /new or /reset.  │
+│                                                                          │
+│  Learn more: https://docs.openclaw.ai/automation/hooks                   │
+│                                                                          │
+├──────────────────────────────────────────────────────────────────────────╯
+│
+◇  Enable hooks?
+│  Skip for now
+│
+◇  Systemd ────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                          │
+│  Linux installs use a systemd user service by default. Without lingering, systemd stops  │       
+│  the user session on logout/idle and kills the Gateway.                                  │       
+│  Enabling lingering now (may require sudo; writes /var/lib/systemd/linger).              │       
+│                                                                                          │       
+├──────────────────────────────────────────────────────────────────────────────────────────╯       
+│
+◇  Systemd ──────────────────────────────╮
+│                                        │
+│  Enabled systemd lingering for ahyuo.  │
+│                                        │
+├────────────────────────────────────────╯
+│
+◇  Gateway service runtime ────────────────────────────────────────────╮
+│                                                                      │
+│  QuickStart uses Node for the Gateway service (stable + supported).  │
+│                                                                      │
+....           
+
+openclaw tui - ws://127.0.0.1:18789 - agent main - session main
+
+ session agent:main:main
+
+
+Wake up, my friend!
+
+
+ ⠇ kerfuffling… • 14m 58s | connected                                                                                                                                    
+ agent main | session main | unknown | tokens ?/200k
 ```
 
 
@@ -204,8 +244,14 @@ TypeError: Cannot read properties of undefined (reading 'trim')
 ### Step 6: Verify Gateway
 
 ```bash
-openclaw gateway status   # 포트 18789 확인
+# Gateway 토큰 확인
+openclaw config get gateway.token
+
+# 토큰과 함께 상태 확인
+openclaw gateway status --token <위에서 확인한 토큰>
 ```
+
+> `unauthorized: gateway token missing` 오류 발생 시 위 순서로 토큰을 먼저 확인한다.
 
 ### Step 7: Open Dashboard
 
@@ -236,3 +282,4 @@ WSL2에서 실행해도 Windows 브라우저에서 `http://127.0.0.1:18789/` 로
 ## Notes
 
 - **Step 5**: 채널이 없는 경우 `--skip-channels` 옵션으로 채널 설정을 건너뜀. "Skip for now" UI 선택 시 `TypeError: Cannot read properties of undefined (reading 'trim')` 버그 발생하므로 반드시 CLI 옵션으로 처리.
+- **Step 6**: `openclaw gateway status` 실행 시 `unauthorized: gateway token missing` 오류 발생 가능. `openclaw config get gateway.token`으로 토큰 확인 후 `--token` 옵션으로 전달 필요.
