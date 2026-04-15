@@ -1,0 +1,43 @@
+site_name: OpenClaw Docs
+site_description: Local AI Agent Orchestration with MCP
+docs_dir: docs
+
+nav:
+  - Home: index.md
+  - Architecture:
+      - System Design: architecture/system-design.md
+  - Agents:
+      - Claude: agents/claude.md
+      - Claude Setup: agents/claude_setup.md
+      - Claude MCP: agents/claude_mcp.md
+      - Codex: agents/codex.md
+      - Ollama: agents/ollama.md
+      - Ollama Setup: agents/ollama_setup.md
+  - MCP:
+      - MCP Server: mcp/mcp_server.md
+  - Environments:
+      - Windows WSL2 Setup: environments/window_wsl2_setup.md
+  - Experiments:
+      - OpenClaw Test: experiments/openclaw_test.md
+  - Logs:
+      - run_001: logs/run_001.md
+
+theme:
+  name: material
+  language: ko
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - content.code.copy
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - tables
+  - toc:
+      permalink: true

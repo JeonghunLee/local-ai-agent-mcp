@@ -14,19 +14,21 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 ```
 └── docs/
     ├── architecture/       시스템 설계 및 Agent 토폴로지
-    ├── agents/             Agent별 설정 및 Prompt
+    ├── agents/             Agent별 설정 및 인증
+    ├── environments/       환경 설치 가이드 (WSL2 등)
     ├── mcp/                MCP 서버 설정 및 Tool 정의
     ├── experiments/        테스트 실행 및 Prompt 실험
-    └── logs/               구조화된 실행 로그
+    ├── logs/               구조화된 실행 로그
+    └── imgs/               다이어그램 및 스크린샷
 ```
 
 ## Quick Start
 
-1. Ollama 설치 (Windows): [docs/experiments/ollama-setup.md](docs/experiments/ollama-setup.md) 참고
-2. OpenClaw 설치 (WSL2): [docs/experiments/wsl2-setup.md](docs/experiments/wsl2-setup.md) 참고
-3. MCP 서버 시작: [docs/mcp/mcp-server.md](docs/mcp/mcp-server.md) 참고
-4. Agent 설정: [docs/agents/](docs/agents/) 참고
-5. 실험 실행: [docs/experiments/openclaw-test.md](docs/experiments/openclaw-test.md) 참고
+1. Ollama 설치 (Windows): [docs/agents/ollama_setup.md](docs/agents/ollama_setup.md)
+2. OpenClaw 설치 (WSL2): [docs/environments/window_wsl2_setup.md](docs/environments/window_wsl2_setup.md)
+3. MCP 서버 시작: [docs/mcp/mcp_server.md](docs/mcp/mcp_server.md)
+4. Agent 설정: [docs/agents/](docs/agents/)
+5. 실험 실행: [docs/experiments/openclaw_test.md](docs/experiments/openclaw_test.md)
 
 ## Documents
 
@@ -35,26 +37,23 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 
 ### Agents
 - [Claude](docs/agents/claude.md) — 추론/분석, Anthropic API
+- [Claude Setup](docs/agents/claude_setup.md) — 인증, Windows 디렉토리 구조
+- [Claude MCP](docs/agents/claude_mcp.md) — MCP Tool Signature
 - [Codex](docs/agents/codex.md) — 코드 생성, OpenAI API
 - [Ollama](docs/agents/ollama.md) — 로컬 추론, API 키 불필요
+- [Ollama Setup](docs/agents/ollama_setup.md) — Windows 설치 및 WSL2 연결
 
 ### MCP
-- [MCP 서버](docs/mcp/mcp-server.md) — 서버 설정, Tool 정의, 프로토콜 흐름
+- [MCP 서버](docs/mcp/mcp_server.md) — 서버 설정, Tool 정의, 프로토콜 흐름
 
-### Claude
-- [claude.md](claude.md) — Claude 모델 공급자 설정, API 키, 모델 선택
-
-### Context & Skills
-- [context.md](context.md) — 컨텍스트 구성 및 메모리 규칙
-- [skill/](skill/) — 문서 접근 규칙 및 일반 실행 규칙
+### Environments
+- [Windows WSL2 Setup](docs/environments/window_wsl2_setup.md) — WSL2에서 OpenClaw 설치
 
 ### Experiments
-- [ollama-setup.md](docs/experiments/ollama-setup.md) — Windows에서 Ollama 설치
-- [wsl2-setup.md](docs/experiments/wsl2-setup.md) — WSL2에서 OpenClaw 설치
-- [openclaw-test.md](docs/experiments/openclaw-test.md) — Agent 라우팅 검증 테스트
+- [openclaw_test.md](docs/experiments/openclaw_test.md) — Agent 라우팅 검증 테스트
 
 ### Logs
-- [run-001.md](docs/logs/run-001.md) — 첫 번째 실행 로그
+- [run_001.md](docs/logs/run_001.md) — 첫 번째 실행 로그
 
 ## Status
 
