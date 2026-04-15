@@ -46,7 +46,7 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 
 ### Step 4: Authenticate Claude CLI
 
-OpenClaw에서 Claude CLI를 사용하는 경우 인증이 필요합니다. 자세한 인증 방법은 [docs/agents/claude.md - Authentication](../agents/claude.md#authentication)을 참고하세요.
+OpenClaw에서 Claude CLI를 사용하는 경우 인증이 필요합니다. 자세한 인증 방법은 [docs/agents/claude_setup.md - Authentication](../agents/claude_setup.md#authentication)을 참고하세요.
 
 **Option A: Windows Credentials 복사 (Claude Code 기존 사용자)**
 
