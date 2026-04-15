@@ -34,10 +34,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Generate Doxygen Docs
-        run: |
-          doxygen Doxyfile_mkdocs          
-
          
       # 변경된 mkdocs_githubaction.yml 사용
       - name: Build site (MkDocs)
