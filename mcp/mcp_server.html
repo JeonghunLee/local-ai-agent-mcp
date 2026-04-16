@@ -348,37 +348,20 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#server-setup">
+<a class="md-nav__link" href="#version-a-with-openclaw">
 <span class="md-ellipsis">
       
-        Server Setup
+        Version A — With OpenClaw
       
     </span>
 </a>
-</li>
+<nav aria-label="Version A — With OpenClaw" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#registered-tools">
 <span class="md-ellipsis">
       
         Registered Tools
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tool-definition-example">
-<span class="md-ellipsis">
-      
-        Tool Definition Example
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#server-configuration-mcp-configjson">
-<span class="md-ellipsis">
-      
-        Server Configuration (mcp-config.json)
       
     </span>
 </a>
@@ -393,10 +376,151 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#notes">
+<a class="md-nav__link" href="#server-configuration-mcp-configjson">
 <span class="md-ellipsis">
       
-        Notes
+        Server Configuration (mcp-config.json)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#version-b-mcp-only">
+<span class="md-ellipsis">
+      
+        Version B — MCP Only
+      
+    </span>
+</a>
+<nav aria-label="Version B — MCP Only" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#registered-tools_1">
+<span class="md-ellipsis">
+      
+        Registered Tools
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protocol-flow_1">
+<span class="md-ellipsis">
+      
+        Protocol Flow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-configuration-mcp-configjson_1">
+<span class="md-ellipsis">
+      
+        Server Configuration (mcp-config.json)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-communication-log-json">
+<span class="md-ellipsis">
+      
+        Agent Communication — Log + JSON
+      
+    </span>
+</a>
+<nav aria-label="Agent Communication — Log + JSON" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#output-file-rules">
+<span class="md-ellipsis">
+      
+        Output File Rules
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resultjson-schema">
+<span class="md-ellipsis">
+      
+        result.json Schema
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#codex-monitoring-logic">
+<span class="md-ellipsis">
+      
+        Codex Monitoring Logic
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tool-definition-example">
+<span class="md-ellipsis">
+      
+        Tool Definition Example
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-tool-access">
+<span class="md-ellipsis">
+      
+        Agent Tool Access
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup">
+<span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+</a>
+<nav aria-label="Setup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#nodejs">
+<span class="md-ellipsis">
+      
+        Node.js
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python">
+<span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related">
+<span class="md-ellipsis">
+      
+        Related
       
     </span>
 </a>
@@ -548,74 +672,180 @@
 <article class="md-content__inner md-typeset">
 <h1 id="mcp-server">MCP Server</h1>
 <h2 id="overview">Overview</h2>
-<p>MCP(Model Context Protocol) 서버는 Orchestrator와 AI Agent 사이의 전송 레이어 역할을 합니다. <br/>
-각 Agent는 Orchestrator가 호출할 수 있는 Tool로 등록됩니다.</p>
-<h2 id="server-setup">Server Setup</h2>
-<p><strong>Windows / Linux 공통</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># MCP SDK 설치</span>
-npm<span class="w"> </span>install<span class="w"> </span>@modelcontextprotocol/sdk
-
-<span class="c1"># 서버 시작</span>
-node<span class="w"> </span>mcp-server.js
-</code></pre></div></p>
-<h2 id="registered-tools">Registered Tools</h2>
+<p>MCP Server는 <strong>CT(Continuous Testing)</strong> 전용 서버. <br/>
+GitHub Release 이벤트를 명령 트리거로 받아 테스트 실행 → 문제 파악 → 분석 → 문서 작성 → 보고까지 자동 처리한다.</p>
+<div class="highlight"><pre><span></span><code>GitHub Release → MCP Server → Ollama (실행) → result.json + .log
+                                             → Codex (감시·분석) → TEST RESULT 문서 → 보고
+</code></pre></div>
 <table>
 <thead>
 <tr>
-<th>Tool 이름</th>
-<th>Agent</th>
-<th>설명</th>
+<th>구분</th>
+<th>역할</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>codex.run</code></td>
-<td>Codex</td>
-<td>코드 생성 Prompt 실행</td>
+<td><strong>명령 주체</strong></td>
+<td>GitHub Release (트리거)</td>
 </tr>
 <tr>
-<td><code>claude.run</code></td>
-<td>Claude</td>
-<td>추론/텍스트 Prompt 실행</td>
+<td><strong>Remote Main</strong></td>
+<td>MCP 미접근 — 코드 생성·문서 생성 전담</td>
 </tr>
 <tr>
-<td><code>ollama.run</code></td>
-<td>Ollama</td>
-<td>로컬 추론 Prompt 실행</td>
+<td><strong>Remote Sub</strong></td>
+<td>감시·분석 전담 — 실행 결과 감시, 에러 시 <code>log_analyzer</code> 호출, TEST 문서 작성 후 보고</td>
 </tr>
 <tr>
-<td><code>log.write</code></td>
-<td>System</td>
-<td>구조화된 실행 로그 항목 작성</td>
+<td><strong>Local (Ollama)</strong></td>
+<td>실행 전담 — 빌드·플래시·UART·QEMU·레지스터 덤프, 분석 없음</td>
 </tr>
 </tbody>
 </table>
-<h2 id="tool-definition-example">Tool Definition Example</h2>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claude.run"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Claude에 Prompt를 보내고 응답을 반환합니다."</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"inputSchema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"prompt"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"context"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claude-sonnet-4-6"</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"prompt"</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-<h2 id="server-configuration-mcp-configjson">Server Configuration (<code>mcp-config.json</code>)</h2>
+<p><strong>Remote Agent 구성</strong></p>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>Remote Agent 수</th>
+<th>Sub 역할 처리</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2-Agent</td>
+<td>Main + Sub</td>
+<td>Sub가 독립 처리</td>
+</tr>
+<tr>
+<td>1-Agent</td>
+<td>Main only</td>
+<td>Main이 Sub 역할 대행 (<code>log_analyzer</code>, <code>test_result</code> 권한 부여)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>Version A</th>
+<th>Version B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>트리거 수신</td>
+<td>GitHub Release → OpenClaw → MCP</td>
+<td>GitHub Release → MCP 직접</td>
+</tr>
+<tr>
+<td>Channel 담당</td>
+<td>OpenClaw</td>
+<td>MCP <code>channels()</code></td>
+</tr>
+<tr>
+<td>MCP 역할</td>
+<td>CT Tool Server</td>
+<td>CT Tool Server + Channel Router</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="version-a-with-openclaw">Version A — With OpenClaw</h2>
+<p>OpenClaw이 채널(GitHub · Slack · E-Mail)을 담당하며, MCP는 <code>channels()</code> 미포함.</p>
+<h3 id="registered-tools">Registered Tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>설명</th>
+<th>접근 Agent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>build_tool()</code></td>
+<td>make · cmake · bitbake 빌드 실행</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>flash_tool()</code></td>
+<td>OpenOCD · JLink · dfu-util 플래시</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>uart_capture()</code></td>
+<td>pyserial · minicom UART 로그 캡처</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>qemu_spawn()</code></td>
+<td>QEMU 인스턴스 실행</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>reg_dump()</code></td>
+<td>/dev/mem · devmem2 · debugfs 레지스터 덤프</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>log_analyzer()</code></td>
+<td>oops · panic · assert 분석 — 실행 결과 수신 후 문제 파악</td>
+<td>Codex (분석)</td>
+</tr>
+<tr>
+<td><code>test_result()</code></td>
+<td>테스트 결과 수집 후 TEST RESULT 문서 생성</td>
+<td>Codex (분석)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="protocol-flow">Protocol Flow</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant GH as GitHub Release
+    participant OC as OpenClaw
+    participant M as MCP Server
+    participant OL as Ollama (실행)
+    participant J as result.json + tool.log
+    participant CX as Codex (감시·분석)
+    participant CH as Channels (GitHub · Slack · E-Mail)
+
+    GH-&gt;&gt;OC: Release 이벤트 (webhook)
+    OC-&gt;&gt;M: CT 실행 요청
+    M-&gt;&gt;OL: build_tool() 호출
+    OL--&gt;&gt;J: 결과 저장 (tool.log + result.json)
+    J--&gt;&gt;CX: JSON 읽기 (감시)
+    alt 에러 발생 (status: error)
+        CX-&gt;&gt;M: log_analyzer(log_path) 호출
+        M--&gt;&gt;CX: 분석 결과
+        CX-&gt;&gt;M: test_result() 호출 — TEST RESULT 문서 생성
+        CX--&gt;&gt;OC: 에러 보고
+    else 정상 (status: success)
+        CX-&gt;&gt;M: test_result() 호출 — TEST RESULT 문서 생성
+        CX--&gt;&gt;OC: 완료 보고
+    end
+    OC-&gt;&gt;CH: 문서 공유 · 알림 (API)</code></pre>
+<h3 id="server-configuration-mcp-configjson">Server Configuration (<code>mcp-config.json</code>)</h3>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openclaw-mcp"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1.0"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"agents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"claude"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">"codex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">"ollama"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">"base_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:11434"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"remote_agents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claude"</span><span class="p">,</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"sub"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"codex"</span><span class="p">,</span><span class="w">  </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"tools"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"build_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"flash_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"uart_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"qemu_spawn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"log_analyzer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"reg_dump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
 <span class="w">  </span><span class="nt">"logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"output_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"../logs"</span><span class="p">,</span>
@@ -623,16 +853,173 @@ node<span class="w"> </span>mcp-server.js
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="protocol-flow">Protocol Flow</h2>
+<hr/>
+<h2 id="version-b-mcp-only">Version B — MCP Only</h2>
+<p>OpenClaw 없이 MCP가 Tool 라우팅 + 채널 연동까지 담당하는 단순화된 구조.</p>
+<h3 id="registered-tools_1">Registered Tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>설명</th>
+<th>접근 Agent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>build_tool()</code></td>
+<td>make · cmake · bitbake 빌드 실행</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>flash_tool()</code></td>
+<td>OpenOCD · JLink · dfu-util 플래시</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>uart_capture()</code></td>
+<td>pyserial · minicom UART 로그 캡처</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>qemu_spawn()</code></td>
+<td>QEMU 인스턴스 실행</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>reg_dump()</code></td>
+<td>/dev/mem · devmem2 · debugfs 레지스터 덤프</td>
+<td>Ollama (실행)</td>
+</tr>
+<tr>
+<td><code>log_analyzer()</code></td>
+<td>oops · panic · assert 분석 — 실행 결과 수신 후 문제 파악</td>
+<td>Codex (분석)</td>
+</tr>
+<tr>
+<td><code>test_result()</code></td>
+<td>테스트 결과 수집 후 TEST RESULT 문서 생성</td>
+<td>Codex (분석)</td>
+</tr>
+<tr>
+<td><code>channels()</code></td>
+<td>GitHub · Slack · E-Mail 채널 라우팅</td>
+<td>MCP 내부</td>
+</tr>
+</tbody>
+</table>
+<h3 id="protocol-flow_1">Protocol Flow</h3>
 <pre class="mermaid"><code>sequenceDiagram
-    participant O as Orchestrator
+    participant GH as GitHub Release
     participant M as MCP Server
-    participant A as Agent (Claude / Codex / Ollama)
+    participant OL as Ollama (실행)
+    participant J as result.json + tool.log
+    participant CX as Codex (감시·분석)
+    participant CH as Channels (GitHub · Slack · E-Mail)
 
-    O-&gt;&gt;M: POST /mcp/tool/call { name, args }
-    M-&gt;&gt;A: Tool 호출 (HTTP / local)
-    A--&gt;&gt;M: 응답 반환
-    M--&gt;&gt;O: { result, tokens_used, latency_ms }</code></pre>
+    GH-&gt;&gt;M: Release 이벤트 (webhook 직접)
+    M-&gt;&gt;OL: build_tool() 호출
+    OL--&gt;&gt;J: 결과 저장 (tool.log + result.json)
+    J--&gt;&gt;CX: JSON 읽기 (감시)
+    alt 에러 발생 (status: error)
+        CX-&gt;&gt;M: log_analyzer(log_path) 호출
+        M--&gt;&gt;CX: 분석 결과
+        CX-&gt;&gt;M: test_result() 호출 — TEST RESULT 문서 생성
+        CX-&gt;&gt;M: channels() 호출 — 에러 보고
+    else 정상 (status: success)
+        CX-&gt;&gt;M: test_result() 호출 — TEST RESULT 문서 생성
+        CX-&gt;&gt;M: channels() 호출 — 완료 보고
+    end
+    M-&gt;&gt;CH: 문서 공유 · 알림 (API)</code></pre>
+<h3 id="server-configuration-mcp-configjson_1">Server Configuration (<code>mcp-config.json</code>)</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openclaw-mcp"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"B"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"remote_agents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claude"</span><span class="p">,</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"sub"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"codex"</span><span class="p">,</span><span class="w">  </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"channels"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"github"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"slack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"email"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"tools"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"build_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"flash_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"uart_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"qemu_spawn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"log_analyzer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"reg_dump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"output_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"../logs"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"markdown"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr/>
+<h2 id="agent-communication-log-json">Agent Communication — Log + JSON</h2>
+<p>모든 Tool 실행은 <strong>Log 파일**과 **JSON 파일</strong> 두 가지를 남긴다. <br/>
+- <strong>Log</strong>: 원시 출력 전체 — 에러 분석용<br/>
+- <strong>JSON</strong>: 구조화된 결과 요약 — Codex 감시 판단용</p>
+<h3 id="output-file-rules">Output File Rules</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Log 파일</th>
+<th>JSON 파일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>build_tool()</code></td>
+<td><code>logs/build_&lt;timestamp&gt;.log</code></td>
+<td><code>results/build_&lt;timestamp&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>flash_tool()</code></td>
+<td><code>logs/flash_&lt;timestamp&gt;.log</code></td>
+<td><code>results/flash_&lt;timestamp&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>uart_capture()</code></td>
+<td><code>logs/uart_&lt;timestamp&gt;.log</code></td>
+<td><code>results/uart_&lt;timestamp&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>qemu_spawn()</code></td>
+<td><code>logs/qemu_&lt;timestamp&gt;.log</code></td>
+<td><code>results/qemu_&lt;timestamp&gt;.json</code></td>
+</tr>
+<tr>
+<td><code>reg_dump()</code></td>
+<td><code>logs/reg_&lt;timestamp&gt;.log</code></td>
+<td><code>results/reg_&lt;timestamp&gt;.json</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="resultjson-schema">result.json Schema</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"tool"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build_tool"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-04-16T10:00:00Z"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success | error"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"exit_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"log_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logs/build_20260416T100000.log"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"duration_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">3200</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"context"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"make"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"all"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"working_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/workspace"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 <table>
 <thead>
 <tr>
@@ -642,32 +1029,227 @@ node<span class="w"> </span>mcp-server.js
 </thead>
 <tbody>
 <tr>
-<td><code>name</code></td>
-<td>Tool 이름 (예: <code>claude.run</code>)</td>
+<td><code>tool</code></td>
+<td>실행한 Tool 이름</td>
 </tr>
 <tr>
-<td><code>args</code></td>
-<td>Tool 인자 (예: <code>{ prompt: "..." }</code>)</td>
+<td><code>timestamp</code></td>
+<td>실행 시각 (ISO 8601)</td>
 </tr>
 <tr>
-<td><code>result</code></td>
-<td>Agent 응답 텍스트</td>
+<td><code>status</code></td>
+<td><code>success</code> / <code>error</code> — Codex 감시 판단 기준</td>
 </tr>
 <tr>
-<td><code>tokens_used</code></td>
-<td>소비된 Token 수</td>
+<td><code>exit_code</code></td>
+<td>프로세스 종료 코드 (0 = 정상)</td>
 </tr>
 <tr>
-<td><code>latency_ms</code></td>
-<td>응답 지연 시간 (ms)</td>
+<td><code>log_path</code></td>
+<td>상세 로그 파일 경로 — 에러 시 <code>log_analyzer()</code> 입력으로 사용</td>
+</tr>
+<tr>
+<td><code>duration_ms</code></td>
+<td>실행 소요 시간 (ms)</td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td>Tool 실행 파라미터</td>
 </tr>
 </tbody>
 </table>
-<h2 id="notes">Notes</h2>
+<h3 id="codex-monitoring-logic">Codex Monitoring Logic</h3>
+<div class="highlight"><pre><span></span><code>result.json 수신
+  └─ status == "error"  →  log_analyzer(log_path) 호출 → 분석 결과 보고
+  └─ status == "success" →  완료 보고
+</code></pre></div>
+<hr/>
+<h2 id="tool-definition-example">Tool Definition Example</h2>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build_tool"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"빌드 시스템 실행 후 결과 반환 (make · cmake · bitbake)"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"inputSchema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"make · cmake · bitbake"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"빌드 타겟"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"working_dir"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"빌드 디렉터리"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"command"</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_result"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"테스트 실행 결과를 수집하고 TEST RESULT 문서(Markdown)로 저장"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"inputSchema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"test_suite"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"테스트 스위트 이름"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"pass"</span><span class="p">,</span><span class="w"> </span><span class="s2">"fail"</span><span class="p">,</span><span class="w"> </span><span class="s2">"skip"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">          </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"output_path"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"저장 경로 (예: docs/logs/test_result_00.md)"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"test_suite"</span><span class="p">,</span><span class="w"> </span><span class="s2">"results"</span><span class="p">,</span><span class="w"> </span><span class="s2">"output_path"</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"channels"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GitHub · Slack · E-Mail 채널로 메시지 또는 문서 전송 (Version B 전용)"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"inputSchema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"github"</span><span class="p">,</span><span class="w"> </span><span class="s2">"slack"</span><span class="p">,</span><span class="w"> </span><span class="s2">"email"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">"payload"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"전송할 데이터"</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"target"</span><span class="p">,</span><span class="w"> </span><span class="s2">"payload"</span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr/>
+<h2 id="agent-tool-access">Agent Tool Access</h2>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>구분</th>
+<th>Tool</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ollama</strong></td>
+<td>실행</td>
+<td><code>build_tool</code>, <code>flash_tool</code>, <code>uart_capture</code>, <code>qemu_spawn</code>, <code>reg_dump</code></td>
+<td>실행만, 분석·판단 없음</td>
+</tr>
+<tr>
+<td>Codex</td>
+<td>감시·분석</td>
+<td><code>log_analyzer</code>, <code>test_result</code></td>
+<td>Ollama 결과 감시 → 에러 시 분석 후 보고</td>
+</tr>
+<tr>
+<td>Claude</td>
+<td>미접근</td>
+<td>—</td>
+<td>코드 생성 · 문서 생성 전담</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="setup">Setup</h2>
+<p>두 가지 구현 중 하나를 선택한다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>언어</th>
+<th>파일</th>
+<th>적합한 경우</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Node.js</td>
+<td>TypeScript / JavaScript</td>
+<td><code>mcp-server.js</code></td>
+<td>빠른 프로토타이핑, JS 생태계 활용</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>Python 3.11+</td>
+<td><code>mcp_server.py</code></td>
+<td>임베디드 툴체인 연동, pyserial · subprocess 활용</td>
+</tr>
+</tbody>
+</table>
+<h3 id="nodejs">Node.js</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># WSL2</span>
+npm<span class="w"> </span>install<span class="w"> </span>@modelcontextprotocol/sdk
+
+node<span class="w"> </span>mcp-server.js
+</code></pre></div>
+<p><code>mcp-config.json</code> — Node.js 서버 설정</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openclaw-mcp"</span><span class="p">,</span><span class="w"> </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w"> </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"node"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"tools"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"build_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"flash_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"uart_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"qemu_spawn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"reg_dump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"log_analyzer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"test_result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"log_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logs"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"result_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"results"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="python">Python</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># WSL2</span>
+pip<span class="w"> </span>install<span class="w"> </span>mcp
+
+python<span class="w"> </span>mcp_server.py
+</code></pre></div>
+<p><code>mcp-config.json</code> — Python 서버 설정</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openclaw-mcp"</span><span class="p">,</span><span class="w"> </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w"> </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"runtime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"tools"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"build_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"flash_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"uart_capture"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">"backend"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pyserial"</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"qemu_spawn"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"reg_dump"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"log_analyzer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"test_result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"log_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logs"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"result_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"results"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>Python 구성은 <code>uart_capture()</code>에 <code>pyserial</code>을 직접 사용할 수 있어 시리얼 장치 연동에 유리.</p>
+</blockquote>
+<p><strong>1-Agent 구성 예시</strong> — Main 1개가 Sub 역할 대행</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"remote_agents"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claude"</span><span class="p">,</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"sub"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><code>sub.enabled: false</code> 시 MCP가 <code>log_analyzer</code>, <code>test_result</code> 호출 권한을 Main으로 위임.</p>
+</blockquote>
 <ul>
-<li>기본적으로 <code>localhost:3000</code>에서 실행</li>
-<li><code>logging.format</code> 설정 시 모든 Tool 호출 자동 로깅</li>
-<li>새 Agent 추가: 새 Tool 정의와 Adapter 등록으로 확장 가능</li>
+<li>기본 포트: <code>localhost:3000</code> (Node.js · Python 공통)</li>
+<li>Version 전환: <code>mcp-config.json</code>의 <code>version</code> 필드와 <code>channels.enabled</code> 조정</li>
+</ul>
+<hr/>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../architecture/system-design.html">architecture/system-design.md</a> — Deployment Diagram (Version A / B)</li>
+<li><a href="../agents/claude.html">agents/claude.md</a> — Claude Agent 설정</li>
+<li><a href="../agents/codex.html">agents/codex.md</a> — Codex Agent 설정</li>
+<li><a href="../agents/ollama.html">agents/ollama.md</a> — Ollama Agent 설정</li>
 </ul>
 </article>
 </div>
@@ -712,7 +1294,7 @@ node<span class="w"> </span>mcp-server.js
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
 <div class="md-copyright__highlight">
-      © 2025 Jeonghun Lee. All rights reserved.
+      © 2026 Jeonghun Lee. All rights reserved.
 
     </div>
   
