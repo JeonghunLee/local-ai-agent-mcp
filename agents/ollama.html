@@ -627,6 +627,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-selection-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Selection Guide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1132,33 +1149,55 @@
 <thead>
 <tr>
 <th>모델</th>
-<th>용도</th>
+<th>강점</th>
 <th>VRAM</th>
+<th>이 프로젝트 용도</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>llama3.2</code></td>
-<td>일반 추론</td>
+<td>일반 추론, 요약, 자연어 이해</td>
 <td>4 GB</td>
-</tr>
-<tr>
-<td><code>codellama</code></td>
-<td>오프라인 코드 작업</td>
-<td>4 GB</td>
+<td>로그 요약, 이상 탐지</td>
 </tr>
 <tr>
 <td><code>mistral</code></td>
-<td>빠른 일반 작업</td>
+<td>빠른 처리, 지시 따르기</td>
 <td>4 GB</td>
+<td>대량 로그 분석, 반복 변환 작업</td>
+</tr>
+<tr>
+<td><code>codellama</code></td>
+<td>코드 생성, 코드 설명</td>
+<td>4 GB</td>
+<td>테스트 초안 생성, 단순 변환 스크립트</td>
 </tr>
 <tr>
 <td><code>deepseek-r1</code></td>
-<td>추론 / 수학</td>
+<td>단계적 추론, 수학</td>
 <td>8 GB+</td>
+<td>복잡한 로그 패턴 분석 (고사양 필요)</td>
 </tr>
 </tbody>
 </table>
+<h3 id="model-selection-guide">Model Selection Guide</h3>
+<p><strong>로그 분석 / 요약</strong></p>
+<ul>
+<li>로그 양이 많고 빠른 처리가 우선 → <code>mistral</code></li>
+<li>맥락 이해·이상 탐지 정확도가 우선 → <code>llama3.2</code></li>
+<li>패턴이 복잡하고 추론이 필요 → <code>deepseek-r1</code> (VRAM 8 GB 이상)</li>
+</ul>
+<p><strong>테스트 자동화</strong></p>
+<ul>
+<li>테스트 초안 코드 생성 → <code>codellama</code></li>
+<li>단순 반복 변환 스크립트 → <code>mistral</code></li>
+<li>복잡한 테스트 로직 설계 → Claude (Ollama 범위 아님)</li>
+</ul>
+<p><strong>권장 기본 구성</strong></p>
+<div class="highlight"><pre><span></span><code>로그 분석: mistral
+테스트 초안: codellama
+</code></pre></div>
 <h2 id="when-to-use">When to Use</h2>
 <ul>
 <li>오프라인 또는 클라우드 의존성 없이 실행해야 하는 작업</li>

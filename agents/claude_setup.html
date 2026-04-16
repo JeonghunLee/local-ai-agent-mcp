@@ -524,26 +524,104 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#windows-directory-structure" class="md-nav__link">
+  <a href="#1-claude-rule-files" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Windows Directory Structure
+        1. Claude Rule Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Claude Rule Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Root
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#project-skill-rules" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Authentication
+        Project Skill Rules
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Authentication">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-memory-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Memory Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#claude-context-loading-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude Context Loading Order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2user-claude-enviornment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.User Claude Enviornment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.User Claude Enviornment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3claude-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.Claude Authentication
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.Claude Authentication">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1120,7 +1198,94 @@
 
 
 <h1 id="agent-claude-setup">Agent: Claude — Setup</h1>
-<h2 id="windows-directory-structure">Windows Directory Structure</h2>
+<h2 id="1-claude-rule-files">1. Claude Rule Files</h2>
+<p>Claude가 이 프로젝트에서 작업할 때 참조하는 규칙 파일들의 위치와 역할.</p>
+<h3 id="project-root">Project Root</h3>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claude.md</code></td>
+<td>Claude를 OpenClaw의 모델 공급자로 사용하는 설정 (모델 선택, API 키, Config 예시)</td>
+</tr>
+<tr>
+<td><code>context.md</code></td>
+<td>Context 로딩 순서, 디렉토리별 적용 Skill 지정, Docs 접근 규칙, Memory 규칙</td>
+</tr>
+</tbody>
+</table>
+<h3 id="project-skill-rules">Project Skill Rules</h3>
+<p>skill 내부 </p>
+<p>작업 유형·디렉토리에 따라 적용할 행동 규칙 파일 모음이다. <br />
+<code>context.md</code>의 디렉토리 테이블이 어떤 Skill을 언제 적용할지 결정한다.</p>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>적용 범위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>skill/index.md</code></td>
+<td>프로젝트 전체 — 환경(WSL2/PowerShell), 파일 조작, 금지 사항 등 일반 규칙</td>
+</tr>
+<tr>
+<td><code>skill/rules_docs.md</code></td>
+<td><code>docs/</code> 디렉토리 — 제목 언어, 파일명 규칙, 다이어그램, 이미지 관리</td>
+</tr>
+<tr>
+<td><code>skill/rules_install.md</code></td>
+<td>설치·환경 설정 작업 — 직접 실행 금지, 사용자 요청 형식, 완료 확인 방법</td>
+</tr>
+</tbody>
+</table>
+<h3 id="user-memory-rule">User Memory Rule</h3>
+<p>세션 간 기억이 필요한 결정사항을 저장하는 디렉토리이다. <br />
+Claude Code가 대화 시작 시 자동으로 로드한다.</p>
+<ul>
+<li>Window 저장장소 사용자의 내부 저장 
+<div class="highlight"><pre><span></span><code>C:\Users\&lt;user&gt;\.claude\projects\d--works-projects-local-ai-agent-mcp\memory
+</code></pre></div></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MEMORY.md</code></td>
+<td>메모리 파일 인덱스 — 항상 컨텍스트에 로드됨</td>
+</tr>
+<tr>
+<td><code>project_overview.md</code></td>
+<td>프로젝트 목적, 핵심 컴포넌트(OpenClaw/MCP/Ollama/Claude/Codex), Agent 선택 로직</td>
+</tr>
+<tr>
+<td><code>project_config_rules.md</code></td>
+<td>프로젝트 규칙 요약 (claude.md / context.md / skill/ 핵심 내용)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="claude-context-loading-order">Claude Context Loading Order</h3>
+<div class="highlight"><pre><span></span><code>1. skill/index.md, skill/rules_docs.md   (행동 규칙)
+2. context.md                            (컨텍스트 규칙)
+3. 작업 관련 docs/ 문서                  (필요한 것만)
+4. memory/MEMORY.md → 각 memory 파일    (세션 간 기억)
+5. 현재 대화 히스토리
+6. 사용자 입력
+</code></pre></div>
+<h2 id="2user-claude-enviornment">2.User Claude Enviornment</h2>
+<p>Claude 사용자의 환경은 다은과 같이 구성됨 </p>
+<h3 id="window">Window</h3>
 <p>Claude Code는 Windows에서 <code>C:\Users\&lt;user&gt;\.claude\</code> 에 모든 설정과 데이터를 저장한다.</p>
 <table>
 <thead>
@@ -1180,7 +1345,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="authentication">Authentication</h2>
+<h2 id="3claude-authentication">3.Claude Authentication</h2>
+<p>Claude 필요한 인증 </p>
 <h3 id="method-1-credentials-copy-wsl2">Method 1: Credentials Copy (WSL2 권장)</h3>
 <p>Windows에서 이미 <code>claude auth login</code>을 완료한 경우 credentials 파일을 복사한다.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># WSL2 내에서 실행</span>
