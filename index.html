@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#openclaw-local-ai-agent-orchestration-with-mcp" class="md-skip">
+        <a href="#local-ai-agent-orchestration-with-mcp" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -344,29 +344,7 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Start
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#manual" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Manual
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Manual">
+    <nav class="md-nav" aria-label="Project Goals">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -424,41 +402,8 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#experiments" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Experiments
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#logs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Logs
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#status" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Status
-      
-    </span>
-  </a>
   
 </li>
       
@@ -1130,24 +1075,15 @@
   
 
 
-<h1 id="openclaw-local-ai-agent-orchestration-with-mcp">OpenClaw — Local AI Agent Orchestration with MCP</h1>
-<p>OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude, Ollama)를 조율하는 로컬 멀티 Agent 시스템입니다.</p>
+<h1 id="local-ai-agent-orchestration-with-mcp">Local AI Agent Orchestration with MCP</h1>
+<p>OpenClaw 기반의 MCP(Model Context Protocol) 사용   <br />
+다양한 AI Agent(Codex, Claude, Ollama) 비롯하여 로컬 멀티 Agent 시스템 기능 테스트   </p>
 <h2 id="project-goals">Project Goals</h2>
 <ul>
-<li>작업 유형과 맥락에 따라 최적의 Agent로 라우팅   </li>
-<li>MCP Tool을 통해 Agent 간 통신 및 작업 인계   </li>
-<li>가능한 한 로컬에서 실행 (Ollama), 클라우드 Fallback (Claude, Codex)   </li>
-<li>재현성과 분석을 위해 모든 실행 로그 기록</li>
+<li>OpenClaw의 필요성 확인   </li>
+<li>MCP Tool을 통해 Agent 간 통신 과 AI Agent 의 수 제한 </li>
+<li>다양한 AI Agent 기반의 TEST 진행    </li>
 </ul>
-<h2 id="quick-start">Quick Start</h2>
-<ol>
-<li><strong>Ollama 설치 (Windows)</strong> → <a href="agents/ollama_setup.html">agents/ollama_setup.md</a>   </li>
-<li><strong>OpenClaw 설치 (WSL2)</strong> → <a href="environments/window_wsl2_setup.html">environments/window_wsl2_setup.md</a>   </li>
-<li><strong>MCP 서버 시작</strong> → <a href="mcp/mcp_server.html">mcp/mcp_server.md</a>   </li>
-<li><strong>Agent 설정</strong> → <a href="agents/claude.html">agents/</a>   </li>
-<li><strong>실험 실행</strong> → <a href="experiments/openclaw_test.html">experiments/openclaw_test.md</a></li>
-</ol>
-<h2 id="manual">Manual</h2>
 <h3 id="architecture">Architecture</h3>
 <table>
 <thead>
@@ -1243,38 +1179,6 @@
 </tr>
 </tbody>
 </table>
-<h3 id="experiments">Experiments</h3>
-<table>
-<thead>
-<tr>
-<th>문서</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="experiments/openclaw_test.html">OpenClaw Test</a></td>
-<td>Agent 라우팅 검증 테스트</td>
-</tr>
-</tbody>
-</table>
-<h3 id="logs">Logs</h3>
-<table>
-<thead>
-<tr>
-<th>문서</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="logs/run_001.html">run_001</a></td>
-<td>첫 번째 실행 로그</td>
-</tr>
-</tbody>
-</table>
-<h2 id="status">Status</h2>
-<p>설치 진행 중 — Ollama (Windows) + OpenClaw (WSL2)</p>
 
 
 
