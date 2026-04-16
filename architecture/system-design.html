@@ -844,55 +844,63 @@
 <h2 id="component-details">Component Details</h2>
 <ol>
 <li>
-<p>User Access
+<p>User Access  <br/>
 브라우저에서 <code>http://127.0.0.1:18789</code> 로 OpenClaw Dashboard에 접속합니다. <br/>
 Prompt를 입력하면 Orchestrator가 작업 유형에 맞는 Agent를 선택해 라우팅합니다.</p>
 </li>
 <li>
 <p>OpenClaw Orchestrator (WSL2)</p>
-</li>
+<ul>
 <li><strong>설치 위치</strong>: WSL2 (Ubuntu)   </li>
 <li><strong>역할</strong>: Prompt를 받아 적합한 Agent 결정 → MCP 서버로 전달   </li>
 <li><strong>포트</strong>: <code>:18789</code> (Dashboard + Gateway)   </li>
-<li>
-<p>WSL2에 설치하는 이유: 공식 권장 환경, Linux 네이티브 안정성</p>
+<li>WSL2에 설치하는 이유: 공식 권장 환경, Linux 네이티브 안정성</li>
+</ul>
 </li>
 <li>
-<p>MCP Server (WSL2)</p>
-</li>
+<p>MCP Server (WSL2)    </p>
+<ul>
 <li><strong>설치 위치</strong>: WSL2 (Ubuntu), OpenClaw와 동일 환경</li>
 <li><strong>목적</strong>: CT(Continuous Testing) — 테스트 실행 · 문제 파악 · 분석 · 문서 작성 · 보고 자동화</li>
 <li><strong>명령 주체</strong>: GitHub Release (webhook 트리거)</li>
 <li><strong>포트</strong>: <code>:3000</code></li>
-<li><strong>구현</strong>: Node.js (<code>mcp-server.js</code>) 또는 Python (<code>mcp_server.py</code>) 선택</li>
+<li><strong>구현</strong>: Node.js (<code>mcp-server.js</code>) 또는 Python (<code>mcp_server.py</code>) 선택<ul>
 <li>Node.js: 빠른 프로토타이핑, JS 생태계</li>
 <li>Python: pyserial · subprocess 직접 연동, 임베디드 툴체인에 유리</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
 <p><a href="../mcp/mcp_server.html">세부사항</a> — MCP 서버 설정</p>
 <ol>
-<li>Local AI (Windows Native)</li>
+<li>
+<p>Local AI (Windows Native)    </p>
+<ul>
 <li><strong>설치 위치</strong>: Windows 11 호스트   </li>
 <li><strong>역할</strong>: 로컬 LLM 추론, 인터넷 없이 동작   </li>
 <li><strong>포트</strong>: <code>:11434</code> </li>
 <li><strong>모델</strong>: <code>llama3.2</code> (범용), <code>codellama</code> (코드 특화)   </li>
 <li>Windows에 설치하는 이유: GPU 직접 접근으로 추론 성능 최적화   </li>
-<li>
-<p>WSL2 → Windows 연결: <code>localhost:11434</code> 로 투명하게 접근 가능</p>
+<li>WSL2 → Windows 연결: <code>localhost:11434</code> 로 투명하게 접근 가능</li>
+</ul>
 </li>
 <li>
-<p>Main AI API (Cloud)</p>
-</li>
+<p>Main AI API (Cloud)      </p>
+<ul>
 <li><strong>설치 위치</strong>: 없음 — Anthropic 클라우드에서 실행   </li>
 <li><strong>연결 방식</strong>: <code>ANTHROPIC_API_KEY</code> 환경변수   </li>
-<li>
-<p><strong>용도</strong>: 추론, 분석, 장문 컨텍스트 처리</p>
+<li><strong>용도</strong>: 추론, 분석, 장문 컨텍스트 처리</li>
+</ul>
 </li>
 <li>
-<p>Sub AI API (Cloud)</p>
-</li>
+<p>Sub AI API (Cloud)     </p>
+<ul>
 <li><strong>설치 위치</strong>: 없음 — OpenAI 클라우드에서 실행   </li>
 <li><strong>연결 방식</strong>: <code>OPENAI_API_KEY</code> 환경변수   </li>
 <li><strong>용도</strong>: 코드 생성, 리팩토링, 언어 변환</li>
+</ul>
+</li>
 </ol>
 <hr/>
 <h2 id="installation-locations">Installation Locations</h2>
