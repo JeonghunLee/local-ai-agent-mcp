@@ -11,16 +11,19 @@ Claude는 추론, 분석, 장문 컨텍스트 처리에 강점이 있어 OpenCla
 
 Agent 역할은 고정되어 있으며 아래 순서로 실행된다.
 
-| 순서 | 작업 유형                                              | Agent                | User 검토       |
-|-----|-------------------------------------------------------|----------------------|----------------|
-| 1   | 구조 설계 / 작업 분해 / 리팩토링 방향                  | Claude               | —              |
-| 2   | 코드 생성                                              | Claude               | 1차 승인 / 수정 |
-| 3   | 문서화                                                 | Claude               | 2차 승인 / 수정 |
-| 4   | 회귀 위험 지적 / 테스트 누락 지적 / patch 초안         | Codex                | 3차 승인 / 수정 |
-| 5   | GitHub PR 요청                                        | GitHub               | —              |
-| 6   | PR Review                                             | Codex + GitHub Users | 4차 승인 / 수정 |
-| 7   | 로그 요약 / 테스트 초안 / 반복 변환 작업               | Ollama               | 5차 승인 / 수정 |
-| 8   | 결과 테스트 문서화                                     | Codex                | 6차 승인 / 수정 |
+| 순서 | 작업 유형 | Agent | User 검토 |
+|-----|-----------|-------|----------|
+| 1 | 구조 설계 / 작업 분해 | Claude (Main) | — |
+| 2 | 코드 생성 | Claude (Main) | 1차 승인 / 수정 |
+| 3 | 문서 생성 | Claude (Main) | 2차 승인 / 수정 |
+| 4 | 코드 리뷰 / 회귀 위험 지적 / patch 초안 | Codex (Sub) | 3차 승인 / 수정 |
+| 5 | GitHub PR 요청 | GitHub | — |
+| 6 | PR Review | Codex (Sub) + GitHub Users | 4차 승인 / 수정 |
+| 7 | TEST 분석 | Codex (Sub) | 5차 승인 / 수정 |
+| 8 | TEST 문서 작성 | Codex (Sub) | 6차 승인 / 수정 |
+
+> Remote Agent: Claude (Main) · Codex (Sub) 2개로 제한  
+> Ollama (Local): MCP Tool 실행 전담 — 빌드, UART 캡처, QEMU, 레지스터 덤프
 
 ---
 

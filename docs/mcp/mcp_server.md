@@ -2,60 +2,83 @@
 
 ## Overview
 
-MCP(Model Context Protocol) 서버는 Orchestrator와 AI Agent 사이의 전송 레이어 역할을 합니다.   
-각 Agent는 Orchestrator가 호출할 수 있는 Tool로 등록됩니다.
+MCP(Model Context Protocol) Server는 AI Agent가 외부 시스템(빌드, 플래시, 로그, 채널 등)에 접근할 수 있도록 Tool을 노출하는 서버.   
+배포 구조(Version A / B)에 따라 Tool 구성과 역할이 달라진다.
 
-## Server Setup
+- **Ollama (Local)**: 실행 전담 — Tool 호출·실행만 담당, 분석 없음
+- **Codex (Sub, Remote)**: 감시·분석 전담 — Ollama 실행 결과를 감시, 에러 발생 시 `log_analyzer`로 분석 후 보고, TEST 문서 작성
+- **Claude (Main, Remote)**: MCP 미접근 — 코드 생성·문서 생성 전담
 
-**Windows / Linux 공통**
-```bash
-# MCP SDK 설치
-npm install @modelcontextprotocol/sdk
+| 구분 | Version A | Version B |
+|------|-----------|-----------|
+| Orchestrator | OpenClaw | 없음 (CLI 직접 호출) |
+| Channel 담당 | OpenClaw | MCP `channels()` |
+| MCP 역할 | Tool Server only | Tool Server + Channel Router |
 
-# 서버 시작
-node mcp-server.js
+---
+
+## Version A — With OpenClaw
+
+OpenClaw이 채널(GitHub · Slack · E-Mail)을 담당하며, MCP는 `channels()` 미포함.
+
+### Registered Tools
+
+| Tool | 설명 | 접근 Agent |
+|------|------|-----------|
+| `build_tool()` | make · cmake · bitbake 빌드 실행 | Ollama (실행) |
+| `flash_tool()` | OpenOCD · JLink · dfu-util 플래시 | Ollama (실행) |
+| `uart_capture()` | pyserial · minicom UART 로그 캡처 | Ollama (실행) |
+| `qemu_spawn()` | QEMU 인스턴스 실행 | Ollama (실행) |
+| `reg_dump()` | /dev/mem · devmem2 · debugfs 레지스터 덤프 | Ollama (실행) |
+| `log_analyzer()` | oops · panic · assert 분석 — 실행 결과 수신 후 문제 파악 | Codex (분석) |
+| `test_result()` | 테스트 결과 수집 후 TEST RESULT 문서 생성 | Codex (분석) |
+
+### Protocol Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User CLI
+    participant OC as OpenClaw
+    participant OL as Ollama (실행)
+    participant M as MCP Server
+    participant J as result.json + tool.log
+    participant CX as Codex (감시·분석)
+    participant CH as Channels (GitHub · Slack · E-Mail)
+
+    U->>OC: Prompt 입력
+    OC->>OL: Tool 실행 요청
+    OL->>M: build_tool() 호출
+    M-->>OL: 실행 결과 반환
+    OL->>J: 결과 저장 (tool.log + result.json)
+    J-->>CX: JSON 읽기 (감시)
+    alt 에러 발생 (status: error)
+        CX->>M: log_analyzer(log_path) 호출
+        M-->>CX: 분석 결과
+        CX-->>OC: 에러 보고
+    else 정상 (status: success)
+        CX-->>OC: 완료 보고
+    end
+    OC->>CH: 문서 공유 · 알림 (API)
 ```
 
-## Registered Tools
-
-| Tool 이름      | Agent | 설명                              |
-|-------------|---------|-----------------------------------|
-| `codex.run`  | Codex   | 코드 생성 Prompt 실행             |
-| `claude.run` | Claude  | 추론/텍스트 Prompt 실행           |
-| `ollama.run` | Ollama  | 로컬 추론 Prompt 실행             |
-| `log.write`  | System  | 구조화된 실행 로그 항목 작성        |
-
-## Tool Definition Example
-
-```json
-{
-  "name": "claude.run",
-  "description": "Claude에 Prompt를 보내고 응답을 반환합니다.",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "prompt": { "type": "string" },
-      "context": { "type": "string" },
-      "model": { "type": "string", "default": "claude-sonnet-4-6" }
-    },
-    "required": ["prompt"]
-  }
-}
-```
-
-## Server Configuration (`mcp-config.json`)
+### Server Configuration (`mcp-config.json`)
 
 ```json
 {
   "server": {
     "name": "openclaw-mcp",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "port": 3000
   },
-  "agents": {
-    "claude": { "enabled": true },
-    "codex": { "enabled": true },
-    "ollama": { "enabled": true, "base_url": "http://localhost:11434" }
+  "version": "A",
+  "channels": { "enabled": false },
+  "tools": {
+    "build_tool": { "enabled": true },
+    "flash_tool": { "enabled": true },
+    "uart_capture": { "enabled": true },
+    "qemu_spawn": { "enabled": true },
+    "log_analyzer": { "enabled": true },
+    "reg_dump": { "enabled": true }
   },
   "logging": {
     "output_dir": "../logs",
@@ -64,30 +87,290 @@ node mcp-server.js
 }
 ```
 
-## Protocol Flow
+---
+
+## Version B — MCP Only
+
+OpenClaw 없이 MCP가 Tool 라우팅 + 채널 연동까지 담당하는 단순화된 구조.
+
+### Registered Tools
+
+| Tool | 설명 | 접근 Agent |
+|------|------|-----------|
+| `build_tool()` | make · cmake · bitbake 빌드 실행 | Ollama (실행) |
+| `flash_tool()` | OpenOCD · JLink · dfu-util 플래시 | Ollama (실행) |
+| `uart_capture()` | pyserial · minicom UART 로그 캡처 | Ollama (실행) |
+| `qemu_spawn()` | QEMU 인스턴스 실행 | Ollama (실행) |
+| `reg_dump()` | /dev/mem · devmem2 · debugfs 레지스터 덤프 | Ollama (실행) |
+| `log_analyzer()` | oops · panic · assert 분석 — 실행 결과 수신 후 문제 파악 | Codex (분석) |
+| `test_result()` | 테스트 결과 수집 후 TEST RESULT 문서 생성 | Codex (분석) |
+| `channels()` | GitHub · Slack · E-Mail 채널 라우팅 | MCP 내부 |
+
+### Protocol Flow
 
 ```mermaid
 sequenceDiagram
-    participant O as Orchestrator
+    participant U as User CLI
+    participant OL as Ollama (실행)
     participant M as MCP Server
-    participant A as Agent (Claude / Codex / Ollama)
+    participant J as result.json + tool.log
+    participant CX as Codex (감시·분석)
+    participant CH as Channels (GitHub · Slack · E-Mail)
 
-    O->>M: POST /mcp/tool/call { name, args }
-    M->>A: Tool 호출 (HTTP / local)
-    A-->>M: 응답 반환
-    M-->>O: { result, tokens_used, latency_ms }
+    U->>OL: Tool 실행 요청 (CLI 직접)
+    OL->>M: build_tool() 호출
+    M-->>OL: 실행 결과 반환
+    OL->>J: 결과 저장 (result.json)
+    J-->>CX: JSON 읽기 (감시)
+    alt 에러 발생 (status: error)
+        CX->>M: log_analyzer() 호출
+        M-->>CX: 분석 결과
+        CX->>M: channels() 호출 — 에러 보고
+    else 정상 (status: success)
+        CX->>M: channels() 호출 — 완료 보고
+    end
+    M->>CH: 문서 공유 · 알림 (API)
+```
+
+### Server Configuration (`mcp-config.json`)
+
+```json
+{
+  "server": {
+    "name": "openclaw-mcp",
+    "version": "1.0.0",
+    "port": 3000
+  },
+  "version": "B",
+  "channels": {
+    "enabled": true,
+    "github": { "enabled": true },
+    "slack": { "enabled": true },
+    "email": { "enabled": true }
+  },
+  "tools": {
+    "build_tool": { "enabled": true },
+    "flash_tool": { "enabled": true },
+    "uart_capture": { "enabled": true },
+    "qemu_spawn": { "enabled": true },
+    "log_analyzer": { "enabled": true },
+    "reg_dump": { "enabled": true }
+  },
+  "logging": {
+    "output_dir": "../logs",
+    "format": "markdown"
+  }
+}
+```
+
+---
+
+## Agent Communication — Log + JSON
+
+모든 Tool 실행은 **Log 파일**과 **JSON 파일** 두 가지를 남긴다.   
+- **Log**: 원시 출력 전체 — 에러 분석용  
+- **JSON**: 구조화된 결과 요약 — Codex 감시 판단용
+
+### Output File Rules
+
+| Tool | Log 파일 | JSON 파일 |
+|------|----------|----------|
+| `build_tool()` | `logs/build_<timestamp>.log` | `results/build_<timestamp>.json` |
+| `flash_tool()` | `logs/flash_<timestamp>.log` | `results/flash_<timestamp>.json` |
+| `uart_capture()` | `logs/uart_<timestamp>.log` | `results/uart_<timestamp>.json` |
+| `qemu_spawn()` | `logs/qemu_<timestamp>.log` | `results/qemu_<timestamp>.json` |
+| `reg_dump()` | `logs/reg_<timestamp>.log` | `results/reg_<timestamp>.json` |
+
+### result.json Schema
+
+```json
+{
+  "tool": "build_tool",
+  "timestamp": "2026-04-16T10:00:00Z",
+  "status": "success | error",
+  "exit_code": 0,
+  "log_path": "logs/build_20260416T100000.log",
+  "duration_ms": 3200,
+  "context": {
+    "command": "make",
+    "target": "all",
+    "working_dir": "/workspace"
+  }
+}
 ```
 
 | 필드 | 설명 |
 |------|------|
-| `name` | Tool 이름 (예: `claude.run`) |
-| `args` | Tool 인자 (예: `{ prompt: "..." }`) |
-| `result` | Agent 응답 텍스트 |
-| `tokens_used` | 소비된 Token 수 |
-| `latency_ms` | 응답 지연 시간 (ms) |
+| `tool` | 실행한 Tool 이름 |
+| `timestamp` | 실행 시각 (ISO 8601) |
+| `status` | `success` / `error` — Codex 감시 판단 기준 |
+| `exit_code` | 프로세스 종료 코드 (0 = 정상) |
+| `log_path` | 상세 로그 파일 경로 — 에러 시 `log_analyzer()` 입력으로 사용 |
+| `duration_ms` | 실행 소요 시간 (ms) |
+| `context` | Tool 실행 파라미터 |
 
-## Notes
+### Codex Monitoring Logic
 
-- 기본적으로 `localhost:3000`에서 실행
-- `logging.format` 설정 시 모든 Tool 호출 자동 로깅
-- 새 Agent 추가: 새 Tool 정의와 Adapter 등록으로 확장 가능
+```
+result.json 수신
+  └─ status == "error"  →  log_analyzer(log_path) 호출 → 분석 결과 보고
+  └─ status == "success" →  완료 보고
+```
+
+---
+
+## Tool Definition Example
+
+```json
+{
+  "name": "build_tool",
+  "description": "빌드 시스템 실행 후 결과 반환 (make · cmake · bitbake)",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "command": { "type": "string", "description": "make · cmake · bitbake" },
+      "target": { "type": "string", "description": "빌드 타겟" },
+      "working_dir": { "type": "string", "description": "빌드 디렉터리" }
+    },
+    "required": ["command"]
+  }
+}
+```
+
+```json
+{
+  "name": "test_result",
+  "description": "테스트 실행 결과를 수집하고 TEST RESULT 문서(Markdown)로 저장",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "test_suite": { "type": "string", "description": "테스트 스위트 이름" },
+      "results": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "status": { "type": "string", "enum": ["pass", "fail", "skip"] },
+            "message": { "type": "string" }
+          }
+        }
+      },
+      "output_path": { "type": "string", "description": "저장 경로 (예: docs/logs/test_result_00.md)" }
+    },
+    "required": ["test_suite", "results", "output_path"]
+  }
+}
+```
+
+```json
+{
+  "name": "channels",
+  "description": "GitHub · Slack · E-Mail 채널로 메시지 또는 문서 전송 (Version B 전용)",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "target": { "type": "string", "enum": ["github", "slack", "email"] },
+      "payload": { "type": "object", "description": "전송할 데이터" }
+    },
+    "required": ["target", "payload"]
+  }
+}
+```
+
+---
+
+## Agent Tool Access
+
+| Agent | 구분 | Tool | 비고 |
+|-------|------|------|------|
+| **Ollama** | 실행 | `build_tool`, `flash_tool`, `uart_capture`, `qemu_spawn`, `reg_dump` | 실행만, 분석·판단 없음 |
+| Codex | 감시·분석 | `log_analyzer`, `test_result` | Ollama 결과 감시 → 에러 시 분석 후 보고 |
+| Claude | 미접근 | — | 코드 생성 · 문서 생성 전담 |
+
+---
+
+## Setup
+
+두 가지 구현 중 하나를 선택한다.
+
+| 구분 | 언어 | 파일 | 적합한 경우 |
+|------|------|------|------------|
+| Node.js | TypeScript / JavaScript | `mcp-server.js` | 빠른 프로토타이핑, JS 생태계 활용 |
+| Python | Python 3.11+ | `mcp_server.py` | 임베디드 툴체인 연동, pyserial · subprocess 활용 |
+
+### Node.js
+
+```bash
+# WSL2
+npm install @modelcontextprotocol/sdk
+
+node mcp-server.js
+```
+
+`mcp-config.json` — Node.js 서버 설정
+
+```json
+{
+  "server": { "name": "openclaw-mcp", "version": "1.0.0", "port": 3000 },
+  "runtime": "node",
+  "tools": {
+    "build_tool": { "enabled": true },
+    "flash_tool": { "enabled": true },
+    "uart_capture": { "enabled": true },
+    "qemu_spawn": { "enabled": true },
+    "reg_dump": { "enabled": true },
+    "log_analyzer": { "enabled": true },
+    "test_result": { "enabled": true }
+  },
+  "output": {
+    "log_dir": "logs",
+    "result_dir": "results"
+  }
+}
+```
+
+### Python
+
+```bash
+# WSL2
+pip install mcp
+
+python mcp_server.py
+```
+
+`mcp-config.json` — Python 서버 설정
+
+```json
+{
+  "server": { "name": "openclaw-mcp", "version": "1.0.0", "port": 3000 },
+  "runtime": "python",
+  "tools": {
+    "build_tool": { "enabled": true },
+    "flash_tool": { "enabled": true },
+    "uart_capture": { "enabled": true, "backend": "pyserial" },
+    "qemu_spawn": { "enabled": true },
+    "reg_dump": { "enabled": true },
+    "log_analyzer": { "enabled": true },
+    "test_result": { "enabled": true }
+  },
+  "output": {
+    "log_dir": "logs",
+    "result_dir": "results"
+  }
+}
+```
+
+> Python 구성은 `uart_capture()`에 `pyserial`을 직접 사용할 수 있어 시리얼 장치 연동에 유리.
+
+- 기본 포트: `localhost:3000` (Node.js · Python 공통)
+- Version 전환: `mcp-config.json`의 `version` 필드와 `channels.enabled` 조정
+
+---
+
+## Related
+
+- [architecture/system-design.md](../architecture/system-design.md) — Deployment Diagram (Version A / B)
+- [agents/claude.md](../agents/claude.md) — Claude Agent 설정
+- [agents/codex.md](../agents/codex.md) — Codex Agent 설정
+- [agents/ollama.md](../agents/ollama.md) — Ollama Agent 설정
