@@ -339,6 +339,28 @@
       
     </span>
 </a>
+<nav aria-label="Agent Workflow" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-agent-harness-version-a">
+<span class="md-ellipsis">
+      
+        AI Agent Harness Version A
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-agent-harness-version-b">
+<span class="md-ellipsis">
+      
+        AI Agent Harness Version B
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#related">
@@ -654,12 +676,12 @@
 <p><img alt="" src="../imgs/openclaw_00.png"/></p>
 <h2 id="deployment-diagram">Deployment Diagram</h2>
 <h3 id="version-a-with-openclaw">Version A — With OpenClaw</h3>
-<p>OpenClaw이 문서 생성·공유·알림을 담당하고 MCP Tool Server는 Tool 전용으로 분리된 구조.</p>
-<pre class="mermaid"><code>graph LR
-    subgraph UserCLI["User"]
+<p>OpenClaw이 채널 담당, MCP는 <code>channels()</code> 미사용.</p>
+<pre class="mermaid"><code>graph TD
+    subgraph UserCLI["Local User"]
         ClaudeCLI["Claude CLI"]
         CodexCLI["Codex CLI"]
-        VSCode["VS Code\nCopilot"]
+        VSCode["VS Code · Copilot"]
     end
 
     subgraph Remote["Remote Cloud"]
@@ -667,24 +689,26 @@
         Codex["Codex API"]
     end
 
-    subgraph Local["Local Windows"]
-        Ollama["Ollama"]
-    end
-
-    subgraph WSL2["WSL2 Ubuntu"]
+    subgraph LocalWSL2["Local WSL2"]
         OpenClaw["OpenClaw\n문서 생성 · 공유 · 알림"]
-        MCP["MCP Tool Server"]
     end
 
-    subgraph WinDev["Windows Dev Environment"]
-        Git["Git / GitHub / PR\ngit · gh"]
-        Test["Build / Test Runner\nnpm · pytest"]
-        Files["Logs / Files\nfs"]
+    subgraph LocalWindows["Local Windows 11"]
+        Ollama["Ollama"]
+        subgraph MCPTools["MCP Tool Server"]
+            Build["build_tool()\nmake · cmake · bitbake"]
+            Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
+            Uart["uart_capture()\npyserial · minicom"]
+            Qemu["qemu_spawn()\nQEMU instance"]
+            LogA["log_analyzer()\noops · panic · assert"]
+            Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
+        end
     end
 
-    subgraph Channels["Channels"]
+    subgraph Channels["Remote Channels"]
         GitHub["GitHub\nCopilot PR Review"]
         Slack["Slack AI"]
+        EMail["E-Mail"]              
     end
 
     ClaudeCLI --&gt; Claude
@@ -695,23 +719,20 @@
     Codex --&gt; OpenClaw
     Ollama --&gt; OpenClaw
 
-    Claude --&gt;|HTTP| MCP
-    Codex --&gt;|HTTP| MCP
-    Ollama --&gt;|HTTP| MCP
+    Claude --&gt;|HTTP| MCPTools
+    Codex --&gt;|HTTP| MCPTools
+    Ollama --&gt;|HTTP| MCPTools
 
     OpenClaw --&gt;|API| GitHub
     OpenClaw --&gt;|API| Slack
-
-    MCP --&gt;|CLI| Git
-    MCP --&gt;|CLI| Test
-    MCP --&gt;|CLI| Files</code></pre>
+    OpenClaw --&gt;|API| EMail        </code></pre>
 <h3 id="version-b-mcp-only">Version B — MCP Only</h3>
-<p>OpenClaw 없이 MCP Server가 Tool 라우팅 + 문서 생성·공유·알림까지 담당하는 단순화된 구조.</p>
-<pre class="mermaid"><code>graph LR
-    subgraph UserCLI["User"]
+<p>MCP Server가 Tool 라우팅 + 문서 생성·공유·알림까지 담당하는 단순화된 구조.</p>
+<pre class="mermaid"><code>graph TD
+    subgraph UserCLI["Local User"]
         ClaudeCLI["Claude CLI"]
         CodexCLI["Codex CLI"]
-        VSCode["VS Code\nCopilot"]
+        VSCode["VS Code · Copilot"]
     end
 
     subgraph Remote["Remote Cloud"]
@@ -719,39 +740,36 @@
         Codex["Codex API"]
     end
 
-    subgraph Local["Local Windows"]
+    subgraph LocalWindows["Local Windows 11"]
         Ollama["Ollama"]
+        subgraph MCPTools["MCP Tool Server"]
+            Build["build_tool()\nmake · cmake · bitbake"]
+            Chan["channels()\nGitHub · Slack · E-Mail"]
+            Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
+            Uart["uart_capture()\npyserial · minicom"]
+            Qemu["qemu_spawn()\nQEMU instance"]
+            LogA["log_analyzer()\noops · panic · assert"]
+            Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
+        end
     end
 
-    subgraph WSL2["WSL2 Ubuntu"]
-        MCP["MCP Server\n문서 생성 · 공유 · 알림\nTool 라우팅"]
-    end
-
-    subgraph WinDev["Windows Dev Environment"]
-        Git["Git / GitHub / PR\ngit · gh"]
-        Test["Build / Test Runner\nnpm · pytest"]
-        Files["Logs / Files\nfs"]
-    end
-
-    subgraph Channels["Channels"]
+    subgraph Channels["Remote Channels"]
         GitHub["GitHub\nCopilot PR Review"]
         Slack["Slack AI"]
+        EMail["E-Mail"]        
     end
 
     ClaudeCLI --&gt; Claude
     CodexCLI --&gt; Codex
     VSCode --&gt;|Copilot| GitHub
 
-    Claude --&gt;|HTTP| MCP
-    Codex --&gt;|HTTP| MCP
-    Ollama --&gt;|HTTP| MCP
+    Claude --&gt;|HTTP| MCPTools
+    Codex --&gt;|HTTP| MCPTools
+    Ollama --&gt;|HTTP| MCPTools
 
-    MCP --&gt;|API| GitHub
-    MCP --&gt;|API| Slack
-
-    MCP --&gt;|CLI| Git
-    MCP --&gt;|CLI| Test
-    MCP --&gt;|CLI| Files</code></pre>
+    Chan --&gt;|API| GitHub
+    Chan --&gt;|API| Slack
+    Chan --&gt;|API| EMail    </code></pre>
 <hr/>
 <h2 id="component-details">Component Details</h2>
 <h3 id="1-user-access">1. User Access</h3>
@@ -886,13 +904,16 @@ Prompt를 입력하면 Orchestrator가 작업 유형에 맞는 Agent를 선택�
 </table>
 <hr/>
 <h2 id="agent-workflow">Agent Workflow</h2>
-<p>Agent 역할은 고정되어 있으며 아래 순서로 실행된다.</p>
+<p>Agent 역할은 고정, 아래 순서로 실행.</p>
+<h3 id="ai-agent-harness-version-a">AI Agent Harness Version A</h3>
+<p>OpenClaw가 문서 생성·공유·알림을 담당하는 구조.</p>
 <table>
 <thead>
 <tr>
 <th>순서</th>
 <th>작업 유형</th>
 <th>Agent</th>
+<th>Orchestrator</th>
 <th>User 검토</th>
 </tr>
 </thead>
@@ -901,48 +922,127 @@ Prompt를 입력하면 Orchestrator가 작업 유형에 맞는 Agent를 선택�
 <td>1</td>
 <td>구조 설계 / 작업 분해 / 리팩토링 방향</td>
 <td>Claude</td>
+<td>OpenClaw</td>
 <td>—</td>
 </tr>
 <tr>
 <td>2</td>
 <td>코드 생성</td>
 <td>Claude</td>
+<td>OpenClaw</td>
 <td>1차 승인 / 수정</td>
 </tr>
 <tr>
 <td>3</td>
 <td>문서화</td>
 <td>Claude</td>
+<td>OpenClaw</td>
 <td>2차 승인 / 수정</td>
 </tr>
 <tr>
 <td>4</td>
 <td>회귀 위험 지적 / 테스트 누락 지적 / patch 초안</td>
 <td>Codex</td>
+<td>OpenClaw</td>
 <td>3차 승인 / 수정</td>
 </tr>
 <tr>
 <td>5</td>
 <td>GitHub PR 요청</td>
 <td>GitHub</td>
+<td>OpenClaw</td>
 <td>—</td>
 </tr>
 <tr>
 <td>6</td>
 <td>PR Review</td>
 <td>Codex + GitHub Users</td>
+<td>OpenClaw</td>
 <td>4차 승인 / 수정</td>
 </tr>
 <tr>
 <td>7</td>
 <td>로그 요약 / 테스트 초안 / 반복 변환 작업</td>
 <td>Ollama</td>
+<td>OpenClaw</td>
 <td>5차 승인 / 수정</td>
 </tr>
 <tr>
 <td>8</td>
 <td>결과 테스트 문서화</td>
 <td>Codex</td>
+<td>OpenClaw</td>
+<td>6차 승인 / 수정</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ai-agent-harness-version-b">AI Agent Harness Version B</h3>
+<p>MCP Server가 Orchestrator 역할까지 담당하는 단순화된 구조.</p>
+<table>
+<thead>
+<tr>
+<th>순서</th>
+<th>작업 유형</th>
+<th>Agent</th>
+<th>Orchestrator</th>
+<th>User 검토</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>구조 설계 / 작업 분해 / 리팩토링 방향</td>
+<td>Claude</td>
+<td>MCP</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td>코드 생성</td>
+<td>Claude</td>
+<td>MCP</td>
+<td>1차 승인 / 수정</td>
+</tr>
+<tr>
+<td>3</td>
+<td>문서화</td>
+<td>Claude</td>
+<td>MCP</td>
+<td>2차 승인 / 수정</td>
+</tr>
+<tr>
+<td>4</td>
+<td>회귀 위험 지적 / 테스트 누락 지적 / patch 초안</td>
+<td>Codex</td>
+<td>MCP</td>
+<td>3차 승인 / 수정</td>
+</tr>
+<tr>
+<td>5</td>
+<td>GitHub PR 요청</td>
+<td>GitHub</td>
+<td>MCP</td>
+<td>—</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PR Review</td>
+<td>Codex + GitHub Users</td>
+<td>MCP</td>
+<td>4차 승인 / 수정</td>
+</tr>
+<tr>
+<td>7</td>
+<td>로그 요약 / 테스트 초안 / 반복 변환 작업</td>
+<td>Ollama</td>
+<td>MCP</td>
+<td>5차 승인 / 수정</td>
+</tr>
+<tr>
+<td>8</td>
+<td>결과 테스트 문서화</td>
+<td>Codex</td>
+<td>MCP</td>
 <td>6차 승인 / 수정</td>
 </tr>
 </tbody>
