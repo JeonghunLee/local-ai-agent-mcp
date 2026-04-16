@@ -198,45 +198,45 @@ graph TD
 
 ## Component Details
 
-1. User Access
+1. User Access    
 브라우저에서 `http://127.0.0.1:18789` 로 OpenClaw Dashboard에 접속합니다.   
 Prompt를 입력하면 Orchestrator가 작업 유형에 맞는 Agent를 선택해 라우팅합니다.
 
 2. OpenClaw Orchestrator (WSL2)
-- **설치 위치**: WSL2 (Ubuntu)   
-- **역할**: Prompt를 받아 적합한 Agent 결정 → MCP 서버로 전달   
-- **포트**: `:18789` (Dashboard + Gateway)   
-- WSL2에 설치하는 이유: 공식 권장 환경, Linux 네이티브 안정성
+    - **설치 위치**: WSL2 (Ubuntu)   
+    - **역할**: Prompt를 받아 적합한 Agent 결정 → MCP 서버로 전달   
+    - **포트**: `:18789` (Dashboard + Gateway)   
+    - WSL2에 설치하는 이유: 공식 권장 환경, Linux 네이티브 안정성
 
-3. MCP Server (WSL2)
-- **설치 위치**: WSL2 (Ubuntu), OpenClaw와 동일 환경
-- **목적**: CT(Continuous Testing) — 테스트 실행 · 문제 파악 · 분석 · 문서 작성 · 보고 자동화
-- **명령 주체**: GitHub Release (webhook 트리거)
-- **포트**: `:3000`
-- **구현**: Node.js (`mcp-server.js`) 또는 Python (`mcp_server.py`) 선택
-  - Node.js: 빠른 프로토타이핑, JS 생태계
-  - Python: pyserial · subprocess 직접 연동, 임베디드 툴체인에 유리
+3. MCP Server (WSL2)    
+    - **설치 위치**: WSL2 (Ubuntu), OpenClaw와 동일 환경
+    - **목적**: CT(Continuous Testing) — 테스트 실행 · 문제 파악 · 분석 · 문서 작성 · 보고 자동화
+    - **명령 주체**: GitHub Release (webhook 트리거)
+    - **포트**: `:3000`
+    - **구현**: Node.js (`mcp-server.js`) 또는 Python (`mcp_server.py`) 선택
+        - Node.js: 빠른 프로토타이핑, JS 생태계
+        - Python: pyserial · subprocess 직접 연동, 임베디드 툴체인에 유리
 
 [세부사항](../mcp/mcp_server.md) — MCP 서버 설정
 
 
-4. Local AI (Windows Native)
-- **설치 위치**: Windows 11 호스트   
-- **역할**: 로컬 LLM 추론, 인터넷 없이 동작   
-- **포트**: `:11434`   
-- **모델**: `llama3.2` (범용), `codellama` (코드 특화)   
-- Windows에 설치하는 이유: GPU 직접 접근으로 추론 성능 최적화   
-- WSL2 → Windows 연결: `localhost:11434` 로 투명하게 접근 가능
+4. Local AI (Windows Native)    
+    - **설치 위치**: Windows 11 호스트   
+    - **역할**: 로컬 LLM 추론, 인터넷 없이 동작   
+    - **포트**: `:11434`   
+    - **모델**: `llama3.2` (범용), `codellama` (코드 특화)   
+    - Windows에 설치하는 이유: GPU 직접 접근으로 추론 성능 최적화   
+    - WSL2 → Windows 연결: `localhost:11434` 로 투명하게 접근 가능
 
-5. Main AI API (Cloud)
-- **설치 위치**: 없음 — Anthropic 클라우드에서 실행   
-- **연결 방식**: `ANTHROPIC_API_KEY` 환경변수   
-- **용도**: 추론, 분석, 장문 컨텍스트 처리
+5. Main AI API (Cloud)      
+    - **설치 위치**: 없음 — Anthropic 클라우드에서 실행   
+    - **연결 방식**: `ANTHROPIC_API_KEY` 환경변수   
+    - **용도**: 추론, 분석, 장문 컨텍스트 처리
 
-6. Sub AI API (Cloud)
-- **설치 위치**: 없음 — OpenAI 클라우드에서 실행   
-- **연결 방식**: `OPENAI_API_KEY` 환경변수   
-- **용도**: 코드 생성, 리팩토링, 언어 변환
+6. Sub AI API (Cloud)     
+    - **설치 위치**: 없음 — OpenAI 클라우드에서 실행   
+    - **연결 방식**: `OPENAI_API_KEY` 환경변수   
+    - **용도**: 코드 생성, 리팩토링, 언어 변환
 
 ---
 
