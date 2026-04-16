@@ -1,23 +1,13 @@
-# OpenClaw — Local AI Agent Orchestration with MCP
+# Local AI Agent Orchestration with MCP
 
-OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude, Ollama)를 조율하는 로컬 멀티 Agent 시스템입니다.
+OpenClaw 기반의 MCP(Model Context Protocol) 사용     
+다양한 AI Agent(Codex, Claude, Ollama) 비롯하여 로컬 멀티 Agent 시스템 기능 테스트   
 
 ## Project Goals
 
-- 작업 유형과 맥락에 따라 최적의 Agent로 라우팅   
-- MCP Tool을 통해 Agent 간 통신 및 작업 인계   
-- 가능한 한 로컬에서 실행 (Ollama), 클라우드 Fallback (Claude, Codex)   
-- 재현성과 분석을 위해 모든 실행 로그 기록
-
-## Quick Start
-
-1. **Ollama 설치 (Windows)** → [agents/ollama_setup.md](agents/ollama_setup.md)   
-2. **OpenClaw 설치 (WSL2)** → [environments/window_wsl2_setup.md](environments/window_wsl2_setup.md)   
-3. **MCP 서버 시작** → [mcp/mcp_server.md](mcp/mcp_server.md)   
-4. **Agent 설정** → [agents/](agents/claude.md)   
-5. **실험 실행** → [experiments/openclaw_test.md](experiments/openclaw_test.md)
-
-## Manual
+- OpenClaw의 필요성 확인   
+- MCP Tool을 통해 Agent 간 통신 과 AI Agent 의 수 제한 
+- 다양한 AI Agent 기반의 TEST 진행    
 
 ### Architecture
 
@@ -54,18 +44,3 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 |------|------|
 | [Windows WSL2 Setup](environments/window_wsl2_setup.md) | WSL2에서 OpenClaw 설치 전체 절차 |
 
-### Experiments
-
-| 문서 | 설명 |
-|------|------|
-| [OpenClaw Test](experiments/openclaw_test.md) | Agent 라우팅 검증 테스트 |
-
-### Logs
-
-| 문서 | 설명 |
-|------|------|
-| [run_001](logs/run_001.md) | 첫 번째 실행 로그 |
-
-## Status
-
-설치 진행 중 — Ollama (Windows) + OpenClaw (WSL2)
