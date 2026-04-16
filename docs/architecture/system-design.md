@@ -7,8 +7,11 @@
     * Ollama: 로그 요약, 테스트 초안, 반복 변환 작업
     * User: 최종 승인
 
-* AI Agent 와 연결 
+* AI Agent 와 Openclaw 연결 
     * openclaw 
+    * 각 Channel 연결  
+    * E-Mail 자동발송  
+    * Github 비롯하여, Slack 과 연결 
 
 
 ![](../imgs/openclaw_00.png)
@@ -16,28 +19,113 @@
 
 ## Deployment Diagram
 
+### Version A — With OpenClaw
+
+OpenClaw이 문서 생성·공유·알림을 담당하고 MCP Tool Server는 Tool 전용으로 분리된 구조.
+
 ```mermaid
-graph TD
-    User["사용자 (브라우저)"]
-
-    subgraph Windows11["🖥️ Windows 11 (호스트)"]
-        subgraph WSL2["🐧 WSL2 · Ubuntu"]
-            OpenClaw["OpenClaw\nOrchestrator\n:18789"]
-            MCP["MCP Server\n:3000"]
-            OpenClaw -->|MCP Protocol| MCP
-        end
-        Ollama["Ollama\n:11434\nllama3.2 · codellama"]
-        MCP -->|HTTP| Ollama
+graph LR
+    subgraph UserCLI["User"]
+        ClaudeCLI["Claude CLI"]
+        CodexCLI["Codex CLI"]
+        VSCode["VS Code\nCopilot"]
     end
 
-    subgraph Cloud["☁️ Cloud"]
-        Claude["Anthropic\nClaude API"]
-        Codex["OpenAI\nCodex API"]
+    subgraph Remote["Remote Cloud"]
+        Claude["Claude API"]
+        Codex["Codex API"]
     end
 
-    User -->|HTTP :18789| OpenClaw
-    MCP -->|HTTPS| Claude
-    MCP -->|HTTPS| Codex
+    subgraph Local["Local Windows"]
+        Ollama["Ollama"]
+    end
+
+    subgraph WSL2["WSL2 Ubuntu"]
+        OpenClaw["OpenClaw\n문서 생성 · 공유 · 알림"]
+        MCP["MCP Tool Server"]
+    end
+
+    subgraph WinDev["Windows Dev Environment"]
+        Git["Git / GitHub / PR\ngit · gh"]
+        Test["Build / Test Runner\nnpm · pytest"]
+        Files["Logs / Files\nfs"]
+    end
+
+    subgraph Channels["Channels"]
+        GitHub["GitHub\nCopilot PR Review"]
+        Slack["Slack AI"]
+    end
+
+    ClaudeCLI --> Claude
+    CodexCLI --> Codex
+    VSCode -->|Copilot| GitHub
+
+    Claude --> OpenClaw
+    Codex --> OpenClaw
+    Ollama --> OpenClaw
+
+    Claude -->|HTTP| MCP
+    Codex -->|HTTP| MCP
+    Ollama -->|HTTP| MCP
+
+    OpenClaw -->|API| GitHub
+    OpenClaw -->|API| Slack
+
+    MCP -->|CLI| Git
+    MCP -->|CLI| Test
+    MCP -->|CLI| Files
+```
+
+### Version B — MCP Only
+
+OpenClaw 없이 MCP Server가 Tool 라우팅 + 문서 생성·공유·알림까지 담당하는 단순화된 구조.
+
+```mermaid
+graph LR
+    subgraph UserCLI["User"]
+        ClaudeCLI["Claude CLI"]
+        CodexCLI["Codex CLI"]
+        VSCode["VS Code\nCopilot"]
+    end
+
+    subgraph Remote["Remote Cloud"]
+        Claude["Claude API"]
+        Codex["Codex API"]
+    end
+
+    subgraph Local["Local Windows"]
+        Ollama["Ollama"]
+    end
+
+    subgraph WSL2["WSL2 Ubuntu"]
+        MCP["MCP Server\n문서 생성 · 공유 · 알림\nTool 라우팅"]
+    end
+
+    subgraph WinDev["Windows Dev Environment"]
+        Git["Git / GitHub / PR\ngit · gh"]
+        Test["Build / Test Runner\nnpm · pytest"]
+        Files["Logs / Files\nfs"]
+    end
+
+    subgraph Channels["Channels"]
+        GitHub["GitHub\nCopilot PR Review"]
+        Slack["Slack AI"]
+    end
+
+    ClaudeCLI --> Claude
+    CodexCLI --> Codex
+    VSCode -->|Copilot| GitHub
+
+    Claude -->|HTTP| MCP
+    Codex -->|HTTP| MCP
+    Ollama -->|HTTP| MCP
+
+    MCP -->|API| GitHub
+    MCP -->|API| Slack
+
+    MCP -->|CLI| Git
+    MCP -->|CLI| Test
+    MCP -->|CLI| Files
 ```
 
 ---
