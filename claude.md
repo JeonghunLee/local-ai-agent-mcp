@@ -2,8 +2,8 @@
 
 ## Overview
 
-OpenClaw에서 Claude를 모델 공급자로 사용하는 방법을 설명합니다.
-Claude는 추론, 분석, 장문 컨텍스트 처리에 강점이 있어 OpenClaw의 기본 추론 Agent로 적합합니다.
+OpenClaw에서 Claude를 모델 공급자로 사용하는 방법을 설명.
+Claude는 추론, 분석, 장문 컨텍스트 처리에 강점이 있어 OpenClaw의 기본 추론 Agent로 적합.
 
 ---
 
