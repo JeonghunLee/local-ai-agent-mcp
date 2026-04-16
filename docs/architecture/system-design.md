@@ -1,15 +1,48 @@
 # System Design
 
 
+## Remote AI Agent   
+
+* Main/Sub 구성
+    * Max 2개 (Main + Sub) 
+    * Min 1개 (Main/Sub 동시) 
+     
+* Main AI Agent
+  - 역할: 코드 생성, 문서 생성
+
+* Sub AI Agent
+  - 역할: 코드 리뷰, 테스트 분석, 테스트 문서 작성
+
+* Agent (default)
+    - Main: Claude (코드/문서 생성)
+    - Sub: Codex (리뷰/테스트 분석)
+
+Gemini/Copliot/이외 더 고려 
+
+## Local AI Agent      
+
+* Agent 구성방법      
+    - Ollama (Windows / Linux / Mac)
+    - MLX (Mac only)
+    - vLLM (고성능 Local / Server)
+
+* Agent 모델 선택 
+    - 각 목적에 맞게 선택 
+
+* Local 사용목적 
+    - Remote API 비용절감 (Claude/Codex)         
+    - Local 반복 자동화 
+    - CI/CD 후 CT 주목적   
+
+최근 Claude Cowork로도 거의 가능하며, 돈걱정이 없다면 그냥 Local 대신 Remote     
+
+## AI Agent Working
+
 * AI Agent 구조
     * Remote Main: 코드 생성, 문서 생성 (기본: Claude)
     * Remote Sub: 코드 리뷰, TEST 분석, TEST 문서 작성 (기본: Codex)
     * Local: 실행 전담 + result.json 확인 + 에러 시 반복 실행 (기본: Ollama)
     * User: 최종 승인
-
-* Remote AI Agent 구성
-    * Max 2개 (Main + Sub), Min 1개
-    * 1개 구성 시: Main 1개가 Main + Sub 역할 모두 담당
 
 * AI Agent 와 Openclaw 연결 
     * openclaw 
@@ -17,7 +50,10 @@
     * E-Mail 자동발송  
     * Github 비롯하여, Slack 과 연결 
 
+
 ## Design Principles
+
+
 
 ### Loose Coupling — Minimal Agent Interference
 
