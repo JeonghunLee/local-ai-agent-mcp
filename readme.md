@@ -1,26 +1,34 @@
 # local-ai-agent-mcp 
 
-* RAG TEST          
+
+* **RAG TEST**          
 이전에 MCP Server로 좀 부족할 거 같아, 다양한 부분 테스트  
 llamindex/langraph 부터 기타사항      
     https://github.com/JeonghunLee/rag_test
 
 * **Local AI Agent Orchestration with MCP**           
 OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude, Ollama)를 조율하는 로컬 멀티 Agent 시스템.
+Copliot도 고려해서 생각해야 할듯   
 
 
-* **추후 OpenClaw 사용**         
+* **with OpenClaw 사용**         
     - 나중에 자동채널 비롯하여, E-Mail 부터 Slack을 비롯하여, 관련부분을 연결  
     - Github 의 자동연결    
     - 별도의 Linux 기반 서버로 사용   
     - 각 MCP Server 동작 확인 및 결과 문서 작성  
 
+* **without OpenClaw 사용**         
+    - 각 MCP Server 의 세부작업    
+
+
 ## Project Goals
 
-- 작업 유형과 맥락에 따라 최적의 Agent로 라우팅
-- MCP Tool을 통해 Agent 간 통신 및 작업 인계
-- 가능한 한 로컬에서 실행 (Ollama), 클라우드 Fallback (Claude, Codex)
-- 재현성과 분석을 위해 모든 실행 로그 기록
+* 개발의 AI Agent와 테스트의 자동화   
+    - 작업 유형과 맥락에 따라 최적의 Agent로 라우팅     
+    - MCP Tool을 통해 Agent 간 통신 및 작업 인계   
+    - 가능한 한 로컬에서 실행 (Ollama), 클라우드 Fallback (Claude, Codex)   
+    - 재현성과 분석을 위해 모든 실행 로그 기록     
+
 
 ## Structure
 
