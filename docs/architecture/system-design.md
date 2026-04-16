@@ -21,8 +21,12 @@ Gemini/Copliot/이외 더 고려
 
 ## Local AI Agent      
 
+* Local AI Agent
+    - Sub AI Agent로 대체 가능    
+    - Local로 동작할 경우 아래로 구성       
+
 * Agent 구성방법      
-    - Ollama (Windows / Linux / Mac)
+    - **Ollama (Windows / Linux / Mac)**   
     - MLX (Mac only)
     - vLLM (고성능 Local / Server)
 
