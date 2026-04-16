@@ -7,9 +7,10 @@ llamindex/langraph 부터 기타사항
     https://github.com/JeonghunLee/rag_test
 
 * **Local AI Agent Orchestration with MCP**           
-OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude, Ollama)를 조율하는 로컬 멀티 Agent 시스템.
-Copliot도 고려해서 생각해야 할듯   
-
+OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude, Ollama, Copliot, Gemini)를 조율.     
+**1.로컬 AI Agent 필요성 판단**   
+**2.AI Agent 수를 최대한 줄이며, 간단한 연결 방법 모색**           
+**3.OpenClaw 필요성 여부 판단**   
 
 * **with OpenClaw 사용**         
     - 나중에 자동채널 비롯하여, E-Mail 부터 Slack을 비롯하여, 관련부분을 연결  
@@ -78,4 +79,5 @@ Copliot도 고려해서 생각해야 할듯
 
 ## Status
 
-설치 진행 중 — Ollama (Windows) + OpenClaw (WSL2)
+설치완료 — Ollama (Windows) + OpenClaw (WSL2)
+기본테스트만 진행   
