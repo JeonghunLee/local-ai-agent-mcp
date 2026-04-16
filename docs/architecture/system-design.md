@@ -19,16 +19,18 @@
 
 ## Deployment Diagram
 
+
+
 ### Version A — With OpenClaw
 
-OpenClaw이 문서 생성·공유·알림을 담당하고 MCP Tool Server는 Tool 전용으로 분리된 구조.
+OpenClaw이 채널 담당, MCP는 `channels()` 미사용.
 
 ```mermaid
-graph LR
-    subgraph UserCLI["User"]
+graph TD
+    subgraph UserCLI["Local User"]
         ClaudeCLI["Claude CLI"]
         CodexCLI["Codex CLI"]
-        VSCode["VS Code\nCopilot"]
+        VSCode["VS Code · Copilot"]
     end
 
     subgraph Remote["Remote Cloud"]
@@ -36,24 +38,26 @@ graph LR
         Codex["Codex API"]
     end
 
-    subgraph Local["Local Windows"]
-        Ollama["Ollama"]
-    end
-
-    subgraph WSL2["WSL2 Ubuntu"]
+    subgraph LocalWSL2["Local WSL2"]
         OpenClaw["OpenClaw\n문서 생성 · 공유 · 알림"]
-        MCP["MCP Tool Server"]
     end
 
-    subgraph WinDev["Windows Dev Environment"]
-        Git["Git / GitHub / PR\ngit · gh"]
-        Test["Build / Test Runner\nnpm · pytest"]
-        Files["Logs / Files\nfs"]
+    subgraph LocalWindows["Local Windows 11"]
+        Ollama["Ollama"]
+        subgraph MCPTools["MCP Tool Server"]
+            Build["build_tool()\nmake · cmake · bitbake"]
+            Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
+            Uart["uart_capture()\npyserial · minicom"]
+            Qemu["qemu_spawn()\nQEMU instance"]
+            LogA["log_analyzer()\noops · panic · assert"]
+            Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
+        end
     end
 
-    subgraph Channels["Channels"]
+    subgraph Channels["Remote Channels"]
         GitHub["GitHub\nCopilot PR Review"]
         Slack["Slack AI"]
+        EMail["E-Mail"]              
     end
 
     ClaudeCLI --> Claude
@@ -64,28 +68,25 @@ graph LR
     Codex --> OpenClaw
     Ollama --> OpenClaw
 
-    Claude -->|HTTP| MCP
-    Codex -->|HTTP| MCP
-    Ollama -->|HTTP| MCP
+    Claude -->|HTTP| MCPTools
+    Codex -->|HTTP| MCPTools
+    Ollama -->|HTTP| MCPTools
 
     OpenClaw -->|API| GitHub
     OpenClaw -->|API| Slack
-
-    MCP -->|CLI| Git
-    MCP -->|CLI| Test
-    MCP -->|CLI| Files
+    OpenClaw -->|API| EMail        
 ```
 
 ### Version B — MCP Only
 
-OpenClaw 없이 MCP Server가 Tool 라우팅 + 문서 생성·공유·알림까지 담당하는 단순화된 구조.
+MCP Server가 Tool 라우팅 + 문서 생성·공유·알림까지 담당하는 단순화된 구조.
 
 ```mermaid
-graph LR
-    subgraph UserCLI["User"]
+graph TD
+    subgraph UserCLI["Local User"]
         ClaudeCLI["Claude CLI"]
         CodexCLI["Codex CLI"]
-        VSCode["VS Code\nCopilot"]
+        VSCode["VS Code · Copilot"]
     end
 
     subgraph Remote["Remote Cloud"]
@@ -93,40 +94,38 @@ graph LR
         Codex["Codex API"]
     end
 
-    subgraph Local["Local Windows"]
+    subgraph LocalWindows["Local Windows 11"]
         Ollama["Ollama"]
+        subgraph MCPTools["MCP Tool Server"]
+            Build["build_tool()\nmake · cmake · bitbake"]
+            Chan["channels()\nGitHub · Slack · E-Mail"]
+            Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
+            Uart["uart_capture()\npyserial · minicom"]
+            Qemu["qemu_spawn()\nQEMU instance"]
+            LogA["log_analyzer()\noops · panic · assert"]
+            Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
+        end
     end
 
-    subgraph WSL2["WSL2 Ubuntu"]
-        MCP["MCP Server\n문서 생성 · 공유 · 알림\nTool 라우팅"]
-    end
-
-    subgraph WinDev["Windows Dev Environment"]
-        Git["Git / GitHub / PR\ngit · gh"]
-        Test["Build / Test Runner\nnpm · pytest"]
-        Files["Logs / Files\nfs"]
-    end
-
-    subgraph Channels["Channels"]
+    subgraph Channels["Remote Channels"]
         GitHub["GitHub\nCopilot PR Review"]
         Slack["Slack AI"]
+        EMail["E-Mail"]        
     end
 
     ClaudeCLI --> Claude
     CodexCLI --> Codex
     VSCode -->|Copilot| GitHub
 
-    Claude -->|HTTP| MCP
-    Codex -->|HTTP| MCP
-    Ollama -->|HTTP| MCP
+    Claude -->|HTTP| MCPTools
+    Codex -->|HTTP| MCPTools
+    Ollama -->|HTTP| MCPTools
 
-    MCP -->|API| GitHub
-    MCP -->|API| Slack
-
-    MCP -->|CLI| Git
-    MCP -->|CLI| Test
-    MCP -->|CLI| Files
+    Chan -->|API| GitHub
+    Chan -->|API| Slack
+    Chan -->|API| EMail    
 ```
+
 
 ---
 
