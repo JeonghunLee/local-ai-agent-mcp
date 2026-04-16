@@ -61,7 +61,7 @@ sequenceDiagram
     participant M as MCP Server
     participant OL as Local AI (실행)
     participant J as result.json + tool.log
-    participant CX as Codex (감시·분석)
+    participant CX as Sub AI (감시·분석)
     participant CH as Channels (GitHub · Slack · E-Mail)
 
     GH->>OC: Tag 이벤트 (webhook)
@@ -151,7 +151,7 @@ sequenceDiagram
     participant M as MCP Server
     participant OL as Local AI (실행)
     participant J as result.json + tool.log
-    participant CX as Codex (감시·분석)
+    participant CX as Sub AI (감시·분석)
     participant CH as Channels (GitHub · Slack · E-Mail)
 
     GH->>M: Tag 이벤트 (webhook 직접)
@@ -218,7 +218,7 @@ sequenceDiagram
 
 모든 Tool 실행은 **Log 파일**과 **JSON 파일** 두 가지를 남긴다.   
 - **Log**: 원시 출력 전체 — 에러 분석용  
-- **JSON**: 구조화된 결과 요약 — Codex 감시 판단용
+- **JSON**: 구조화된 결과 요약 — Sub AI 감시 판단용
 
 ### Output File Rules
 
@@ -252,13 +252,13 @@ sequenceDiagram
 |------|------|
 | `tool` | 실행한 Tool 이름 |
 | `timestamp` | 실행 시각 (ISO 8601) |
-| `status` | `success` / `error` — Codex 감시 판단 기준 |
+| `status` | `success` / `error` — Sub AI 감시 판단 기준 |
 | `exit_code` | 프로세스 종료 코드 (0 = 정상) |
 | `log_path` | 상세 로그 파일 경로 — 에러 시 `log_analyzer()` 입력으로 사용 |
 | `duration_ms` | 실행 소요 시간 (ms) |
 | `context` | Tool 실행 파라미터 |
 
-### Codex Monitoring Logic
+### Sub AI Monitoring Logic
 
 ```
 result.json 수신
@@ -405,7 +405,7 @@ do_test_<type>_<nn>()
 | Agent | 구분 | Tool | 비고 |
 |-------|------|------|------|
 | **Local AI** | 실행·반복 | `build_tool` (1회), `flash_tool` (1회), `do_test` (반복) | 빌드·플래시 후 do_test 반복 실행, result.json 확인하며 문제 패턴 수집 |
-| Codex | 감시·분석 | `log_analyzer` (1회), `test_result` (1회) | 누적 결과 수신 → 에러 패턴 깊은 분석 → TEST 문서 작성 → 보고 |
+| Sub AI | 감시·분석 | `log_analyzer` (1회), `test_result` (1회) | 누적 결과 수신 → 에러 패턴 깊은 분석 → TEST 문서 작성 → 보고 |
 | Claude | 미접근 | — | 코드 생성 · 문서 생성 전담 |
 
 ---
