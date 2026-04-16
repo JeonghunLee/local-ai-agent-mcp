@@ -216,18 +216,18 @@ OpenClaw가 문서 생성·공유·알림을 담당하는 구조.
 
 ### AI Agent Harness Version B
 
-MCP Server가 Orchestrator 역할까지 담당하는 단순화된 구조.
+MCP Server 내부에 별도의 Channel 추가하여  Orchestrator 제거 후, 단순화된 구조.
 
 | 순서 | 작업 유형                                              | Agent                | Orchestrator | User 검토       |
 |-----|-------------------------------------------------------|----------------------|-------------|----------------|
-| 1   | 구조 설계 / 작업 분해 / 리팩토링 방향                  | Claude               | MCP         | —              |
-| 2   | 코드 생성                                              | Claude               | MCP         | 1차 승인 / 수정 |
-| 3   | 문서화                                                 | Claude               | MCP         | 2차 승인 / 수정 |
-| 4   | 회귀 위험 지적 / 테스트 누락 지적 / patch 초안         | Codex                | MCP         | 3차 승인 / 수정 |
+| 1   | 구조 설계 / 작업 분해 / 리팩토링 방향                  | Claude               | CLI         | —              |
+| 2   | 코드 생성                                              | Claude               | CLI         | 1차 승인 / 수정 |
+| 3   | 문서화                                                 | Claude               | CLI         | 2차 승인 / 수정 |
+| 4   | 회귀 위험 지적 / 테스트 누락 지적 / patch 초안         | Codex                | CLI         | 3차 승인 / 수정 |
 | 5   | GitHub PR 요청                                        | GitHub               | MCP         | —              |
 | 6   | PR Review                                             | Codex + GitHub Users | MCP         | 4차 승인 / 수정 |
 | 7   | 로그 요약 / 테스트 초안 / 반복 변환 작업               | Ollama               | MCP         | 5차 승인 / 수정 |
-| 8   | 결과 테스트 문서화                                     | Codex                | MCP         | 6차 승인 / 수정 |
+| 8   | 결과 테스트 문서화                                     | Codex                | CLI         | 6차 승인 / 수정 |
 
 ---
 
