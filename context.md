@@ -3,7 +3,7 @@
 ## Context Composition Order
 
 ```
-1. skill/general.md, skill/docs-rules.md  (행동 규칙)
+1. skill/index.md, skill/rules_docs.md  (행동 규칙)
 2. context.md                             (컨텍스트 규칙)
 3. 작업 관련 docs/ 문서                   (필요한 것만)
 4. 현재 대화 히스토리
@@ -17,15 +17,15 @@
 
 | 디렉토리 | 적용 Skill |
 |---------|-----------|
-| `docs/` 전체 | `skill/docs-rules.md` |
-| `docs/environments/` | `skill/docs-rules.md` + `skill/install.md` |
-| `docs/agents/` | `skill/docs-rules.md` |
-| `docs/architecture/` | `skill/docs-rules.md` |
-| `docs/experiments/` | `skill/docs-rules.md` |
-| `docs/logs/` | `skill/docs-rules.md` |
-| `docs/mcp/` | `skill/docs-rules.md` |
-| 설치·실행 작업 | `skill/general.md` + `skill/install.md` |
-| 프로젝트 전체 | `skill/general.md` |
+| `docs/` 전체 | `skill/rules_docs.md` |
+| `docs/environments/` | `skill/rules_docs.md` + `skill/rules_install.md` |
+| `docs/agents/` | `skill/rules_docs.md` |
+| `docs/architecture/` | `skill/rules_docs.md` |
+| `docs/experiments/` | `skill/rules_docs.md` |
+| `docs/logs/` | `skill/rules_docs.md` |
+| `docs/mcp/` | `skill/rules_docs.md` |
+| 설치·실행 작업 | `skill/index.md` + `skill/rules_install.md` |
+| 프로젝트 전체 | `skill/index.md` |
 
 ## Docs Access Rules
 

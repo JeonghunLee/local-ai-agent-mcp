@@ -1,10 +1,10 @@
 ---
-name: Install Requests
-description: 설치 작업을 사용자에게 요청하는 방식과 절차
+name: Install Rules
+description: 환경 설정 및 설치 작업 요청 방식과 절차
 type: skill
 ---
 
-# Skill: Install Requests
+# Skill: Install Rules
 
 ## Principle
 
