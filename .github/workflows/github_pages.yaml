@@ -35,11 +35,11 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
          
-      # 변경된 mkdocs_githubaction.yml 사용
+      # 변경된 mkdocs.yml 사용
       - name: Build site (MkDocs)
         run: mkdocs build --config-file mkdocs.yml
 
-      # 변경된 mkdocs_githubaction.yml 사용        
+      # 변경된 mkdocs.yml 사용        
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
