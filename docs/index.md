@@ -42,6 +42,12 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 |------|------|
 | [MCP Server](mcp/mcp_server.md) | 서버 설정, Tool 정의, Protocol Flow |
 
+### GitHub
+
+| 문서 | 설명 |
+|------|------|
+| [GitHub Templates](github/github_templates.md) | Issue · PR · Release · Discussion 템플릿, CT 연동 |
+
 ### Environments
 
 | 문서 | 설명 |
