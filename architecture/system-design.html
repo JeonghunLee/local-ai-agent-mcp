@@ -203,6 +203,33 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#remote-ai-agent">
+<span class="md-ellipsis">
+      
+        Remote AI Agent
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-ai-agent">
+<span class="md-ellipsis">
+      
+        Local AI Agent
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-agent-working">
+<span class="md-ellipsis">
+      
+        AI Agent Working
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#design-principles">
 <span class="md-ellipsis">
       
@@ -684,6 +711,63 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="system-design">System Design</h1>
+<h2 id="remote-ai-agent">Remote AI Agent</h2>
+<ul>
+<li>
+<p>Main/Sub 구성</p>
+<ul>
+<li>Max 2개 (Main + Sub) </li>
+<li>Min 1개 (Main/Sub 동시) </li>
+</ul>
+</li>
+<li>
+<p>Main AI Agent</p>
+</li>
+<li>
+<p>역할: 코드 생성, 문서 생성</p>
+</li>
+<li>
+<p>Sub AI Agent</p>
+</li>
+<li>
+<p>역할: 코드 리뷰, 테스트 분석, 테스트 문서 작성</p>
+</li>
+<li>
+<p>Agent (default)</p>
+<ul>
+<li>Main: Claude (코드/문서 생성)</li>
+<li>Sub: Codex (리뷰/테스트 분석)</li>
+</ul>
+</li>
+</ul>
+<p>Gemini/Copliot/이외 더 고려 </p>
+<h2 id="local-ai-agent">Local AI Agent</h2>
+<ul>
+<li>
+<p>Agent 구성방법      </p>
+<ul>
+<li>Ollama (Windows / Linux / Mac)</li>
+<li>MLX (Mac only)</li>
+<li>vLLM (고성능 Local / Server)</li>
+</ul>
+</li>
+<li>
+<p>Agent 모델 선택 </p>
+<ul>
+<li>각 목적에 맞게 선택 </li>
+</ul>
+</li>
+<li>
+<p>Local 사용목적 </p>
+<ul>
+<li>Remote API 비용절감 (Claude/Codex)         </li>
+<li>Local 반복 자동화 </li>
+<li>CI/CD 후 CT 주목적   </li>
+</ul>
+</li>
+</ul>
+<p>최근 Claude Cowork로도 거의 가능하며, 돈걱정이 없다면 그냥 Local 대신 Remote     </p>
+<h2 id="ai-agent-working">AI Agent Working</h2>
 <ul>
 <li>
 <p>AI Agent 구조</p>
@@ -692,13 +776,6 @@
 <li>Remote Sub: 코드 리뷰, TEST 분석, TEST 문서 작성 (기본: Codex)</li>
 <li>Local: 실행 전담 + result.json 확인 + 에러 시 반복 실행 (기본: Ollama)</li>
 <li>User: 최종 승인</li>
-</ul>
-</li>
-<li>
-<p>Remote AI Agent 구성</p>
-<ul>
-<li>Max 2개 (Main + Sub), Min 1개</li>
-<li>1개 구성 시: Main 1개가 Main + Sub 역할 모두 담당</li>
 </ul>
 </li>
 <li>
