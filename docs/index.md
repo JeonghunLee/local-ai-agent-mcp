@@ -1,7 +1,7 @@
-# Local AI Agent Orchestration with MCP
+# AI Agent with MCP
 
 OpenClaw 기반의 MCP(Model Context Protocol) 사용     
-다양한 AI Agent(Codex, Claude, Ollama) 비롯하여 로컬 멀티 Agent 시스템 기능 테스트   
+다양한 AI Agent(Codex, Claude, Ollama) 비롯하여 로컬 멀티 Agent 과 MCP 사용     
 
 ## Project Goals
 
@@ -17,6 +17,7 @@ OpenClaw 기반의 MCP(Model Context Protocol) 사용
 
 ### Agents
 
+
 | 문서 | 설명 |
 |------|------|
 | [Claude](agents/claude.md) | 추론·분석, Anthropic API |
@@ -26,7 +27,9 @@ OpenClaw 기반의 MCP(Model Context Protocol) 사용
 | [Ollama](agents/ollama.md) | 로컬 추론, API 키 불필요 |
 | [Ollama Setup](agents/ollama_setup.md) | Windows 설치 및 WSL2 연결 |
 
-### MCP
+
+### MCP System   
+
 
 | 문서 | 설명 |
 |------|------|
@@ -39,6 +42,7 @@ OpenClaw 기반의 MCP(Model Context Protocol) 사용
 | 문서 | 설명 |
 |------|------|
 | [GitHub Templates](github/github_templates.md) | Issue · PR · Release · Discussion 템플릿, CT 연동 |
+| [self-hosted_runner](github/self-hosted_runner.md) | Self Hosted Runner |
 
 ### Environments
 
