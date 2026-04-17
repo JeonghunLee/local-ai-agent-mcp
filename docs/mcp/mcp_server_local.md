@@ -1,4 +1,6 @@
-# MCP Server
+# Local MCP Server
+
+![](../imgs/mcp_server_local_00.png)
 
 ## Overview
 
