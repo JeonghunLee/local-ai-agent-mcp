@@ -1,5 +1,14 @@
 # Self-hosted Runner
 
+
+* Github Hosted Runner Manaul    
+  https://docs.github.com/ko/actions/reference/runners/github-hosted-runners
+
+
+* Self Hosted Runner Manaul      
+  https://docs.github.com/ko/actions/reference/runners/self-hosted-runners
+
+
 ## Overview
 
 이 문서에서는 이 프로젝트에서 말하는 `Target Runner`와  
