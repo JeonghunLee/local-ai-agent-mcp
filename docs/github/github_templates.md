@@ -2,229 +2,182 @@
 
 ## Overview
 
-GitHub 저장소에서 사용할 수 있는 템플릿 목록.   
-모든 템플릿은 `.github/` 디렉터리에 위치한다.
+이 문서는 현재 저장소에서 사용하는 GitHub 템플릿과  
+TEST 요청 흐름에서 각 템플릿이 어떤 역할을 하는지 정리한다.
 
-| 템플릿 | 파일 경로 | 용도 |
-|--------|----------|------|
-| Issue | `.github/ISSUE_TEMPLATE/*.yml` | 버그 리포트, 기능 요청 등 |
-| Pull Request | `.github/PULL_REQUEST_TEMPLATE.md` | PR 제출 시 기본 본문 |
-| Release Notes | `.github/release.yml` | Release 자동 생성 노트 카테고리 |
-| Discussion | `.github/DISCUSSION_TEMPLATE/*.yml` | 토론 카테고리별 양식 |
+현재 기준:
+
+- Issue 템플릿은 `.github/issue_template/*.md`
+- Pull Request 템플릿은 `.github/pull_request_template.md`
+- TEST 요청은 별도 `Test Request` 이슈 템플릿으로 받는다
+
+이 프로젝트에서는 일반 기능 요청/문서 요청과  
+TEST 실행 요청을 분리하는 것이 중요하다.
 
 ---
 
-## Issue Template
+## Template List
 
-`.github/ISSUE_TEMPLATE/bug_report.yml`
+| Template | File | Purpose |
+|----------|------|---------|
+| Bug Report | `.github/issue_template/bug_report.md` | 재현 가능한 버그 보고 |
+| Documentation | `.github/issue_template/documentation.md` | 문서 수정/개선 요청 |
+| Feature Request | `.github/issue_template/feature_request.md` | 기능 추가/개선 요청 |
+| Question | `.github/issue_template/question.md` | 질문 또는 확인 요청 |
+| Test Request | `.github/issue_template/test_request.md` | Local MCP / Test 실행 요청 |
+| Pull Request | `.github/pull_request_template.md` | PR 설명, 변경점, 테스트 결과 정리 |
 
-```yaml
-name: Bug Report
-description: 버그 및 오류 보고
-labels: ["bug"]
-body:
-  - type: markdown
-    attributes:
-      value: |
-        버그를 발견했다면 아래 양식을 작성해 주세요.
+---
 
-  - type: textarea
-    id: description
-    attributes:
-      label: Description
-      description: 발생한 문제를 설명하세요.
-    validations:
-      required: true
+## Test Request Template
 
-  - type: textarea
-    id: steps
-    attributes:
-      label: Steps to Reproduce
-      description: 재현 방법을 순서대로 작성하세요.
-      placeholder: |
-        1. 
-        2. 
-        3.
-    validations:
-      required: true
+TEST 실행은 일반 feature/bug issue와 분리해서 받는다.
 
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected Behavior
-      description: 기대했던 동작을 작성하세요.
-    validations:
-      required: true
+파일:
 
-  - type: textarea
-    id: logs
-    attributes:
-      label: Logs
-      description: 관련 로그가 있으면 첨부하세요.
-      render: shell
+- [.github/issue_template/test_request.md](../../.github/issue_template/test_request.md)
+
+주요 필드:
+
+- `Branch / Tag / Commit`
+- `Target Runner`
+- `Test Type`
+- `Target Device / Image`
+- `Iterations`
+- `Expected Outcome`
+- `Execution Notes`
+
+예시:
+
+```md
+## Requested Ref
+- Branch / Tag / Commit: 29e157c0
+- Target Runner: qemu-runner
+
+## Test Scope
+- Test Type: smoke
+- Target Device / Image: zephyr.elf
+- Iterations: 3
 ```
 
-`.github/ISSUE_TEMPLATE/feature_request.yml`
+이 템플릿은 다음 흐름을 전제로 한다.
 
-```yaml
-name: Feature Request
-description: 새 기능 요청
-labels: ["enhancement"]
-body:
-  - type: textarea
-    id: problem
-    attributes:
-      label: Problem
-      description: 어떤 문제를 해결하려는지 작성하세요.
-    validations:
-      required: true
-
-  - type: textarea
-    id: solution
-    attributes:
-      label: Proposed Solution
-      description: 원하는 해결 방법을 작성하세요.
-    validations:
-      required: true
+```text
+GitHub Issue (TEST 요청)
+  → GitHub MCP Server로 이슈 조회
+  → Target Runner 확인
+  → Local MCP Server Tool 실행
+  → logs + result.json 생성
+  → GitHub Issue 댓글로 결과 보고
 ```
+
+---
+
+## Target Runner
+
+`Test Request` 템플릿의 `Target Runner`는 요청을 처리할 실행 노드를 지정한다.
+
+예:
+
+- `local-dev`
+- `qemu-runner`
+- `lab-node-01`
+- `windows-hw-01`
+
+이 값은:
+
+- Local MCP Server를 실행할 환경을 구분하는 데 쓰일 수 있고
+- 나중에 GitHub Actions `self-hosted runner` label과 맞출 수도 있다
+
+더 자세한 설명:
+
+- [self-hosted_runner.md](self-hosted_runner.md)
+
+---
+
+## Usage Guidance
+
+### Use Bug Report When
+
+- 이미 발생한 문제를 재현하고 싶을 때
+- 증상, 재현 단계, 환경 정보가 핵심일 때
+
+### Use Feature Request When
+
+- 기능 추가나 구조 변경을 제안할 때
+- 실행 요청이 아니라 설계/개선 요청일 때
+
+### Use Test Request When
+
+- 특정 ref/commit에 대해 테스트를 실행해달라고 요청할 때
+- Runner를 지정해야 할 때
+- 결과를 로그/JSON/Issue 댓글로 남기고 싶을 때
+
+즉 TEST는 기능 요청이 아니라 **운영 실행 요청**이므로 별도 템플릿이 더 적합하다.
 
 ---
 
 ## Pull Request Template
 
-`.github/PULL_REQUEST_TEMPLATE.md`
+파일:
 
-```markdown
-## Summary
+- [.github/pull_request_template.md](../../.github/pull_request_template.md)
 
-<!-- 변경 사항을 간략히 설명하세요 -->
+PR 템플릿에는 보통 아래 정보가 포함된다.
 
-## Changes
+- 변경 요약
+- 주요 변경점
+- 테스트 결과
+- 관련 문서 업데이트 여부
 
-- 
+TEST 요청과 PR은 역할이 다르다.
 
-## Test Result
+- `Test Request`: 실행 요청
+- `Pull Request`: 코드 변경 제안
 
-<!-- TEST RESULT 문서 링크 또는 결과 요약 -->
+필요하면 TEST Request issue 번호를 PR 본문에 연결할 수 있다.
 
-## Checklist
+예:
 
-- [ ] 코드 리뷰 완료 (Codex Sub)
-- [ ] TEST RESULT 문서 생성 완료
-- [ ] 관련 문서 업데이트
+```md
+Related test request: #12
 ```
 
 ---
 
-## Release Notes Template
+## Recommended Labeling
 
-`.github/release.yml`
+TEST 요청 운영 시 함께 쓰기 좋은 label 예시:
 
-Release를 생성할 때 PR을 label 기준으로 자동 분류하여 릴리즈 노트를 생성한다.
+- `test-request`
+- `test-running`
+- `test-done`
+- `test-failed`
 
-```yaml
-changelog:
-  exclude:
-    labels:
-      - ignore-for-release
-  categories:
-    - title: Breaking Changes
-      labels:
-        - breaking-change
-
-    - title: New Features
-      labels:
-        - enhancement
-        - feature
-
-    - title: Bug Fixes
-      labels:
-        - bug
-        - fix
-
-    - title: CT / Test
-      labels:
-        - test
-        - ct
-
-    - title: Documentation
-      labels:
-        - documentation
-        - docs
-
-    - title: Others
-      labels:
-        - "*"
-```
-
-> Release 생성 시 **Generate release notes** 버튼을 누르면 위 카테고리 기준으로 PR 목록이 자동 작성된다.
-
-### Release Trigger → MCP CT 연동
-
-Release가 생성되면 GitHub webhook이 MCP Server로 이벤트를 전송하여 CT를 자동 시작한다.
-
-```yaml
-# .github/workflows/ct_trigger.yml
-name: CT Trigger on Release
-
-on:
-  release:
-    types: [published]
-
-jobs:
-  trigger-mcp-ct:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify MCP Server
-        run: |
-          curl -X POST http://<MCP_SERVER>:3000/ct/trigger \
-            -H "Content-Type: application/json" \
-            -d '{
-              "event": "release",
-              "tag": "${{ github.ref_name }}",
-              "release_url": "${{ github.event.release.html_url }}"
-            }'
-```
-
----
-
-## Discussion Template
-
-`.github/DISCUSSION_TEMPLATE/general.yml`
-
-```yaml
-labels: ["general"]
-body:
-  - type: textarea
-    id: content
-    attributes:
-      label: Content
-    validations:
-      required: true
-```
+일반 issue와 TEST issue를 구분하면 라우팅과 추적이 쉬워진다.
 
 ---
 
 ## Directory Structure
 
-```
+```text
 .github/
-├── ISSUE_TEMPLATE/
-│   ├── bug_report.yml
-│   └── feature_request.yml
-├── DISCUSSION_TEMPLATE/
-│   └── general.yml
-├── PULL_REQUEST_TEMPLATE.md
-├── release.yml
+├── issue_template/
+│   ├── bug_report.md
+│   ├── documentation.md
+│   ├── feature_request.md
+│   ├── question.md
+│   └── test_request.md
+├── pull_request_template.md
 └── workflows/
-    └── ct_trigger.yml
+    └── github_pages.yaml
 ```
 
 ---
 
 ## Related
 
-- [architecture/system-design.md](../architecture/system-design.md) — CT 흐름 및 GitHub Release 트리거
-- [MCP Gateway](../mcp/mcp_gateway.md) — MCP Gateway 라우팅 설정
-- [mcp/mcp_server_local.md](../mcp/mcp_server_local.md) — MCP Server Local CT 설정
-- [mcp/mcp_server_github.md](../mcp/mcp_server_github.md) — MCP Server Github 설정
+- [self-hosted_runner.md](self-hosted_runner.md) — Target Runner와 self-hosted runner 개념 정리
+- [mcp_server_local.md](../mcp/mcp_server_local.md) — Local MCP Server와 TEST 요청 흐름
+- [mcp_server_github.md](../mcp/mcp_server_github.md) — GitHub MCP Server 역할
+- [mcp_gateway.md](../mcp/mcp_gateway.md) — VS Code MCP Gateway와 다중 MCP Server 연결

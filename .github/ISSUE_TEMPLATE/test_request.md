@@ -17,6 +17,7 @@ Describe the test request in one or two sentences.
 
 ## Requested Ref
 - Branch / Tag / Commit:
+- Target Runner:
 
 ## Test Scope
 - Test Type:
