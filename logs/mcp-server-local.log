@@ -1,55 +1,41 @@
-2026-04-17 16:27:37,264 [INFO] [local_mcp] server.start name=mcp-server-local version=0.1.0
-2026-04-17 16:27:37,264 [INFO] [local_mcp] server.recv name=mcp-server-local method=initialize id=1
-2026-04-17 16:27:37,264 [INFO] [local_mcp] server.initialize name=mcp-server-local
-2026-04-17 16:27:37,264 [INFO] [local_mcp] server.send name=mcp-server-local id=1 result=ok
-2026-04-17 16:27:37,264 [INFO] [local_mcp] server.recv name=mcp-server-local method=notifications/initialized id=None
-2026-04-17 16:27:37,264 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/list id=2
-2026-04-17 16:27:37,265 [INFO] [local_mcp] server.tools_list name=mcp-server-local count=3
-2026-04-17 16:27:37,265 [INFO] [local_mcp] server.send name=mcp-server-local id=2 result=ok
-2026-04-17 16:27:37,265 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/call id=3
-2026-04-17 16:27:37,265 [INFO] [local_mcp] server.tools_call_start name=mcp-server-local id=3 tool=build_tool arguments={"target": "all", "working_dir": "."}
-2026-04-17 16:27:37,265 [INFO] [local_mcp.tools] tool.call name=build_tool target=all working_dir=.
-2026-04-17 16:27:41,338 [INFO] [local_mcp] server.tools_call_done name=mcp-server-local id=3 tool=build_tool status=success
-2026-04-17 16:27:41,338 [INFO] [local_mcp] server.send name=mcp-server-local id=3 result=ok
-2026-04-17 16:27:41,339 [INFO] [local_mcp] server.stop name=mcp-server-local reason=stdin_closed
-2026-04-17 16:28:27,370 [INFO] [local_mcp] server.start name=mcp-server-local version=0.1.0
-2026-04-17 16:28:27,370 [INFO] [local_mcp] server.recv name=mcp-server-local method=initialize id=1
-2026-04-17 16:28:27,370 [INFO] [local_mcp] server.initialize name=mcp-server-local
-2026-04-17 16:28:27,370 [INFO] [local_mcp] server.send name=mcp-server-local id=1 result=ok
-2026-04-17 16:28:27,371 [INFO] [local_mcp] server.recv name=mcp-server-local method=notifications/initialized id=None
-2026-04-17 16:28:27,372 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/list id=2
-2026-04-17 16:28:27,372 [INFO] [local_mcp] server.tools_list name=mcp-server-local count=3
-2026-04-17 16:28:27,372 [INFO] [local_mcp] server.send name=mcp-server-local id=2 result=ok
-2026-04-17 16:28:43,813 [INFO] [local_mcp] server.stop name=mcp-server-local reason=stdin_closed
-2026-04-17 16:28:47,051 [INFO] [local_mcp] server.start name=mcp-server-local version=0.1.0
-2026-04-17 16:28:47,051 [INFO] [local_mcp] server.recv name=mcp-server-local method=initialize id=1
-2026-04-17 16:28:47,051 [INFO] [local_mcp] server.initialize name=mcp-server-local
-2026-04-17 16:28:47,051 [INFO] [local_mcp] server.send name=mcp-server-local id=1 result=ok
-2026-04-17 16:28:47,053 [INFO] [local_mcp] server.recv name=mcp-server-local method=notifications/initialized id=None
-2026-04-17 16:28:47,054 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/list id=2
-2026-04-17 16:28:47,054 [INFO] [local_mcp] server.tools_list name=mcp-server-local count=3
-2026-04-17 16:28:47,054 [INFO] [local_mcp] server.send name=mcp-server-local id=2 result=ok
-2026-04-17 16:29:54,948 [INFO] [local_mcp] server.start name=mcp-server-local version=0.1.0
-2026-04-17 16:29:54,948 [INFO] [local_mcp] server.recv name=mcp-server-local method=initialize id=1
-2026-04-17 16:29:54,948 [INFO] [local_mcp] server.initialize name=mcp-server-local
-2026-04-17 16:29:54,949 [INFO] [local_mcp] server.send name=mcp-server-local id=1 result=ok
-2026-04-17 16:29:54,949 [INFO] [local_mcp] server.recv name=mcp-server-local method=notifications/initialized id=None
-2026-04-17 16:29:54,949 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/list id=2
-2026-04-17 16:29:54,949 [INFO] [local_mcp] server.tools_list name=mcp-server-local count=3
-2026-04-17 16:29:54,949 [INFO] [local_mcp] server.send name=mcp-server-local id=2 result=ok
-2026-04-17 16:29:54,949 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/call id=3
-2026-04-17 16:29:54,949 [INFO] [local_mcp] server.tools_call_start name=mcp-server-local id=3 tool=build_tool arguments={"target": "all", "working_dir": "."}
-2026-04-17 16:29:54,949 [INFO] [local_mcp.tools] tool.call name=build_tool target=all working_dir=.
-2026-04-17 16:29:59,010 [INFO] [local_mcp] server.tools_call_done name=mcp-server-local id=3 tool=build_tool status=success
-2026-04-17 16:29:59,011 [INFO] [local_mcp] server.send name=mcp-server-local id=3 result=ok
-2026-04-17 16:29:59,011 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/call id=4
-2026-04-17 16:29:59,011 [INFO] [local_mcp] server.tools_call_start name=mcp-server-local id=4 tool=flash_tool arguments={"interface": "openocd", "image": "firmware.bin"}
-2026-04-17 16:29:59,011 [INFO] [local_mcp.tools] tool.call name=flash_tool interface=openocd image=firmware.bin
-2026-04-17 16:29:59,011 [INFO] [local_mcp] server.tools_call_done name=mcp-server-local id=4 tool=flash_tool status=success
-2026-04-17 16:29:59,011 [INFO] [local_mcp] server.send name=mcp-server-local id=4 result=ok
-2026-04-17 16:29:59,012 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/call id=5
-2026-04-17 16:29:59,012 [INFO] [local_mcp] server.tools_call_start name=mcp-server-local id=5 tool=log_analyzer arguments={"log_path": "logs/sample.log"}
-2026-04-17 16:29:59,012 [INFO] [local_mcp.tools] tool.call name=log_analyzer log_path=logs/sample.log
-2026-04-17 16:29:59,012 [INFO] [local_mcp] server.tools_call_done name=mcp-server-local id=5 tool=log_analyzer status=success
-2026-04-17 16:29:59,012 [INFO] [local_mcp] server.send name=mcp-server-local id=5 result=ok
-2026-04-17 16:29:59,012 [INFO] [local_mcp] server.stop name=mcp-server-local reason=stdin_closed
+2026-04-17 16:39:33,694 [INFO] [local_mcp] server.start name=mcp-server-local version=0.1.0
+2026-04-17 16:39:33,694 [INFO] [local_mcp] server.recv name=mcp-server-local method=initialize id=1
+2026-04-17 16:39:33,695 [INFO] [local_mcp] server.initialize name=mcp-server-local
+2026-04-17 16:39:33,695 [INFO] [local_mcp] server.send name=mcp-server-local id=1 result=ok
+2026-04-17 16:39:33,696 [INFO] [local_mcp] server.recv name=mcp-server-local method=notifications/initialized id=None
+2026-04-17 16:39:33,696 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/list id=2
+2026-04-17 16:39:33,696 [INFO] [local_mcp] server.tools_list name=mcp-server-local count=3
+2026-04-17 16:39:33,697 [INFO] [local_mcp] server.send name=mcp-server-local id=2 result=ok
+2026-04-17 16:40:21,882 [INFO] [local_mcp] server.stop name=mcp-server-local reason=stdin_closed
+2026-04-17 16:40:24,641 [INFO] [local_mcp] server.start name=mcp-server-local version=0.1.0
+2026-04-17 16:40:24,642 [INFO] [local_mcp] server.recv name=mcp-server-local method=initialize id=1
+2026-04-17 16:40:24,642 [INFO] [local_mcp] server.initialize name=mcp-server-local
+2026-04-17 16:40:24,642 [INFO] [local_mcp] server.send name=mcp-server-local id=1 result=ok
+2026-04-17 16:40:24,643 [INFO] [local_mcp] server.recv name=mcp-server-local method=notifications/initialized id=None
+2026-04-17 16:40:24,643 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/list id=2
+2026-04-17 16:40:24,644 [INFO] [local_mcp] server.tools_list name=mcp-server-local count=3
+2026-04-17 16:40:24,644 [INFO] [local_mcp] server.send name=mcp-server-local id=2 result=ok
+2026-04-17 16:41:19,870 [INFO] [local_mcp] server.start name=mcp-server-local version=0.1.0
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.recv name=mcp-server-local method=initialize id=1
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.initialize name=mcp-server-local
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.send name=mcp-server-local id=1 result=ok
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.recv name=mcp-server-local method=notifications/initialized id=None
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/list id=2
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.tools_list name=mcp-server-local count=3
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.send name=mcp-server-local id=2 result=ok
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/call id=3
+2026-04-17 16:41:19,871 [INFO] [local_mcp] server.tools_call_start name=mcp-server-local id=3 tool=build_tool arguments={"target": "all", "working_dir": "."}
+2026-04-17 16:41:19,871 [INFO] [local_mcp.tools] tool.call name=build_tool target=all working_dir=.
+2026-04-17 16:41:23,929 [INFO] [local_mcp] server.tools_call_done name=mcp-server-local id=3 tool=build_tool status=success
+2026-04-17 16:41:23,930 [INFO] [local_mcp] server.send name=mcp-server-local id=3 result=ok
+2026-04-17 16:41:23,930 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/call id=4
+2026-04-17 16:41:23,930 [INFO] [local_mcp] server.tools_call_start name=mcp-server-local id=4 tool=flash_tool arguments={"interface": "openocd", "image": "firmware.bin"}
+2026-04-17 16:41:23,930 [INFO] [local_mcp.tools] tool.call name=flash_tool interface=openocd image=firmware.bin
+2026-04-17 16:41:23,930 [INFO] [local_mcp] server.tools_call_done name=mcp-server-local id=4 tool=flash_tool status=success
+2026-04-17 16:41:23,931 [INFO] [local_mcp] server.send name=mcp-server-local id=4 result=ok
+2026-04-17 16:41:23,931 [INFO] [local_mcp] server.recv name=mcp-server-local method=tools/call id=5
+2026-04-17 16:41:23,931 [INFO] [local_mcp] server.tools_call_start name=mcp-server-local id=5 tool=log_analyzer arguments={"log_path": "logs/sample.log"}
+2026-04-17 16:41:23,931 [INFO] [local_mcp.tools] tool.call name=log_analyzer log_path=logs/sample.log
+2026-04-17 16:41:23,932 [INFO] [local_mcp] server.tools_call_done name=mcp-server-local id=5 tool=log_analyzer status=success
+2026-04-17 16:41:23,932 [INFO] [local_mcp] server.send name=mcp-server-local id=5 result=ok
+2026-04-17 16:41:23,932 [INFO] [local_mcp] server.stop name=mcp-server-local reason=stdin_closed
