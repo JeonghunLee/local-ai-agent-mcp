@@ -5,11 +5,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="Local AI Agent Orchestration with MCP" name="description"/>
+<meta content="AI Agent Orchestration with MCP" name="description"/>
 <meta content="Jeonghun Lee" name="author"/>
+<link href="mcp_gateway.html" rel="prev"/>
+<link href="mcp_server_local.html" rel="next"/>
 <link href="../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>GitHub MCP Server - OpenClaw Docs</title>
+<title>MCP Server-Github - AI Agent MCP Docs</title>
 <link href="../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/iframe-worker/shim"></script>
@@ -32,7 +34,7 @@
 </div>
 <header class="md-header md-header--shadow" data-md-component="header">
 <nav aria-label="상단/헤더" class="md-header__inner md-grid">
-<a aria-label="OpenClaw Docs" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="OpenClaw Docs">
+<a aria-label="AI Agent MCP Docs" class="md-header__button md-logo" data-md-component="logo" href="../index.html" title="AI Agent MCP Docs">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
 </a>
 <label class="md-header__button md-icon" for="__drawer">
@@ -42,13 +44,13 @@
 <div class="md-header__ellipsis">
 <div class="md-header__topic">
 <span class="md-ellipsis">
-            OpenClaw Docs
+            AI Agent MCP Docs
           </span>
 </div>
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              GitHub MCP Server
+              MCP Server-Github
             
           </span>
 </div>
@@ -120,10 +122,10 @@
 <div class="md-sidebar__inner">
 <nav aria-label="네비게이션" class="md-nav md-nav--primary md-nav--integrated" data-md-level="0">
 <label class="md-nav__title" for="__drawer">
-<a aria-label="OpenClaw Docs" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="OpenClaw Docs">
+<a aria-label="AI Agent MCP Docs" class="md-nav__button md-logo" data-md-component="logo" href="../index.html" title="AI Agent MCP Docs">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
 </a>
-    OpenClaw Docs
+    AI Agent MCP Docs
   </label>
 <div class="md-nav__source">
 <a class="md-source" data-md-component="source" href="https://github.com/JeonghunLee/local-ai-agent-mcp" title="저장소로 이동">
@@ -284,8 +286,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -297,7 +299,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
@@ -319,8 +321,20 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="mcp_github_server.md">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    MCP Server-Github
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="mcp_server_github.html">
 <span class="md-ellipsis">
     
   
@@ -330,6 +344,130 @@
     
   </span>
 </a>
+<nav aria-label="목차" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mcp-server-gitub">
+<span class="md-ellipsis">
+      
+        MCP Server-Gitub
+      
+    </span>
+</a>
+<nav aria-label="MCP Server-Gitub" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vs-code-config">
+<span class="md-ellipsis">
+      
+        VS Code Config
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capabilities">
+<span class="md-ellipsis">
+      
+        Capabilities
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capability-diagram">
+<span class="md-ellipsis">
+      
+        Capability Diagram
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#roles">
+<span class="md-ellipsis">
+      
+        Roles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-grouping">
+<span class="md-ellipsis">
+      
+        Practical Grouping
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-tool-extensibility">
+<span class="md-ellipsis">
+      
+        Custom Tool Extensibility
+      
+    </span>
+</a>
+<nav aria-label="Custom Tool Extensibility" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#conclusion">
+<span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-extend-the-github-mcp-server-itself">
+<span class="md-ellipsis">
+      
+        A. Extend the GitHub MCP Server Itself
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#b-add-a-separate-custom-mcp-server">
+<span class="md-ellipsis">
+      
+        B. Add a Separate Custom MCP Server
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#c-add-a-wrapper-orchestrator-tool">
+<span class="md-ellipsis">
+      
+        C. Add a Wrapper / Orchestrator Tool
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="mcp_server_local.html">
@@ -466,6 +604,24 @@
 </div>
 </div>
 <div class="md-content" data-md-component="content">
+<nav aria-label="네비게이션" class="md-path">
+<ol class="md-path__list">
+<li class="md-path__item">
+<a class="md-path__link" href="../index.html">
+<span class="md-ellipsis">
+    Home
+  </span>
+</a>
+</li>
+<li class="md-path__item">
+<a class="md-path__link" href="mcp_gateway.html">
+<span class="md-ellipsis">
+    MCP Gateway
+  </span>
+</a>
+</li>
+</ol>
+</nav>
 <article class="md-content__inner md-typeset">
 <h1 id="github-mcp-server">GitHub MCP Server</h1>
 <ul>
@@ -964,6 +1120,34 @@
 </button>
 </main>
 <footer class="md-footer">
+<nav aria-label="하단/푸터" class="md-footer__inner md-grid">
+<a aria-label="이전: Overview" class="md-footer__link md-footer__link--prev" href="mcp_gateway.html">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                이전
+              </span>
+<div class="md-ellipsis">
+                Overview
+              </div>
+</div>
+</a>
+<a aria-label="다음: MCP Server-Local" class="md-footer__link md-footer__link--next" href="mcp_server_local.html">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                다음
+              </span>
+<div class="md-ellipsis">
+                MCP Server-Local
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">

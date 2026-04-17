@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Local AI Agent Orchestration with MCP">
+        <meta name="description" content="AI Agent Orchestration with MCP">
       
       
         <meta name="author" content="Jeonghun Lee">
@@ -23,7 +23,7 @@
     
     
       
-        <title>GitHub Templates - OpenClaw Docs</title>
+        <title>GitHub Templates - AI Agent MCP Docs</title>
       
     
     
@@ -94,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../index.html" title="OpenClaw Docs" class="md-header__button md-logo" aria-label="OpenClaw Docs" data-md-component="logo">
+    <a href="../index.html" title="AI Agent MCP Docs" class="md-header__button md-logo" aria-label="AI Agent MCP Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            OpenClaw Docs
+            AI Agent MCP Docs
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -244,13 +244,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="OpenClaw Docs" class="md-nav__button md-logo" aria-label="OpenClaw Docs" data-md-component="logo">
+    <a href="../index.html" title="AI Agent MCP Docs" class="md-nav__button md-logo" aria-label="AI Agent MCP Docs" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    OpenClaw Docs
+    AI Agent MCP Docs
   </label>
   
     <div class="md-nav__source">
@@ -680,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../mcp/mcp_github_server.md" class="md-nav__link">
+      <a href="../mcp/mcp_server_github.html" class="md-nav__link">
         
   
   
@@ -1012,223 +1012,184 @@
 
 <h1 id="github-templates">GitHub Templates</h1>
 <h2 id="overview">Overview</h2>
-<p>GitHub 저장소에서 사용할 수 있는 템플릿 목록. <br />
-모든 템플릿은 <code>.github/</code> 디렉터리에 위치한다.</p>
+<p>이 문서는 현재 저장소에서 사용하는 GitHub 템플릿과<br />
+TEST 요청 흐름에서 각 템플릿이 어떤 역할을 하는지 정리한다.</p>
+<p>현재 기준:</p>
+<ul>
+<li>Issue 템플릿은 <code>.github/issue_template/*.md</code></li>
+<li>Pull Request 템플릿은 <code>.github/pull_request_template.md</code></li>
+<li>TEST 요청은 별도 <code>Test Request</code> 이슈 템플릿으로 받는다</li>
+</ul>
+<p>이 프로젝트에서는 일반 기능 요청/문서 요청과<br />
+TEST 실행 요청을 분리하는 것이 중요하다.</p>
+<hr />
+<h2 id="template-list">Template List</h2>
 <table>
 <thead>
 <tr>
-<th>템플릿</th>
-<th>파일 경로</th>
-<th>용도</th>
+<th>Template</th>
+<th>File</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Issue</td>
-<td><code>.github/ISSUE_TEMPLATE/*.yml</code></td>
-<td>버그 리포트, 기능 요청 등</td>
+<td>Bug Report</td>
+<td><code>.github/issue_template/bug_report.md</code></td>
+<td>재현 가능한 버그 보고</td>
+</tr>
+<tr>
+<td>Documentation</td>
+<td><code>.github/issue_template/documentation.md</code></td>
+<td>문서 수정/개선 요청</td>
+</tr>
+<tr>
+<td>Feature Request</td>
+<td><code>.github/issue_template/feature_request.md</code></td>
+<td>기능 추가/개선 요청</td>
+</tr>
+<tr>
+<td>Question</td>
+<td><code>.github/issue_template/question.md</code></td>
+<td>질문 또는 확인 요청</td>
+</tr>
+<tr>
+<td>Test Request</td>
+<td><code>.github/issue_template/test_request.md</code></td>
+<td>Local MCP / Test 실행 요청</td>
 </tr>
 <tr>
 <td>Pull Request</td>
-<td><code>.github/PULL_REQUEST_TEMPLATE.md</code></td>
-<td>PR 제출 시 기본 본문</td>
-</tr>
-<tr>
-<td>Release Notes</td>
-<td><code>.github/release.yml</code></td>
-<td>Release 자동 생성 노트 카테고리</td>
-</tr>
-<tr>
-<td>Discussion</td>
-<td><code>.github/DISCUSSION_TEMPLATE/*.yml</code></td>
-<td>토론 카테고리별 양식</td>
+<td><code>.github/pull_request_template.md</code></td>
+<td>PR 설명, 변경점, 테스트 결과 정리</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="issue-template">Issue Template</h2>
-<p><code>.github/ISSUE_TEMPLATE/bug_report.yml</code></p>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bug Report</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">버그 및 오류 보고</span>
-<span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;bug&quot;</span><span class="p p-Indicator">]</span>
-<span class="nt">body</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdown</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">        </span><span class="no">버그를 발견했다면 아래 양식을 작성해 주세요.</span>
+<h2 id="test-request-template">Test Request Template</h2>
+<p>TEST 실행은 일반 feature/bug issue와 분리해서 받는다.</p>
+<p>파일:</p>
+<ul>
+<li><a href="../../.github/issue_template/test_request.md">.github/issue_template/test_request.md</a></li>
+</ul>
+<p>주요 필드:</p>
+<ul>
+<li><code>Branch / Tag / Commit</code></li>
+<li><code>Target Runner</code></li>
+<li><code>Test Type</code></li>
+<li><code>Target Device / Image</code></li>
+<li><code>Iterations</code></li>
+<li><code>Expected Outcome</code></li>
+<li><code>Execution Notes</code></li>
+</ul>
+<p>예시:</p>
+<div class="highlight"><pre><span></span><code><span class="gu">## Requested Ref</span>
+<span class="k">-</span><span class="w"> </span>Branch / Tag / Commit: 29e157c0
+<span class="k">-</span><span class="w"> </span>Target Runner: qemu-runner
 
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textarea</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">description</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Description</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">발생한 문제를 설명하세요.</span>
-<span class="w">    </span><span class="nt">validations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textarea</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">steps</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Steps to Reproduce</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">재현 방법을 순서대로 작성하세요.</span>
-<span class="w">      </span><span class="nt">placeholder</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">        </span><span class="no">1. </span>
-<span class="w">        </span><span class="no">2. </span>
-<span class="w">        </span><span class="no">3.</span>
-<span class="w">    </span><span class="nt">validations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textarea</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">expected</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Expected Behavior</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">기대했던 동작을 작성하세요.</span>
-<span class="w">    </span><span class="nt">validations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textarea</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">logs</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Logs</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">관련 로그가 있으면 첨부하세요.</span>
-<span class="w">      </span><span class="nt">render</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shell</span>
+<span class="gu">## Test Scope</span>
+<span class="k">-</span><span class="w"> </span>Test Type: smoke
+<span class="k">-</span><span class="w"> </span>Target Device / Image: zephyr.elf
+<span class="k">-</span><span class="w"> </span>Iterations: 3
 </code></pre></div>
-<p><code>.github/ISSUE_TEMPLATE/feature_request.yml</code></p>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Feature Request</span>
-<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">새 기능 요청</span>
-<span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;enhancement&quot;</span><span class="p p-Indicator">]</span>
-<span class="nt">body</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textarea</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">problem</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Problem</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">어떤 문제를 해결하려는지 작성하세요.</span>
-<span class="w">    </span><span class="nt">validations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textarea</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solution</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Proposed Solution</span>
-<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">원하는 해결 방법을 작성하세요.</span>
-<span class="w">    </span><span class="nt">validations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<p>이 템플릿은 다음 흐름을 전제로 한다.</p>
+<div class="highlight"><pre><span></span><code>GitHub Issue (TEST 요청)
+  → GitHub MCP Server로 이슈 조회
+  → Target Runner 확인
+  → Local MCP Server Tool 실행
+  → logs + result.json 생성
+  → GitHub Issue 댓글로 결과 보고
 </code></pre></div>
+<hr />
+<h2 id="target-runner">Target Runner</h2>
+<p><code>Test Request</code> 템플릿의 <code>Target Runner</code>는 요청을 처리할 실행 노드를 지정한다.</p>
+<p>예:</p>
+<ul>
+<li><code>local-dev</code></li>
+<li><code>qemu-runner</code></li>
+<li><code>lab-node-01</code></li>
+<li><code>windows-hw-01</code></li>
+</ul>
+<p>이 값은:</p>
+<ul>
+<li>Local MCP Server를 실행할 환경을 구분하는 데 쓰일 수 있고</li>
+<li>나중에 GitHub Actions <code>self-hosted runner</code> label과 맞출 수도 있다</li>
+</ul>
+<p>더 자세한 설명:</p>
+<ul>
+<li><a href="self-hosted_runner.html">self-hosted_runner.md</a></li>
+</ul>
+<hr />
+<h2 id="usage-guidance">Usage Guidance</h2>
+<h3 id="use-bug-report-when">Use Bug Report When</h3>
+<ul>
+<li>이미 발생한 문제를 재현하고 싶을 때</li>
+<li>증상, 재현 단계, 환경 정보가 핵심일 때</li>
+</ul>
+<h3 id="use-feature-request-when">Use Feature Request When</h3>
+<ul>
+<li>기능 추가나 구조 변경을 제안할 때</li>
+<li>실행 요청이 아니라 설계/개선 요청일 때</li>
+</ul>
+<h3 id="use-test-request-when">Use Test Request When</h3>
+<ul>
+<li>특정 ref/commit에 대해 테스트를 실행해달라고 요청할 때</li>
+<li>Runner를 지정해야 할 때</li>
+<li>결과를 로그/JSON/Issue 댓글로 남기고 싶을 때</li>
+</ul>
+<p>즉 TEST는 기능 요청이 아니라 **운영 실행 요청**이므로 별도 템플릿이 더 적합하다.</p>
 <hr />
 <h2 id="pull-request-template">Pull Request Template</h2>
-<p><code>.github/PULL_REQUEST_TEMPLATE.md</code></p>
-<div class="highlight"><pre><span></span><code><span class="gu">## Summary</span>
-
-&lt;!-- 변경 사항을 간략히 설명하세요 --&gt;
-
-<span class="gu">## Changes</span>
-
-- 
-
-<span class="gu">## Test Result</span>
-
-&lt;!-- TEST RESULT 문서 링크 또는 결과 요약 --&gt;
-
-<span class="gu">## Checklist</span>
-
-<span class="k">- [ ]</span> 코드 리뷰 완료 (Codex Sub)
-<span class="k">- [ ]</span> TEST RESULT 문서 생성 완료
-<span class="k">- [ ]</span> 관련 문서 업데이트
+<p>파일:</p>
+<ul>
+<li><a href="../../.github/pull_request_template.md">.github/pull_request_template.md</a></li>
+</ul>
+<p>PR 템플릿에는 보통 아래 정보가 포함된다.</p>
+<ul>
+<li>변경 요약</li>
+<li>주요 변경점</li>
+<li>테스트 결과</li>
+<li>관련 문서 업데이트 여부</li>
+</ul>
+<p>TEST 요청과 PR은 역할이 다르다.</p>
+<ul>
+<li><code>Test Request</code>: 실행 요청</li>
+<li><code>Pull Request</code>: 코드 변경 제안</li>
+</ul>
+<p>필요하면 TEST Request issue 번호를 PR 본문에 연결할 수 있다.</p>
+<p>예:</p>
+<div class="highlight"><pre><span></span><code>Related test request: <span class="ni">#12</span>
 </code></pre></div>
 <hr />
-<h2 id="release-notes-template">Release Notes Template</h2>
-<p><code>.github/release.yml</code></p>
-<p>Release를 생성할 때 PR을 label 기준으로 자동 분류하여 릴리즈 노트를 생성한다.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">changelog</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">exclude</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ignore-for-release</span>
-<span class="w">  </span><span class="nt">categories</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Breaking Changes</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">breaking-change</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">New Features</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enhancement</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">feature</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bug Fixes</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bug</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fix</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CT / Test</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">test</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ct</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Documentation</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">documentation</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs</span>
-
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Others</span>
-<span class="w">      </span><span class="nt">labels</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;*&quot;</span>
-</code></pre></div>
-<blockquote>
-<p>Release 생성 시 <strong>Generate release notes</strong> 버튼을 누르면 위 카테고리 기준으로 PR 목록이 자동 작성된다.</p>
-</blockquote>
-<h3 id="release-trigger-mcp-ct">Release Trigger → MCP CT 연동</h3>
-<p>Release가 생성되면 GitHub webhook이 MCP Server로 이벤트를 전송하여 CT를 자동 시작한다.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># .github/workflows/ct_trigger.yml</span>
-<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CT Trigger on Release</span>
-
-<span class="nt">on</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">release</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">published</span><span class="p p-Indicator">]</span>
-
-<span class="nt">jobs</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">trigger-mcp-ct</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Notify MCP Server</span>
-<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">          </span><span class="no">curl -X POST http://&lt;MCP_SERVER&gt;:3000/ct/trigger \</span>
-<span class="w">            </span><span class="no">-H &quot;Content-Type: application/json&quot; \</span>
-<span class="w">            </span><span class="no">-d &#39;{</span>
-<span class="w">              </span><span class="no">&quot;event&quot;: &quot;release&quot;,</span>
-<span class="w">              </span><span class="no">&quot;tag&quot;: &quot;${{ github.ref_name }}&quot;,</span>
-<span class="w">              </span><span class="no">&quot;release_url&quot;: &quot;${{ github.event.release.html_url }}&quot;</span>
-<span class="w">            </span><span class="no">}&#39;</span>
-</code></pre></div>
-<hr />
-<h2 id="discussion-template">Discussion Template</h2>
-<p><code>.github/DISCUSSION_TEMPLATE/general.yml</code></p>
-<div class="highlight"><pre><span></span><code><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;general&quot;</span><span class="p p-Indicator">]</span>
-<span class="nt">body</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textarea</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">content</span>
-<span class="w">    </span><span class="nt">attributes</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Content</span>
-<span class="w">    </span><span class="nt">validations</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-</code></pre></div>
+<h2 id="recommended-labeling">Recommended Labeling</h2>
+<p>TEST 요청 운영 시 함께 쓰기 좋은 label 예시:</p>
+<ul>
+<li><code>test-request</code></li>
+<li><code>test-running</code></li>
+<li><code>test-done</code></li>
+<li><code>test-failed</code></li>
+</ul>
+<p>일반 issue와 TEST issue를 구분하면 라우팅과 추적이 쉬워진다.</p>
 <hr />
 <h2 id="directory-structure">Directory Structure</h2>
 <div class="highlight"><pre><span></span><code>.github/
-├── ISSUE_TEMPLATE/
-│   ├── bug_report.yml
-│   └── feature_request.yml
-├── DISCUSSION_TEMPLATE/
-│   └── general.yml
-├── PULL_REQUEST_TEMPLATE.md
-├── release.yml
+├── issue_template/
+│   ├── bug_report.md
+│   ├── documentation.md
+│   ├── feature_request.md
+│   ├── question.md
+│   └── test_request.md
+├── pull_request_template.md
 └── workflows/
-    └── ct_trigger.yml
+    └── github_pages.yaml
 </code></pre></div>
 <hr />
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="../architecture/system-design.html">architecture/system-design.md</a> — CT 흐름 및 GitHub Release 트리거</li>
-<li><a href="../mcp/mcp_gateway.html">MCP Gateway</a> — MCP Gateway 라우팅 설정</li>
-<li><a href="../mcp/mcp_server_local.html">mcp/mcp_server_local.md</a> — MCP Server Local CT 설정</li>
-<li><a href="../mcp/mcp_server_github.html">mcp/mcp_server_github.md</a> — MCP Server Github 설정</li>
+<li><a href="self-hosted_runner.html">self-hosted_runner.md</a> — Target Runner와 self-hosted runner 개념 정리</li>
+<li><a href="../mcp/mcp_server_local.html">mcp_server_local.md</a> — Local MCP Server와 TEST 요청 흐름</li>
+<li><a href="../mcp/mcp_server_github.html">mcp_server_github.md</a> — GitHub MCP Server 역할</li>
+<li><a href="../mcp/mcp_gateway.html">mcp_gateway.md</a> — VS Code MCP Gateway와 다중 MCP Server 연결</li>
 </ul>
 
 
