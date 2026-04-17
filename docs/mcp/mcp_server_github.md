@@ -1,5 +1,6 @@
 # GitHub MCP Server
 
+* VSCode Extension -> MCP Servers     
 ![](../imgs/mcp_server_github_00.png)
 
 
