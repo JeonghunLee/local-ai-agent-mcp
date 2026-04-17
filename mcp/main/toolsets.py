@@ -8,7 +8,7 @@ LOGGER = logging.getLogger("local_mcp.tools")
 
 
 def build_tool(arguments: dict) -> dict:
-    LOGGER.info("tool.call name=build_tool")
+    LOGGER.info("tool.call name=build_tool target=%s working_dir=%s", arguments.get("target", "all"), arguments.get("working_dir", "."))
     result = subprocess.run(
         ["ping", "-n", "5", "127.0.0.1"],
         capture_output=True,
@@ -28,7 +28,7 @@ def build_tool(arguments: dict) -> dict:
 
 
 def flash_tool(arguments: dict) -> dict:
-    LOGGER.info("tool.call name=flash_tool")
+    LOGGER.info("tool.call name=flash_tool interface=%s image=%s", arguments.get("interface", "openocd"), arguments.get("image", "firmware.bin"))
     return {
         "tool": "flash_tool",
         "status": "success",
@@ -39,7 +39,7 @@ def flash_tool(arguments: dict) -> dict:
 
 
 def log_analyzer(arguments: dict) -> dict:
-    LOGGER.info("tool.call name=log_analyzer")
+    LOGGER.info("tool.call name=log_analyzer log_path=%s", arguments.get("log_path", "logs/sample.log"))
     return {
         "tool": "log_analyzer",
         "status": "success",

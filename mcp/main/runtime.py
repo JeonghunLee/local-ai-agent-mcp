@@ -1,5 +1,6 @@
 import json
 import logging
+from pathlib import Path
 import sys
 from typing import Any, Callable
 
@@ -10,9 +11,15 @@ ToolHandler = Callable[[JsonDict], JsonDict]
 
 LOGGER = logging.getLogger("local_mcp")
 if not LOGGER.handlers:
-    handler = logging.StreamHandler(sys.stderr)
-    handler.setFormatter(logging.Formatter("[%(levelname)s] [%(name)s] %(message)s"))
-    LOGGER.addHandler(handler)
+    stream_handler = logging.StreamHandler(sys.stderr)
+    stream_handler.setFormatter(logging.Formatter("[%(levelname)s] [%(name)s] %(message)s"))
+    LOGGER.addHandler(stream_handler)
+
+    log_dir = Path("logs")
+    log_dir.mkdir(exist_ok=True)
+    file_handler = logging.FileHandler(log_dir / "mcp-server-local.log", encoding="utf-8")
+    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] %(message)s"))
+    LOGGER.addHandler(file_handler)
 LOGGER.setLevel(logging.INFO)
 LOGGER.propagate = False
 
@@ -26,7 +33,7 @@ class MCPServer:
         self._transport_mode = "content-length"
 
     def run(self) -> None:
-        # self._log_info(f"server.start name={self.name} version={self.version}")
+        self._log_info(f"server.start name={self.name} version={self.version}")
         while True:
             try:
                 message = self._read_message()
@@ -36,17 +43,17 @@ class MCPServer:
                 )
                 continue
             if message is None:
-                # self._log_info(f"server.stop name={self.name} reason=stdin_closed")
+                self._log_info(f"server.stop name={self.name} reason=stdin_closed")
                 return
-            # self._log_info(
-            #     f"server.recv name={self.name} method={message.get('method')} id={message.get('id')}"
-            # )
+            self._log_info(
+                f"server.recv name={self.name} method={message.get('method')} id={message.get('id')}"
+            )
             response = self._handle_message(message)
             if response is not None:
-                # self._log_info(
-                #     f"server.send name={self.name} id={response.get('id')} "
-                #     f"result={'error' if response.get('error') else 'ok'}"
-                # )
+                self._log_info(
+                    f"server.send name={self.name} id={response.get('id')} "
+                    f"result={'error' if response.get('error') else 'ok'}"
+                )
                 self._write_message(response)
 
     def _handle_message(self, message: JsonDict) -> JsonDict | None:
@@ -57,7 +64,7 @@ class MCPServer:
         request_id = message.get("id")
 
         if method == "initialize":
-            # self._log_info(f"server.initialize name={self.name}")
+            self._log_info(f"server.initialize name={self.name}")
             return {
                 "jsonrpc": "2.0",
                 "id": request_id,
@@ -72,11 +79,11 @@ class MCPServer:
             return None
 
         if method == "ping":
-            # self._log_info(f"server.ping name={self.name}")
+            self._log_info(f"server.ping name={self.name}")
             return {"jsonrpc": "2.0", "id": request_id, "result": {}}
 
         if method == "tools/list":
-            # self._log_info(f"server.tools_list name={self.name} count={len(self.tools)}")
+            self._log_info(f"server.tools_list name={self.name} count={len(self.tools)}")
             return {"jsonrpc": "2.0", "id": request_id, "result": {"tools": self.tools}}
 
         if method == "tools/call":
@@ -91,13 +98,15 @@ class MCPServer:
             if not isinstance(arguments, dict):
                 return self._error_response(request_id, -32602, "Invalid params")
             self._log_info(
-                f"server.tools_call name={self.name} tool={tool_name} "
+                f"server.tools_call_start name={self.name} id={request_id} tool={tool_name} "
                 f"arguments={json.dumps(arguments, ensure_ascii=False)}"
             )
             handler = self.handlers.get(tool_name)
 
             if handler is None:
-                # self._log_info(f"server.tools_call_unknown name={self.name} tool={tool_name}")
+                self._log_info(
+                    f"server.tools_call_unknown name={self.name} id={request_id} tool={tool_name}"
+                )
                 return {
                     "jsonrpc": "2.0",
                     "id": request_id,
@@ -109,7 +118,11 @@ class MCPServer:
 
             try:
                 payload = handler(arguments)
-                # self._log_info(f"server.tools_call_done name={self.name} tool={tool_name}")
+                status = payload.get("status", "unknown") if isinstance(payload, dict) else "unknown"
+                self._log_info(
+                    f"server.tools_call_done name={self.name} id={request_id} "
+                    f"tool={tool_name} status={status}"
+                )
                 return {
                     "jsonrpc": "2.0",
                     "id": request_id,
