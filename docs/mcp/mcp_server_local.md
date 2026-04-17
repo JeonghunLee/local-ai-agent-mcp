@@ -8,6 +8,23 @@
 MCP Server는 **CT(Continuous Testing)** 전용 서버.   
 Tag 이벤트를 명령 트리거로 받아 테스트 실행 → 문제 파악 → 분석 → 문서 작성 → 보고까지 자동 처리한다.
 
+> 현재 구현 상태와 목표 아키텍처는 다르다.
+>
+> 현재 구현:
+> - VS Code MCP Client / MCP Gateway를 통해 `mcp-server-local`에 연결
+> - `build_tool`, `flash_tool`, `log_analyzer` 3개 Tool 호출 가능
+> - Tool별 실행 로그는 `logs/mcp-server-local-<tool>.log`에 기록
+>
+> 아직 미구현:
+> - GitHub Tag Event 직접 수신
+> - `do_test_<type>_<nn>()`
+> - `test_result()`
+> - `channels()`
+> - `result.json + .log` 표준 산출물 생성
+> - Remote Sub AI 감시·분석 자동화
+
+아래 다이어그램과 설명은 **목표 구조**를 나타낸다.
+
 ```
 Tag Event → MCP Server → Local AI (실행) → result.json + .log
                                              → Remote Sub AI (감시·분석) → TEST RESULT 문서 → 보고
