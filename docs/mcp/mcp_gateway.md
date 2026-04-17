@@ -24,7 +24,7 @@ AI Agent
   https://code.visualstudio.com/docs/copilot/reference/mcp-configuration
 
 * Add and manage MCP servers in VS Code
-  https://code.visualstudio.com/docs/copilot/reference/mcp-configuration
+  https://code.visualstudio.com/docs/copilot/chat/mcp-servers
 
 * **MCP developer guide**
   https://code.visualstudio.com/api/extension-guides/mcp
@@ -36,7 +36,7 @@ AI Agent
 | 구성 요소 | 위치 | 역할 |
 |----------|------|------|
 | **MCP Gateway** | Local | Tool 호출 수신 · 라우팅 · 응답 반환 |
-| [MCP Server-Local](mcp_server.local.md) | Local | `build_tool`, `flash_tool`, `do_test`, `log_analyzer` 등 CT Tool |
+| [MCP Server-Local](mcp_server_local.md) | Local | `build_tool`, `flash_tool`, `do_test`, `log_analyzer` 등 CT Tool |
 | [MCP Server-GitHub](mcp_server_github.md) | Local Process + Remote GitHub API | `PR`, `Issue`, `Repository`, `Actions` Tool |
 
 ---
@@ -129,13 +129,17 @@ cat ~/.openclaw/openclaw.json
 
 ### Version B
 
-
-* VSCode MCP Gateway 
+* VS Code Internal MCP Gateway Log
 ```
 2026-04-17 10:30:15.965 [info] [McpGatewayService] Initialized
 ```
 
-* VSCode MCP Gateway
+* VS Code Internal MCP Gateway
+  - VS Code 내부 서비스
+  - `.vscode/mcp.json` 또는 User `mcp.json` 관리 대상
+  - OpenClaw Gateway 설정 파일과 별도
+
+* OpenClaw MCP Gateway Config Example
 ```json
 {
   "gateway": {
@@ -204,6 +208,6 @@ flowchart TD
 
 ## Related
 
-- [mcp_server.local.md](mcp_server.local.md) — CT Tool 상세 정의, Protocol Flow
+- [mcp_server_local.md](mcp_server_local.md) — CT Tool 상세 정의, Protocol Flow
 - [mcp_server_github.md](mcp_server_github.md) — GitHub MCP Server 44 Tools
 - [architecture/system-design.md](../architecture/system-design.md) — 시스템 구조 및 Deployment Diagram

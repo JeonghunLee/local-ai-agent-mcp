@@ -60,11 +60,6 @@ JSON Setup
 }
 ```
 
-* AI Agent Setup
-Config Model Access 
-    [v] Auto 
-    [v] 
-
 
 
 ### Capabilities
@@ -231,5 +226,4 @@ flowchart LR
 
 - 사용자 직접 조합 부담 감소
 - workflow 표준화 용이
-
 
