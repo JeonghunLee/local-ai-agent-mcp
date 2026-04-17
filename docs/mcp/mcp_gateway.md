@@ -20,13 +20,13 @@ AI Agent
 
 ## VS Code MCP System 
 
-* MCP configuration reference
+* MCP configuration reference       
   https://code.visualstudio.com/docs/copilot/reference/mcp-configuration
 
-* Add and manage MCP servers in VS Code
+* Add and manage MCP servers in VS Code      
   https://code.visualstudio.com/docs/copilot/chat/mcp-servers
 
-* **MCP developer guide**
+* **MCP developer guide**      
   https://code.visualstudio.com/api/extension-guides/mcp
 
 
