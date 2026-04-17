@@ -225,4 +225,6 @@ body:
 ## Related
 
 - [architecture/system-design.md](../architecture/system-design.md) — CT 흐름 및 GitHub Release 트리거
-- [mcp/local_mcp_server.md](../mcp/local_mcp_server.md) — MCP Server CT 설정
+- [MCP Gateway](../mcp/mcp_gateway.md) — MCP Gateway 라우팅 설정
+- [mcp/mcp_server_local.md](../mcp/mcp_server_local.md) — MCP Server Local CT 설정
+- [mcp/mcp_server_github.md](../mcp/mcp_server_github.md) — MCP Server Github 설정

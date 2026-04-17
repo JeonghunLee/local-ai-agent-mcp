@@ -20,8 +20,8 @@ AI Agent
 | 구성 요소 | 위치 | 역할 |
 |----------|------|------|
 | **MCP Gateway** | Local | Tool 호출 수신 · 라우팅 · 응답 반환 |
-| [Local MCP Server](local_mcp_server.md) | Local | `build_tool`, `flash_tool`, `do_test`, `log_analyzer` 등 CT Tool |
-| [GitHub MCP Server](github_mcp_server.md) | Local Process + Remote GitHub API | `PR`, `Issue`, `Repository`, `Actions` Tool |
+| [Local MCP Server](mcp_server.local.md) | Local | `build_tool`, `flash_tool`, `do_test`, `log_analyzer` 등 CT Tool |
+| [GitHub MCP Server](mcp_server_github.md) | Local Process + Remote GitHub API | `PR`, `Issue`, `Repository`, `Actions` Tool |
 
 ---
 
@@ -137,6 +137,6 @@ flowchart TD
 
 ## Related
 
-- [local_mcp_server.md](local_mcp_server.md) — CT Tool 상세 정의, Protocol Flow
-- [github_mcp_server.md](github_mcp_server.md) — GitHub MCP Server 44 Tools
+- [mcp_server.local.md](mcp_server.local.md) — CT Tool 상세 정의, Protocol Flow
+- [mcp_server_github.md](mcp_server_github.md) — GitHub MCP Server 44 Tools
 - [architecture/system-design.md](../architecture/system-design.md) — 시스템 구조 및 Deployment Diagram
