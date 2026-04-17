@@ -1,12 +1,21 @@
 # GitHub MCP Server
 
+![](../imgs/mcp_server_github_00.png)
+
+
+* Manaul
+https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server
+
+* Node.js 
+https://github.com/github/github-mcp-server 
+
+
 ## Overview
 
-GitHub `Repository`, `Pull Request`, `Issue`, `Review`, `Actions` 대상 MCP(Model Context Protocol) `Tool` 제공용 전용 서버.
+GitHub 대상 MCP(Model Context Protocol) `Tool` 제공용 전용 서버.
 
-확인 기준 로그:
-
-```text
+VS Code MCP Server Github Log:
+```log
 2026-04-17 10:33:22.770 [info] Starting server io.github.github/github-mcp-server
 2026-04-17 10:33:22.770 [info] Connection state: Starting
 2026-04-17 10:33:22.770 [info] Starting server from LocalProcess extension host
@@ -17,37 +26,48 @@ GitHub `Repository`, `Pull Request`, `Issue`, `Review`, `Actions` 대상 MCP(Mod
 2026-04-17 10:33:33.737 [info] Discovered 44 tools
 ```
 
-핵심 판단:
-
-- 범용 MCP Server보다 GitHub 전용 MCP Server 성격
+- GitHub 전용 MCP Server 
 - Local 실행 + Remote GitHub 인증/데이터 구조
-- `44 tools` 발견 상태
+
 
 ---
 
-## 1. Log Summary
+## MCP Server-Gitub
 
-| Log | Meaning |
-|------|------|
-| `Starting server io.github.github/github-mcp-server` | GitHub MCP Server 시작 |
-| `Starting server from LocalProcess extension host` | Local process 기반 실행 |
-| `Connection state: Running` | MCP 세션 정상 상태 |
-| `Discovered resource metadata at https://api.githubcopilot.com/.../mcp/` | 보호 리소스 메타데이터 탐색 |
-| `Using auth server metadata url: https://github.com/login/oauth` | GitHub OAuth 사용 |
-| `Discovered authorization server metadata ...` | OAuth 메타데이터 확인 |
-| `Discovered 44 tools` | MCP `Tool` 44개 노출 |
+상위 아이콘의 설정메뉴에서 확인 
 
-### Key Points
+### VS Code Config
 
-- Server process: Local
-- Authentication: Remote GitHub OAuth
-- Data source: Remote GitHub API
-- Runtime shape: `Local Process + Remote GitHub API/OAuth`
-- `44 tools`: 시작 시점 discovery 결과
+Default Manaul
+    https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server
 
----
 
-## 2. GitHub MCP Server Capabilities
+JSON Setup 
+    https://github.com/github/github-mcp-server/blob/main/docs/server-configuration.md
+
+* MCP Server Setup (Remote/HTTP)
+```json
+{
+	"servers": {
+		"io.github.github/github-mcp-server": {
+			"type": "http",
+			"url": "https://api.githubcopilot.com/mcp/",
+			"gallery": "https://api.mcp.github.com",
+			"version": "0.33.0"
+		}
+	},
+	"inputs": []
+}
+```
+
+* AI Agent Setup
+Config Model Access 
+    [v] Auto 
+    [v] 
+
+
+
+### Capabilities
 
 주요 기능군:
 
@@ -74,43 +94,7 @@ flowchart LR
     Server -->|read / write tools| API
 ```
 
-### 2.1 GitHub MCP Server Location (Local / Remote)
-
-| Component | Location | Description |
-|------|------|------|
-| MCP Server Process | Local | IDE 또는 MCP Client 프로세스 |
-| OAuth Server | Remote | `github.com/login/oauth` |
-| Protected Resource Metadata | Remote | `api.githubcopilot.com` |
-| Data Source | Remote | GitHub `Repository` / `PR` / `Issue` / `Actions` |
-
-### Structure Summary
-
-- Execution: Local
-- Auth: Remote
-- Data: Remote
-- Scope 결정 요소: GitHub API + server implementation
-
----
-
-## 3. 44 Tools and Their Roles
-
-주의:
-
-- 로그 기준 확인 사실: `Discovered 44 tools`
-- 로그 미포함 항목: 개별 `Tool` 이름 전체
-- 아래 표: 일반적인 GitHub MCP Server 패턴 기준 역할군 정리
-- 실제 목록 확인 수단: MCP Inspector, `tools/list`
-
-### 3.1 Confirmed vs Inferred
-
-| Type | Status | Meaning |
-|------|------|------|
-| Count | Confirmed | `44 tools` 는 로그로 확인 |
-| Exact tool names | Unverified | 개별 Tool 이름은 현재 문서 근거만으로 확인 불가 |
-| Exact tool signatures | Unverified | 입력 파라미터, 반환 타입 확인 불가 |
-| Role mapping below | Inferred | 일반적인 GitHub MCP Server 패턴 기준 분류 |
-
-### 3.2 Inferred 44-Item Mapping
+### Roles 
 
 | No. | Inferred Role Group | Example Tasks | Verification |
 |------|------|-----------|------|
@@ -171,7 +155,7 @@ flowchart LR
 
 ---
 
-## 4. Custom Tool Extensibility
+## Custom Tool Extensibility
 
 ### Conclusion
 
@@ -248,21 +232,4 @@ flowchart LR
 - 사용자 직접 조합 부담 감소
 - workflow 표준화 용이
 
----
 
-## Recommendation
-
-권장 구성:
-
-- GitHub 데이터 조회/수정: GitHub MCP Server
-- 빌드, 테스트, log 분석, 문서 생성: 프로젝트 전용 MCP Server
-- 다단계 자동화: Wrapper `Tool` 또는 상위 Orchestrator
-
----
-
-## Notes
-
-- `44 tools` 수: 서버 버전, 인증 범위, MCP Client 구현 영향
-- 실제 개별 목록 필요 시: MCP Inspector 또는 `tools/list` 결과 캡처
-- 현재 문서 기준: 확보 로그 + 일반적인 GitHub MCP Server 패턴
-- 번호 `1`~`44`: 실제 Tool 이름이 아니라, `44개` 규모를 맞춰 정리한 추정 역할 인덱스
