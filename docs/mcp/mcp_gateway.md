@@ -149,7 +149,7 @@ cat ~/.openclaw/openclaw.json
   },
   "servers": {
     "local": {
-      "name": "local-mcp-server",
+      "name": "mcp-server-local",
       "url": "http://localhost:3000",
       "enabled": true,
       "tool_prefixes": ["build_", "flash_", "do_test_", "uart_", "qemu_", "reg_", "file_", "log_", "test_", "channels"]
