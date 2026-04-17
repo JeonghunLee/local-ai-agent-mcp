@@ -1,5 +1,8 @@
 # MCP Gateway
 
+* MCP Gateway
+  MCP Server에게 Routing 을 하여 연결하는 기능 
+
 ## Overview
 
 MCP Gateway는 여러 MCP Server 앞에 위치하는 라우팅 계층.  
@@ -15,13 +18,26 @@ AI Agent
 
 ---
 
+## VS Code MCP System 
+
+* MCP configuration reference
+  https://code.visualstudio.com/docs/copilot/reference/mcp-configuration
+
+* Add and manage MCP servers in VS Code
+  https://code.visualstudio.com/docs/copilot/reference/mcp-configuration
+
+* **MCP developer guide**
+  https://code.visualstudio.com/api/extension-guides/mcp
+
+
+
 ## Role
 
 | 구성 요소 | 위치 | 역할 |
 |----------|------|------|
 | **MCP Gateway** | Local | Tool 호출 수신 · 라우팅 · 응답 반환 |
-| [Local MCP Server](mcp_server.local.md) | Local | `build_tool`, `flash_tool`, `do_test`, `log_analyzer` 등 CT Tool |
-| [GitHub MCP Server](mcp_server_github.md) | Local Process + Remote GitHub API | `PR`, `Issue`, `Repository`, `Actions` Tool |
+| [MCP Server-Local](mcp_server.local.md) | Local | `build_tool`, `flash_tool`, `do_test`, `log_analyzer` 등 CT Tool |
+| [MCP Server-GitHub](mcp_server_github.md) | Local Process + Remote GitHub API | `PR`, `Issue`, `Repository`, `Actions` Tool |
 
 ---
 
@@ -67,8 +83,59 @@ sequenceDiagram
 
 ---
 
-## Gateway Configuration (`gateway-config.json`)
+## MCP Gateway 
 
+### Version A
+
+**with OpenClaw**
+
+Window WSL 
+```
+cat ~/.openclaw/openclaw.json
+```
+
+```json
+...
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "xxxxxxxx"
+    },
+    "port": 18789,
+    "bind": "loopback",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "controlUi": {
+      "allowInsecureAuth": true
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "contacts.add",
+        "calendar.add",
+        "reminders.add",
+        "sms.send",
+        "sms.search"
+      ]
+    }
+  },
+...
+```
+
+### Version B
+
+
+* VSCode MCP Gateway 
+```
+2026-04-17 10:30:15.965 [info] [McpGatewayService] Initialized
+```
+
+* VSCode MCP Gateway
 ```json
 {
   "gateway": {
@@ -131,7 +198,7 @@ flowchart TD
 | **Local AI** | `build_tool`, `flash_tool`, `do_test_*` | Gateway → Local MCP Server |
 | **Sub AI** | `log_analyzer`, `test_result` | Gateway → Local MCP Server |
 | **Sub AI** | `pr_*`, `issue_*`, `workflow_*` | Gateway → GitHub MCP Server |
-| **Main AI (Claude)** | Tool 미접근 — 코드·문서 생성 전담 | — |
+| **Main AI** | Tool 미접근 — 코드·문서 생성 전담 | — |
 
 ---
 
