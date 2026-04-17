@@ -1,6 +1,6 @@
 # Local MCP Server
 
-* VSCode Extension -> MCP Servers
+* VSCode Extension -> MCP Servers              
 ![](../imgs/mcp_server_local_00.png)
 
 ## Overview
@@ -43,31 +43,37 @@ GitHub Issue (TEST 요청)
 
 ---
 
-## Trigger
+## MCP Server Local 
 
-### Recommended Trigger
+### Github Issue Trigger 
 
-현재 권장 트리거는 **GitHub Issue 기반 TEST 요청**이다.
 
-- 사용자는 [test_request.md](../../.github/issue_template/test_request.md) 템플릿으로 TEST 이슈를 생성한다
-- 이슈 본문에 대상 ref, 테스트 종류, 장치/이미지, 반복 횟수, 제약 사항을 기록한다
-- AI Agent 또는 운영자가 GitHub MCP Server로 이슈 내용을 읽는다
-- 필요한 Local MCP Tool을 순서대로 실행한다
-- 결과는 로컬 로그와 JSON 결과 파일로 남기고, 필요 시 GitHub Issue에 댓글로 보고한다
+* **GitHub Issue 기반 TEST 요청**     
+  1. 사용자는 [test_request.md](../../.github/issue_template/test_request.md) 템플릿으로 TEST 이슈생성    
+      - [Github Template](../github/github_templates.md)    
+  2. `Target Runner`, 테스트 종류, 장치/이미지, 반복 횟수, 제약 사항을 기록       
+      - [Self-Hosted Runner](../github/self-hosted_runner.md)   
+  3. AI Agent 또는 운영자가 GitHub MCP Server로 이슈 내용 분석   
+  4. Local MCP Tool 실행    
+  5. TEST 결과보고     
+      - Result : Json 과 Log    
+      - GitHub Issue 보고       
 
-### Why Not Tag Event
 
-VS Code MCP Gateway는 여러 MCP Server를 연결하고 Tool을 호출하는 허브이지,  
-외부 GitHub Tag Event를 직접 구독하고 자동 실행하는 오케스트레이터는 아니다.
+### Runner Assignment
 
-따라서 현재 구조에서는 `Tag Event -> VS Code MCP Gateway -> 자동 실행`보다  
-`Issue 요청 -> GitHub MCP + Local MCP 수동/반자동 실행`이 더 잘 맞는다.
+여러 실행 주체가 있을 경우 `Target Runner` 값으로 담당 대상을 구분한다.
+
+- 예: `local-dev`, `lab-node-01`, `qemu-runner`, `windows-host`
+- 실행 주체는 자신에게 해당하는 `Target Runner` 요청만 처리한다
+- 처리 시작 시 assignee 또는 label로 실행 중 상태를 표시할 수 있다
+
 
 ---
 
 ## VS Code Configuration
 
-Local MCP Server는 `.vscode/mcp.json`으로 등록한다.
+Local MCP Server는 `.vscode/mcp.json`으로 등록.   
 
 예시:
 
@@ -94,7 +100,7 @@ Local MCP Server는 `.vscode/mcp.json`으로 등록한다.
 
 ## Tool Set
 
-현재 문서 기준 Local MCP Server의 목표 Tool 집합은 아래와 같다.
+문서 기준 Local MCP Server의 목표 Tool 집합.
 
 | Tool | 목적 | 설명 |
 |------|------|------|
