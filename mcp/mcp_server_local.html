@@ -7,9 +7,11 @@
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <meta content="Local AI Agent Orchestration with MCP" name="description"/>
 <meta content="Jeonghun Lee" name="author"/>
+<link href="mcp_gateway.html" rel="prev"/>
+<link href="../environments/window_wsl2_setup.html" rel="next"/>
 <link href="../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>MCP Server - OpenClaw Docs</title>
+<title>MCP Server-Local - OpenClaw Docs</title>
 <link href="../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link href="../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
 <script src="https://unpkg.com/iframe-worker/shim"></script>
@@ -48,7 +50,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              MCP Server
+              MCP Server-Local
             
           </span>
 </div>
@@ -284,40 +286,302 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
 <span class="md-ellipsis">
     
   
-    MCP
+    MCP Gateway
   
 
     
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
   
-    MCP
+    MCP Gateway
   
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="mcp_server.md">
+<a class="md-nav__link" href="mcp_gateway.html">
 <span class="md-ellipsis">
     
   
-    MCP Server
+    Overview
   
 
     
   </span>
 </a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="mcp_github_server.md">
+<span class="md-ellipsis">
+    
+  
+    MCP Server-Github
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    MCP Server-Local
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="mcp_server_local.html">
+<span class="md-ellipsis">
+    
+  
+    MCP Server-Local
+  
+
+    
+  </span>
+</a>
+<nav aria-label="목차" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#version-a-with-openclaw">
+<span class="md-ellipsis">
+      
+        Version A — With OpenClaw
+      
+    </span>
+</a>
+<nav aria-label="Version A — With OpenClaw" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#registered-tools">
+<span class="md-ellipsis">
+      
+        Registered Tools
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protocol-flow">
+<span class="md-ellipsis">
+      
+        Protocol Flow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-configuration-mcp-configjson">
+<span class="md-ellipsis">
+      
+        Server Configuration (mcp-config.json)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#version-b-mcp-only">
+<span class="md-ellipsis">
+      
+        Version B — MCP Only
+      
+    </span>
+</a>
+<nav aria-label="Version B — MCP Only" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#registered-tools_1">
+<span class="md-ellipsis">
+      
+        Registered Tools
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#protocol-flow_1">
+<span class="md-ellipsis">
+      
+        Protocol Flow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-configuration-mcp-configjson_1">
+<span class="md-ellipsis">
+      
+        Server Configuration (mcp-config.json)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-communication-log-json">
+<span class="md-ellipsis">
+      
+        Agent Communication — Log + JSON
+      
+    </span>
+</a>
+<nav aria-label="Agent Communication — Log + JSON" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#output-file-rules">
+<span class="md-ellipsis">
+      
+        Output File Rules
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resultjson-schema">
+<span class="md-ellipsis">
+      
+        result.json Schema
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sub-ai-monitoring-logic">
+<span class="md-ellipsis">
+      
+        Sub AI Monitoring Logic
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tool-definition-example">
+<span class="md-ellipsis">
+      
+        Tool Definition Example
+      
+    </span>
+</a>
+<nav aria-label="Tool Definition Example" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#naming-convention">
+<span class="md-ellipsis">
+      
+        Naming Convention
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-generation-methods-sub-functions">
+<span class="md-ellipsis">
+      
+        Log Generation Methods (Sub-functions)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#do_test-schema">
+<span class="md-ellipsis">
+      
+        do_test Schema
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-tool-access">
+<span class="md-ellipsis">
+      
+        Agent Tool Access
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup">
+<span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+</a>
+<nav aria-label="Setup" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#nodejs">
+<span class="md-ellipsis">
+      
+        Node.js
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python">
+<span class="md-ellipsis">
+      
+        Python
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related">
+<span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -442,6 +706,24 @@
 </div>
 </div>
 <div class="md-content" data-md-component="content">
+<nav aria-label="네비게이션" class="md-path">
+<ol class="md-path__list">
+<li class="md-path__item">
+<a class="md-path__link" href="../index.html">
+<span class="md-ellipsis">
+    Home
+  </span>
+</a>
+</li>
+<li class="md-path__item">
+<a class="md-path__link" href="mcp_gateway.html">
+<span class="md-ellipsis">
+    MCP Gateway
+  </span>
+</a>
+</li>
+</ol>
+</nav>
 <article class="md-content__inner md-typeset">
 <h1 id="mcp-server">MCP Server</h1>
 <h2 id="overview">Overview</h2>
@@ -1182,6 +1464,34 @@ python<span class="w"> </span>mcp_server.py
 </button>
 </main>
 <footer class="md-footer">
+<nav aria-label="하단/푸터" class="md-footer__inner md-grid">
+<a aria-label="이전: Overview" class="md-footer__link md-footer__link--prev" href="mcp_gateway.html">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                이전
+              </span>
+<div class="md-ellipsis">
+                Overview
+              </div>
+</div>
+</a>
+<a aria-label="다음: Windows WSL2 Setup" class="md-footer__link md-footer__link--next" href="../environments/window_wsl2_setup.html">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                다음
+              </span>
+<div class="md-ellipsis">
+                Windows WSL2 Setup
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+</div>
+</a>
+</nav>
 <div class="md-footer-meta md-typeset">
 <div class="md-footer-meta__inner md-grid">
 <div class="md-copyright">
