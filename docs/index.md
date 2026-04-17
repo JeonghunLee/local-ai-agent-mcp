@@ -30,7 +30,7 @@ OpenClaw 기반의 MCP(Model Context Protocol) 사용
 
 | 문서 | 설명 |
 |------|------|
-| [MCP Server](mcp/mcp_server.md) | 서버 설정, Tool 정의, Protocol Flow |
+| [MCP Server](mcp/local_mcp_server.md) | 서버 설정, Tool 정의, Protocol Flow |
 
 ### GitHub
 

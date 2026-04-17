@@ -101,52 +101,63 @@ flowchart LR
 - 아래 표: 일반적인 GitHub MCP Server 패턴 기준 역할군 정리
 - 실제 목록 확인 수단: MCP Inspector, `tools/list`
 
-| Role Group | Example Tasks |
-|--------|-----------|
-| `Repository Metadata` | 저장소 정보, default branch |
-| `Repository Search` | 접근 가능한 저장소 검색 |
-| `Branch Search` | branch 검색, 기준 branch 선택 |
-| `File Fetch` | 특정 ref 파일 조회 |
-| `Blob Fetch` | blob SHA 기반 조회 |
-| `Commit Fetch` | 단일 commit 메타데이터, 변경 내용 |
-| `Commit Compare` | 두 ref 간 변경 파일, 통계 비교 |
-| `Commit Search` | commit 검색 |
-| `Commit Status` | combined status, check 결과 |
-| `Workflow Run Lookup` | 특정 commit의 Actions run |
-| `Workflow Jobs` | run 내 job 목록 |
-| `Workflow Steps` | job step 상태 |
-| `Workflow Logs` | 실패 job log |
-| `PR Metadata` | PR 제목, 상태, base/head branch |
-| `PR Diff` | PR diff, patch |
-| `PR Patch By File` | 파일 단위 PR patch |
-| `PR File List` | 변경 파일 목록 |
-| `PR Discussion` | PR comment, review comment, review event |
-| `PR Reviews` | review 목록 |
-| `PR Review Threads` | inline review thread, resolve 상태 |
-| `PR Reactions` | reaction 조회, 추가 |
-| `PR Comment Reply` | inline review comment reply |
-| `PR Review Submit` | approve, request changes, review 제출 |
-| `PR Reviewer Request` | reviewer, team reviewer 요청 |
-| `PR Ready/Draft` | Draft, Ready for Review 전환 |
-| `PR Update` | 제목, 본문, 상태, base branch 수정 |
-| `PR Merge` | merge, squash, rebase |
-| `PR Auto Merge` | auto-merge |
-| `Issue Fetch` | Issue 본문, 상태, 메타데이터 |
-| `Issue Comments` | Issue comment |
-| `Issue Create` | Issue 생성 |
-| `Issue Update` | 제목, 본문, 상태, milestone 수정 |
-| `Issue Labels` | label 추가, 제거 |
-| `Issue Assignees` | assignee 추가, 제거 |
-| `Issue Lock` | conversation lock, unlock |
-| `Issue Comment Update` | top-level comment 수정 |
-| `Issue Reactions` | Issue comment reaction |
-| `File Create` | 파일 생성 |
-| `File Update` | 파일 수정 |
-| `File Delete` | 파일 삭제 |
-| `Blob Create` | blob 생성 |
-| `Tree Create` | Git tree 생성 |
-| `Commit Create` | Git commit 생성 |
-| `Ref Update` | branch ref 이동, branch 생성 |
+### 3.1 Confirmed vs Inferred
+
+| Type | Status | Meaning |
+|------|------|------|
+| Count | Confirmed | `44 tools` 는 로그로 확인 |
+| Exact tool names | Unverified | 개별 Tool 이름은 현재 문서 근거만으로 확인 불가 |
+| Exact tool signatures | Unverified | 입력 파라미터, 반환 타입 확인 불가 |
+| Role mapping below | Inferred | 일반적인 GitHub MCP Server 패턴 기준 분류 |
+
+### 3.2 Inferred 44-Item Mapping
+
+| No. | Inferred Role Group | Example Tasks | Verification |
+|------|------|-----------|------|
+| 1 | `Repository Metadata` | 저장소 정보, default branch | Inferred |
+| 2 | `Repository Search` | 접근 가능한 저장소 검색 | Inferred |
+| 3 | `Branch Search` | branch 검색, 기준 branch 선택 | Inferred |
+| 4 | `File Fetch` | 특정 ref 파일 조회 | Inferred |
+| 5 | `Blob Fetch` | blob SHA 기반 조회 | Inferred |
+| 6 | `Commit Fetch` | 단일 commit 메타데이터, 변경 내용 | Inferred |
+| 7 | `Commit Compare` | 두 ref 간 변경 파일, 통계 비교 | Inferred |
+| 8 | `Commit Search` | commit 검색 | Inferred |
+| 9 | `Commit Status` | combined status, check 결과 | Inferred |
+| 10 | `Workflow Run Lookup` | 특정 commit의 Actions run | Inferred |
+| 11 | `Workflow Jobs` | run 내 job 목록 | Inferred |
+| 12 | `Workflow Steps` | job step 상태 | Inferred |
+| 13 | `Workflow Logs` | 실패 job log | Inferred |
+| 14 | `PR Metadata` | PR 제목, 상태, base/head branch | Inferred |
+| 15 | `PR Diff` | PR diff, patch | Inferred |
+| 16 | `PR Patch By File` | 파일 단위 PR patch | Inferred |
+| 17 | `PR File List` | 변경 파일 목록 | Inferred |
+| 18 | `PR Discussion` | PR comment, review comment, review event | Inferred |
+| 19 | `PR Reviews` | review 목록 | Inferred |
+| 20 | `PR Review Threads` | inline review thread, resolve 상태 | Inferred |
+| 21 | `PR Reactions` | reaction 조회, 추가 | Inferred |
+| 22 | `PR Comment Reply` | inline review comment reply | Inferred |
+| 23 | `PR Review Submit` | approve, request changes, review 제출 | Inferred |
+| 24 | `PR Reviewer Request` | reviewer, team reviewer 요청 | Inferred |
+| 25 | `PR Ready/Draft` | Draft, Ready for Review 전환 | Inferred |
+| 26 | `PR Update` | 제목, 본문, 상태, base branch 수정 | Inferred |
+| 27 | `PR Merge` | merge, squash, rebase | Inferred |
+| 28 | `PR Auto Merge` | auto-merge | Inferred |
+| 29 | `Issue Fetch` | Issue 본문, 상태, 메타데이터 | Inferred |
+| 30 | `Issue Comments` | Issue comment | Inferred |
+| 31 | `Issue Create` | Issue 생성 | Inferred |
+| 32 | `Issue Update` | 제목, 본문, 상태, milestone 수정 | Inferred |
+| 33 | `Issue Labels` | label 추가, 제거 | Inferred |
+| 34 | `Issue Assignees` | assignee 추가, 제거 | Inferred |
+| 35 | `Issue Lock` | conversation lock, unlock | Inferred |
+| 36 | `Issue Comment Update` | top-level comment 수정 | Inferred |
+| 37 | `Issue Reactions` | Issue comment reaction | Inferred |
+| 38 | `File Create` | 파일 생성 | Inferred |
+| 39 | `File Update` | 파일 수정 | Inferred |
+| 40 | `File Delete` | 파일 삭제 | Inferred |
+| 41 | `Blob Create` | blob 생성 | Inferred |
+| 42 | `Tree Create` | Git tree 생성 | Inferred |
+| 43 | `Commit Create` | Git commit 생성 | Inferred |
+| 44 | `Ref Update` | branch ref 이동, branch 생성 | Inferred |
 
 ### Practical Grouping
 
@@ -164,7 +175,7 @@ flowchart LR
 
 ### Conclusion
 
-확장 가능.
+확장 가능성은 있으나, 현재 문서의 근거만으로는 범위를 단정할 수 없음.
 
 구분 기준:
 
@@ -172,12 +183,12 @@ flowchart LR
 - 별도 Custom MCP Server 추가
 - Wrapper / Orchestrator 계층 추가
 
-| Approach | Possible | Description |
+| Approach | Confidence | Description |
 |------|-----------|------|
-| Modify GitHub MCP Server itself | Yes | 서버 소스 수정 기반 `Tool` 추가 |
-| Add tools by config only | Limited | 설정만으로 임의 `Tool` 추가는 제한적 |
-| Add a separate Custom MCP Server | Best option | GitHub 전용 서버 유지 + 프로젝트 전용 서버 추가 |
-| Build a Wrapper Server | Yes | 여러 GitHub `Tool` 호출을 상위 `Tool`로 추상화 |
+| Modify GitHub MCP Server itself | Medium | 서버 소스 접근 가능 시 `Tool` 추가 가능성이 높음 |
+| Add tools by config only | Low | 설정만으로 임의 `Tool` 추가 가능 여부는 현재 근거 부족 |
+| Add a separate Custom MCP Server | High | GitHub 전용 서버와 별도 프로젝트 서버 병행은 일반적으로 현실적 |
+| Build a Wrapper Server | High | 여러 GitHub `Tool` 호출을 상위 `Tool`로 추상화하는 방식은 일반적으로 가능 |
 
 ### A. Extend the GitHub MCP Server Itself
 
@@ -254,3 +265,4 @@ flowchart LR
 - `44 tools` 수: 서버 버전, 인증 범위, MCP Client 구현 영향
 - 실제 개별 목록 필요 시: MCP Inspector 또는 `tools/list` 결과 캡처
 - 현재 문서 기준: 확보 로그 + 일반적인 GitHub MCP Server 패턴
+- 번호 `1`~`44`: 실제 Tool 이름이 아니라, `44개` 규모를 맞춰 정리한 추정 역할 인덱스
