@@ -1,5 +1,6 @@
 # Local MCP Server
 
+* VSCode Extension -> MCP Servers
 ![](../imgs/mcp_server_local_00.png)
 
 ## Overview
