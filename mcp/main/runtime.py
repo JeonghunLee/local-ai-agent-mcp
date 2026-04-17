@@ -2,6 +2,7 @@ import json
 import logging
 from pathlib import Path
 import sys
+from datetime import datetime
 from typing import Any, Callable
 
 
@@ -13,12 +14,14 @@ LOGGER = logging.getLogger("local_mcp")
 if not LOGGER.handlers:
     stream_handler = logging.StreamHandler(sys.stderr)
     stream_handler.setFormatter(logging.Formatter("[%(levelname)s] [%(name)s] %(message)s"))
+    stream_handler.setLevel(logging.ERROR)
     LOGGER.addHandler(stream_handler)
 
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
     file_handler = logging.FileHandler(log_dir / "mcp-server-local.log", encoding="utf-8")
     file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] %(message)s"))
+    file_handler.setLevel(logging.INFO)
     LOGGER.addHandler(file_handler)
 LOGGER.setLevel(logging.INFO)
 LOGGER.propagate = False
@@ -101,12 +104,14 @@ class MCPServer:
                 f"server.tools_call_start name={self.name} id={request_id} tool={tool_name} "
                 f"arguments={json.dumps(arguments, ensure_ascii=False)}"
             )
+            self._append_tool_log(tool_name, f"start id={request_id} arguments={json.dumps(arguments, ensure_ascii=False)}")
             handler = self.handlers.get(tool_name)
 
             if handler is None:
                 self._log_info(
                     f"server.tools_call_unknown name={self.name} id={request_id} tool={tool_name}"
                 )
+                self._append_tool_log(tool_name, f"unknown id={request_id}")
                 return {
                     "jsonrpc": "2.0",
                     "id": request_id,
@@ -123,6 +128,7 @@ class MCPServer:
                     f"server.tools_call_done name={self.name} id={request_id} "
                     f"tool={tool_name} status={status}"
                 )
+                self._append_tool_log(tool_name, f"done id={request_id} status={status}")
                 return {
                     "jsonrpc": "2.0",
                     "id": request_id,
@@ -135,6 +141,10 @@ class MCPServer:
                 self._log_info(
                     f"server.tools_call_error name={self.name} tool={tool_name} "
                     f"error={type(exc).__name__}: {exc}"
+                )
+                self._append_tool_log(
+                    tool_name,
+                    f"error id={request_id} error={type(exc).__name__}: {exc}",
                 )
                 return {
                     "jsonrpc": "2.0",
@@ -197,6 +207,12 @@ class MCPServer:
 
     def _log_info(self, message: str) -> None:
         LOGGER.info(message)
+
+    def _append_tool_log(self, tool_name: str, message: str) -> None:
+        timestamp = datetime.now().isoformat(timespec="seconds")
+        log_path = Path("logs") / f"mcp-server-local-{tool_name}.log"
+        with log_path.open("a", encoding="utf-8") as handle:
+            handle.write(f"{timestamp} {message}\n")
 
     def _error_response(self, request_id: Any, code: int, message: str) -> JsonDict:
         return {
