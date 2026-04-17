@@ -468,9 +468,23 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="github-mcp-server">GitHub MCP Server</h1>
+<ul>
+<li>
+<p>VSCode Extension -&gt; MCP Servers   <br/>
+<img alt="" src="../imgs/mcp_server_github_00.png"/></p>
+</li>
+<li>
+<p>Manaul
+<a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server">https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server</a></p>
+</li>
+<li>
+<p>Node.js 
+<a href="https://github.com/github/github-mcp-server">https://github.com/github/github-mcp-server</a> </p>
+</li>
+</ul>
 <h2 id="overview">Overview</h2>
-<p>GitHub <code>Repository</code>, <code>Pull Request</code>, <code>Issue</code>, <code>Review</code>, <code>Actions</code> 대상 MCP(Model Context Protocol) <code>Tool</code> 제공용 전용 서버.</p>
-<p>확인 기준 로그:</p>
+<p>GitHub 대상 MCP(Model Context Protocol) <code>Tool</code> 제공용 전용 서버.</p>
+<p>VS Code MCP Server Github Log:
 <div class="highlight"><pre><span></span><code>2026-04-17 10:33:22.770 [info] Starting server io.github.github/github-mcp-server
 2026-04-17 10:33:22.770 [info] Connection state: Starting
 2026-04-17 10:33:22.770 [info] Starting server from LocalProcess extension host
@@ -479,63 +493,41 @@
 2026-04-17 10:33:25.037 [info] Using auth server metadata url: https://github.com/login/oauth
 2026-04-17 10:33:25.440 [info] Discovered authorization server metadata at https://github.com/.well-known/oauth-authorization-server/login/oauth
 2026-04-17 10:33:33.737 [info] Discovered 44 tools
-</code></pre></div>
-<p>핵심 판단:</p>
+</code></pre></div></p>
 <ul>
-<li>범용 MCP Server보다 GitHub 전용 MCP Server 성격</li>
+<li>GitHub 전용 MCP Server </li>
 <li>Local 실행 + Remote GitHub 인증/데이터 구조</li>
-<li><code>44 tools</code> 발견 상태</li>
 </ul>
 <hr/>
-<h2 id="1-log-summary">1. Log Summary</h2>
-<table>
-<thead>
-<tr>
-<th>Log</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Starting server io.github.github/github-mcp-server</code></td>
-<td>GitHub MCP Server 시작</td>
-</tr>
-<tr>
-<td><code>Starting server from LocalProcess extension host</code></td>
-<td>Local process 기반 실행</td>
-</tr>
-<tr>
-<td><code>Connection state: Running</code></td>
-<td>MCP 세션 정상 상태</td>
-</tr>
-<tr>
-<td><code>Discovered resource metadata at https://api.githubcopilot.com/.../mcp/</code></td>
-<td>보호 리소스 메타데이터 탐색</td>
-</tr>
-<tr>
-<td><code>Using auth server metadata url: https://github.com/login/oauth</code></td>
-<td>GitHub OAuth 사용</td>
-</tr>
-<tr>
-<td><code>Discovered authorization server metadata ...</code></td>
-<td>OAuth 메타데이터 확인</td>
-</tr>
-<tr>
-<td><code>Discovered 44 tools</code></td>
-<td>MCP <code>Tool</code> 44개 노출</td>
-</tr>
-</tbody>
-</table>
-<h3 id="key-points">Key Points</h3>
+<h2 id="mcp-server-gitub">MCP Server-Gitub</h2>
+<p>상위 아이콘의 설정메뉴에서 확인 </p>
 <ul>
-<li>Server process: Local</li>
-<li>Authentication: Remote GitHub OAuth</li>
-<li>Data source: Remote GitHub API</li>
-<li>Runtime shape: <code>Local Process + Remote GitHub API/OAuth</code></li>
-<li><code>44 tools</code>: 시작 시점 discovery 결과</li>
+<li>
+<p><strong>Default Manaul</strong> <br/>
+<a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server">https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server</a></p>
+</li>
+<li>
+<p><strong>JSON Setup</strong> <br/>
+<a href="https://github.com/github/github-mcp-server/blob/main/docs/server-configuration.md">https://github.com/github/github-mcp-server/blob/main/docs/server-configuration.md</a></p>
+</li>
 </ul>
-<hr/>
-<h2 id="2-github-mcp-server-capabilities">2. GitHub MCP Server Capabilities</h2>
+<h3 id="vs-code-config">VS Code Config</h3>
+<ul>
+<li>MCP Server Setup (Remote/HTTP)
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"io.github.github/github-mcp-server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.githubcopilot.com/mcp/"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"gallery"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.mcp.github.com"</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.33.0"</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="p">}</span>
+</code></pre></div></li>
+</ul>
+<h3 id="capabilities">Capabilities</h3>
 <p>주요 기능군:</p>
 <ul>
 <li><code>Repository</code> 조회 / 검색</li>
@@ -557,87 +549,7 @@
     Server --&gt;|discover metadata| Meta
     Server --&gt;|authenticate| OAuth
     Server --&gt;|read / write tools| API</code></pre>
-<h3 id="21-github-mcp-server-location-local-remote">2.1 GitHub MCP Server Location (Local / Remote)</h3>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Location</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>MCP Server Process</td>
-<td>Local</td>
-<td>IDE 또는 MCP Client 프로세스</td>
-</tr>
-<tr>
-<td>OAuth Server</td>
-<td>Remote</td>
-<td><code>github.com/login/oauth</code></td>
-</tr>
-<tr>
-<td>Protected Resource Metadata</td>
-<td>Remote</td>
-<td><code>api.githubcopilot.com</code></td>
-</tr>
-<tr>
-<td>Data Source</td>
-<td>Remote</td>
-<td>GitHub <code>Repository</code> / <code>PR</code> / <code>Issue</code> / <code>Actions</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="structure-summary">Structure Summary</h3>
-<ul>
-<li>Execution: Local</li>
-<li>Auth: Remote</li>
-<li>Data: Remote</li>
-<li>Scope 결정 요소: GitHub API + server implementation</li>
-</ul>
-<hr/>
-<h2 id="3-44-tools-and-their-roles">3. 44 Tools and Their Roles</h2>
-<p>주의:</p>
-<ul>
-<li>로그 기준 확인 사실: <code>Discovered 44 tools</code></li>
-<li>로그 미포함 항목: 개별 <code>Tool</code> 이름 전체</li>
-<li>아래 표: 일반적인 GitHub MCP Server 패턴 기준 역할군 정리</li>
-<li>실제 목록 확인 수단: MCP Inspector, <code>tools/list</code></li>
-</ul>
-<h3 id="31-confirmed-vs-inferred">3.1 Confirmed vs Inferred</h3>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Status</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Count</td>
-<td>Confirmed</td>
-<td><code>44 tools</code> 는 로그로 확인</td>
-</tr>
-<tr>
-<td>Exact tool names</td>
-<td>Unverified</td>
-<td>개별 Tool 이름은 현재 문서 근거만으로 확인 불가</td>
-</tr>
-<tr>
-<td>Exact tool signatures</td>
-<td>Unverified</td>
-<td>입력 파라미터, 반환 타입 확인 불가</td>
-</tr>
-<tr>
-<td>Role mapping below</td>
-<td>Inferred</td>
-<td>일반적인 GitHub MCP Server 패턴 기준 분류</td>
-</tr>
-</tbody>
-</table>
-<h3 id="32-inferred-44-item-mapping">3.2 Inferred 44-Item Mapping</h3>
+<h3 id="roles">Roles</h3>
 <table>
 <thead>
 <tr>
@@ -946,7 +858,7 @@
 </tbody>
 </table>
 <hr/>
-<h2 id="4-custom-tool-extensibility">4. Custom Tool Extensibility</h2>
+<h2 id="custom-tool-extensibility">Custom Tool Extensibility</h2>
 <h3 id="conclusion">Conclusion</h3>
 <p>확장 가능성은 있으나, 현재 문서의 근거만으로는 범위를 단정할 수 없음.</p>
 <p>구분 기준:</p>
@@ -1040,22 +952,6 @@
 <ul>
 <li>사용자 직접 조합 부담 감소</li>
 <li>workflow 표준화 용이</li>
-</ul>
-<hr/>
-<h2 id="recommendation">Recommendation</h2>
-<p>권장 구성:</p>
-<ul>
-<li>GitHub 데이터 조회/수정: GitHub MCP Server</li>
-<li>빌드, 테스트, log 분석, 문서 생성: 프로젝트 전용 MCP Server</li>
-<li>다단계 자동화: Wrapper <code>Tool</code> 또는 상위 Orchestrator</li>
-</ul>
-<hr/>
-<h2 id="notes">Notes</h2>
-<ul>
-<li><code>44 tools</code> 수: 서버 버전, 인증 범위, MCP Client 구현 영향</li>
-<li>실제 개별 목록 필요 시: MCP Inspector 또는 <code>tools/list</code> 결과 캡처</li>
-<li>현재 문서 기준: 확보 로그 + 일반적인 GitHub MCP Server 패턴</li>
-<li>번호 <code>1</code>~<code>44</code>: 실제 Tool 이름이 아니라, <code>44개</code> 규모를 맞춰 정리한 추정 역할 인덱스</li>
 </ul>
 </article>
 </div>

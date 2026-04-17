@@ -348,10 +348,28 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#vs-code-mcp-system">
+<span class="md-ellipsis">
+      
+        VS Code MCP System
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#role">
 <span class="md-ellipsis">
       
         Role
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#current-usage">
+<span class="md-ellipsis">
+      
+        Current Usage
       
     </span>
 </a>
@@ -375,19 +393,50 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#gateway-configuration-gateway-configjson">
+<a class="md-nav__link" href="#gateway-variants">
 <span class="md-ellipsis">
       
-        Gateway Configuration (gateway-config.json)
+        Gateway Variants
       
     </span>
 </a>
+<nav aria-label="Gateway Variants" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#version-a">
+<span class="md-ellipsis">
+      
+        Version A
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#version-b">
+<span class="md-ellipsis">
+      
+        Version B
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#with-without-openclaw">
 <span class="md-ellipsis">
       
         With / Without OpenClaw
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#limitation">
+<span class="md-ellipsis">
+      
+        Limitation
       
     </span>
 </a>
@@ -580,16 +629,47 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="mcp-gateway">MCP Gateway</h1>
+<ul>
+<li>MCP Gateway
+  VS Code가 여러 MCP Server를 동시에 연결하고 선택적으로 호출하는 내부 허브 기능</li>
+</ul>
 <h2 id="overview">Overview</h2>
-<p>MCP Gateway는 여러 MCP Server 앞에 위치하는 라우팅 계층.<br/>
-AI Agent(Claude, Codex, Ollama)의 Tool 호출을 수신하고, 등록된 MCP Server 중 적합한 서버로 전달한다.</p>
+<p>이 문서에서 말하는 MCP Gateway는 별도 프로세스로 구현한 커스텀 게이트웨이 서버가 아니라,<br/>
+**VS Code 내부 MCP Gateway 기능**을 기준으로 설명한다.</p>
+<p>즉 현재 의도는 다음과 같다.</p>
+<ul>
+<li>VS Code가 <code>.vscode/mcp.json</code>에 등록된 여러 MCP Server에 동시에 연결</li>
+<li>AI Agent가 필요할 때 각 Server의 Tool을 직접 호출</li>
+<li>Local Tool은 <code>mcp-server-local</code>, GitHub Tool은 <code>github-mcp-server</code>를 사용</li>
+</ul>
+<p>중요한 점:</p>
+<ul>
+<li>VS Code MCP Gateway는 **연결과 Tool 라우팅**을 담당한다</li>
+<li>하지만 **Tag Event 수신, result.json 감시, Sub AI 분석 자동 연결**까지 대신해주지는 않는다</li>
+<li>그런 end-to-end 실행 흐름은 별도의 오케스트레이션 로직이 필요하다</li>
+</ul>
 <div class="highlight"><pre><span></span><code>AI Agent
   └─ Tool 호출
-       └─ MCP Gateway (:4000)
-            ├─ Local MCP Server (:3000)  — 빌드 · 테스트 · 로그 Tool
+       └─ VS Code MCP Gateway
+            ├─ Local MCP Server          — 빌드 · 테스트 · 로그 Tool
             └─ GitHub MCP Server         — Repository · PR · Issue Tool
 </code></pre></div>
 <hr/>
+<h2 id="vs-code-mcp-system">VS Code MCP System</h2>
+<ul>
+<li>
+<p>MCP configuration reference     <br/>
+<a href="https://code.visualstudio.com/docs/copilot/reference/mcp-configuration">https://code.visualstudio.com/docs/copilot/reference/mcp-configuration</a></p>
+</li>
+<li>
+<p>Add and manage MCP servers in VS Code    <br/>
+<a href="https://code.visualstudio.com/docs/copilot/chat/mcp-servers">https://code.visualstudio.com/docs/copilot/chat/mcp-servers</a></p>
+</li>
+<li>
+<p><strong>MCP developer guide</strong> <br/>
+<a href="https://code.visualstudio.com/api/extension-guides/mcp">https://code.visualstudio.com/api/extension-guides/mcp</a></p>
+</li>
+</ul>
 <h2 id="role">Role</h2>
 <table>
 <thead>
@@ -601,22 +681,32 @@ AI Agent(Claude, Codex, Ollama)의 Tool 호출을 수신하고, 등록된 MCP Se
 </thead>
 <tbody>
 <tr>
-<td><strong>MCP Gateway</strong></td>
-<td>Local</td>
-<td>Tool 호출 수신 · 라우팅 · 응답 반환</td>
+<td><strong>VS Code MCP Gateway</strong></td>
+<td>VS Code 내부</td>
+<td>MCP Server 연결 · Tool discovery · Tool 호출 라우팅</td>
 </tr>
 <tr>
-<td><a href="mcp_server.local.md">Local MCP Server</a></td>
+<td><a href="mcp_server_local.html">MCP Server-Local</a></td>
 <td>Local</td>
 <td><code>build_tool</code>, <code>flash_tool</code>, <code>do_test</code>, <code>log_analyzer</code> 등 CT Tool</td>
 </tr>
 <tr>
-<td><a href="mcp_server_github.html">GitHub MCP Server</a></td>
+<td><a href="mcp_server_github.html">MCP Server-GitHub</a></td>
 <td>Local Process + Remote GitHub API</td>
 <td><code>PR</code>, <code>Issue</code>, <code>Repository</code>, <code>Actions</code> Tool</td>
 </tr>
 </tbody>
 </table>
+<hr/>
+<h2 id="current-usage">Current Usage</h2>
+<p>현재 이 프로젝트에서 실제로 사용하는 방식은 아래와 같다.</p>
+<ol>
+<li>VS Code가 <code>.vscode/mcp.json</code>을 읽고 MCP Server들을 시작한다.</li>
+<li><code>mcp-server-local</code>과 <code>github-mcp-server</code>가 각각 연결된다.</li>
+<li>AI Agent는 Tool 이름과 목적에 따라 적절한 Server의 Tool을 호출한다.</li>
+<li>각 Tool의 실행 순서와 업무 흐름은 VS Code Gateway가 자동으로 오케스트레이션하지 않는다.</li>
+</ol>
+<p>즉 VS Code Gateway는 <code>Hub</code>에 가깝고, 별도 <code>Workflow Engine</code>은 아니다.</p>
 <hr/>
 <h2 id="routing-rules">Routing Rules</h2>
 <p>Tool 이름 prefix 기준으로 대상 서버를 결정한다.</p>
@@ -658,12 +748,12 @@ AI Agent(Claude, Codex, Ollama)의 Tool 호출을 수신하고, 등록된 MCP Se
 <h2 id="protocol-flow">Protocol Flow</h2>
 <pre class="mermaid"><code>sequenceDiagram
     participant A as AI Agent
-    participant G as MCP Gateway (:4000)
-    participant L as Local MCP Server (:3000)
+    participant G as VS Code MCP Gateway
+    participant L as Local MCP Server
     participant GH as GitHub MCP Server
 
     A-&gt;&gt;G: tools/call { name, arguments }
-    G-&gt;&gt;G: Tool prefix 기준 라우팅 판단
+    G-&gt;&gt;G: 등록된 Tool 기준 대상 Server 선택
 
     alt Local Tool
         G-&gt;&gt;L: tools/call 전달
@@ -677,32 +767,78 @@ AI Agent(Claude, Codex, Ollama)의 Tool 호출을 수신하고, 등록된 MCP Se
 
     G--&gt;&gt;A: 결과 반환</code></pre>
 <hr/>
-<h2 id="gateway-configuration-gateway-configjson">Gateway Configuration (<code>gateway-config.json</code>)</h2>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<h2 id="gateway-variants">Gateway Variants</h2>
+<h3 id="version-a">Version A</h3>
+<p><strong>with OpenClaw</strong></p>
+<p>OpenClaw 쪽 Gateway를 별도로 둘 수는 있지만, 이 프로젝트의 현재 문서 기준 기본 전제는 아니다.</p>
+<p>Window WSL 
+<div class="highlight"><pre><span></span><code>cat ~/.openclaw/openclaw.json
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><span class="err">...</span>
 <span class="w">  </span><span class="nt">"gateway"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openclaw-mcp-gateway"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">4000</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"local"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"local-mcp-server"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://localhost:3000"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"tool_prefixes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"build_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flash_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"do_test_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"uart_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"qemu_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"reg_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"file_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"log_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"test_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"channels"</span><span class="p">]</span>
+<span class="w">    </span><span class="nt">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"local"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"auth"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"token"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxxxxxx"</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">"github"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"github-mcp-server"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"tool_prefixes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"github_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"pr_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"issue_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"repo_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"commit_"</span><span class="p">,</span><span class="w"> </span><span class="s2">"workflow_"</span><span class="p">]</span>
+<span class="w">    </span><span class="nt">"port"</span><span class="p">:</span><span class="w"> </span><span class="mi">18789</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"bind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"loopback"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"tailscale"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"off"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"resetOnExit"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"controlUi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"allowInsecureAuth"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">"nodes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"denyCommands"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"camera.snap"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"camera.clip"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"screen.record"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"contacts.add"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"calendar.add"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"reminders.add"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"sms.send"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"sms.search"</span>
+<span class="w">      </span><span class="p">]</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"logging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"output_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"../logs"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"markdown"</span>
+<span class="err">...</span>
+</code></pre></div>
+<h3 id="version-b">Version B</h3>
+<ul>
+<li>
+<p>VS Code Internal MCP Gateway Log
+<div class="highlight"><pre><span></span><code>2026-04-17 10:30:15.965 [info] [McpGatewayService] Initialized
+</code></pre></div></p>
+</li>
+<li>
+<p>VS Code Internal MCP Gateway</p>
+</li>
+<li>VS Code 내부 서비스</li>
+<li><code>.vscode/mcp.json</code> 또는 User <code>mcp.json</code> 관리 대상</li>
+<li>여러 MCP Server를 동시에 붙이는 허브</li>
+<li>OpenClaw Gateway 설정 파일과 별도</li>
+<li>
+<p>현재 프로젝트에서 우선 사용하는 방향</p>
+</li>
+<li>
+<p>Workspace MCP Config Example
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"mcp-server-local"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">"-m"</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">"mcp.main.server_local"</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div>
+</code></pre></div></p>
+</li>
+</ul>
 <hr/>
 <h2 id="with-without-openclaw">With / Without OpenClaw</h2>
 <table>
@@ -716,30 +852,42 @@ AI Agent(Claude, Codex, Ollama)의 Tool 호출을 수신하고, 등록된 MCP Se
 <tbody>
 <tr>
 <td><strong>With OpenClaw</strong></td>
-<td>OpenClaw → Gateway</td>
-<td>OpenClaw이 채널 담당, Gateway는 Tool 라우팅만 수행</td>
+<td>OpenClaw → 별도 흐름 제어</td>
+<td>OpenClaw이 채널 담당, VS Code Gateway는 MCP Tool 연결만 담당</td>
 </tr>
 <tr>
 <td><strong>Without OpenClaw</strong></td>
-<td>GitHub Tag Event → Gateway</td>
-<td>Gateway가 채널 라우팅까지 담당 (<code>channels</code> Tool 포함)</td>
+<td>수동 Tool 호출 또는 별도 트리거 구현 필요</td>
+<td>VS Code Gateway는 연결 허브이며 자동 실행 흐름은 별도 구현 필요</td>
 </tr>
 </tbody>
 </table>
 <pre class="mermaid"><code>flowchart TD
     subgraph With OpenClaw
-        OC[OpenClaw] --&gt;|CT 실행 요청| GW1[MCP Gateway]
+        OC[OpenClaw] --&gt;|CT 실행 요청| GW1[VS Code MCP Gateway]
         GW1 --&gt; L1[Local MCP Server]
         GW1 --&gt; GH1[GitHub MCP Server]
         OC --&gt;|channels| CH[GitHub · Slack · E-Mail]
     end
 
     subgraph Without OpenClaw
-        TAG[GitHub Tag Event] --&gt;|webhook| GW2[MCP Gateway]
+        TAG[GitHub Tag Event] --&gt;|별도 구현 필요| ORCH[Orchestrator]
+        ORCH --&gt; GW2[VS Code MCP Gateway]
         GW2 --&gt; L2[Local MCP Server]
         GW2 --&gt; GH2[GitHub MCP Server]
-        L2 --&gt;|channels Tool| CH2[GitHub · Slack · E-Mail]
+        ORCH --&gt;|channels/report| CH2[GitHub · Slack · E-Mail]
     end</code></pre>
+<hr/>
+<h2 id="limitation">Limitation</h2>
+<p>VS Code MCP Gateway만으로는 아래 항목이 자동으로 완성되지 않는다.</p>
+<ul>
+<li>GitHub Tag Event webhook 수신</li>
+<li>Local MCP 실행 결과의 반복 감시</li>
+<li><code>result.json</code> 기반 재시도</li>
+<li>Sub AI의 <code>log_analyzer</code> / <code>test_result</code> 자동 연결</li>
+<li>최종 보고 자동 게시</li>
+</ul>
+<p>즉 이 문서의 Gateway는 <code>연결 허브</code>이고, CT 파이프라인 전체를 실행하는 <code>오케스트레이터</code>는 아니다.</p>
 <hr/>
 <h2 id="agent-tool-access">Agent Tool Access</h2>
 <table>
@@ -767,7 +915,7 @@ AI Agent(Claude, Codex, Ollama)의 Tool 호출을 수신하고, 등록된 MCP Se
 <td>Gateway → GitHub MCP Server</td>
 </tr>
 <tr>
-<td><strong>Main AI (Claude)</strong></td>
+<td><strong>Main AI</strong></td>
 <td>Tool 미접근 — 코드·문서 생성 전담</td>
 <td>—</td>
 </tr>
@@ -776,7 +924,7 @@ AI Agent(Claude, Codex, Ollama)의 Tool 호출을 수신하고, 등록된 MCP Se
 <hr/>
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="mcp_server.local.md">mcp_server.local.md</a> — CT Tool 상세 정의, Protocol Flow</li>
+<li><a href="mcp_server_local.html">mcp_server_local.md</a> — CT Tool 상세 정의, Protocol Flow</li>
 <li><a href="mcp_server_github.html">mcp_server_github.md</a> — GitHub MCP Server 44 Tools</li>
 <li><a href="../architecture/system-design.html">architecture/system-design.md</a> — 시스템 구조 및 Deployment Diagram</li>
 </ul>
