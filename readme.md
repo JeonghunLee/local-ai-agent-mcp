@@ -48,7 +48,7 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 
 1. Ollama 설치 (Windows): [docs/agents/ollama_setup.md](docs/agents/ollama_setup.md)
 2. OpenClaw 설치 (WSL2): [docs/environments/window_wsl2_setup.md](docs/environments/window_wsl2_setup.md)
-3. MCP 서버 시작: [docs/mcp/mcp_server.md](docs/mcp/mcp_server.md)
+3. MCP 서버 시작: [docs/mcp/local_mcp_server.md](docs/mcp/local_mcp_server.md)
 4. Agent 설정: [docs/agents/](docs/agents/)
 5. 실험 실행: [docs/experiments/openclaw_test.md](docs/experiments/openclaw_test.md)
 
@@ -66,7 +66,7 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 - [Ollama Setup](docs/agents/ollama_setup.md) — Windows 설치 및 WSL2 연결
 
 ### MCP
-- [MCP 서버](docs/mcp/mcp_server.md) — 서버 설정, Tool 정의, 프로토콜 흐름
+- [MCP 서버](docs/mcp/local_mcp_server.md) — 서버 설정, Tool 정의, 프로토콜 흐름
 
 ### Environments
 - [Windows WSL2 Setup](docs/environments/window_wsl2_setup.md) — WSL2에서 OpenClaw 설치
