@@ -1,2 +1,9 @@
 #
+
+
+# MCP System (MCP Server Local)
 mcp/main/__pycache__
+
+# action-runner
+actions-runner/*
+actions-runner
