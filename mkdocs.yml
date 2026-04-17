@@ -19,8 +19,10 @@ nav:
       - Codex: agents/codex.md
       - Ollama: agents/ollama.md
       - Ollama Setup: agents/ollama_setup.md
-  - MCP:
-      - MCP Server: mcp/mcp_server.md
+  - MCP Gateway:
+      - Overview: mcp/mcp_gateway.md
+      - MCP Server-Github: mcp/mcp_github_server.md
+      - MCP Server-Local: mcp/mcp_server_local.md
   - Environments:
       - Windows WSL2 Setup: environments/window_wsl2_setup.md
   - Experiments:
