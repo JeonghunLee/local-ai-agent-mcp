@@ -30,6 +30,7 @@ OpenClaw 기반의 MCP(Model Context Protocol) 사용
 
 | 문서 | 설명 |
 |------|------|
+| [MCP Gateway](mcp/mcp_gateway.md) | Tool 라우팅 계층, 다중 MCP Server 연결 |
 | [MCP Server](mcp/local_mcp_server.md) | 서버 설정, Tool 정의, Protocol Flow |
 
 ### GitHub

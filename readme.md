@@ -66,6 +66,7 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 - [Ollama Setup](docs/agents/ollama_setup.md) — Windows 설치 및 WSL2 연결
 
 ### MCP
+- [MCP Gateway](docs/mcp/mcp_gateway.md) — Tool 라우팅 계층, 다중 MCP Server 연결
 - [MCP 서버](docs/mcp/local_mcp_server.md) — 서버 설정, Tool 정의, 프로토콜 흐름
 
 ### Environments
