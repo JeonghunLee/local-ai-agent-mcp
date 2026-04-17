@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "mcp-server-local": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp.main.server_local"
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}
