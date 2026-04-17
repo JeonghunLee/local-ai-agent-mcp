@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import subprocess
 
 
 LOGGER = logging.getLogger("local_mcp.tools")
@@ -8,13 +9,21 @@ LOGGER = logging.getLogger("local_mcp.tools")
 
 def build_tool(arguments: dict) -> dict:
     LOGGER.info("tool.call name=build_tool")
+    result = subprocess.run(
+        ["ping", "-n", "5", "127.0.0.1"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
     return {
         "tool": "build_tool",
-        "status": "success",
-        "command": arguments.get("command", "make"),
+        "status": "success" if result.returncode == 0 else "error",
+        "command": "ping -n 5 127.0.0.1",
         "target": arguments.get("target", "all"),
         "working_dir": arguments.get("working_dir", "."),
-        "message": "Local build tool stub executed.",
+        "exit_code": result.returncode,
+        "stdout": result.stdout,
+        "stderr": result.stderr,
     }
 
 

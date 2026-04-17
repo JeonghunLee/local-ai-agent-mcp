@@ -23,9 +23,10 @@ class MCPServer:
         self.version = version
         self.tools = tools
         self.handlers = handlers
+        self._transport_mode = "content-length"
 
     def run(self) -> None:
-        self._log_info(f"server.start name={self.name} version={self.version}")
+        # self._log_info(f"server.start name={self.name} version={self.version}")
         while True:
             try:
                 message = self._read_message()
@@ -35,17 +36,17 @@ class MCPServer:
                 )
                 continue
             if message is None:
-                self._log_info(f"server.stop name={self.name} reason=stdin_closed")
+                # self._log_info(f"server.stop name={self.name} reason=stdin_closed")
                 return
-            self._log_info(
-                f"server.recv name={self.name} method={message.get('method')} id={message.get('id')}"
-            )
+            # self._log_info(
+            #     f"server.recv name={self.name} method={message.get('method')} id={message.get('id')}"
+            # )
             response = self._handle_message(message)
             if response is not None:
-                self._log_info(
-                    f"server.send name={self.name} id={response.get('id')} "
-                    f"result={'error' if response.get('error') else 'ok'}"
-                )
+                # self._log_info(
+                #     f"server.send name={self.name} id={response.get('id')} "
+                #     f"result={'error' if response.get('error') else 'ok'}"
+                # )
                 self._write_message(response)
 
     def _handle_message(self, message: JsonDict) -> JsonDict | None:
@@ -56,7 +57,7 @@ class MCPServer:
         request_id = message.get("id")
 
         if method == "initialize":
-            self._log_info(f"server.initialize name={self.name}")
+            # self._log_info(f"server.initialize name={self.name}")
             return {
                 "jsonrpc": "2.0",
                 "id": request_id,
@@ -71,11 +72,11 @@ class MCPServer:
             return None
 
         if method == "ping":
-            self._log_info(f"server.ping name={self.name}")
+            # self._log_info(f"server.ping name={self.name}")
             return {"jsonrpc": "2.0", "id": request_id, "result": {}}
 
         if method == "tools/list":
-            self._log_info(f"server.tools_list name={self.name} count={len(self.tools)}")
+            # self._log_info(f"server.tools_list name={self.name} count={len(self.tools)}")
             return {"jsonrpc": "2.0", "id": request_id, "result": {"tools": self.tools}}
 
         if method == "tools/call":
@@ -96,7 +97,7 @@ class MCPServer:
             handler = self.handlers.get(tool_name)
 
             if handler is None:
-                self._log_info(f"server.tools_call_unknown name={self.name} tool={tool_name}")
+                # self._log_info(f"server.tools_call_unknown name={self.name} tool={tool_name}")
                 return {
                     "jsonrpc": "2.0",
                     "id": request_id,
@@ -108,7 +109,7 @@ class MCPServer:
 
             try:
                 payload = handler(arguments)
-                self._log_info(f"server.tools_call_done name={self.name} tool={tool_name}")
+                # self._log_info(f"server.tools_call_done name={self.name} tool={tool_name}")
                 return {
                     "jsonrpc": "2.0",
                     "id": request_id,
@@ -141,7 +142,18 @@ class MCPServer:
         while True:
             line = sys.stdin.buffer.readline()
             if not line:
+                # self._log_info(f"server.stdin_eof name={self.name}")
                 return None
+            # self._log_info(
+            #     f"server.stdin_line name={self.name} bytes={len(line)} raw={line!r}"
+            # )
+            stripped = line.strip()
+            if stripped.startswith(b"{"):
+                self._transport_mode = "json-line"
+                # self._log_info(
+                #     f"server.stdin_json_line name={self.name} bytes={len(stripped)}"
+                # )
+                return json.loads(stripped.decode("utf-8"))
             if line in (b"\r\n", b"\n"):
                 break
             key, _, value = line.decode("utf-8").partition(":")
@@ -153,16 +165,21 @@ class MCPServer:
         length = int(headers["content-length"])
         if length < 0:
             raise ValueError("Invalid Content-Length header")
+        # self._log_info(f"server.stdin_body name={self.name} content_length={length}")
 
         body = sys.stdin.buffer.read(length)
         if len(body) != length:
             raise ValueError("Incomplete message body")
+        # self._log_info(f"server.stdin_body_read name={self.name} bytes={len(body)}")
         return json.loads(body.decode("utf-8"))
 
     def _write_message(self, payload: JsonDict) -> None:
         encoded = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-        sys.stdout.buffer.write(f"Content-Length: {len(encoded)}\r\n\r\n".encode("ascii"))
-        sys.stdout.buffer.write(encoded)
+        if self._transport_mode == "json-line":
+            sys.stdout.buffer.write(encoded + b"\n")
+        else:
+            sys.stdout.buffer.write(f"Content-Length: {len(encoded)}\r\n\r\n".encode("ascii"))
+            sys.stdout.buffer.write(encoded)
         sys.stdout.buffer.flush()
 
     def _log_info(self, message: str) -> None:
