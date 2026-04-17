@@ -37,14 +37,14 @@ VS Code MCP Server Github Log:
 
 상위 아이콘의 설정메뉴에서 확인 
 
-### VS Code Config
-
-Default Manaul
+* **Default Manaul**    
     https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server
 
-
-JSON Setup 
+* **JSON Setup**   
     https://github.com/github/github-mcp-server/blob/main/docs/server-configuration.md
+
+
+### VS Code Config
 
 * MCP Server Setup (Remote/HTTP)
 ```json
@@ -60,8 +60,6 @@ JSON Setup
 	"inputs": []
 }
 ```
-
-
 
 ### Capabilities
 

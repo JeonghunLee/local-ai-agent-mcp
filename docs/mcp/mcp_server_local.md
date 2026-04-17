@@ -5,525 +5,256 @@
 
 ## Overview
 
-MCP Server는 **CT(Continuous Testing)** 전용 서버.   
-Tag 이벤트를 명령 트리거로 받아 테스트 실행 → 문제 파악 → 분석 → 문서 작성 → 보고까지 자동 처리한다.
+Local MCP Server는 **VS Code MCP Gateway**를 통해 연결되는 로컬 실행용 MCP Server이다.
 
-> 현재 구현 상태와 목표 아키텍처는 다르다.
->
-> 현재 구현:
-> - VS Code MCP Client / MCP Gateway를 통해 `mcp-server-local`에 연결
-> - `build_tool`, `flash_tool`, `log_analyzer` 3개 Tool 호출 가능
-> - Tool별 실행 로그는 `logs/mcp-server-local-<tool>.log`에 기록
->
-> 아직 미구현:
-> - GitHub Tag Event 직접 수신
-> - `do_test_<type>_<nn>()`
-> - `test_result()`
-> - `channels()`
-> - `result.json + .log` 표준 산출물 생성
-> - Remote Sub AI 감시·분석 자동화
+현재 문서의 기준은 다음과 같다.
 
-아래 다이어그램과 설명은 **목표 구조**를 나타낸다.
+- OpenClaw는 사용하지 않는다
+- 서버 등록과 실행은 `.vscode/mcp.json` 기준으로 설명한다
+- 테스트 요청의 시작점은 `Tag Event`가 아니라 **GitHub Issue Event / TEST Issue 요청**이다
+- 각 MCP Tool은 실행 결과를 **log 파일**과 **JSON 결과 파일**로 남긴다
+- Tool 종류는 현재 운영 방향에 맞춰 최소 집합으로 유지한다
 
+권장 흐름:
+
+```text
+GitHub Issue (TEST 요청)
+  → GitHub MCP Server로 Issue 내용 확인
+  → Local MCP Server Tool 실행
+  → logs + results JSON 저장
+  → GitHub Issue 댓글 또는 후속 문서로 보고
 ```
-Tag Event → MCP Server → Local AI (실행) → result.json + .log
-                                             → Remote Sub AI (감시·분석) → TEST RESULT 문서 → 보고
-```
-
-| 이름 | AI Agent 역할 | 동작역할 |
-|------ |------ |------| 
-| **Main AI**  |  Remote Main    | MCP 미접근 — 코드 생성·문서 생성 전담 |
-| **Sub AI**   |  Remote Sub   |  감시·분석 전담 — 실행 결과 감시, 에러 시 `log_analyzer` 호출, TEST 문서 작성 후 보고 |
-| **Local AI** |  Remote Sub AI or Local AI        | 실행 + 반복 전담 — Tool 실행 → result.json 확인 → 에러 시 재실행, 여러 TEST 반복으로 문제 패턴 수집 |
-
-**Remote Agent 구성**
-
-| 구성 | Remote Agent 수 | Sub 역할 처리 |
-|------|----------------|--------------|
-| 2-Agent | Main + Sub | Sub가 독립 처리 |
-| 1-Agent | Main only | Main이 Sub 역할 대행 (`log_analyzer`, `test_result` 권한 부여) |
-
-**Local Agent 구성**
-
-| 구분 | Version A | Version B |
-|------|-----------|-----------|
-| 트리거 수신 | Tag Event → OpenClaw → MCP | Tag Event → MCP 직접 |
-| Channel 담당 | OpenClaw | MCP `channels()` |
-| MCP 역할 | CT Tool Server | CT Tool Server + Channel Router |
 
 ---
 
-## Version A — With OpenClaw
+## Current Direction
 
-OpenClaw이 채널(GitHub · Slack · E-Mail)을 담당하며, MCP는 `channels()` 미포함.
+이 문서는 현재 구현 완료 상태를 모두 설명하는 문서라기보다,  
+**VS Code 기반 Local MCP Server의 목표 운영 방식**을 정리한 문서다.
 
-### Registered Tools
+현재 코드 기준으로 일부 Tool은 stub이거나 축소 구현일 수 있다.  
+문서의 초점은 다음 구조를 명확히 하는 데 있다.
 
-| Tool | 설명 | 담당 | 실행 |
-|------|------|------|------|
-| `build_tool()` | make · cmake · bitbake 빌드 실행 | Local AI | 1회 |
-| `flash_tool()` | OpenOCD · JLink · dfu-util 플래시 | Local AI | 1회 |
-| `do_test_<type>_<nn>()` | 타입별 테스트 실행 — 각자 log 생성 방식 보유 | Local AI | 반복 |
-| &nbsp;&nbsp;`→ uart_capture()` | pyserial · minicom UART 로그 캡처 | do_test 내부 | — |
-| &nbsp;&nbsp;`→ qemu_spawn()` | QEMU 인스턴스 실행 후 콘솔 로그 수집 | do_test 내부 | — |
-| &nbsp;&nbsp;`→ reg_dump()` | /dev/mem · devmem2 · debugfs 레지스터 덤프 | do_test 내부 | — |
-| &nbsp;&nbsp;`→ file_read()` | 지정 경로 파일 로그 수집 | do_test 내부 | — |
-| `log_analyzer()` | oops · panic · assert 분석 — 누적 결과 에러 패턴 파악 | Sub AI | 반복 완료 후 1회 |
-| `test_result()` | TEST RESULT 문서 생성 | Sub AI | 1회 |
-| `channels()` | GitHub · Slack · E-Mail 채널 라우팅 | MCP 내부 | 1회 |
+1. VS Code가 MCP Server를 시작한다
+2. GitHub Issue 기반으로 테스트 요청을 읽는다
+3. Local MCP Tool이 실제 장치/로그/디버그 데이터를 수집한다
+4. 각 Tool은 `.log`와 `.json` 결과를 남긴다
+5. 이후 분석 또는 보고는 GitHub MCP와 연계해 처리한다
 
-### Protocol Flow
+---
 
-```mermaid
-sequenceDiagram
-    participant GH as GitHub Tag Event
-    participant OC as OpenClaw
-    participant M as MCP Server
-    participant OL as Local AI (실행)
-    participant J as result.json + tool.log
-    participant CX as Sub AI (감시·분석)
-    participant CH as Channels (GitHub · Slack · E-Mail)
+## Trigger
 
-    GH->>OC: Tag 이벤트 (webhook)
-    OC->>M: CT 실행 요청
-    M->>OL: build_tool() — 1회
-    OL-->>J: build result.json + .log
-    M->>OL: flash_tool() — 1회
-    OL-->>J: flash result.json + .log
-    loop do_test() 반복 (문제 패턴 수집)
-        M->>OL: do_test() 호출
-        OL-->>J: test result.json + .log
-        OL->>J: result.json 확인
-        alt 에러 (status: error)
-            OL->>M: 재실행 요청
-        else 정상 (status: success)
-            OL->>M: 반복 완료 신호
-        end
-    end
-    J-->>CX: 누적 결과 전달 (감시)
-    CX->>M: log_analyzer() — 에러 패턴 분석
-    M-->>CX: 분석 결과
-    CX->>M: test_result() — TEST RESULT 문서 생성
-    alt 에러 있음
-        CX-->>OC: 에러 보고
-    else 전체 정상
-        CX-->>OC: 완료 보고
-    end
-    OC->>CH: channels() — 문서 공유 · 알림 (1회)
-```
+### Recommended Trigger
 
-### Server Configuration (`mcp-config.json`)
+현재 권장 트리거는 **GitHub Issue 기반 TEST 요청**이다.
+
+- 사용자는 [test_request.md](../../.github/issue_template/test_request.md) 템플릿으로 TEST 이슈를 생성한다
+- 이슈 본문에 대상 ref, 테스트 종류, 장치/이미지, 반복 횟수, 제약 사항을 기록한다
+- AI Agent 또는 운영자가 GitHub MCP Server로 이슈 내용을 읽는다
+- 필요한 Local MCP Tool을 순서대로 실행한다
+- 결과는 로컬 로그와 JSON 결과 파일로 남기고, 필요 시 GitHub Issue에 댓글로 보고한다
+
+### Why Not Tag Event
+
+VS Code MCP Gateway는 여러 MCP Server를 연결하고 Tool을 호출하는 허브이지,  
+외부 GitHub Tag Event를 직접 구독하고 자동 실행하는 오케스트레이터는 아니다.
+
+따라서 현재 구조에서는 `Tag Event -> VS Code MCP Gateway -> 자동 실행`보다  
+`Issue 요청 -> GitHub MCP + Local MCP 수동/반자동 실행`이 더 잘 맞는다.
+
+---
+
+## VS Code Configuration
+
+Local MCP Server는 `.vscode/mcp.json`으로 등록한다.
+
+예시:
 
 ```json
 {
-  "server": {
-    "name": "openclaw-mcp",
-    "version": "1.0.0",
-    "port": 3000
-  },
-  "version": "A",
-  "remote_agents": {
-    "main": { "provider": "claude", "enabled": true },
-    "sub":  { "provider": "codex",  "enabled": true }
-  },
-  "channels": { "enabled": false },
-  "tools": {
-    "build_tool": { "enabled": true },
-    "flash_tool": { "enabled": true },
-    "uart_capture": { "enabled": true },
-    "qemu_spawn": { "enabled": true },
-    "log_analyzer": { "enabled": true },
-    "reg_dump": { "enabled": true }
-  },
-  "logging": {
-    "output_dir": "../logs",
-    "format": "markdown"
+  "servers": {
+    "mcp-server-local": {
+      "type": "stdio",
+      "command": "C:\\Python314\\python.exe",
+      "args": ["-X", "utf8", "-m", "mcp.main.server_local"],
+      "cwd": "${workspaceFolder}"
+    }
   }
 }
 ```
 
+의미:
+
+- VS Code가 `mcp-server-local` 프로세스를 시작
+- MCP `initialize`, `tools/list`, `tools/call`은 VS Code MCP Gateway를 통해 전달
+- Tool discovery와 Tool 호출은 VS Code 내부 MCP 시스템이 처리
+
 ---
 
-## Version B — MCP Only
+## Tool Set
 
-OpenClaw 없이 MCP가 Tool 라우팅 + 채널 연동까지 담당하는 단순화된 구조.
+현재 문서 기준 Local MCP Server의 목표 Tool 집합은 아래와 같다.
 
-### Registered Tools
+| Tool | 목적 | 설명 |
+|------|------|------|
+| `flash_tool()` | 이미지 반영 | 장치 또는 대상 환경에 펌웨어/이미지 반영 |
+| `uart_capture()` | UART 로그 수집 | 시리얼 포트 기반 런타임 로그 수집 |
+| `get_debug()` | 디버그 정보 수집 | 디버그 덤프, 상태 정보, 추가 진단 데이터 수집 |
+| `channels()` | 결과 전달 | GitHub 등 외부 채널로 결과 또는 알림 전달 |
+| `do_test_<type>_<nn>()` | 테스트 실행 단위 | 특정 테스트 시나리오를 독립 Tool로 정의 |
 
-| Tool | 설명 | 담당 | 실행 |
-|------|------|------|------|
-| `build_tool()` | make · cmake · bitbake 빌드 실행 | Local AI | 1회 |
-| `flash_tool()` | OpenOCD · JLink · dfu-util 플래시 | Local AI | 1회 |
-| `do_test_<type>_<nn>()` | 타입별 테스트 실행 — 각자 log 생성 방식 보유 | Local AI | 반복 |
-| &nbsp;&nbsp;`→ uart_capture()` | pyserial · minicom UART 로그 캡처 | do_test 내부 | — |
-| &nbsp;&nbsp;`→ qemu_spawn()` | QEMU 인스턴스 실행 후 콘솔 로그 수집 | do_test 내부 | — |
-| &nbsp;&nbsp;`→ reg_dump()` | /dev/mem · devmem2 · debugfs 레지스터 덤프 | do_test 내부 | — |
-| &nbsp;&nbsp;`→ file_read()` | 지정 경로 파일 로그 수집 | do_test 내부 | — |
-| `log_analyzer()` | oops · panic · assert 분석 — 누적 결과 에러 패턴 파악 | Sub AI | 반복 완료 후 1회 |
-| `test_result()` | TEST RESULT 문서 생성 | Sub AI | 1회 |
-| `channels()` | GitHub · Slack · E-Mail 채널 라우팅 | MCP 내부 | 1회 |
+설계 의도:
 
-### Protocol Flow
+- Tool은 너무 크게 뭉치지 않고 역할별로 나눈다
+- `do_test_<type>_<nn>()`는 실제 테스트 시나리오 단위를 표현한다
+- `uart_capture()`와 `get_debug()`는 테스트 내부 또는 독립 단계에서 사용될 수 있다
+- 결과 전달은 `channels()`가 담당한다
+
+---
+
+## Protocol Flow
 
 ```mermaid
 sequenceDiagram
-    participant GH as GitHub Tag Event
-    participant M as MCP Server
-    participant OL as Local AI (실행)
-    participant J as result.json + tool.log
-    participant CX as Sub AI (감시·분석)
-    participant CH as Channels (GitHub · Slack · E-Mail)
+    participant U as User / Operator
+    participant GH as GitHub Issue
+    participant GM as GitHub MCP Server
+    participant VG as VS Code MCP Gateway
+    participant LM as Local MCP Server
+    participant J as log + result.json
 
-    GH->>M: Tag 이벤트 (webhook 직접)
-    loop 여러 TEST 반복 (문제 패턴 수집)
-        M->>OL: build_tool() 호출
-        OL-->>J: 결과 저장 (tool.log + result.json)
-        OL->>J: result.json 확인
-        alt 에러 발생 (status: error)
-            OL->>M: 재실행 요청 (retry)
-        else 정상 (status: success)
-            OL->>M: 반복 완료 신호
-        end
-    end
-    J-->>CX: 누적 결과 전달 (감시)
-    CX->>M: log_analyzer(log_path) 호출 — 에러 패턴 분석
-    M-->>CX: 분석 결과
-    CX->>M: test_result() 호출 — TEST RESULT 문서 생성
-    alt 에러 있음
-        CX->>M: channels() 호출 — 에러 보고
-    else 전체 정상
-        CX->>M: channels() 호출 — 완료 보고
-    end
-    M->>CH: 문서 공유 · 알림 (API)
+    U->>GH: TEST Issue 생성
+    GM->>GH: Issue 내용 조회
+    VG->>LM: tools/call
+    LM->>LM: flash_tool / uart_capture / get_debug / do_test_* 실행
+    LM-->>J: .log + .json 저장
+    VG->>GM: 결과 보고용 후속 호출
 ```
 
-### Server Configuration (`mcp-config.json`)
+실행 관점에서 보면:
 
-```json
-{
-  "server": {
-    "name": "openclaw-mcp",
-    "version": "1.0.0",
-    "port": 3000
-  },
-  "version": "B",
-  "remote_agents": {
-    "main": { "provider": "claude", "enabled": true },
-    "sub":  { "provider": "codex",  "enabled": true }
-  },
-  "channels": {
-    "enabled": true,
-    "github": { "enabled": true },
-    "slack": { "enabled": true },
-    "email": { "enabled": true }
-  },
-  "tools": {
-    "build_tool": { "enabled": true },
-    "flash_tool": { "enabled": true },
-    "uart_capture": { "enabled": true },
-    "qemu_spawn": { "enabled": true },
-    "log_analyzer": { "enabled": true },
-    "reg_dump": { "enabled": true }
-  },
-  "logging": {
-    "output_dir": "../logs",
-    "format": "markdown"
-  }
-}
-```
+1. GitHub Issue가 테스트 요청을 담는다
+2. GitHub MCP Server가 요청 내용을 읽는다
+3. VS Code MCP Gateway를 통해 Local MCP Tool이 호출된다
+4. Local MCP Server는 로그와 JSON 결과를 저장한다
+5. 이후 요약/분석/보고는 GitHub MCP와 연계한다
 
 ---
 
-## Agent Communication — Log + JSON
+## Output Rules
 
-모든 Tool 실행은 **Log 파일**과 **JSON 파일** 두 가지를 남긴다.   
-- **Log**: 원시 출력 전체 — 에러 분석용  
-- **JSON**: 구조화된 결과 요약 — Sub AI 감시 판단용
+각 Tool 실행 결과는 최소 두 가지 산출물을 남기는 것을 목표로 한다.
 
-### Output File Rules
+- **Log file**: 원시 실행 로그
+- **JSON result file**: 구조화된 실행 결과 요약
 
-| Tool | Log 파일 | JSON 파일 |
-|------|----------|----------|
-| `build_tool()` | `logs/build_<timestamp>.log` | `results/build_<timestamp>.json` |
+### File Naming
+
+| Tool | Log file | JSON result |
+|------|----------|-------------|
 | `flash_tool()` | `logs/flash_<timestamp>.log` | `results/flash_<timestamp>.json` |
 | `uart_capture()` | `logs/uart_<timestamp>.log` | `results/uart_<timestamp>.json` |
-| `qemu_spawn()` | `logs/qemu_<timestamp>.log` | `results/qemu_<timestamp>.json` |
-| `reg_dump()` | `logs/reg_<timestamp>.log` | `results/reg_<timestamp>.json` |
+| `get_debug()` | `logs/debug_<timestamp>.log` | `results/debug_<timestamp>.json` |
+| `do_test_<type>_<nn>()` | `logs/test_<type>_<nn>_<timestamp>.log` | `results/test_<type>_<nn>_<timestamp>.json` |
+| `channels()` | `logs/channels_<timestamp>.log` | `results/channels_<timestamp>.json` |
 
-### result.json Schema
+### Result JSON Example
 
 ```json
 {
-  "tool": "build_tool",
-  "timestamp": "2026-04-16T10:00:00Z",
-  "status": "success | error",
+  "tool": "do_test_uart_01",
+  "timestamp": "2026-04-17T10:00:00Z",
+  "status": "success",
   "exit_code": 0,
-  "log_path": "logs/build_20260416T100000.log",
-  "duration_ms": 3200,
+  "log_path": "logs/test_uart_01_20260417T100000.log",
+  "duration_ms": 1200,
   "context": {
-    "command": "make",
-    "target": "all",
-    "working_dir": "/workspace"
+    "target": "/dev/ttyUSB0",
+    "issue_number": 12
   }
 }
 ```
 
-| 필드 | 설명 |
-|------|------|
+### Required Fields
+
+| Field | Description |
+|------|-------------|
 | `tool` | 실행한 Tool 이름 |
-| `timestamp` | 실행 시각 (ISO 8601) |
-| `status` | `success` / `error` — Sub AI 감시 판단 기준 |
-| `exit_code` | 프로세스 종료 코드 (0 = 정상) |
-| `log_path` | 상세 로그 파일 경로 — 에러 시 `log_analyzer()` 입력으로 사용 |
-| `duration_ms` | 실행 소요 시간 (ms) |
-| `context` | Tool 실행 파라미터 |
-
-### Sub AI Monitoring Logic
-
-```
-result.json 수신
-  └─ status == "error"  →  log_analyzer(log_path) 호출 → 분석 결과 보고
-  └─ status == "success" →  완료 보고
-```
+| `timestamp` | 실행 시각 |
+| `status` | `success` / `error` |
+| `exit_code` | 프로세스 또는 실행 결과 코드 |
+| `log_path` | 관련 로그 파일 경로 |
+| `duration_ms` | 실행 시간 |
+| `context` | Issue 요청 또는 테스트 파라미터 |
 
 ---
 
-## Tool Definition Example
+## Tool Definition Notes
 
-### Naming Convention
+### `flash_tool()`
 
-```
-do_test_<type>_<nn>()
+- 목적: 테스트 대상 장치/환경에 이미지 반영
+- 입력 예시: `image`, `interface`, `target`
+- 출력: flash 로그 + flash 결과 JSON
 
-  type : 테스트 방식 — uart / qemu / reg / file
-  nn   : 테스트 번호 — 01, 02, 03 ...
+### `uart_capture()`
 
-예시)
-  do_test_uart_01()   — UART 로그 기반 부팅 테스트 1번
-  do_test_uart_02()   — UART 로그 기반 네트워크 테스트 2번
-  do_test_qemu_01()   — QEMU 콘솔 로그 기반 커널 테스트 1번
-  do_test_reg_01()    — 레지스터 덤프 기반 드라이버 테스트 1번
-  do_test_file_01()   — 파일 로그 기반 스토리지 테스트 1번
-```
+- 목적: UART 기반 로그 수집
+- 입력 예시: `port`, `baudrate`, `timeout`
+- 출력: uart 로그 + uart 결과 JSON
 
-### Log Generation Methods (Sub-functions)
+### `get_debug()`
 
-각 `do_test_<type>_<nn>()`은 `log_method`에 따라 아래 sub-function 중 하나 이상을 내부 호출한다.
+- 목적: 추가 디버그 정보 수집
+- 예: 레지스터 상태, 진단 텍스트, 디버그 덤프, 상태 파일
+- 출력: debug 로그 + debug 결과 JSON
 
-| Sub-function | 로그 방식 | 사용 예 |
-|-------------|----------|--------|
-| `uart_capture()` | 시리얼 포트 UART 출력 수집 | 실제 장치 부팅 · 런타임 로그 |
-| `qemu_spawn()` | QEMU 콘솔 출력 수집 | 하드웨어 없이 커널 · 드라이버 테스트 |
-| `reg_dump()` | 메모리 맵 레지스터 덤프 | 드라이버 상태 · 하드웨어 오류 진단 |
-| `file_read()` | 지정 경로 로그 파일 수집 | syslog · dmesg · 애플리케이션 로그 |
+### `channels()`
 
-### do_test Schema
+- 목적: 결과 전달 또는 알림 전송
+- 예: GitHub Issue 댓글, Slack, 이메일
+- 출력: channels 로그 + channels 결과 JSON
 
-```json
-{
-  "name": "do_test_<type>_<nn>",
-  "description": "타입별 반복 테스트 실행 — 지정된 log_method로 로그 수집 후 result.json + .log 저장",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "target":     { "type": "string", "description": "테스트 대상 장치 또는 이미지" },
-      "iterations": { "type": "integer", "description": "최대 반복 횟수", "default": 3 },
-      "log_method": {
-        "type": "array",
-        "items": { "type": "string", "enum": ["uart_capture", "qemu_spawn", "reg_dump", "file_read"] },
-        "description": "사용할 log 수집 sub-function 목록 (순서대로 실행)"
-      }
-    },
-    "required": ["target", "log_method"]
-  }
-}
-```
+### `do_test_<type>_<nn>()`
 
-**예시 — UART 기반 테스트**
+- 목적: 구체적인 테스트 시나리오 1개를 독립 Tool로 정의
+- 예: `do_test_uart_01`, `do_test_smoke_01`, `do_test_boot_01`
+- 출력: 각 테스트별 로그 + 결과 JSON
 
-```json
-{
-  "name": "do_test_uart_01",
-  "target": "/dev/ttyUSB0",
-  "iterations": 3,
-  "log_method": ["uart_capture", "reg_dump"]
-}
-```
+이 naming 방식의 장점:
 
-**예시 — QEMU 기반 테스트**
-
-```json
-{
-  "name": "do_test_qemu_01",
-  "target": "zephyr.elf",
-  "iterations": 5,
-  "log_method": ["qemu_spawn", "file_read"]
-}
-```
-
-```json
-{
-  "name": "build_tool",
-  "description": "빌드 시스템 실행 후 결과 반환 (make · cmake · bitbake)",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "command": { "type": "string", "description": "make · cmake · bitbake" },
-      "target": { "type": "string", "description": "빌드 타겟" },
-      "working_dir": { "type": "string", "description": "빌드 디렉터리" }
-    },
-    "required": ["command"]
-  }
-}
-```
-
-```json
-{
-  "name": "test_result",
-  "description": "테스트 실행 결과를 수집하고 TEST RESULT 문서(Markdown)로 저장",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "test_suite": { "type": "string", "description": "테스트 스위트 이름" },
-      "results": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": { "type": "string" },
-            "status": { "type": "string", "enum": ["pass", "fail", "skip"] },
-            "message": { "type": "string" }
-          }
-        }
-      },
-      "output_path": { "type": "string", "description": "저장 경로 (예: docs/logs/test_result_00.md)" }
-    },
-    "required": ["test_suite", "results", "output_path"]
-  }
-}
-```
-
-```json
-{
-  "name": "channels",
-  "description": "GitHub · Slack · E-Mail 채널로 메시지 또는 문서 전송 (Version B 전용)",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "target": { "type": "string", "enum": ["github", "slack", "email"] },
-      "payload": { "type": "object", "description": "전송할 데이터" }
-    },
-    "required": ["target", "payload"]
-  }
-}
-```
+- 테스트 시나리오가 Tool 이름만으로 드러남
+- GitHub Issue 요청과 테스트 결과를 쉽게 매핑 가능
+- 이후 실패 패턴 분석과 문서화가 쉬움
 
 ---
 
-## Agent Tool Access
+## Agent Role
 
-| Agent | 구분 | Tool | 비고 |
-|-------|------|------|------|
-| **Local AI** | 실행·반복 | `build_tool` (1회), `flash_tool` (1회), `do_test` (반복) | 빌드·플래시 후 do_test 반복 실행, result.json 확인하며 문제 패턴 수집 |
-| Sub AI | 감시·분석 | `log_analyzer` (1회), `test_result` (1회) | 누적 결과 수신 → 에러 패턴 깊은 분석 → TEST 문서 작성 → 보고 |
-| Claude | 미접근 | — | 코드 생성 · 문서 생성 전담 |
+| Agent | Role | Access |
+|------|------|--------|
+| Local AI | 실행 전담 | `flash_tool`, `uart_capture`, `get_debug`, `do_test_*`, `channels` |
+| Remote / Sub AI | 분석 및 보고 | JSON 결과와 로그를 읽고 요약/분석 |
+| GitHub MCP | 요청/보고 연결 | Issue 조회, 댓글 작성, 상태 반영 |
 
 ---
 
-## Setup
+## Practical Usage
 
-두 가지 구현 중 하나를 선택한다.
+현재 구조에서 현실적인 사용 예시는 아래와 같다.
 
-| 구분 | 언어 | 파일 | 적합한 경우 |
-|------|------|------|------------|
-| Node.js | TypeScript / JavaScript | `mcp-server.js` | 빠른 프로토타이핑, JS 생태계 활용 |
-| Python | Python 3.11+ | `mcp_server.py` | 임베디드 툴체인 연동, pyserial · subprocess 활용 |
-
-### Node.js
-
-```bash
-# WSL2
-npm install @modelcontextprotocol/sdk
-
-node mcp-server.js
-```
-
-`mcp-config.json` — Node.js 서버 설정
-
-```json
-{
-  "server": { "name": "openclaw-mcp", "version": "1.0.0", "port": 3000 },
-  "runtime": "node",
-  "tools": {
-    "build_tool": { "enabled": true },
-    "flash_tool": { "enabled": true },
-    "uart_capture": { "enabled": true },
-    "qemu_spawn": { "enabled": true },
-    "reg_dump": { "enabled": true },
-    "log_analyzer": { "enabled": true },
-    "test_result": { "enabled": true }
-  },
-  "output": {
-    "log_dir": "logs",
-    "result_dir": "results"
-  }
-}
-```
-
-### Python
-
-```bash
-# WSL2
-pip install mcp
-
-python mcp_server.py
-```
-
-`mcp-config.json` — Python 서버 설정
-
-```json
-{
-  "server": { "name": "openclaw-mcp", "version": "1.0.0", "port": 3000 },
-  "runtime": "python",
-  "tools": {
-    "build_tool": { "enabled": true },
-    "flash_tool": { "enabled": true },
-    "uart_capture": { "enabled": true, "backend": "pyserial" },
-    "qemu_spawn": { "enabled": true },
-    "reg_dump": { "enabled": true },
-    "log_analyzer": { "enabled": true },
-    "test_result": { "enabled": true }
-  },
-  "output": {
-    "log_dir": "logs",
-    "result_dir": "results"
-  }
-}
-```
-
-> Python 구성은 `uart_capture()`에 `pyserial`을 직접 사용할 수 있어 시리얼 장치 연동에 유리.
-
-**1-Agent 구성 예시** — Main 1개가 Sub 역할 대행
-
-```json
-{
-  "remote_agents": {
-    "main": { "provider": "claude", "enabled": true },
-    "sub":  { "enabled": false }
-  }
-}
-```
-
-> `sub.enabled: false` 시 MCP가 `log_analyzer`, `test_result` 호출 권한을 Main으로 위임.
-
-- 기본 포트: `localhost:3000` (Node.js · Python 공통)
-- Version 전환: `mcp-config.json`의 `version` 필드와 `channels.enabled` 조정
+1. GitHub에 `Test Request` 이슈 생성
+2. 이슈에 대상 ref, 테스트 종류, 장치 정보 기록
+3. GitHub MCP Server로 이슈 확인
+4. Local MCP Server에서 필요한 Tool 실행
+5. `logs/`와 `results/`에 실행 결과 저장
+6. GitHub MCP Server로 결과를 이슈에 댓글 또는 상태로 보고
 
 ---
 
 ## Related
 
-- [architecture/system-design.md](../architecture/system-design.md) — Deployment Diagram (Version A / B)
-- [agents/claude.md](../agents/claude.md) — Claude Agent 설정
-- [agents/codex.md](../agents/codex.md) — Codex Agent 설정
-- [agents/ollama.md](../agents/ollama.md) — Ollama Agent 설정
+- [mcp_gateway.md](mcp_gateway.md) — VS Code MCP Gateway와 다중 MCP Server 연결
+- [mcp_server_github.md](mcp_server_github.md) — GitHub MCP Server 역할
+- [test_request.md](../../.github/issue_template/test_request.md) — TEST 요청용 Issue 템플릿
