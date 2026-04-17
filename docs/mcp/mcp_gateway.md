@@ -173,18 +173,16 @@ cat ~/.openclaw/openclaw.json
 {
   "servers": {
     "mcp-server-local": {
-      "command": "C:\\Python314\\python.exe",
-      "args": ["-X", "utf8", "-m", "mcp.main.server_local"],
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp.main.server_local"
+      ],
       "cwd": "${workspaceFolder}"
-    },
-    "io.github.github/github-mcp-server": {
-      "type": "http",
-      "url": "https://api.githubcopilot.com/mcp/",
-      "gallery": "https://api.mcp.github.com",
-      "version": "0.33.0"
     }
   }
 }
+
 ```
 
 ---
