@@ -203,6 +203,14 @@ def append_summary(lines: list[str]) -> None:
         handle.write("\n".join(lines) + "\n")
 
 
+def resolve_log_paths(tool_name: str) -> dict[str, str]:
+    return {
+        "log_dir": DEFAULT_LOG_DIR,
+        "server_log": f"{DEFAULT_LOG_DIR}/mcp-server-local.log",
+        "tool_log": f"{DEFAULT_LOG_DIR}/mcp-server-local-{tool_name}.log",
+    }
+
+
 def main() -> int:
     args = parse_args()
     if args.issue_body is not None:
@@ -249,6 +257,7 @@ def main() -> int:
         mcp_result = call_local_mcp(server_mode, tool_name, tool_arguments)
         tool_payload, is_error = parse_call_payload(mcp_result["call_response"])
         server_name = resolve_server_name(server_mode)
+        log_paths = resolve_log_paths(tool_name)
         payload = {
             "issue_number": args.issue_number,
             "issue_title": args.issue_title,
@@ -261,6 +270,7 @@ def main() -> int:
             "parsed_fields": fields,
             "selected_tool": tool_name,
             "tool_arguments": tool_arguments,
+            "log_paths": log_paths,
             "tool_result": tool_payload,
         }
         output_path = write_result(args.issue_number, payload)
@@ -275,6 +285,8 @@ def main() -> int:
                 f"- Tool: `{tool_name}`",
                 f"- Request Ref: `{fields['request_ref'] or 'n/a'}`",
                 f"- Target Runner: `{fields['target_runner'] or 'n/a'}`",
+                f"- Server Log: `{log_paths['server_log']}`",
+                f"- Tool Log: `{log_paths['tool_log']}`",
                 f"- Result File: `{output_path}`",
             ]
         )
