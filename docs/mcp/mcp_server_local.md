@@ -114,12 +114,16 @@ GitHub Issue
 
 ```mermaid
 flowchart LR
-    A["GitHub Issue"] --> B["GitHub Actions"]
-    B --> C["Python bridge<br/>mcp.local_action_runner.run_test_request"]
-    C --> D["mcp-server-local-direct<br/>or<br/>mcp-server-local-runner"]
-    D --> E["selected tools"]
-    E --> F["results/log_mcp_server_local<br/>results/*.json"]
-    B --> G["GitHub Issue comment"]
+    A["GitHub Issue<br/>Test Request"] --> B["GitHub Actions"]
+
+    B --> D["Self-hosted Runner<br/>[self-hosted, local-dev]"]
+    D --> E["Python bridge<br/>mcp.local_action_runner.run_test_request"]
+    E --> F["mcp-server-local-direct<br/>or<br/>mcp-server-local-runner"]
+    F --> G["selected tools"]
+    G --> I["results/log_mcp_server_local<br/>results/*.json"]
+
+    I --> C["GitHub MCP Server"]
+    C --> H["Comment result on issue"]
 ```
 
 ---
