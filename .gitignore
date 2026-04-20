@@ -1,9 +1,20 @@
 #
 
+#
+# Python
+# - MCP System (MCP Server Local)
+#
+mcp/server_local/__pycache__/
+mcp/local_action_runner/__pycache__/
 
-# MCP System (MCP Server Local)
-mcp/main/__pycache__
+#
+# results and temporary files
+#
+results/
 
-# action-runner
+# 
+# self-hosted runner 
+# - action-runner
+#
 actions-runner/*
 actions-runner
