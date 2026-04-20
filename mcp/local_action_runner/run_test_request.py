@@ -50,6 +50,19 @@ def split_csv(value: str) -> list[str]:
     return [item.strip().lower() for item in value.split(",") if item.strip()]
 
 
+def normalize_server_mode(value: str) -> str:
+    normalized = value.strip().lower()
+    if normalized not in {"direct", "runner"}:
+        raise ValueError("MCP Server Mode must be recorded as `direct` or `runner`.")
+    return normalized
+
+
+def resolve_server_module(server_mode: str) -> str:
+    if server_mode == "direct":
+        return "mcp.server_local_direct.server"
+    return "mcp.server_local_runner.server"
+
+
 def resolve_tool(test_tool: str, test_type: str, target_device_image: str) -> tuple[str, dict[str, Any]]:
     normalized_tool = test_tool.strip().lower()
     normalized_type = test_type.strip().lower()
@@ -88,7 +101,7 @@ def resolve_tool(test_tool: str, test_type: str, target_device_image: str) -> tu
     )
 
 
-def call_local_mcp(tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+def call_local_mcp(server_mode: str, tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     requests = [
         {
             "jsonrpc": "2.0",
@@ -111,7 +124,7 @@ def call_local_mcp(tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     ]
     payload = "\n".join(json.dumps(request) for request in requests) + "\n"
     result = subprocess.run(
-        [sys.executable, "-m", "mcp.server_local_runner.server"],
+        [sys.executable, "-m", resolve_server_module(server_mode)],
         input=payload,
         capture_output=True,
         text=True,
@@ -174,11 +187,12 @@ def main() -> int:
         issue_body = Path(args.issue_body_file).read_text(encoding="utf-8")
     fields = extract_fields(issue_body)
 
+    server_mode = normalize_server_mode(fields["mcp_server_mode"])
     requested_runners = split_csv(fields["target_runner"])
     expected_runner = args.expected_runner.strip().lower()
     timestamp = datetime.now(timezone.utc).isoformat()
 
-    if expected_runner not in requested_runners:
+    if server_mode == "runner" and expected_runner not in requested_runners:
         payload = {
             "issue_number": args.issue_number,
             "issue_title": args.issue_title,
@@ -208,7 +222,7 @@ def main() -> int:
             fields["test_type"],
             fields["target_device_image"],
         )
-        mcp_result = call_local_mcp(tool_name, tool_arguments)
+        mcp_result = call_local_mcp(server_mode, tool_name, tool_arguments)
         tool_payload, is_error = parse_call_payload(mcp_result["call_response"])
         payload = {
             "issue_number": args.issue_number,
@@ -229,7 +243,7 @@ def main() -> int:
                 "## Test Request Result",
                 f"- Issue: #{args.issue_number}",
                 f"- Status: {payload['status']}",
-                f"- MCP Server Mode: `{fields['mcp_server_mode'] or 'runner'}`",
+                f"- MCP Server Mode: `{server_mode}`",
                 f"- Tool: `{tool_name}`",
                 f"- Request Ref: `{fields['request_ref'] or 'n/a'}`",
                 f"- Target Runner: `{fields['target_runner'] or 'n/a'}`",
