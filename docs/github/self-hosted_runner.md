@@ -2,15 +2,15 @@
 
 References:
 
-- GitHub-hosted runners
+- GitHub-hosted runners      
   https://docs.github.com/ko/actions/reference/runners/github-hosted-runners
-- Self-hosted runners
+- Self-hosted runners      
   https://docs.github.com/ko/actions/reference/runners/self-hosted-runners
 
 ## Overview
 
-`Target Runner`와 GitHub `self-hosted runner`의 관계
-내 PC를 GitHub Actions self-hosted runner로 연결방법.
+`Target Runner`와 GitHub `self-hosted runner`의 관계  
+
 
 핵심 개념:
   - `Target Runner`는 TEST 요청을 처리할 실행 주체를 가리키는 논리적 이름        
@@ -28,8 +28,8 @@ References:
 내 PC를 연결하려면 아래 순서로 진행하면 된다.
 
 1. GitHub 저장소의 `Settings > Actions > Runners`로 이동.
-2. `New self-hosted runner`를 runner 등록 명령.
-3. 설정 후 Manaul 대로 Download 후 
+2. `New self-hosted runner`를 runner 등록 명령 (등록을 Token 과 최신 Action Download)         
+3.  설치 Manaul 과 설정 Manaul (**Token 확인**)              
    - Runner image : Window/Linux/MacOS 선택 
    - Architecture : x86
 4. Self-hosted Runner 설정 (`config.cmd`)
@@ -37,6 +37,15 @@ References:
 5. `runs-on`에 `self-hosted`와 해당 label을 지정.
 
 이 프로젝트 기준으로는 `Target Runner: local-dev`와 runner label `local-dev`를 맞추는 방식을 권장한다.
+
+![](../imgs/github_runner_00.png)
+
+```
+√ Connected to GitHub
+
+Current runner version: '2.333.1'
+2026-04-20 05:30:21Z: Listening for Jobs
+```
 
 ## Recommended Naming
 
