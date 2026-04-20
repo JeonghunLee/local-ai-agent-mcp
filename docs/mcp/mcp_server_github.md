@@ -15,6 +15,18 @@ https://github.com/github/github-mcp-server
 
 GitHub 대상 MCP(Model Context Protocol) `Tool` 제공용 전용 서버.
 
+## Current Position In This Repository
+
+현재 저장소에서 GitHub MCP Server는 IDE 안에서 GitHub 리소스와 Actions 정보를 조회하거나 갱신할 때 사용하는 MCP 서버다.
+
+현재 구현 기준:
+
+- TEST Request 자동 실행 경로는 GitHub MCP Server가 직접 트리거하지 않는다
+- 현재 자동 경로는 `GitHub Issue -> GitHub Actions -> Python bridge -> Local MCP Server`이다
+- GitHub MCP Server는 결과 조회, 후속 댓글 작성, 상태 반영 같은 후처리 연계 지점으로 남아 있다
+
+즉 현재 구현에서 GitHub MCP Server는 Issue 이벤트를 받아 Local MCP Server를 직접 중계하는 오케스트레이터가 아니다.
+
 VS Code MCP Server Github Log:
 ```log
 2026-04-17 10:33:22.770 [info] Starting server io.github.github/github-mcp-server
@@ -225,4 +237,3 @@ flowchart LR
 
 - 사용자 직접 조합 부담 감소
 - workflow 표준화 용이
-

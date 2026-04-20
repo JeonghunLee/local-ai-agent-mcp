@@ -25,12 +25,32 @@ GitHub Issue (TEST 요청)
   → GitHub Issue 댓글 또는 후속 문서로 보고
 ```
 
+현재 구현 기준:
+
+```text
+GitHub Issue (TEST 요청)
+  → GitHub Actions workflow 트리거
+  → Python bridge (mcp.local_action_runner.run_test_request)
+  → Local MCP Server Tool 실행
+  → results/log_mcp_server_local + results JSON 저장
+```
+
 ---
 
 ## Current Direction
 
 이 문서는 현재 구현 완료 상태를 모두 설명하는 문서라기보다,  
 **VS Code 기반 Local MCP Server의 목표 운영 방식**을 정리한 문서다.
+
+현재 저장소에서 실제로 자동 동작하는 경로는 다음과 같다.
+
+1. GitHub Issue가 `test-request` 라벨과 함께 생성되거나 수정된다
+2. GitHub Actions workflow가 `issues` 이벤트를 감지한다
+3. self-hosted runner에서 Python bridge가 이슈 본문을 파싱한다
+4. Python bridge가 `mcp.server_local.server_local`을 호출한다
+5. Local MCP Server가 로그와 JSON 결과를 저장한다
+
+즉 현재 구현은 `GitHub Issue -> GitHub Actions -> Python bridge -> Local MCP Server` 구조다.
 
 현재 코드 기준으로 일부 Tool은 stub이거나 축소 구현일 수 있다.  
 문서의 초점은 다음 구조를 명확히 하는 데 있다.
@@ -83,7 +103,7 @@ Local MCP Server는 `.vscode/mcp.json`으로 등록.
     "mcp-server-local": {
       "type": "stdio",
       "command": "C:\\Python314\\python.exe",
-      "args": ["-X", "utf8", "-m", "mcp.main.server_local"],
+      "args": ["-X", "utf8", "-m", "mcp.server_local.server_local"],
       "cwd": "${workspaceFolder}"
     }
   }
@@ -120,6 +140,16 @@ Local MCP Server는 `.vscode/mcp.json`으로 등록.
 ---
 
 ## Protocol Flow
+
+현재 구현 요약:
+
+```text
+GitHub Issue
+  → GitHub Actions
+  → Python bridge
+  → Local MCP Server
+  → results/log_mcp_server_local + results JSON
+```
 
 ```mermaid
 sequenceDiagram
@@ -159,11 +189,11 @@ sequenceDiagram
 
 | Tool | Log file | JSON result |
 |------|----------|-------------|
-| `flash_tool()` | `logs/flash_<timestamp>.log` | `results/flash_<timestamp>.json` |
-| `uart_capture()` | `logs/uart_<timestamp>.log` | `results/uart_<timestamp>.json` |
-| `get_debug()` | `logs/debug_<timestamp>.log` | `results/debug_<timestamp>.json` |
-| `do_test_<type>_<nn>()` | `logs/test_<type>_<nn>_<timestamp>.log` | `results/test_<type>_<nn>_<timestamp>.json` |
-| `channels()` | `logs/channels_<timestamp>.log` | `results/channels_<timestamp>.json` |
+| `flash_tool()` | `results/log_mcp_server_local/flash_<timestamp>.log` | `results/flash_<timestamp>.json` |
+| `uart_capture()` | `results/log_mcp_server_local/uart_<timestamp>.log` | `results/uart_<timestamp>.json` |
+| `get_debug()` | `results/log_mcp_server_local/debug_<timestamp>.log` | `results/debug_<timestamp>.json` |
+| `do_test_<type>_<nn>()` | `results/log_mcp_server_local/test_<type>_<nn>_<timestamp>.log` | `results/test_<type>_<nn>_<timestamp>.json` |
+| `channels()` | `results/log_mcp_server_local/channels_<timestamp>.log` | `results/channels_<timestamp>.json` |
 
 ### Result JSON Example
 
@@ -173,7 +203,7 @@ sequenceDiagram
   "timestamp": "2026-04-17T10:00:00Z",
   "status": "success",
   "exit_code": 0,
-  "log_path": "logs/test_uart_01_20260417T100000.log",
+  "log_path": "results/log_mcp_server_local/test_uart_01_20260417T100000.log",
   "duration_ms": 1200,
   "context": {
     "target": "/dev/ttyUSB0",
@@ -254,7 +284,7 @@ sequenceDiagram
 2. 이슈에 대상 ref, 테스트 종류, 장치 정보 기록
 3. GitHub MCP Server로 이슈 확인
 4. Local MCP Server에서 필요한 Tool 실행
-5. `logs/`와 `results/`에 실행 결과 저장
+5. `results/log_mcp_server_local/`와 `results/`에 실행 결과 저장
 6. GitHub MCP Server로 결과를 이슈에 댓글 또는 상태로 보고
 
 ---
