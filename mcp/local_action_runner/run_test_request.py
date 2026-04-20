@@ -27,9 +27,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run a Test Request issue against the local MCP server.")
     parser.add_argument("--issue-number", type=int, required=True)
     parser.add_argument("--issue-title", required=True)
-    parser.add_argument("--issue-body-file", required=True)
+    parser.add_argument("--issue-body")
+    parser.add_argument("--issue-body-file")
     parser.add_argument("--expected-runner", required=True)
-    return parser.parse_args()
+    args = parser.parse_args()
+    if not args.issue_body and not args.issue_body_file:
+        parser.error("one of --issue-body or --issue-body-file is required")
+    return args
 
 
 def extract_fields(issue_body: str) -> dict[str, str]:
@@ -146,7 +150,10 @@ def append_summary(lines: list[str]) -> None:
 
 def main() -> int:
     args = parse_args()
-    issue_body = Path(args.issue_body_file).read_text(encoding="utf-8")
+    if args.issue_body is not None:
+        issue_body = args.issue_body
+    else:
+        issue_body = Path(args.issue_body_file).read_text(encoding="utf-8")
     fields = extract_fields(issue_body)
 
     requested_runners = split_csv(fields["target_runner"])
