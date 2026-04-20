@@ -54,8 +54,12 @@ TEST 실행은 일반 feature/bug issue와 분리해서 받는다.
 - Target Runner: qemu-runner
 - MCP Server Mode: runner
 
+## Test Tool
+- [x] `build_tool`
+- [ ] `flash_tool`
+- [ ] `log_analyzer`
+
 ## Test Scope
-- Test Tool: build_tool
 - Test Type: smoke
 - Target Device / Image: zephyr.elf
 - Iterations: 3

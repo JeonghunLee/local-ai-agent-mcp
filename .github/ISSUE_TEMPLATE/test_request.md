@@ -10,15 +10,15 @@ assignees: ""
 Use this format when you create the issue title.
 
 ```text
-[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM> <summary>
-[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM> <summary>
+[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM> 
+[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM> 
 ```
 
 Examples:
 
 ```text
-[TEST] [direct] 2026-04-20 16:30 build_tool smoke
-[TEST] [runner] [local-dev] 2026-04-20 16:35 build_tool smoke 
+[TEST] [direct] 2026-04-20 16:30 
+[TEST] [runner] [local-dev] 2026-04-20 16:35 
 ```
 
 ## Summary
@@ -26,7 +26,6 @@ Describe the test request in one or two sentences.
 
 ## Checklist
 - [ ] I selected `direct` or `runner` in MCP Server Mode with Target Runner
-- [ ] I selected the test tool to run
 - [ ] I recorded the request result
 
 ## Request Ref
@@ -44,8 +43,14 @@ ex.2 (runner) self-hosted runner
 - MCP Server Mode: runner
 ```
 
+## Test Tool
+- [ ] `build_tool`
+- [ ] `flash_tool`
+- [ ] `log_analyzer`
+
+Select exactly one tool.
+
 ## Test Scope
-- Test Tool:
 - Test Type:
 - Target Device / Image:
 - Iterations:
