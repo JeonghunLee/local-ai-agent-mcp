@@ -6,7 +6,6 @@ on:
       - opened
       - edited
       - reopened
-      - labeled
 
 permissions:
   contents: read
@@ -76,13 +75,16 @@ jobs:
               body = [
                 "## Test Request Result",
                 "",
+                "### 1. TEST Result",
                 "- Status: error",
+                "- Reason: result file was not created",
+                "",
+                "### 2. Request Ref",
                 `- MCP Server Mode (requested): ${requestedMode}`,
                 "- MCP Server (resolved): n/a",
                 `- Target Runner (requested): ${requestedRunner}`,
                 `- Target Runner (workflow expected): ${process.env.RUNNER_NAME || "local-dev"}`,
                 `- Request Ref: ${requestRef}`,
-                "- Reason: result file was not created",
               ].join("\n");
             } else {
               const payload = JSON.parse(fs.readFileSync(resultPath, "utf8"));
@@ -90,20 +92,9 @@ jobs:
               const lines = [
                 "## Test Request Result",
                 "",
+                "### 1. TEST Result",
                 `- Status: ${payload.status || "unknown"}`,
-                `- MCP Server Mode (requested): ${parsed.mcp_server_mode || "n/a"}`,
-                `- MCP Server (resolved): ${payload.resolved_server_name || "n/a"}`,
-                `- Target Runner (requested): ${parsed.target_runner || "n/a"}`,
-                `- Target Runner (workflow expected): ${payload.expected_runner || "n/a"}`,
-                `- Request Ref: ${parsed.request_ref || "n/a"}`,
-                `- Test Type: ${parsed.test_type || "n/a"}`,
-                `- Target Device / Image: ${parsed.target_device_image || "n/a"}`,
-                `- Iterations: ${parsed.iterations || "n/a"}`,
               ];
-
-              if (payload.selected_tool) {
-                lines.push(`- Selected Tool: ${payload.selected_tool}`);
-              }
 
               if (payload.reason) {
                 lines.push(`- Reason: ${payload.reason}`);
@@ -113,9 +104,27 @@ jobs:
                 lines.push(`- Error: ${payload.error}`);
               }
 
+              lines.push("");
+              lines.push("### 2. Request Ref");
+              lines.push(`- MCP Server Mode (requested): ${parsed.mcp_server_mode || "n/a"}`);
+              lines.push(`- MCP Server (resolved): ${payload.resolved_server_name || "n/a"}`);
+              lines.push(`- Target Runner (requested): ${parsed.target_runner || "n/a"}`);
+              lines.push(`- Target Runner (workflow expected): ${payload.expected_runner || "n/a"}`);
+              lines.push(`- Request Ref: ${parsed.request_ref || "n/a"}`);
+
+              lines.push("");
+              lines.push("### 3. Test Scope");
+
+              if (payload.selected_tool) {
+                lines.push(`- Selected Tool: ${payload.selected_tool}`);
+              }
+              lines.push(`- Test Type: ${parsed.test_type || "n/a"}`);
+              lines.push(`- Target Device / Image: ${parsed.target_device_image || "n/a"}`);
+              lines.push(`- Iterations: ${parsed.iterations || "n/a"}`);
+
               if (payload.tool_result) {
                 lines.push("");
-                lines.push("### Tool Result");
+                lines.push("### 4. Tool Result");
                 lines.push("");
                 lines.push("```json");
                 lines.push(JSON.stringify(payload.tool_result, null, 2));
