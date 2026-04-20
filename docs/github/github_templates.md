@@ -89,22 +89,23 @@ GitHub Issue (TEST 요청)
 Recommended title rule:
 
 ```text
-[TEST] <mode> <YYYY-MM-DD HH:MM> <summary>
+[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM> <summary>
+[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM> <summary>
 ```
 
 Examples:
 
 ```text
-[TEST] direct 2026-04-20 16:30 build_tool smoke
-[TEST] runner 2026-04-20 16:35 build_tool smoke local-dev
+[TEST] [direct] 2026-04-20 16:30 build_tool smoke
+[TEST] [runner] [local-dev] 2026-04-20 16:35 build_tool smoke
 ```
 
 Meaning:
 
-- `mode`: `direct` or `runner`
+- `mcp mode`: `direct` or `runner`
 - `YYYY-MM-DD HH:MM`: local request date/time
 - `summary`: short test purpose
-- Add the runner name at the end when `mode` is `runner`
+- Add `[<target runner>]` when `mcp mode` is `runner`
 
 ## Target Runner
 

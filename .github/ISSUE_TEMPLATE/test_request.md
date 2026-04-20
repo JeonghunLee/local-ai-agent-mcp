@@ -10,14 +10,15 @@ assignees: ""
 Use this format when you create the issue title.
 
 ```text
-[TEST] <mode> <YYYY-MM-DD HH:MM> <summary>
+[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM> <summary>
+[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM> <summary>
 ```
 
 Examples:
 
 ```text
-[TEST] direct 2026-04-20 16:30 build_tool smoke
-[TEST] runner 2026-04-20 16:35 build_tool smoke local-dev
+[TEST] [direct] 2026-04-20 16:30 build_tool smoke
+[TEST] [runner] [local-dev] 2026-04-20 16:35 build_tool smoke 
 ```
 
 ## Summary
