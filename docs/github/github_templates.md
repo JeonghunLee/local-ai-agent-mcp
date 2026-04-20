@@ -86,6 +86,26 @@ GitHub Issue (TEST 요청)
 
 ---
 
+Recommended title rule:
+
+```text
+[TEST] <mode> <YYYY-MM-DD HH:MM> <summary>
+```
+
+Examples:
+
+```text
+[TEST] direct 2026-04-20 16:30 build_tool smoke
+[TEST] runner 2026-04-20 16:35 build_tool smoke local-dev
+```
+
+Meaning:
+
+- `mode`: `direct` or `runner`
+- `YYYY-MM-DD HH:MM`: local request date/time
+- `summary`: short test purpose
+- Add the runner name at the end when `mode` is `runner`
+
 ## Target Runner
 
 `Test Request` 템플릿의 `Target Runner`는 요청을 처리할 실행 노드를 지정한다.
