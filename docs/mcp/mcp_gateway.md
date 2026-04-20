@@ -64,6 +64,20 @@ AI Agent
 
 즉 VS Code Gateway는 `Hub`에 가깝고, 별도 `Workflow Engine`은 아니다.
 
+현재 TEST Request 자동 실행은 VS Code Gateway가 담당하지 않는다.
+
+현재 구현된 자동 경로:
+
+```text
+GitHub Issue
+  → GitHub Actions
+  → Python bridge (mcp.local_action_runner.run_test_request)
+  → Local MCP Server
+```
+
+즉 `GitHub Issue -> GitHub Actions -> Python bridge -> Local MCP Server` 경로와,
+VS Code MCP Gateway를 통한 일반 Tool 호출 경로는 서로 다른 층위의 흐름이다.
+
 ---
 
 ## Routing Rules
