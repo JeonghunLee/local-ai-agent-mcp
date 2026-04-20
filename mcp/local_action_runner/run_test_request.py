@@ -24,6 +24,12 @@ FIELD_PATTERNS = {
     "iterations": re.compile(r"^- Iterations:\s*(.*)$", re.MULTILINE),
 }
 
+SUPPORTED_TOOLS = ("build_tool", "flash_tool", "log_analyzer")
+TOOL_CHECKLIST_PATTERNS = {
+    tool_name: re.compile(rf"^- \[x\]\s*`?{re.escape(tool_name)}`?\s*$", re.MULTILINE | re.IGNORECASE)
+    for tool_name in SUPPORTED_TOOLS
+}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run a Test Request issue against the local MCP server.")
@@ -43,6 +49,18 @@ def extract_fields(issue_body: str) -> dict[str, str]:
     for key, pattern in FIELD_PATTERNS.items():
         match = pattern.search(issue_body)
         fields[key] = match.group(1).strip() if match else ""
+    if not fields["test_tool"]:
+        selected_tools = [
+            tool_name
+            for tool_name, pattern in TOOL_CHECKLIST_PATTERNS.items()
+            if pattern.search(issue_body)
+        ]
+        if len(selected_tools) == 1:
+            fields["test_tool"] = selected_tools[0]
+        elif len(selected_tools) > 1:
+            raise ValueError(
+                "Select exactly one supported tool in the checklist: build_tool, flash_tool, or log_analyzer."
+            )
     return fields
 
 
