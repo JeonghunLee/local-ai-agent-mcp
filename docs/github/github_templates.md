@@ -50,6 +50,7 @@ TEST 실행은 일반 feature/bug issue와 분리해서 받는다.
 
 ```md
 ## Request Ref
+- Template Version: v0.0.1
 - Branch / Tag / Commit: 29e157c0
 - Target Runner: qemu-runner
 - MCP Server Mode: runner
@@ -57,13 +58,18 @@ TEST 실행은 일반 feature/bug issue와 분리해서 받는다.
 ## Test Tool
 - [x] `build_tool`
 - [ ] `flash_tool`
-- [ ] `log_analyzer`
+- [x] `log_analyzer`
 
 ## Test Scope
 - Test Type: smoke
 - Target Device / Image: zephyr.elf
 - Iterations: 3
 ```
+
+One Test Request issue may select multiple tools.
+
+`Template Version` is used to track the request body format.
+When the Test Request structure changes, bump this version.
 
 모드 선택 예시:
 
@@ -93,22 +99,21 @@ GitHub Issue (TEST 요청)
 Recommended title rule:
 
 ```text
-[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM> <summary>
-[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM> <summary>
+[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM>
+[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM>
 ```
 
 Examples:
 
 ```text
-[TEST] [direct] 2026-04-20 16:30 build_tool smoke
-[TEST] [runner] [local-dev] 2026-04-20 16:35 build_tool smoke
+[TEST] [direct] 2026-04-20 16:30
+[TEST] [runner] [local-dev] 2026-04-20 16:35
 ```
 
 Meaning:
 
 - `mcp mode`: `direct` or `runner`
 - `YYYY-MM-DD HH:MM`: local request date/time
-- `summary`: short test purpose
 - Add `[<target runner>]` when `mcp mode` is `runner`
 
 ## Target Runner

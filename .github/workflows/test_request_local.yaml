@@ -80,6 +80,7 @@ jobs:
                 "- Reason: result file was not created",
                 "",
                 "### 2. Request Ref",
+                `- Template Version: ${extractField("Template Version") || "v0.0.1"}`,
                 `- MCP Server Mode (requested): ${requestedMode}`,
                 "- MCP Server (resolved): n/a",
                 `- Target Runner (requested): ${requestedRunner}`,
@@ -106,6 +107,7 @@ jobs:
 
               lines.push("");
               lines.push("### 2. Request Ref");
+              lines.push(`- Template Version: ${parsed.template_version || "v0.0.1"}`);
               lines.push(`- MCP Server Mode (requested): ${parsed.mcp_server_mode || "n/a"}`);
               lines.push(`- MCP Server (resolved): ${payload.resolved_server_name || "n/a"}`);
               lines.push(`- Target Runner (requested): ${parsed.target_runner || "n/a"}`);
@@ -115,28 +117,38 @@ jobs:
               lines.push("");
               lines.push("### 3. Test Scope");
 
-              if (payload.selected_tool) {
-                lines.push(`- Selected Tool: ${payload.selected_tool}`);
+              if (Array.isArray(payload.selected_tools) && payload.selected_tools.length > 0) {
+                lines.push(`- Selected Tools: ${payload.selected_tools.join(", ")}`);
               }
               lines.push(`- Test Type: ${parsed.test_type || "n/a"}`);
               lines.push(`- Target Device / Image: ${parsed.target_device_image || "n/a"}`);
               lines.push(`- Iterations: ${parsed.iterations || "n/a"}`);
 
-              if (payload.log_paths) {
+              if (Array.isArray(payload.tool_runs) && payload.tool_runs.length > 0) {
                 lines.push("");
                 lines.push("### 4. Logs");
-                lines.push(`- Log Directory: ${payload.log_paths.log_dir || "n/a"}`);
-                lines.push(`- Server Log: ${payload.log_paths.server_log || "n/a"}`);
-                lines.push(`- Tool Log: ${payload.log_paths.tool_log || "n/a"}`);
-              }
+                for (const toolRun of payload.tool_runs) {
+                  const logs = toolRun.log_paths || {};
+                  lines.push(`- ${toolRun.tool_name}: ${logs.tool_log || "n/a"}`);
+                }
 
-              if (payload.tool_result) {
                 lines.push("");
                 lines.push("### 5. Tool Result");
-                lines.push("");
-                lines.push("```json");
-                lines.push(JSON.stringify(payload.tool_result, null, 2));
-                lines.push("```");
+                for (const toolRun of payload.tool_runs) {
+                  lines.push("");
+                  lines.push(`#### ${toolRun.tool_name}`);
+                  lines.push(`- Status: ${toolRun.status || "unknown"}`);
+                  if (toolRun.log_paths) {
+                    lines.push(`- Server Log: ${toolRun.log_paths.server_log || "n/a"}`);
+                    lines.push(`- Tool Log: ${toolRun.log_paths.tool_log || "n/a"}`);
+                  }
+                  if (toolRun.tool_result) {
+                    lines.push("");
+                    lines.push("```json");
+                    lines.push(JSON.stringify(toolRun.tool_result, null, 2));
+                    lines.push("```");
+                  }
+                }
               }
 
               body = lines.join("\n");
