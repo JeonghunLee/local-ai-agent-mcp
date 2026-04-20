@@ -8,6 +8,7 @@ from typing import Any, Callable
 
 JsonDict = dict[str, Any]
 ToolHandler = Callable[[JsonDict], JsonDict]
+LOG_DIR = Path("results") / "log_mcp_server_local"
 
 
 LOGGER = logging.getLogger("local_mcp")
@@ -17,9 +18,8 @@ if not LOGGER.handlers:
     stream_handler.setLevel(logging.ERROR)
     LOGGER.addHandler(stream_handler)
 
-    log_dir = Path("logs")
-    log_dir.mkdir(exist_ok=True)
-    file_handler = logging.FileHandler(log_dir / "mcp-server-local.log", encoding="utf-8")
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    file_handler = logging.FileHandler(LOG_DIR / "mcp-server-local.log", encoding="utf-8")
     file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] %(message)s"))
     file_handler.setLevel(logging.INFO)
     LOGGER.addHandler(file_handler)
@@ -165,17 +165,10 @@ class MCPServer:
         while True:
             line = sys.stdin.buffer.readline()
             if not line:
-                # self._log_info(f"server.stdin_eof name={self.name}")
                 return None
-            # self._log_info(
-            #     f"server.stdin_line name={self.name} bytes={len(line)} raw={line!r}"
-            # )
             stripped = line.strip()
             if stripped.startswith(b"{"):
                 self._transport_mode = "json-line"
-                # self._log_info(
-                #     f"server.stdin_json_line name={self.name} bytes={len(stripped)}"
-                # )
                 return json.loads(stripped.decode("utf-8"))
             if line in (b"\r\n", b"\n"):
                 break
@@ -188,12 +181,10 @@ class MCPServer:
         length = int(headers["content-length"])
         if length < 0:
             raise ValueError("Invalid Content-Length header")
-        # self._log_info(f"server.stdin_body name={self.name} content_length={length}")
 
         body = sys.stdin.buffer.read(length)
         if len(body) != length:
             raise ValueError("Incomplete message body")
-        # self._log_info(f"server.stdin_body_read name={self.name} bytes={len(body)}")
         return json.loads(body.decode("utf-8"))
 
     def _write_message(self, payload: JsonDict) -> None:
@@ -210,7 +201,8 @@ class MCPServer:
 
     def _append_tool_log(self, tool_name: str, message: str) -> None:
         timestamp = datetime.now().isoformat(timespec="seconds")
-        log_path = Path("logs") / f"mcp-server-local-{tool_name}.log"
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        log_path = LOG_DIR / f"mcp-server-local-{tool_name}.log"
         with log_path.open("a", encoding="utf-8") as handle:
             handle.write(f"{timestamp} {message}\n")
 

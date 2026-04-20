@@ -176,7 +176,7 @@ cat ~/.openclaw/openclaw.json
       "command": "python",
       "args": [
         "-m",
-        "mcp.main.server_local"
+        "mcp.server_local.server_local"
       ],
       "cwd": "${workspaceFolder}"
     }
