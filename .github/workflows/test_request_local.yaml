@@ -11,6 +11,12 @@ permissions:
   contents: read
   issues: write
 
+#
+#  Every check for test request issues 
+#   - template: .github/ISSUE_TEMPLATE/test_request.md 
+#  
+#  only working self-hosted runner 
+#
 jobs:
   run-local-test-request:
     if: contains(github.event.issue.labels.*.name, 'test-request')
@@ -26,7 +32,9 @@ jobs:
           Write-Host "Runner Name: $env:RUNNER_NAME"
           Write-Host "Runner OS: $env:RUNNER_OS"
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
-
+    # 
+    #   mcp.local_action_runner is working 
+    #          
       - name: Run test request through local MCP
         shell: powershell
         env:
@@ -47,6 +55,9 @@ jobs:
             results/log_mcp_server_local/*.log
             results/*.json
 
+#
+#   Test Result Commenting
+#            
       - name: Comment result on issue
         if: always()
         uses: actions/github-script@v7
