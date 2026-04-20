@@ -31,7 +31,7 @@ mcp/
 | Mode | Start | Main Context |
 |------|------|--------------|
 | `direct` | VS Code MCP 같은 local client 가 직접 시작 | local 개발, direct MCP TEST |
-| `runner` | GitHub Actions issue flow 에서 self-hosted runner 를 통해 시작 | Issue 기반 TEST 자동화 |
+| `runner` | GitHub Actions issue flow 에서 self-hosted runner 를 통해 시작 | Github Issue 기반 TEST 자동화 |
 
 ---
 
