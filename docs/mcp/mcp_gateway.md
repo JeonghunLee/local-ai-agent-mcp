@@ -12,7 +12,7 @@
 
 - VS Code가 `.vscode/mcp.json`에 등록된 여러 MCP Server에 동시에 연결
 - AI Agent가 필요할 때 각 Server의 Tool을 직접 호출
-- Local Tool은 `mcp-server-local`, GitHub Tool은 `github-mcp-server`를 사용
+- Local Tool은 `mcp-server-local-direct` 또는 `mcp-server-local-runner`, GitHub Tool은 `github-mcp-server`를 사용
 
 중요한 점:
 
@@ -58,7 +58,7 @@ AI Agent
 현재 이 프로젝트에서 실제로 사용하는 방식은 아래와 같다.
 
 1. VS Code가 `.vscode/mcp.json`을 읽고 MCP Server들을 시작한다.
-2. `mcp-server-local`과 `github-mcp-server`가 각각 연결된다.
+2. `mcp-server-local-direct`와 `github-mcp-server`가 각각 연결된다.
 3. AI Agent는 Tool 이름과 목적에 따라 적절한 Server의 Tool을 호출한다.
 4. 각 Tool의 실행 순서와 업무 흐름은 VS Code Gateway가 자동으로 오케스트레이션하지 않는다.
 
@@ -186,11 +186,11 @@ cat ~/.openclaw/openclaw.json
 ```json
 {
   "servers": {
-    "mcp-server-local": {
+    "mcp-server-local-direct": {
       "command": "python",
       "args": [
         "-m",
-        "mcp.server_local.server_local"
+        "mcp.server_local_direct.server"
       ],
       "cwd": "${workspaceFolder}"
     }
