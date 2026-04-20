@@ -22,7 +22,7 @@ GitHub 대상 MCP(Model Context Protocol) `Tool` 제공용 전용 서버.
 현재 구현 기준:
 
 - TEST Request 자동 실행 경로는 GitHub MCP Server가 직접 트리거하지 않는다
-- 현재 자동 경로는 `GitHub Issue -> GitHub Actions -> Python bridge -> Local MCP Server`이다
+- 현재 자동 경로는 `GitHub Issue -> GitHub Actions -> Python bridge -> mcp-server-local-runner`이다
 - GitHub MCP Server는 결과 조회, 후속 댓글 작성, 상태 반영 같은 후처리 연계 지점으로 남아 있다
 
 즉 현재 구현에서 GitHub MCP Server는 Issue 이벤트를 받아 Local MCP Server를 직접 중계하는 오케스트레이터가 아니다.

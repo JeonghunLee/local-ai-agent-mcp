@@ -7,6 +7,11 @@
 
 Local MCP Server는 **VS Code MCP Gateway**를 통해 연결되는 로컬 실행용 MCP Server이다.
 
+현재 구조에서는 공통 코어(`mcp/server_local`) 위에 두 개의 진입점이 존재한다.
+
+- `mcp-server-local-direct`: VS Code 또는 수동 실행용
+- `mcp-server-local-runner`: GitHub Actions / self-hosted runner 실행용
+
 현재 문서의 기준은 다음과 같다.
 
 - OpenClaw는 사용하지 않는다
@@ -31,7 +36,7 @@ GitHub Issue (TEST 요청)
 GitHub Issue (TEST 요청)
   → GitHub Actions workflow 트리거
   → Python bridge (mcp.local_action_runner.run_test_request)
-  → Local MCP Server Tool 실행
+  → mcp-server-local-runner Tool 실행
   → results/log_mcp_server_local + results JSON 저장
 ```
 
@@ -47,7 +52,7 @@ GitHub Issue (TEST 요청)
 1. GitHub Issue가 `test-request` 라벨과 함께 생성되거나 수정된다
 2. GitHub Actions workflow가 `issues` 이벤트를 감지한다
 3. self-hosted runner에서 Python bridge가 이슈 본문을 파싱한다
-4. Python bridge가 `mcp.server_local.server_local`을 호출한다
+4. Python bridge가 `mcp.server_local_runner.server`를 호출한다
 5. Local MCP Server가 로그와 JSON 결과를 저장한다
 
 즉 현재 구현은 `GitHub Issue -> GitHub Actions -> Python bridge -> Local MCP Server` 구조다.
@@ -100,10 +105,10 @@ Local MCP Server는 `.vscode/mcp.json`으로 등록.
 ```json
 {
   "servers": {
-    "mcp-server-local": {
+    "mcp-server-local-direct": {
       "type": "stdio",
       "command": "C:\\Python314\\python.exe",
-      "args": ["-X", "utf8", "-m", "mcp.server_local.server_local"],
+      "args": ["-X", "utf8", "-m", "mcp.server_local_direct.server"],
       "cwd": "${workspaceFolder}"
     }
   }
@@ -112,7 +117,7 @@ Local MCP Server는 `.vscode/mcp.json`으로 등록.
 
 의미:
 
-- VS Code가 `mcp-server-local` 프로세스를 시작
+- VS Code가 `mcp-server-local-direct` 프로세스를 시작
 - MCP `initialize`, `tools/list`, `tools/call`은 VS Code MCP Gateway를 통해 전달
 - Tool discovery와 Tool 호출은 VS Code 내부 MCP 시스템이 처리
 
