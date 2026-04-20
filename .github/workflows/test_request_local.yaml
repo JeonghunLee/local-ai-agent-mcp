@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   run-local-test-request:
@@ -46,3 +47,70 @@ jobs:
           path: |
             results/log_mcp_server_local/*.log
             results/*.json
+
+      - name: Comment result on issue
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          RESULT_PATH: results/issue-test-request-${{ github.event.issue.number }}.json
+        with:
+          script: |
+            const fs = require("fs");
+            const issueNumber = Number(process.env.ISSUE_NUMBER);
+            const resultPath = process.env.RESULT_PATH;
+
+            let body;
+
+            if (!fs.existsSync(resultPath)) {
+              body = [
+                "## Test Request Result",
+                "",
+                "- Status: error",
+                "- Reason: result file was not created",
+              ].join("\n");
+            } else {
+              const payload = JSON.parse(fs.readFileSync(resultPath, "utf8"));
+              const parsed = payload.parsed_fields || {};
+              const lines = [
+                "## Test Request Result",
+                "",
+                `- Status: ${payload.status || "unknown"}`,
+                `- Expected Runner: ${payload.expected_runner || "n/a"}`,
+                `- Requested Runner: ${parsed.target_runner || "n/a"}`,
+                `- Requested Ref: ${parsed.requested_ref || "n/a"}`,
+                `- Test Type: ${parsed.test_type || "n/a"}`,
+                `- Target Device / Image: ${parsed.target_device_image || "n/a"}`,
+                `- Iterations: ${parsed.iterations || "n/a"}`,
+              ];
+
+              if (payload.selected_tool) {
+                lines.push(`- Selected Tool: ${payload.selected_tool}`);
+              }
+
+              if (payload.reason) {
+                lines.push(`- Reason: ${payload.reason}`);
+              }
+
+              if (payload.error) {
+                lines.push(`- Error: ${payload.error}`);
+              }
+
+              if (payload.tool_result) {
+                lines.push("");
+                lines.push("### Tool Result");
+                lines.push("");
+                lines.push("```json");
+                lines.push(JSON.stringify(payload.tool_result, null, 2));
+                lines.push("```");
+              }
+
+              body = lines.join("\n");
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body,
+            });
