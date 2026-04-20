@@ -1,0 +1,48 @@
+name: Test Request Local
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - reopened
+      - labeled
+
+permissions:
+  contents: read
+
+jobs:
+  run-local-test-request:
+    if: contains(github.event.issue.labels.*.name, 'test-request')
+    runs-on: [self-hosted, local-dev]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show runner context
+        shell: pwsh
+        run: |
+          Write-Host "Runner Name: $env:RUNNER_NAME"
+          Write-Host "Runner OS: $env:RUNNER_OS"
+          Write-Host "Repository: $env:GITHUB_REPOSITORY"
+
+      - name: Run test request through local MCP
+        shell: pwsh
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          python -m mcp.local_action_runner.run_test_request `
+            --issue-number "${{ github.event.issue.number }}" `
+            --issue-title "${{ github.event.issue.title }}" `
+            --issue-body "$env:ISSUE_BODY" `
+            --expected-runner "local-dev"
+
+      - name: Upload MCP logs and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-request-${{ github.event.issue.number }}
+          path: |
+            results/log_mcp_server_local/*.log
+            results/*.json
