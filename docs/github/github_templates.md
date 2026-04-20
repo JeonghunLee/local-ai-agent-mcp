@@ -41,23 +41,36 @@ TEST 실행은 일반 feature/bug issue와 분리해서 받는다.
 
 - `Branch / Tag / Commit`
 - `Target Runner`
+- `MCP Server Mode`
 - `Test Type`
 - `Target Device / Image`
 - `Iterations`
-- `Expected Outcome`
-- `Execution Notes`
 
 예시:
 
 ```md
-## Requested Ref
+## Request Ref
 - Branch / Tag / Commit: 29e157c0
 - Target Runner: qemu-runner
+- MCP Server Mode: runner
 
 ## Test Scope
+- Test Tool: build_tool
 - Test Type: smoke
 - Target Device / Image: zephyr.elf
 - Iterations: 3
+```
+
+모드 선택 예시:
+
+```md
+ex.1
+- Target Runner: none
+- MCP Server Mode: direct
+
+ex.2
+- Target Runner: local-dev
+- MCP Server Mode: runner
 ```
 
 이 템플릿은 다음 흐름을 전제로 한다.
