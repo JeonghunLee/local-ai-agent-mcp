@@ -15,8 +15,9 @@ DEFAULT_LOG_DIR = "results/log_mcp_server_local"
 
 
 FIELD_PATTERNS = {
-    "requested_ref": re.compile(r"^- Branch / Tag / Commit:\s*(.*)$", re.MULTILINE),
+    "request_ref": re.compile(r"^- Branch / Tag / Commit:\s*(.*)$", re.MULTILINE),
     "target_runner": re.compile(r"^- Target Runner:\s*(.*)$", re.MULTILINE),
+    "mcp_server_mode": re.compile(r"^- MCP Server Mode:\s*(.*)$", re.MULTILINE),
     "test_tool": re.compile(r"^- Test Tool:\s*(.*)$", re.MULTILINE),
     "test_type": re.compile(r"^- Test Type:\s*(.*)$", re.MULTILINE),
     "target_device_image": re.compile(r"^- Target Device / Image:\s*(.*)$", re.MULTILINE),
@@ -228,8 +229,9 @@ def main() -> int:
                 "## Test Request Result",
                 f"- Issue: #{args.issue_number}",
                 f"- Status: {payload['status']}",
+                f"- MCP Server Mode: `{fields['mcp_server_mode'] or 'runner'}`",
                 f"- Tool: `{tool_name}`",
-                f"- Requested Ref: `{fields['requested_ref'] or 'n/a'}`",
+                f"- Request Ref: `{fields['request_ref'] or 'n/a'}`",
                 f"- Target Runner: `{fields['target_runner'] or 'n/a'}`",
                 f"- Result File: `{output_path}`",
             ]
