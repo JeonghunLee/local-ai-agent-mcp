@@ -63,6 +63,12 @@ def resolve_server_module(server_mode: str) -> str:
     return "mcp.server_local_runner.server"
 
 
+def resolve_server_name(server_mode: str) -> str:
+    if server_mode == "direct":
+        return "mcp-server-local-direct"
+    return "mcp-server-local-runner"
+
+
 def resolve_tool(test_tool: str, test_type: str, target_device_image: str) -> tuple[str, dict[str, Any]]:
     normalized_tool = test_tool.strip().lower()
     normalized_type = test_type.strip().lower()
@@ -224,6 +230,7 @@ def main() -> int:
         )
         mcp_result = call_local_mcp(server_mode, tool_name, tool_arguments)
         tool_payload, is_error = parse_call_payload(mcp_result["call_response"])
+        server_name = resolve_server_name(server_mode)
         payload = {
             "issue_number": args.issue_number,
             "issue_title": args.issue_title,
@@ -231,6 +238,8 @@ def main() -> int:
             "status": "error" if is_error else "success",
             "expected_runner": expected_runner,
             "requested_runners": requested_runners,
+            "resolved_server_mode": server_mode,
+            "resolved_server_name": server_name,
             "parsed_fields": fields,
             "selected_tool": tool_name,
             "tool_arguments": tool_arguments,
@@ -244,6 +253,7 @@ def main() -> int:
                 f"- Issue: #{args.issue_number}",
                 f"- Status: {payload['status']}",
                 f"- MCP Server Mode: `{server_mode}`",
+                f"- MCP Server: `{server_name}`",
                 f"- Tool: `{tool_name}`",
                 f"- Request Ref: `{fields['request_ref'] or 'n/a'}`",
                 f"- Target Runner: `{fields['target_runner'] or 'n/a'}`",
