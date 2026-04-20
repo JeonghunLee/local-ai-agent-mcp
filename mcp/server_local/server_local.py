@@ -1,5 +1,5 @@
-from mcp.main.runtime import MCPServer
-from mcp.main.toolsets import LOCAL_HANDLERS, LOCAL_TOOLS
+from mcp.server_local.runtime import MCPServer
+from mcp.server_local.toolsets import LOCAL_HANDLERS, LOCAL_TOOLS
 
 
 if __name__ == "__main__":

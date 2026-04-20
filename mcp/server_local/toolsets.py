@@ -5,6 +5,7 @@ import subprocess
 
 
 LOGGER = logging.getLogger("local_mcp.tools")
+DEFAULT_LOG_DIR = "results/log_mcp_server_local"
 
 
 def build_tool(arguments: dict) -> dict:
@@ -39,11 +40,11 @@ def flash_tool(arguments: dict) -> dict:
 
 
 def log_analyzer(arguments: dict) -> dict:
-    LOGGER.info("tool.call name=log_analyzer log_path=%s", arguments.get("log_path", "logs/sample.log"))
+    LOGGER.info("tool.call name=log_analyzer log_path=%s", arguments.get("log_path", f"{DEFAULT_LOG_DIR}/sample.log"))
     return {
         "tool": "log_analyzer",
         "status": "success",
-        "log_path": arguments.get("log_path", "logs/sample.log"),
+        "log_path": arguments.get("log_path", f"{DEFAULT_LOG_DIR}/sample.log"),
         "summary": "No critical pattern detected in stub analyzer.",
     }
 

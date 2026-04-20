@@ -9,9 +9,9 @@ VS Code `.vscode/mcp.json` 등록용 Python stdio server 구성.
 
 | File | Role |
 |------|------|
-| `main/runtime.py` | 최소 MCP stdio runtime |
-| `main/toolsets.py` | Local tool handler |
-| `main/server_local.py` | Local MCP Server entrypoint |
+| `server_local/runtime.py` | 최소 MCP stdio runtime |
+| `server_local/toolsets.py` | Local tool handler |
+| `server_local/server_local.py` | Local MCP Server entrypoint |
 
 ## VS Code Setup
 
@@ -22,7 +22,7 @@ VS Code `.vscode/mcp.json` 등록용 Python stdio server 구성.
   "servers": {
     "mcp-server-local": {
       "command": "python",
-      "args": ["-m", "mcp.main.server_local"]
+      "args": ["-m", "mcp.server_local.server_local"]
     }
   }
 }
