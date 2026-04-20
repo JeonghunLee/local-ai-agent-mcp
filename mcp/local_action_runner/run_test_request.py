@@ -12,9 +12,11 @@ from typing import Any
 
 
 DEFAULT_LOG_DIR = "results/log_mcp_server_local"
+DEFAULT_TEMPLATE_VERSION = "v0.0.1"
 
 
 FIELD_PATTERNS = {
+    "template_version": re.compile(r"^- Template Version:\s*(.*)$", re.MULTILINE),
     "request_ref": re.compile(r"^- Branch / Tag / Commit:\s*(.*)$", re.MULTILINE),
     "target_runner": re.compile(r"^- Target Runner:\s*(.*)$", re.MULTILINE),
     "mcp_server_mode": re.compile(r"^- MCP Server Mode:\s*(.*)$", re.MULTILINE),
@@ -49,18 +51,8 @@ def extract_fields(issue_body: str) -> dict[str, str]:
     for key, pattern in FIELD_PATTERNS.items():
         match = pattern.search(issue_body)
         fields[key] = match.group(1).strip() if match else ""
-    if not fields["test_tool"]:
-        selected_tools = [
-            tool_name
-            for tool_name, pattern in TOOL_CHECKLIST_PATTERNS.items()
-            if pattern.search(issue_body)
-        ]
-        if len(selected_tools) == 1:
-            fields["test_tool"] = selected_tools[0]
-        elif len(selected_tools) > 1:
-            raise ValueError(
-                "Select exactly one supported tool in the checklist: build_tool, flash_tool, or log_analyzer."
-            )
+    if not fields["template_version"]:
+        fields["template_version"] = DEFAULT_TEMPLATE_VERSION
     return fields
 
 
@@ -123,6 +115,22 @@ def resolve_tool(test_tool: str, test_type: str, target_device_image: str) -> tu
     raise ValueError(
         "Unsupported Test Tool/Test Type. Use one of: build_tool, flash_tool, log_analyzer."
     )
+
+
+def resolve_selected_tools(issue_body: str, test_tool: str, test_type: str, target_device_image: str) -> list[tuple[str, dict[str, Any]]]:
+    selected_tools = [
+        tool_name
+        for tool_name, pattern in TOOL_CHECKLIST_PATTERNS.items()
+        if pattern.search(issue_body)
+    ]
+    if selected_tools:
+        return [
+            resolve_tool(tool_name, test_type, target_device_image)
+            for tool_name in selected_tools
+        ]
+
+    fallback_tool_name, fallback_arguments = resolve_tool(test_tool, test_type, target_device_image)
+    return [(fallback_tool_name, fallback_arguments)]
 
 
 def call_local_mcp(server_mode: str, tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
@@ -211,6 +219,12 @@ def resolve_log_paths(tool_name: str) -> dict[str, str]:
     }
 
 
+def summarize_statuses(tool_results: list[dict[str, Any]]) -> str:
+    if any(item["status"] == "error" for item in tool_results):
+        return "error"
+    return "success"
+
+
 def main() -> int:
     args = parse_args()
     if args.issue_body is not None:
@@ -249,32 +263,45 @@ def main() -> int:
         return 0
 
     try:
-        tool_name, tool_arguments = resolve_tool(
+        selected_tools = resolve_selected_tools(
+            issue_body,
             fields["test_tool"],
             fields["test_type"],
             fields["target_device_image"],
         )
-        mcp_result = call_local_mcp(server_mode, tool_name, tool_arguments)
-        tool_payload, is_error = parse_call_payload(mcp_result["call_response"])
         server_name = resolve_server_name(server_mode)
-        log_paths = resolve_log_paths(tool_name)
+        executed_tools: list[dict[str, Any]] = []
+
+        for tool_name, tool_arguments in selected_tools:
+            mcp_result = call_local_mcp(server_mode, tool_name, tool_arguments)
+            tool_payload, is_error = parse_call_payload(mcp_result["call_response"])
+            executed_tools.append(
+                {
+                    "tool_name": tool_name,
+                    "tool_arguments": tool_arguments,
+                    "log_paths": resolve_log_paths(tool_name),
+                    "status": "error" if is_error else "success",
+                    "tool_result": tool_payload,
+                }
+            )
+
+        status = summarize_statuses(executed_tools)
         payload = {
             "issue_number": args.issue_number,
             "issue_title": args.issue_title,
             "timestamp": timestamp,
-            "status": "error" if is_error else "success",
+            "status": status,
             "expected_runner": expected_runner,
             "requested_runners": requested_runners,
             "resolved_server_mode": server_mode,
             "resolved_server_name": server_name,
             "parsed_fields": fields,
-            "selected_tool": tool_name,
-            "tool_arguments": tool_arguments,
-            "log_paths": log_paths,
-            "tool_result": tool_payload,
+            "selected_tools": [item["tool_name"] for item in executed_tools],
+            "tool_runs": executed_tools,
         }
         output_path = write_result(args.issue_number, payload)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
+        summary_tools = ", ".join(payload["selected_tools"]) or "n/a"
         append_summary(
             [
                 "## Test Request Result",
@@ -282,15 +309,13 @@ def main() -> int:
                 f"- Status: {payload['status']}",
                 f"- MCP Server Mode: `{server_mode}`",
                 f"- MCP Server: `{server_name}`",
-                f"- Tool: `{tool_name}`",
+                f"- Tools: `{summary_tools}`",
                 f"- Request Ref: `{fields['request_ref'] or 'n/a'}`",
                 f"- Target Runner: `{fields['target_runner'] or 'n/a'}`",
-                f"- Server Log: `{log_paths['server_log']}`",
-                f"- Tool Log: `{log_paths['tool_log']}`",
                 f"- Result File: `{output_path}`",
             ]
         )
-        return 1 if is_error else 0
+        return 1 if status == "error" else 0
     except Exception as exc:
         payload = {
             "issue_number": args.issue_number,

@@ -21,14 +21,12 @@ Examples:
 [TEST] [runner] [local-dev] 2026-04-20 16:35 
 ```
 
-## Summary
-Describe the test request in one or two sentences.
-
 ## Checklist
 - [ ] I selected `direct` or `runner` in MCP Server Mode with Target Runner
 - [ ] I recorded the request result
 
 ## Request Ref
+- Template Version: v0.0.1
 - Branch / Tag / Commit:
 - Target Runner:
 - MCP Server Mode:
@@ -48,7 +46,7 @@ ex.2 (runner) self-hosted runner
 - [ ] `flash_tool`
 - [ ] `log_analyzer`
 
-Select exactly one tool.
+Select one or more tools.
 
 ## Test Scope
 - Test Type:
