@@ -1,10 +1,10 @@
 {
   "servers": {
-    "mcp-server-local": {
+    "mcp-server-local-direct": {
       "command": "python",
       "args": [
         "-m",
-        "mcp.server_local.server_local"
+        "mcp.server_local_direct.server"
       ],
       "cwd": "${workspaceFolder}"
     }
