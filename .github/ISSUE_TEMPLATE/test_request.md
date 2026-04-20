@@ -10,25 +10,18 @@ assignees: ""
 Describe the test request in one or two sentences.
 
 ## Checklist
-- [ ] I searched existing issues
-- [ ] I specified the target ref or commit
-- [ ] I listed the requested test scope
-- [ ] I included logs or constraints if relevant
+- [ ] I selected the test tool to run
+- [ ] I recorded the request result
 
 ## Requested Ref
 - Branch / Tag / Commit:
 - Target Runner:
 
 ## Test Scope
+- Test Tool:
 - Test Type:
 - Target Device / Image:
 - Iterations:
-
-## Expected Outcome
-What result should be verified?
-
-## Execution Notes
-List any setup steps, environment constraints, or special instructions.
 
 ## Logs or References
 Add links, issue references, artifacts, or related context if available.
