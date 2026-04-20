@@ -110,7 +110,7 @@ def call_local_mcp(tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
     ]
     payload = "\n".join(json.dumps(request) for request in requests) + "\n"
     result = subprocess.run(
-        [sys.executable, "-m", "mcp.server_local.server_local"],
+        [sys.executable, "-m", "mcp.server_local_runner.server"],
         input=payload,
         capture_output=True,
         text=True,
