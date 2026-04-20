@@ -17,6 +17,7 @@ DEFAULT_LOG_DIR = "results/log_mcp_server_local"
 FIELD_PATTERNS = {
     "requested_ref": re.compile(r"^- Branch / Tag / Commit:\s*(.*)$", re.MULTILINE),
     "target_runner": re.compile(r"^- Target Runner:\s*(.*)$", re.MULTILINE),
+    "test_tool": re.compile(r"^- Test Tool:\s*(.*)$", re.MULTILINE),
     "test_type": re.compile(r"^- Test Type:\s*(.*)$", re.MULTILINE),
     "target_device_image": re.compile(r"^- Target Device / Image:\s*(.*)$", re.MULTILINE),
     "iterations": re.compile(r"^- Iterations:\s*(.*)$", re.MULTILINE),
@@ -48,25 +49,41 @@ def split_csv(value: str) -> list[str]:
     return [item.strip().lower() for item in value.split(",") if item.strip()]
 
 
-def resolve_tool(test_type: str, target_device_image: str) -> tuple[str, dict[str, Any]]:
-    normalized = test_type.strip().lower()
+def resolve_tool(test_tool: str, test_type: str, target_device_image: str) -> tuple[str, dict[str, Any]]:
+    normalized_tool = test_tool.strip().lower()
+    normalized_type = test_type.strip().lower()
 
-    if normalized in {"build", "build_tool"}:
+    if normalized_tool in {"build_tool", "build"}:
         return "build_tool", {
             "target": target_device_image or "all",
             "working_dir": ".",
         }
-    if normalized in {"flash", "flash_tool"}:
+    if normalized_tool in {"flash_tool", "flash"}:
         return "flash_tool", {
             "interface": "openocd",
             "image": target_device_image or "firmware.bin",
         }
-    if normalized in {"log", "log_analyzer", "analyzer"}:
+    if normalized_tool in {"log_analyzer", "log", "analyzer"}:
+        return "log_analyzer", {
+            "log_path": target_device_image or f"{DEFAULT_LOG_DIR}/sample.log",
+        }
+
+    if normalized_type in {"build", "build_tool"}:
+        return "build_tool", {
+            "target": target_device_image or "all",
+            "working_dir": ".",
+        }
+    if normalized_type in {"flash", "flash_tool"}:
+        return "flash_tool", {
+            "interface": "openocd",
+            "image": target_device_image or "firmware.bin",
+        }
+    if normalized_type in {"log", "log_analyzer", "analyzer"}:
         return "log_analyzer", {
             "log_path": target_device_image or f"{DEFAULT_LOG_DIR}/sample.log",
         }
     raise ValueError(
-        "Unsupported Test Type. Use one of: build, flash, log_analyzer."
+        "Unsupported Test Tool/Test Type. Use one of: build_tool, flash_tool, log_analyzer."
     )
 
 
@@ -186,6 +203,7 @@ def main() -> int:
 
     try:
         tool_name, tool_arguments = resolve_tool(
+            fields["test_tool"],
             fields["test_type"],
             fields["target_device_image"],
         )
