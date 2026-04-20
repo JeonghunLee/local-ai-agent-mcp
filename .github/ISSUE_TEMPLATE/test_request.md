@@ -10,12 +10,24 @@ assignees: ""
 Describe the test request in one or two sentences.
 
 ## Checklist
+- [ ] I selected `direct` or `runner` in MCP Server Mode with Target Runner
 - [ ] I selected the test tool to run
 - [ ] I recorded the request result
 
-## Requested Ref
+## Request Ref
 - Branch / Tag / Commit:
 - Target Runner:
+- MCP Server Mode:
+
+```md
+ex.1 (direct) 
+- Target Runner: none
+- MCP Server Mode: direct
+
+ex.2 (runner) self-hosted runner 
+- Target Runner: local-dev
+- MCP Server Mode: runner
+```
 
 ## Test Scope
 - Test Tool:
