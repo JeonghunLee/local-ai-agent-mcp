@@ -72,6 +72,54 @@ def compact_test_request_fields(fields: dict[str, str], selected_tools: list[str
     return compact_fields
 
 
+def run_git_command(args: list[str]) -> str:
+    result = subprocess.run(
+        ["git", *args],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        return ""
+    return result.stdout.strip()
+
+
+def looks_like_commit_sha(value: str) -> bool:
+    return bool(re.fullmatch(r"[0-9a-fA-F]{7,40}", value.strip()))
+
+
+def resolve_git_ref_metadata(request_ref: str) -> dict[str, str]:
+    ref = request_ref.strip()
+    head_commit = run_git_command(["rev-parse", "HEAD"])
+    head_branch = run_git_command(["branch", "--show-current"]) or "HEAD"
+
+    metadata = {
+        "resolved_branch": "",
+        "resolved_commit": "",
+        "checked_out_branch": head_branch,
+        "checked_out_commit": head_commit,
+    }
+
+    if not ref:
+        metadata["resolved_branch"] = head_branch
+        metadata["resolved_commit"] = head_commit
+        return metadata
+
+    resolved_commit = run_git_command(["rev-parse", f"{ref}^{{commit}}"])
+    if resolved_commit:
+        metadata["resolved_commit"] = resolved_commit
+    else:
+        metadata["resolved_commit"] = head_commit
+
+    if looks_like_commit_sha(ref):
+        containing_branch = run_git_command(["branch", "--contains", ref, "--format", "%(refname:short)"])
+        metadata["resolved_branch"] = containing_branch.splitlines()[0] if containing_branch else "n/a"
+        return metadata
+
+    metadata["resolved_branch"] = ref
+    return metadata
+
+
 def extract_field(issue_body: str, label: str) -> str:
     markdown_pattern = re.compile(rf"^- {re.escape(label)}:\s*(.*)$", re.MULTILINE)
     markdown_match = markdown_pattern.search(issue_body)
@@ -309,15 +357,18 @@ def main() -> int:
     requested_runners = split_csv(fields["target_runner"])
     expected_runner = args.expected_runner.strip().lower()
     timestamp = datetime.now(timezone.utc).isoformat()
+    git_ref_metadata = resolve_git_ref_metadata(fields["request_ref"])
 
     if server_mode == "runner" and expected_runner not in requested_runners:
+        compact_fields = compact_test_request_fields(fields)
+        compact_fields.update(git_ref_metadata)
         payload = {
             "issue_number": args.issue_number,
             "issue_title": args.issue_title,
             "timestamp": timestamp,
             "status": "skipped",
             "reason": "target_runner_mismatch",
-            "test_request_pared_fileds": compact_test_request_fields(fields),
+            "test_request_pared_fileds": compact_fields,
         }
         output_path = write_result(args.issue_number, payload)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
@@ -357,15 +408,17 @@ def main() -> int:
             )
 
         status = summarize_statuses(executed_tools)
+        compact_fields = compact_test_request_fields(
+            fields,
+            [item["tool_function"] for item in executed_tools],
+        )
+        compact_fields.update(git_ref_metadata)
         payload = {
             "issue_number": args.issue_number,
             "issue_title": args.issue_title,
             "timestamp": timestamp,
             "status": status,
-            "test_request_pared_fileds": compact_test_request_fields(
-                fields,
-                [item["tool_function"] for item in executed_tools],
-            ),
+            "test_request_pared_fileds": compact_fields,
             "tool_runs": executed_tools,
         }
         output_path = write_result(args.issue_number, payload)
@@ -386,12 +439,14 @@ def main() -> int:
         )
         return 1 if status == "error" else 0
     except Exception as exc:
+        compact_fields = compact_test_request_fields(fields)
+        compact_fields.update(git_ref_metadata)
         payload = {
             "issue_number": args.issue_number,
             "issue_title": args.issue_title,
             "timestamp": timestamp,
             "status": "error",
-            "test_request_pared_fileds": compact_test_request_fields(fields),
+            "test_request_pared_fileds": compact_fields,
             "error": f"{type(exc).__name__}: {exc}",
         }
         output_path = write_result(args.issue_number, payload)

@@ -106,7 +106,10 @@ def render_missing_result(issue_body: str) -> str:
 def render_payload(payload: dict[str, Any]) -> str:
     parsed = payload.get("test_request_pared_fileds") or payload.get("parsed_fields", {})
     request_ref = parsed.get("request_ref") or "n/a"
-    branch, commit = parse_request_ref(request_ref)
+    branch = parsed.get("resolved_branch") or "n/a"
+    commit = parsed.get("resolved_commit") or "n/a"
+    if branch == "n/a" and commit == "n/a":
+        branch, commit = parse_request_ref(request_ref)
     server_mode = parsed.get("mcp_server_mode") or DEFAULT_SERVER_MODE
     target_runner = parsed.get("target_runner") or DEFAULT_TARGET_RUNNER
     server_name = resolve_server_name(server_mode)
