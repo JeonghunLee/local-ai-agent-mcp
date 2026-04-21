@@ -47,20 +47,29 @@ pipeline {
         stage('Resolve Request') {
             steps {
                 script {
-                    def webhookTriggered = (env.WEBHOOK_ISSUE_NUMBER?.trim() || env.WEBHOOK_ISSUE_BODY?.trim()) ? true : false
+                    def normalize = { value ->
+                        def text = value == null ? '' : value.toString().trim()
+                        if (!text || text.equalsIgnoreCase('null') || text.equalsIgnoreCase('undefined')) {
+                            return ''
+                        }
+                        return text
+                    }
+                    def webhookIssueNumber = normalize(env.WEBHOOK_ISSUE_NUMBER)
+                    def webhookIssueBody = normalize(env.WEBHOOK_ISSUE_BODY)
+                    def webhookTriggered = (webhookIssueNumber || webhookIssueBody) ? true : false
                     def pickWebhookFirst = { String webhookValue, String manualValue, String fallback = '' ->
-                        def webhookTrimmed = webhookValue?.trim()
+                        def webhookTrimmed = normalize(webhookValue)
                         if (webhookTrimmed) {
                             return webhookTrimmed
                         }
-                        def manualTrimmed = manualValue?.trim()
+                        def manualTrimmed = normalize(manualValue)
                         if (manualTrimmed) {
                             return manualTrimmed
                         }
                         return fallback
                     }
                     def pickManualOnly = { String manualValue, String fallback = '' ->
-                        def manualTrimmed = manualValue?.trim()
+                        def manualTrimmed = normalize(manualValue)
                         if (manualTrimmed) {
                             return manualTrimmed
                         }
@@ -89,14 +98,14 @@ pipeline {
                     env.EFFECTIVE_GITHUB_REPO = webhookTriggered
                         ? pickWebhookFirst(env.WEBHOOK_REPO, params.GITHUB_REPO)
                         : pickManualOnly(params.GITHUB_REPO)
-                    env.EFFECTIVE_LABELS = env.WEBHOOK_LABELS ?: ''
+                    env.EFFECTIVE_LABELS = normalize(env.WEBHOOK_LABELS)
                     env.EFFECTIVE_EVENT = webhookTriggered ? (env.WEBHOOK_EVENT ?: 'webhook') : 'manual'
 
-                    def labels = (env.EFFECTIVE_LABELS ?: '').toLowerCase()
-                    def title = (env.EFFECTIVE_ISSUE_TITLE ?: '').toLowerCase()
-                    def body = env.EFFECTIVE_ISSUE_BODY ?: ''
+                    def labels = normalize(env.EFFECTIVE_LABELS).toLowerCase()
+                    def title = normalize(env.EFFECTIVE_ISSUE_TITLE).toLowerCase()
+                    def body = normalize(env.EFFECTIVE_ISSUE_BODY)
 
-                    def hasIssueContext = env.EFFECTIVE_ISSUE_NUMBER?.trim() && body.trim()
+                    def hasIssueContext = normalize(env.EFFECTIVE_ISSUE_NUMBER) && body
                     def looksLikeTestRequest = labels.contains('test-request') || title.startsWith('[test]') || body.contains('### Target Runner')
 
                     env.SHOULD_RUN_REQUEST = (hasIssueContext && looksLikeTestRequest) ? 'true' : 'false'
