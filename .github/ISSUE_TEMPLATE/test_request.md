@@ -1,57 +1,34 @@
 ---
 name: Test Request
-about: Request a local MCP-driven test run
-title: "[TEST] "
+about: Request a local MCP-driven test run on Self-hosted Runner 
+title: "[TEST] [local-dev]"
 labels: test-request
 assignees: ""
 ---
 
-## Recommended Title
-Use this format when you create the issue title.
-
-```text
-[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM> 
-[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM> 
-```
-
-Examples:
-
-```text
-[TEST] [direct] 2026-04-20 16:30 
-[TEST] [runner] [local-dev] 2026-04-20 16:35 
-```
-
-## Checklist
-- [ ] I selected `direct` or `runner` in MCP Server Mode with Target Runner
-- [ ] I recorded the request result
-
 ## Request Ref
+
 - Template Version: v0.0.1
-- Branch / Tag / Commit:
-- Target Runner:
-- MCP Server Mode:
-
-```md
-ex.1 (direct) 
-- Target Runner: none
-- MCP Server Mode: direct
-
-ex.2 (runner) self-hosted runner 
 - Target Runner: local-dev
-- MCP Server Mode: runner
-```
+- Branch / Tag / Commit: main 
 
-## Test Tool
-- [ ] `build_tool`
+Select only one category.
+
+## Setup Tools Checklist
+
+- [ ] `check_version`
 - [ ] `flash_tool`
+- [ ] `setup_python`
+
+## Test Tools Checklist
+
+- [ ] `test_ping_00`
+- [ ] `test_ping_11`
+- [ ] `test_ping_22`
+
+
+## Log Tools Checklist
+
+- [ ] `get_serial_log`
 - [ ] `log_analyzer`
-
-Select one or more tools.
-
-## Test Scope
-- Test Type:
-- Target Device / Image:
-- Iterations:
-
-## Logs or References
-Add links, issue references, artifacts, or related context if available.
+- [ ] `log_snapshot`
