@@ -16,7 +16,7 @@ permissions:
 
 #
 #  Every check for test request issues 
-#   - template: .github/ISSUE_TEMPLATE/test_request.md 
+#   - template: .github/ISSUE_TEMPLATE/test_request_runner.yml
 #  
 #  only working self-hosted runner
 #  - workflow files are executed inside the runner workspace checkout
@@ -94,7 +94,8 @@ jobs:
           python -m mcp.scripts.make_test_result `
             --issue-body "$env:ISSUE_BODY" `
             --result-path "results/Github-ISSUE-TR-${{ github.event.issue.number }}.json" `
-            --output-path "results/test-request-comment-${{ github.event.issue.number }}.md"
+            --output-path "results/test-request-comment-${{ github.event.issue.number }}.md" `
+            --execution-platform "github-actions"
       #
       #   Test Result Commenting to Github Issue
       #   

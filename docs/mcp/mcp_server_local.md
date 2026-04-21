@@ -161,7 +161,8 @@ GitHub Issue
 
 issue body format source:
 
-- `.github/issue_template/test_request.md`
+- `.github/ISSUE_TEMPLATE/test_request_direct.yml`
+- `.github/ISSUE_TEMPLATE/test_request_runner.yml`
 
 현재 template 주요 항목:
 
@@ -336,4 +337,5 @@ workflow 는 이 파일을 artifact 로 업로드하고, formatting 후 issue co
 - [mcp_server_github.md](mcp_server_github.md)
 - [github_templates.md](../github/github_templates.md)
 - [self-hosted_runner.md](../github/self-hosted_runner.md)
-- [test_request.md](../../.github/issue_template/test_request.md)
+- [test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
+- [test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)

@@ -24,7 +24,8 @@ TEST 실행 요청을 분리하는 것이 중요하다.
 | Documentation | `.github/issue_template/documentation.md` | 문서 수정/개선 요청 |
 | Feature Request | `.github/issue_template/feature_request.md` | 기능 추가/개선 요청 |
 | Question | `.github/issue_template/question.md` | 질문 또는 확인 요청 |
-| Test Request | `.github/issue_template/test_request.md` | Local MCP / Test 실행 요청 |
+| Test Request Direct | `.github/ISSUE_TEMPLATE/test_request_direct.yml` | Jenkins + direct MCP TEST 실행 요청 |
+| Test Request Runner | `.github/ISSUE_TEMPLATE/test_request_runner.yml` | self-hosted runner TEST 실행 요청 |
 | Pull Request | `.github/pull_request_template.md` | PR 설명, 변경점, 테스트 결과 정리 |
 
 ---
@@ -35,7 +36,8 @@ TEST 실행은 일반 feature/bug issue와 분리해서 받는다.
 
 파일:
 
-- [.github/issue_template/test_request.md](../../.github/issue_template/test_request.md)
+- [.github/ISSUE_TEMPLATE/test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
+- [.github/ISSUE_TEMPLATE/test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
 
 주요 필드:
 
@@ -210,7 +212,8 @@ TEST 요청 운영 시 함께 쓰기 좋은 label 예시:
 │   ├── documentation.md
 │   ├── feature_request.md
 │   ├── question.md
-│   └── test_request.md
+│   ├── test_request_direct.yml
+│   └── test_request_runner.yml
 ├── pull_request_template.md
 └── workflows/
     └── github_pages.yaml

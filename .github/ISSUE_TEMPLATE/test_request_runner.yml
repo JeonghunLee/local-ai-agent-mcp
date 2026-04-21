@@ -1,13 +1,14 @@
-name: Test Request
-description: Request a local MCP-driven test run on Self-hosted Runner
-title: "[TEST] "
+name: Test Request Runner
+description: Request a local MCP-driven test run on a GitHub self-hosted runner
+title: "[TEST] [runner] "
 labels:
   - test-request
 body:
   - type: markdown
     attributes:
       value: |
-        Fill out the request reference and select tools from only one category: Setup, Test, or Log.
+        Use this template for GitHub Actions runner-based execution.
+        Select tools from only one category: Setup, Test, or Log.
 
   - type: dropdown
     id: template_version
@@ -42,9 +43,9 @@ body:
     id: mcp_server_mode
     attributes:
       label: MCP Server Mode
+      description: Fixed to runner for the GitHub Actions execution flow.
       options:
         - runner
-        - direct
       default: 0
     validations:
       required: true
