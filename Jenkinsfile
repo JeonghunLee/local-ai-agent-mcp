@@ -102,19 +102,18 @@ pipeline {
                     env.EFFECTIVE_EVENT = webhookTriggered ? (env.WEBHOOK_EVENT ?: 'webhook') : 'manual'
 
                     def labels = normalize(env.EFFECTIVE_LABELS).toLowerCase()
-                    def title = normalize(env.EFFECTIVE_ISSUE_TITLE).toLowerCase()
                     def body = normalize(env.EFFECTIVE_ISSUE_BODY)
-
                     def hasIssueContext = normalize(env.EFFECTIVE_ISSUE_NUMBER) && body
-                    def looksLikeTestRequest = labels.contains('test-request') || title.startsWith('[test]') || body.contains('### Target Runner')
+                    def isDirectRequest = labels.contains('test-request-direct')
 
-                    env.SHOULD_RUN_REQUEST = (hasIssueContext && looksLikeTestRequest) ? 'true' : 'false'
+                    env.SHOULD_RUN_REQUEST = (hasIssueContext && isDirectRequest) ? 'true' : 'false'
 
                     echo "Resolved trigger event: ${env.EFFECTIVE_EVENT}"
                     echo "Webhook detected: ${webhookTriggered}"
                     echo "Resolved issue number: ${env.EFFECTIVE_ISSUE_NUMBER ?: 'n/a'}"
                     echo "Resolved repository: ${env.EFFECTIVE_GITHUB_OWNER ?: 'n/a'}/${env.EFFECTIVE_GITHUB_REPO ?: 'n/a'}"
                     echo "Resolved issue body length: ${body.length()}"
+                    echo "Resolved labels: ${labels ?: 'n/a'}"
                     echo "Should run request: ${env.SHOULD_RUN_REQUEST}"
                 }
             }
@@ -290,7 +289,7 @@ pipeline {
                 }
             }
             steps {
-                echo 'Webhook payload did not look like a test-request issue, so the pipeline is exiting without running MCP.'
+                echo 'Webhook payload was not a Jenkins direct test request, so the pipeline is exiting without running MCP.'
             }
         }
     }
