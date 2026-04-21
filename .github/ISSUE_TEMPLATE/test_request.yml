@@ -1,6 +1,6 @@
 name: Test Request
 description: Request a local MCP-driven test run on Self-hosted Runner
-title: "[TEST] [local-dev]"
+title: "[TEST] "
 labels:
   - test-request
 body:
