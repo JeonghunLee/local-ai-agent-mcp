@@ -60,6 +60,18 @@ def extract_fields(issue_body: str) -> dict[str, str]:
     return fields
 
 
+def compact_test_request_fields(fields: dict[str, str], selected_tools: list[str] | None = None) -> dict[str, Any]:
+    compact_fields: dict[str, Any] = {
+        "template_version": fields.get("template_version", "") or DEFAULT_TEMPLATE_VERSION,
+        "request_ref": fields.get("request_ref", ""),
+        "target_runner": fields.get("target_runner", ""),
+        "mcp_server_mode": fields.get("mcp_server_mode", "") or DEFAULT_SERVER_MODE,
+    }
+    if selected_tools:
+        compact_fields["selected_tools"] = selected_tools
+    return compact_fields
+
+
 def extract_field(issue_body: str, label: str) -> str:
     markdown_pattern = re.compile(rf"^- {re.escape(label)}:\s*(.*)$", re.MULTILINE)
     markdown_match = markdown_pattern.search(issue_body)
@@ -305,9 +317,7 @@ def main() -> int:
             "timestamp": timestamp,
             "status": "skipped",
             "reason": "target_runner_mismatch",
-            "expected_runner": expected_runner,
-            "requested_runners": requested_runners,
-            "parsed_fields": fields,
+            "test_request_pared_fileds": compact_test_request_fields(fields),
         }
         output_path = write_result(args.issue_number, payload)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
@@ -352,17 +362,15 @@ def main() -> int:
             "issue_title": args.issue_title,
             "timestamp": timestamp,
             "status": status,
-            "expected_runner": expected_runner,
-            "requested_runners": requested_runners,
-            "resolved_server_mode": server_mode,
-            "resolved_server_name": server_name,
-            "parsed_fields": fields,
-            "selected_tools": [item["tool_function"] for item in executed_tools],
+            "test_request_pared_fileds": compact_test_request_fields(
+                fields,
+                [item["tool_function"] for item in executed_tools],
+            ),
             "tool_runs": executed_tools,
         }
         output_path = write_result(args.issue_number, payload)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
-        summary_tools = ", ".join(payload["selected_tools"]) or "n/a"
+        summary_tools = ", ".join(payload["test_request_pared_fileds"].get("selected_tools", [])) or "n/a"
         append_summary(
             [
                 "## Test Request Result",
@@ -383,9 +391,7 @@ def main() -> int:
             "issue_title": args.issue_title,
             "timestamp": timestamp,
             "status": "error",
-            "expected_runner": expected_runner,
-            "requested_runners": requested_runners,
-            "parsed_fields": fields,
+            "test_request_pared_fileds": compact_test_request_fields(fields),
             "error": f"{type(exc).__name__}: {exc}",
         }
         output_path = write_result(args.issue_number, payload)

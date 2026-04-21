@@ -10,6 +10,7 @@ from typing import Any
 DEFAULT_TEMPLATE_VERSION = "v0.0.1"
 DEFAULT_SERVER_MODE = "runner"
 DEFAULT_TARGET_RUNNER = "local-dev"
+DEFAULT_RESULTS_DIR = r"actions-runner\_work\local-ai-agent-mcp\local-ai-agent-mcp\results"
 
 
 def parse_args() -> argparse.Namespace:
@@ -50,6 +51,37 @@ def load_payload(result_path: Path) -> dict[str, Any] | None:
     return json.loads(result_path.read_text(encoding="utf-8"))
 
 
+def format_inline_json(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False)
+
+
+def parse_request_ref(request_ref: str) -> tuple[str, str]:
+    value = (request_ref or "").strip()
+    if not value or value == "n/a":
+        return "n/a", "n/a"
+
+    sha_match = re.fullmatch(r"[0-9a-fA-F]{7,40}", value)
+    if sha_match:
+        return "n/a", value
+
+    if "@" in value:
+        branch, commit = value.split("@", 1)
+        return branch.strip() or "n/a", commit.strip() or "n/a"
+
+    return value, "xxxx"
+
+
+def resolve_server_name(server_mode: str) -> str:
+    if (server_mode or "").strip().lower() == "direct":
+        return "mcp-server-local-direct"
+    return "mcp-server-local-runner"
+
+
+def resolve_server_log(server_mode: str) -> str:
+    prefix = "direct" if (server_mode or "").strip().lower() == "direct" else "runner"
+    return f"results/logs/mcp/server_local/{prefix}.log"
+
+
 def render_missing_result(issue_body: str) -> str:
     requested_mode = extract_field(issue_body, "MCP Server Mode")
     requested_runner = extract_field(issue_body, "Target Runner")
@@ -72,68 +104,79 @@ def render_missing_result(issue_body: str) -> str:
 
 
 def render_payload(payload: dict[str, Any]) -> str:
-    parsed = payload.get("parsed_fields", {})
+    parsed = payload.get("test_request_pared_fileds") or payload.get("parsed_fields", {})
+    request_ref = parsed.get("request_ref") or "n/a"
+    branch, commit = parse_request_ref(request_ref)
+    server_mode = parsed.get("mcp_server_mode") or DEFAULT_SERVER_MODE
+    target_runner = parsed.get("target_runner") or DEFAULT_TARGET_RUNNER
+    server_name = resolve_server_name(server_mode)
+    server_log = resolve_server_log(server_mode)
+    tool_runs = payload.get("tool_runs") or []
+
     lines = [
-        "## Test Request Result",
+        "## TEST Request Result",
         "",
-        "### 1. TEST Result",
-        f"- Status: {payload.get('status', 'unknown')}",
+        f"* Template Version: {parsed.get('template_version') or DEFAULT_TEMPLATE_VERSION}",
+        f"* Status: {payload.get('status', 'unknown')}",
+        "* Github:",
+        f"\t* Branch: {branch}",
+        f"\t* Commit: {commit}",
     ]
 
     if payload.get("reason"):
-        lines.append(f"- Reason: {payload['reason']}")
+        lines.append(f"* Reason: {payload['reason']}")
 
     if payload.get("error"):
-        lines.append(f"- Error: {payload['error']}")
+        lines.append(f"* Error: {payload['error']}")
 
     lines.extend(
         [
             "",
-            "### 2. Request Ref",
-            f"- Template Version: {parsed.get('template_version') or DEFAULT_TEMPLATE_VERSION}",
-            f"- MCP Server Mode (requested): {parsed.get('mcp_server_mode') or 'n/a'}",
-            f"- MCP Server (resolved): {payload.get('resolved_server_name') or 'n/a'}",
-            f"- Target Runner (requested): {parsed.get('target_runner') or 'n/a'}",
-            f"- Target Runner (workflow expected): {payload.get('expected_runner') or 'n/a'}",
-            f"- Request Ref: {parsed.get('request_ref') or 'n/a'}",
+            "### 1.TEST Envs ",
             "",
-            "### 3. Test Scope",
+            f"* Target Runner : {target_runner}   ",
+            "\t* self-hosted-runner \t",
+            f"* result_path: {DEFAULT_RESULTS_DIR}",
+            f"\t* MCP Server: {server_name} ",
+            f"\t* MCP Server Log: {server_log}",
+            "",
+            "### 2.Tool Results ",
         ]
     )
 
-    if payload.get("selected_tools"):
-        lines.append(f"- Selected Tools: {', '.join(payload['selected_tools'])}")
-    lines.append(f"- Test Type: {parsed.get('test_type') or 'n/a'}")
-    lines.append(f"- Target Device / Image: {parsed.get('target_device_image') or 'n/a'}")
-    lines.append(f"- Iterations: {parsed.get('iterations') or 'n/a'}")
+    if not tool_runs:
+        lines.extend(["", "_No tool results found._"])
+        return "\n".join(lines)
 
-    tool_runs = payload.get("tool_runs") or []
-    if tool_runs:
-        lines.extend(["", "### 4. Logs"])
-        for tool_run in tool_runs:
-            tool_log = tool_run.get("tool_result", {}).get("tool_log", "n/a")
-            lines.append(f"- {tool_run.get('tool_function', 'n/a')}: {tool_log}")
+    for tool_run in tool_runs:
+        tool_name = tool_run.get("tool_function", "n/a")
+        tool_args = tool_run.get("tool_args", {})
+        tool_result = tool_run.get("tool_result")
+        tool_log = "n/a"
+        if isinstance(tool_result, dict):
+            tool_log = tool_result.get("tool_log", "n/a")
 
-        lines.extend(["", "### 5. Tool Result"])
-        for tool_run in tool_runs:
-            lines.extend(["", f"#### {tool_run.get('tool_function', 'n/a')}"])
-            lines.append(f"- Category: {tool_run.get('tool_category', 'n/a')}")
-            if tool_run.get("tool_args") is not None:
-                lines.append(f"- Tool Args: {json.dumps(tool_run['tool_args'], ensure_ascii=False)}")
-            lines.append(f"- MCP Server Log: {tool_run.get('log_mcp_server', 'n/a')}")
+        category = tool_run.get("tool_category", "")
+        heading = f"{category}_{tool_name}" if category else tool_name
+        lines.extend(
+            [
+                "",
+                f"#### {heading}",
+                "",
+                f"- Tool Args: {format_inline_json(tool_args)}",
+                f"- Tool Log: {tool_log}",
+            ]
+        )
 
-            tool_result = tool_run.get("tool_result")
-            if isinstance(tool_result, dict) and tool_result.get("tool_log"):
-                lines.append(f"- Tool Log: {tool_result['tool_log']}")
-            if tool_result:
-                lines.extend(
-                    [
-                        "",
-                        "```json",
-                        json.dumps(tool_result, ensure_ascii=False, indent=2),
-                        "```",
-                    ]
-                )
+        if tool_result:
+            lines.extend(
+                [
+                    "",
+                    "```json",
+                    json.dumps(tool_result, ensure_ascii=False, indent=2),
+                    "```",
+                ]
+            )
 
     return "\n".join(lines)
 
