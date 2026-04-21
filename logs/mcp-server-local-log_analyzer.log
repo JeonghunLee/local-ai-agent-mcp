@@ -1,6 +1,0 @@
-2026-04-17T16:38:56 start id=5 arguments={"log_path": "logs/sample.log"}
-2026-04-17T16:38:56 done id=5 status=success
-2026-04-17T16:41:23 start id=5 arguments={"log_path": "logs/sample.log"}
-2026-04-17T16:41:23 done id=5 status=success
-2026-04-20T14:35:29 start id=5 arguments={"log_path": "logs/sample.log"}
-2026-04-20T14:35:29 done id=5 status=success
