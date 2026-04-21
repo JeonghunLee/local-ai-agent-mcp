@@ -47,28 +47,50 @@ pipeline {
         stage('Resolve Request') {
             steps {
                 script {
-                    def pick = { String manualValue, String webhookValue, String fallback = '' ->
-                        def manualTrimmed = manualValue?.trim()
-                        if (manualTrimmed) {
-                            return manualTrimmed
-                        }
+                    def webhookTriggered = (env.WEBHOOK_ISSUE_NUMBER?.trim() || env.WEBHOOK_ISSUE_BODY?.trim()) ? true : false
+                    def pickWebhookFirst = { String webhookValue, String manualValue, String fallback = '' ->
                         def webhookTrimmed = webhookValue?.trim()
                         if (webhookTrimmed) {
                             return webhookTrimmed
                         }
+                        def manualTrimmed = manualValue?.trim()
+                        if (manualTrimmed) {
+                            return manualTrimmed
+                        }
+                        return fallback
+                    }
+                    def pickManualOnly = { String manualValue, String fallback = '' ->
+                        def manualTrimmed = manualValue?.trim()
+                        if (manualTrimmed) {
+                            return manualTrimmed
+                        }
                         return fallback
                     }
 
-                    env.EFFECTIVE_REPO_URL = pick(params.REPO_URL, env.WEBHOOK_REPO_URL)
-                    env.EFFECTIVE_REPO_REF = pick(params.REPO_REF, env.WEBHOOK_DEFAULT_BRANCH, 'main')
-                    env.EFFECTIVE_ISSUE_NUMBER = pick(params.ISSUE_NUMBER, env.WEBHOOK_ISSUE_NUMBER)
-                    env.EFFECTIVE_ISSUE_TITLE = pick(params.ISSUE_TITLE, env.WEBHOOK_ISSUE_TITLE, '[TEST]')
-                    env.EFFECTIVE_ISSUE_BODY = pick(params.ISSUE_BODY, env.WEBHOOK_ISSUE_BODY)
-                    env.EFFECTIVE_EXPECTED_RUNNER = pick(params.EXPECTED_RUNNER, '', 'local-dev')
-                    env.EFFECTIVE_GITHUB_OWNER = pick(params.GITHUB_OWNER, env.WEBHOOK_OWNER)
-                    env.EFFECTIVE_GITHUB_REPO = pick(params.GITHUB_REPO, env.WEBHOOK_REPO)
+                    env.EFFECTIVE_REPO_URL = webhookTriggered
+                        ? pickWebhookFirst(env.WEBHOOK_REPO_URL, params.REPO_URL)
+                        : pickManualOnly(params.REPO_URL)
+                    env.EFFECTIVE_REPO_REF = webhookTriggered
+                        ? pickWebhookFirst(env.WEBHOOK_DEFAULT_BRANCH, params.REPO_REF, 'main')
+                        : pickManualOnly(params.REPO_REF, 'main')
+                    env.EFFECTIVE_ISSUE_NUMBER = webhookTriggered
+                        ? pickWebhookFirst(env.WEBHOOK_ISSUE_NUMBER, params.ISSUE_NUMBER)
+                        : pickManualOnly(params.ISSUE_NUMBER)
+                    env.EFFECTIVE_ISSUE_TITLE = webhookTriggered
+                        ? pickWebhookFirst(env.WEBHOOK_ISSUE_TITLE, params.ISSUE_TITLE, '[TEST]')
+                        : pickManualOnly(params.ISSUE_TITLE, '[TEST]')
+                    env.EFFECTIVE_ISSUE_BODY = webhookTriggered
+                        ? pickWebhookFirst(env.WEBHOOK_ISSUE_BODY, params.ISSUE_BODY)
+                        : pickManualOnly(params.ISSUE_BODY)
+                    env.EFFECTIVE_EXPECTED_RUNNER = pickManualOnly(params.EXPECTED_RUNNER, 'local-dev')
+                    env.EFFECTIVE_GITHUB_OWNER = webhookTriggered
+                        ? pickWebhookFirst(env.WEBHOOK_OWNER, params.GITHUB_OWNER)
+                        : pickManualOnly(params.GITHUB_OWNER)
+                    env.EFFECTIVE_GITHUB_REPO = webhookTriggered
+                        ? pickWebhookFirst(env.WEBHOOK_REPO, params.GITHUB_REPO)
+                        : pickManualOnly(params.GITHUB_REPO)
                     env.EFFECTIVE_LABELS = env.WEBHOOK_LABELS ?: ''
-                    env.EFFECTIVE_EVENT = env.WEBHOOK_EVENT ?: 'manual'
+                    env.EFFECTIVE_EVENT = webhookTriggered ? (env.WEBHOOK_EVENT ?: 'webhook') : 'manual'
 
                     def labels = (env.EFFECTIVE_LABELS ?: '').toLowerCase()
                     def title = (env.EFFECTIVE_ISSUE_TITLE ?: '').toLowerCase()
@@ -80,8 +102,10 @@ pipeline {
                     env.SHOULD_RUN_REQUEST = (hasIssueContext && looksLikeTestRequest) ? 'true' : 'false'
 
                     echo "Resolved trigger event: ${env.EFFECTIVE_EVENT}"
+                    echo "Webhook detected: ${webhookTriggered}"
                     echo "Resolved issue number: ${env.EFFECTIVE_ISSUE_NUMBER ?: 'n/a'}"
                     echo "Resolved repository: ${env.EFFECTIVE_GITHUB_OWNER ?: 'n/a'}/${env.EFFECTIVE_GITHUB_REPO ?: 'n/a'}"
+                    echo "Resolved issue body length: ${body.length()}"
                     echo "Should run request: ${env.SHOULD_RUN_REQUEST}"
                 }
             }
