@@ -196,7 +196,7 @@ def parse_call_payload(call_response: dict[str, Any]) -> tuple[dict[str, Any] | 
 def write_result(issue_number: int, payload: dict[str, Any]) -> Path:
     results_dir = Path("results")
     results_dir.mkdir(exist_ok=True)
-    output_path = results_dir / f"issue-test-request-{issue_number}.json"
+    output_path = results_dir / f"Github-ISSUE-TR-{issue_number}.json"
     output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return output_path
 
