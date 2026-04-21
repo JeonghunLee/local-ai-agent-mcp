@@ -1,0 +1,81 @@
+name: Test Request
+description: Request a local MCP-driven test run on Self-hosted Runner
+title: "[TEST] [local-dev]"
+labels:
+  - test-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill out the request reference and select tools from only one category: Setup, Test, or Log.
+
+  - type: dropdown
+    id: template_version
+    attributes:
+      label: Template Version
+      options:
+        - v0.0.1
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: target_runner
+    attributes:
+      label: Target Runner
+      options:
+        - local-dev
+      default: 0
+    validations:
+      required: true
+
+  - type: input
+    id: request_ref
+    attributes:
+      label: Branch / Tag / Commit
+      value: main
+      placeholder: main
+    validations:
+      required: true
+
+  - type: dropdown
+    id: mcp_server_mode
+    attributes:
+      label: MCP Server Mode
+      options:
+        - runner
+        - direct
+      default: 0
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "Select tools from only one category."
+
+  - type: checkboxes
+    id: setup_tools
+    attributes:
+      label: Setup Tools Checklist
+      options:
+        - label: check_version
+        - label: flash_tool
+        - label: setup_python
+
+  - type: checkboxes
+    id: test_tools
+    attributes:
+      label: Test Tools Checklist
+      options:
+        - label: test_ping_00
+        - label: test_ping_11
+        - label: test_ping_22
+
+  - type: checkboxes
+    id: log_tools
+    attributes:
+      label: Log Tools Checklist
+      options:
+        - label: get_serial_log
+        - label: log_analyzer
+        - label: log_snapshot

@@ -18,15 +18,15 @@ DEFAULT_TEMPLATE_VERSION = "v0.0.1"
 DEFAULT_SERVER_MODE = "runner"
 
 
-FIELD_PATTERNS = {
-    "template_version": re.compile(r"^- Template Version:\s*(.*)$", re.MULTILINE),
-    "request_ref": re.compile(r"^- Branch / Tag / Commit:\s*(.*)$", re.MULTILINE),
-    "target_runner": re.compile(r"^- Target Runner:\s*(.*)$", re.MULTILINE),
-    "mcp_server_mode": re.compile(r"^- MCP Server Mode:\s*(.*)$", re.MULTILINE),
-    "test_tool": re.compile(r"^- Test Tool:\s*(.*)$", re.MULTILINE),
-    "test_type": re.compile(r"^- Test Type:\s*(.*)$", re.MULTILINE),
-    "target_device_image": re.compile(r"^- Target Device / Image:\s*(.*)$", re.MULTILINE),
-    "iterations": re.compile(r"^- Iterations:\s*(.*)$", re.MULTILINE),
+FIELD_LABELS = {
+    "template_version": "Template Version",
+    "request_ref": "Branch / Tag / Commit",
+    "target_runner": "Target Runner",
+    "mcp_server_mode": "MCP Server Mode",
+    "test_tool": "Test Tool",
+    "test_type": "Test Type",
+    "target_device_image": "Target Device / Image",
+    "iterations": "Iterations",
 }
 
 CHECKLIST_HEADERS = {
@@ -51,14 +51,37 @@ def parse_args() -> argparse.Namespace:
 
 def extract_fields(issue_body: str) -> dict[str, str]:
     fields: dict[str, str] = {}
-    for key, pattern in FIELD_PATTERNS.items():
-        match = pattern.search(issue_body)
-        fields[key] = match.group(1).strip() if match else ""
+    for key, label in FIELD_LABELS.items():
+        fields[key] = extract_field(issue_body, label)
     if not fields["template_version"]:
         fields["template_version"] = DEFAULT_TEMPLATE_VERSION
     if not fields["mcp_server_mode"]:
         fields["mcp_server_mode"] = DEFAULT_SERVER_MODE
     return fields
+
+
+def extract_field(issue_body: str, label: str) -> str:
+    markdown_pattern = re.compile(rf"^- {re.escape(label)}:\s*(.*)$", re.MULTILINE)
+    markdown_match = markdown_pattern.search(issue_body)
+    if markdown_match:
+        return markdown_match.group(1).strip()
+
+    form_pattern = re.compile(
+        rf"^###\s+{re.escape(label)}\s*$\n+(.+?)(?=\n###\s+|\Z)",
+        re.MULTILINE | re.DOTALL,
+    )
+    form_match = form_pattern.search(issue_body)
+    if not form_match:
+        return ""
+
+    value_lines = [line.strip() for line in form_match.group(1).splitlines() if line.strip()]
+    if not value_lines:
+        return ""
+
+    first_value = value_lines[0]
+    if first_value.startswith("- ["):
+        return ""
+    return first_value
 
 
 def split_csv(value: str) -> list[str]:
@@ -110,7 +133,7 @@ def normalize_tool_name(value: str) -> str:
 def extract_checked_tools(issue_body: str, category: str) -> list[str]:
     header = CHECKLIST_HEADERS[category]
     pattern = re.compile(
-        rf"##\s+{re.escape(header)}\s*\n(?P<body>.*?)(?=\n##\s+|\Z)",
+        rf"###+?\s+{re.escape(header)}\s*\n(?P<body>.*?)(?=\n###+?\s+|\Z)",
         re.IGNORECASE | re.DOTALL,
     )
     match = pattern.search(issue_body)

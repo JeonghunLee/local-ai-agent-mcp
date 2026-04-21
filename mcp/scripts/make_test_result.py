@@ -21,9 +21,27 @@ def parse_args() -> argparse.Namespace:
 
 
 def extract_field(issue_body: str, label: str) -> str:
-    pattern = re.compile(rf"^- {re.escape(label)}:\s*(.*)$", re.MULTILINE)
-    match = pattern.search(issue_body)
-    return match.group(1).strip() if match else "n/a"
+    markdown_pattern = re.compile(rf"^- {re.escape(label)}:\s*(.*)$", re.MULTILINE)
+    markdown_match = markdown_pattern.search(issue_body)
+    if markdown_match:
+        return markdown_match.group(1).strip()
+
+    form_pattern = re.compile(
+        rf"^###\s+{re.escape(label)}\s*$\n+(.+?)(?=\n###\s+|\Z)",
+        re.MULTILINE | re.DOTALL,
+    )
+    form_match = form_pattern.search(issue_body)
+    if not form_match:
+        return "n/a"
+
+    value_lines = [line.strip() for line in form_match.group(1).splitlines() if line.strip()]
+    if not value_lines:
+        return "n/a"
+
+    first_value = value_lines[0]
+    if first_value.startswith("- ["):
+        return "n/a"
+    return first_value
 
 
 def load_payload(result_path: Path) -> dict[str, Any] | None:
