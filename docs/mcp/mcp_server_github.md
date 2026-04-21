@@ -49,7 +49,7 @@ GitHub Issue
 ```mermaid
 flowchart LR
     A["GitHub Issue"] --> B["GitHub Actions"]
-    B --> C["Python bridge<br/>mcp.local_action_runner.run_test_request"]
+    B --> C["Python bridge<br/>mcp.scripts.run_test_request"]
     C --> D["Local MCP Server"]
     D --> E["results/logs/mcp/server_local<br/>results/*.json"]
     B --> F["GitHub Issue comment"]

@@ -7,7 +7,7 @@
 mcp/server_local/__pycache__/
 mcp/server_local_direct/__pycache__/
 mcp/server_local_runner/__pycache__/
-mcp/local_action_runner/__pycache__/
+mcp/scripts/__pycache__/
 
 #
 # results and temporary files

@@ -33,14 +33,14 @@ jobs:
           Write-Host "Runner OS: $env:RUNNER_OS"
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
     # 
-    #   mcp.local_action_runner is working 
+    #   mcp.scripts is working 
     #          
       - name: Run test request through local MCP
         shell: powershell
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          python -m mcp.local_action_runner.run_test_request `
+          python -m mcp.scripts.run_test_request `
             --issue-number "${{ github.event.issue.number }}" `
             --issue-title "${{ github.event.issue.title }}" `
             --issue-body "$env:ISSUE_BODY" `
@@ -58,113 +58,29 @@ jobs:
 #
 #   Test Result Commenting
 #            
+      - name: Render comment body
+        if: always()
+        shell: powershell
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          python -m mcp.scripts.make_test_result `
+            --issue-body "$env:ISSUE_BODY" `
+            --result-path "results/Github-ISSUE-TR-${{ github.event.issue.number }}.json" `
+            --output-path "results/test-request-comment-${{ github.event.issue.number }}.md"
+
       - name: Comment result on issue
         if: always()
         uses: actions/github-script@v7
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
-          RESULT_PATH: results/Github-ISSUE-TR-${{ github.event.issue.number }}.json
+          COMMENT_BODY_PATH: results/test-request-comment-${{ github.event.issue.number }}.md
         with:
           script: |
             const fs = require("fs");
             const issueNumber = Number(process.env.ISSUE_NUMBER);
-            const resultPath = process.env.RESULT_PATH;
-            const issueBody = context.payload.issue?.body || "";
-
-            function extractField(label) {
-              const pattern = new RegExp(`^- ${label}:\\s*(.*)$`, "m");
-              const match = issueBody.match(pattern);
-              return match ? match[1].trim() : "n/a";
-            }
-
-            let body;
-
-            if (!fs.existsSync(resultPath)) {
-              const requestedMode = extractField("MCP Server Mode");
-              const requestedRunner = extractField("Target Runner");
-              const requestRef = extractField("Branch / Tag / Commit");
-              body = [
-                "## Test Request Result",
-                "",
-                "### 1. TEST Result",
-                "- Status: error",
-                "- Reason: result file was not created",
-                "",
-                "### 2. Request Ref",
-                `- Template Version: ${extractField("Template Version") || "v0.0.1"}`,
-                `- MCP Server Mode : ${requestedMode || "runner"}`,
-                `- Target Runner   : ${requestedRunner || "local-dev"}`,
-                `- Request Ref: ${requestRef}`,
-              ].join("\n");
-            } else {
-              const payload = JSON.parse(fs.readFileSync(resultPath, "utf8"));
-              const parsed = payload.parsed_fields || {};
-              const lines = [
-                "## Test Request Result",
-                "",
-                "### 1. TEST Result",
-                `- Status: ${payload.status || "unknown"}`,
-              ];
-
-              if (payload.reason) {
-                lines.push(`- Reason: ${payload.reason}`);
-              }
-
-              if (payload.error) {
-                lines.push(`- Error: ${payload.error}`);
-              }
-
-              lines.push("");
-              lines.push("### 2. Request Ref");
-              lines.push(`- Template Version: ${parsed.template_version || "v0.0.1"}`);
-              lines.push(`- MCP Server Mode (requested): ${parsed.mcp_server_mode || "n/a"}`);
-              lines.push(`- MCP Server (resolved): ${payload.resolved_server_name || "n/a"}`);
-              lines.push(`- Target Runner (requested): ${parsed.target_runner || "n/a"}`);
-              lines.push(`- Target Runner (workflow expected): ${payload.expected_runner || "n/a"}`);
-              lines.push(`- Request Ref: ${parsed.request_ref || "n/a"}`);
-
-              lines.push("");
-              lines.push("### 3. Test Scope");
-
-              if (Array.isArray(payload.selected_tools) && payload.selected_tools.length > 0) {
-                lines.push(`- Selected Tools: ${payload.selected_tools.join(", ")}`);
-              }
-              lines.push(`- Test Type: ${parsed.test_type || "n/a"}`);
-              lines.push(`- Target Device / Image: ${parsed.target_device_image || "n/a"}`);
-              lines.push(`- Iterations: ${parsed.iterations || "n/a"}`);
-
-              if (Array.isArray(payload.tool_runs) && payload.tool_runs.length > 0) {
-                lines.push("");
-                lines.push("### 4. Logs");
-                for (const toolRun of payload.tool_runs) {
-                  const toolLog = toolRun.tool_result?.tool_log || "n/a";
-                  lines.push(`- ${toolRun.tool_function || "n/a"}: ${toolLog}`);
-                }
-
-                lines.push("");
-                lines.push("### 5. Tool Result");
-                for (const toolRun of payload.tool_runs) {
-                  lines.push("");
-                  lines.push(`#### ${toolRun.tool_function || "n/a"}`);
-                  lines.push(`- Category: ${toolRun.tool_category || "n/a"}`);
-                  if (toolRun.tool_args) {
-                    lines.push(`- Tool Args: ${JSON.stringify(toolRun.tool_args)}`);
-                  }
-                  lines.push(`- MCP Server Log: ${toolRun.log_mcp_server || "n/a"}`);
-                  if (toolRun.tool_result?.tool_log) {
-                    lines.push(`- Tool Log: ${toolRun.tool_result.tool_log}`);
-                  }
-                  if (toolRun.tool_result) {
-                    lines.push("");
-                    lines.push("```json");
-                    lines.push(JSON.stringify(toolRun.tool_result, null, 2));
-                    lines.push("```");
-                  }
-                }
-              }
-
-              body = lines.join("\n");
-            }
+            const commentBodyPath = process.env.COMMENT_BODY_PATH;
+            const body = fs.readFileSync(commentBodyPath, "utf8");
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
