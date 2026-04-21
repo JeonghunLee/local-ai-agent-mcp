@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    "**/actions-runner": true
+  },
+  "search.exclude": {
+    "**/actions-runner": true
+  },
+  "files.watcherExclude": {
+    "**/actions-runner/**": true
+  }
+}
