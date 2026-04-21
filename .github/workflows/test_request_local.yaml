@@ -53,11 +53,24 @@ jobs:
             --issue-body "$env:ISSUE_BODY" `
             --expected-runner "local-dev"
 
+      - name: Show generated result files
+        if: always()
+        shell: powershell
+        run: |
+          Write-Host "Workspace: $(Get-Location)"
+          if (Test-Path results) {
+            Write-Host "Generated files under results/"
+            Get-ChildItem results -Recurse -File | Select-Object FullName, Length, LastWriteTime | Format-Table -AutoSize
+          } else {
+            Write-Host "results directory was not created"
+          }
+
       - name: Upload MCP logs and results
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: test-request-${{ github.event.issue.number }}
+          if-no-files-found: error
           path: |
             results/logs/mcp/server_local/*.log
             results/*.json
