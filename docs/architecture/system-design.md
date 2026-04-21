@@ -95,7 +95,6 @@ graph TD
     subgraph UserCLI["Local User"]
         MainAICLI["Main AI CLI"]
         SubAICLI["Sub AI CLI"]
-        VSCode["VS Code · Copilot"]
     end
 
     subgraph Remote["Remote Cloud"]
@@ -109,8 +108,8 @@ graph TD
 
     subgraph LocalWindows["Local Windows 11"]
         LocalAI["Local AI"]
-        subgraph MCPGatewayA["MCP Gateway (:4000)"]
-            subgraph MCPTools["Local MCP Server (:3000)"]
+        subgraph MCPGatewayA["MCP Gateway "]
+            subgraph MCPTools["Local MCP Server )"]
                 Build["build_tool()\nmake · cmake · bitbake"]
                 Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
                 Uart["uart_capture()\npyserial · minicom"]
@@ -124,14 +123,13 @@ graph TD
     end
 
     subgraph Channels["Remote Channels"]
-        GitHub["GitHub\nCopilot PR Review"]
+        GitHub["GitHub\n Issue ,PR, Review"]
         Slack["Slack AI"]
         EMail["E-Mail"]              
     end
 
     MainAICLI --> MainAI
     SubAICLI --> SubAI
-    VSCode -->|Copilot| GitHub
 
     MainAI --> OpenClaw
     SubAI --> OpenClaw
@@ -158,7 +156,7 @@ graph TD
     subgraph UserCLI["Local User"]
         MainAICLI["Main AI CLI"]
         SubAICLI["Sub AI CLI"]
-        VSCode["VS Code · Copilot"]
+
     end
 
     subgraph Remote["Remote Cloud"]
@@ -168,8 +166,8 @@ graph TD
 
     subgraph LocalWindows["Local Windows 11"]
         LocalAI["Local AI"]
-        subgraph MCPGatewayB["MCP Gateway (:4000)"]
-            subgraph MCPTools["Local MCP Server (:3000)"]
+        subgraph MCPGatewayB["MCP Gateway "]
+            subgraph MCPTools["Local MCP Server "]
                 Build["build_tool()\nmake · cmake · bitbake"]
                 Chan["channels()\nGitHub · Slack · E-Mail"]
                 Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
@@ -191,7 +189,7 @@ graph TD
 
     MainAICLI --> MainAI
     SubAICLI --> SubAI
-    VSCode -->|Copilot| GitHub
+   
 
     LocalAI -->|HTTP| MCPGatewayB
     SubAI -->|HTTP| MCPGatewayB
