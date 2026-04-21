@@ -18,7 +18,9 @@ permissions:
 #  Every check for test request issues 
 #   - template: .github/ISSUE_TEMPLATE/test_request.md 
 #  
-#  only working self-hosted runner 
+#  only working self-hosted runner
+#  - workflow files are executed inside the runner workspace checkout
+#  - generated results/logs are created under actions-runner/_work/.../results
 #
 jobs:
   run-local-test-request:
@@ -38,6 +40,7 @@ jobs:
           Write-Host "Runner OS: $env:RUNNER_OS"
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
           Write-Host "Actions Runner Version: $env:ACTIONS_RUNNER_VERSION"
+          Write-Host "Runner Workspace: $env:GITHUB_WORKSPACE"
     # 
     #   mcp.scripts is working 
     #   -> call mcp.server_local_runner 
@@ -57,9 +60,10 @@ jobs:
         if: always()
         shell: powershell
         run: |
-          Write-Host "Workspace: $(Get-Location)"
+          Write-Host "Current Working Directory: $(Get-Location)"
+          Write-Host "GitHub Workspace: $env:GITHUB_WORKSPACE"
           if (Test-Path results) {
-            Write-Host "Generated files under results/"
+            Write-Host "Generated files under runner workspace results/"
             Get-ChildItem results -Recurse -File | Select-Object FullName, Length, LastWriteTime | Format-Table -AutoSize
           } else {
             Write-Host "results directory was not created"
