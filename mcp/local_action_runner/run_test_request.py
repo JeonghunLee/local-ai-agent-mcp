@@ -10,9 +10,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from mcp.server_local.toolsets import TOOL_ALIAS_MAP, TOOL_CATALOG, TOOL_CATEGORIES
+
 
 DEFAULT_LOG_DIR = "results/log_mcp_server_local"
 DEFAULT_TEMPLATE_VERSION = "v0.0.1"
+DEFAULT_SERVER_MODE = "runner"
 
 
 FIELD_PATTERNS = {
@@ -26,10 +29,10 @@ FIELD_PATTERNS = {
     "iterations": re.compile(r"^- Iterations:\s*(.*)$", re.MULTILINE),
 }
 
-SUPPORTED_TOOLS = ("build_tool", "flash_tool", "log_analyzer")
-TOOL_CHECKLIST_PATTERNS = {
-    tool_name: re.compile(rf"^- \[x\]\s*`?{re.escape(tool_name)}`?\s*$", re.MULTILINE | re.IGNORECASE)
-    for tool_name in SUPPORTED_TOOLS
+CHECKLIST_HEADERS = {
+    "setup": "Setup Tools Checklist",
+    "test": "Test Tools Checklist",
+    "log": "Log Tools Checklist",
 }
 
 
@@ -53,6 +56,8 @@ def extract_fields(issue_body: str) -> dict[str, str]:
         fields[key] = match.group(1).strip() if match else ""
     if not fields["template_version"]:
         fields["template_version"] = DEFAULT_TEMPLATE_VERSION
+    if not fields["mcp_server_mode"]:
+        fields["mcp_server_mode"] = DEFAULT_SERVER_MODE
     return fields
 
 
@@ -79,58 +84,75 @@ def resolve_server_name(server_mode: str) -> str:
     return "mcp-server-local-runner"
 
 
-def resolve_tool(test_tool: str, test_type: str, target_device_image: str) -> tuple[str, dict[str, Any]]:
-    normalized_tool = test_tool.strip().lower()
-    normalized_type = test_type.strip().lower()
+def build_tool_arguments(tool_name: str, target_device_image: str) -> dict[str, Any]:
+    return TOOL_CATALOG[tool_name]["default_arguments"](target_device_image)
 
-    if normalized_tool in {"build_tool", "build"}:
-        return "build_tool", {
-            "target": target_device_image or "all",
-            "working_dir": ".",
-        }
-    if normalized_tool in {"flash_tool", "flash"}:
-        return "flash_tool", {
-            "interface": "openocd",
-            "image": target_device_image or "firmware.bin",
-        }
-    if normalized_tool in {"log_analyzer", "log", "analyzer"}:
-        return "log_analyzer", {
-            "log_path": target_device_image or f"{DEFAULT_LOG_DIR}/sample.log",
-        }
 
-    if normalized_type in {"build", "build_tool"}:
-        return "build_tool", {
-            "target": target_device_image or "all",
-            "working_dir": ".",
-        }
-    if normalized_type in {"flash", "flash_tool"}:
-        return "flash_tool", {
-            "interface": "openocd",
-            "image": target_device_image or "firmware.bin",
-        }
-    if normalized_type in {"log", "log_analyzer", "analyzer"}:
-        return "log_analyzer", {
-            "log_path": target_device_image or f"{DEFAULT_LOG_DIR}/sample.log",
-        }
-    raise ValueError(
-        "Unsupported Test Tool/Test Type. Use one of: build_tool, flash_tool, log_analyzer."
+def normalize_tool_name(value: str) -> str:
+    normalized = value.strip().lower()
+    if not normalized:
+        raise ValueError("Tool name cannot be empty.")
+    tool_name = TOOL_ALIAS_MAP.get(normalized)
+    if tool_name is None:
+        supported = ", ".join(TOOL_CATALOG.keys())
+        raise ValueError(f"Unsupported tool name `{value}`. Use one of: {supported}.")
+    return tool_name
+
+
+def extract_checked_tools(issue_body: str, category: str) -> list[str]:
+    header = CHECKLIST_HEADERS[category]
+    pattern = re.compile(
+        rf"##\s+{re.escape(header)}\s*\n(?P<body>.*?)(?=\n##\s+|\Z)",
+        re.IGNORECASE | re.DOTALL,
     )
+    match = pattern.search(issue_body)
+    if not match:
+        return []
+
+    section_body = match.group("body")
+    selected_tools: list[str] = []
+    for tool_name in TOOL_CATEGORIES[category]:
+        item_pattern = re.compile(
+            rf"^- \[(?:x|X)\]\s*`?{re.escape(tool_name)}`?\s*$",
+            re.MULTILINE,
+        )
+        if item_pattern.search(section_body):
+            selected_tools.append(tool_name)
+    return selected_tools
+
+
+def resolve_tool(test_tool: str, test_type: str, target_device_image: str) -> tuple[str, dict[str, Any]]:
+    fallback_value = test_tool or test_type
+    tool_name = normalize_tool_name(fallback_value)
+    return tool_name, build_tool_arguments(tool_name, target_device_image)
 
 
 def resolve_selected_tools(issue_body: str, test_tool: str, test_type: str, target_device_image: str) -> list[tuple[str, dict[str, Any]]]:
-    selected_tools = [
-        tool_name
-        for tool_name, pattern in TOOL_CHECKLIST_PATTERNS.items()
-        if pattern.search(issue_body)
+    selected_by_category = {
+        category: extract_checked_tools(issue_body, category)
+        for category in ("setup", "test", "log")
+    }
+    selected_categories = [
+        category
+        for category, tools in selected_by_category.items()
+        if tools
     ]
-    if selected_tools:
+    if len(selected_categories) > 1:
+        raise ValueError(
+            "Select tools from only one category: setup, test, or log."
+        )
+
+    if selected_categories:
+        selected_tools = selected_by_category[selected_categories[0]]
         return [
-            resolve_tool(tool_name, test_type, target_device_image)
+            (tool_name, build_tool_arguments(tool_name, target_device_image))
             for tool_name in selected_tools
         ]
 
-    fallback_tool_name, fallback_arguments = resolve_tool(test_tool, test_type, target_device_image)
-    return [(fallback_tool_name, fallback_arguments)]
+    if not test_tool and not test_type:
+        raise ValueError("No checklist item was selected in the test request template.")
+
+    return [resolve_tool(test_tool, test_type, target_device_image)]
 
 
 def call_local_mcp(server_mode: str, tool_name: str, arguments: dict[str, Any]) -> dict[str, Any]:
@@ -278,6 +300,7 @@ def main() -> int:
             executed_tools.append(
                 {
                     "tool_name": tool_name,
+                    "tool_category": TOOL_CATALOG[tool_name]["category"],
                     "tool_arguments": tool_arguments,
                     "log_paths": resolve_log_paths(tool_name),
                     "status": "error" if is_error else "success",
