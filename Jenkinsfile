@@ -1,6 +1,26 @@
 pipeline {
     agent any
 
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+                [key: 'WEBHOOK_EVENT', value: '$.action'],
+                [key: 'WEBHOOK_ISSUE_NUMBER', value: '$.issue.number'],
+                [key: 'WEBHOOK_ISSUE_TITLE', value: '$.issue.title'],
+                [key: 'WEBHOOK_ISSUE_BODY', value: '$.issue.body'],
+                [key: 'WEBHOOK_REPO_URL', value: '$.repository.clone_url'],
+                [key: 'WEBHOOK_DEFAULT_BRANCH', value: '$.repository.default_branch'],
+                [key: 'WEBHOOK_OWNER', value: '$.repository.owner.login'],
+                [key: 'WEBHOOK_REPO', value: '$.repository.name'],
+                [key: 'WEBHOOK_LABELS', value: '$.issue.labels[*].name']
+            ],
+            causeString: 'GitHub issue webhook #$WEBHOOK_ISSUE_NUMBER',
+            printContributedVariables: true,
+            printPostContent: true,
+            silentResponse: false
+        )
+    }
+
     options {
         timestamps()
         disableConcurrentBuilds()
@@ -20,17 +40,66 @@ pipeline {
 
     environment {
         ISSUE_BODY_FILE = 'results/jenkins-issue-body.md'
+        REQUEST_PAYLOAD_FILE = 'results/jenkins-request.json'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Resolve Request') {
             steps {
                 script {
-                    if (params.REPO_URL?.trim()) {
+                    def pick = { String manualValue, String webhookValue, String fallback = '' ->
+                        def manualTrimmed = manualValue?.trim()
+                        if (manualTrimmed) {
+                            return manualTrimmed
+                        }
+                        def webhookTrimmed = webhookValue?.trim()
+                        if (webhookTrimmed) {
+                            return webhookTrimmed
+                        }
+                        return fallback
+                    }
+
+                    env.EFFECTIVE_REPO_URL = pick(params.REPO_URL, env.WEBHOOK_REPO_URL)
+                    env.EFFECTIVE_REPO_REF = pick(params.REPO_REF, env.WEBHOOK_DEFAULT_BRANCH, 'main')
+                    env.EFFECTIVE_ISSUE_NUMBER = pick(params.ISSUE_NUMBER, env.WEBHOOK_ISSUE_NUMBER)
+                    env.EFFECTIVE_ISSUE_TITLE = pick(params.ISSUE_TITLE, env.WEBHOOK_ISSUE_TITLE, '[TEST]')
+                    env.EFFECTIVE_ISSUE_BODY = pick(params.ISSUE_BODY, env.WEBHOOK_ISSUE_BODY)
+                    env.EFFECTIVE_EXPECTED_RUNNER = pick(params.EXPECTED_RUNNER, '', 'local-dev')
+                    env.EFFECTIVE_GITHUB_OWNER = pick(params.GITHUB_OWNER, env.WEBHOOK_OWNER)
+                    env.EFFECTIVE_GITHUB_REPO = pick(params.GITHUB_REPO, env.WEBHOOK_REPO)
+                    env.EFFECTIVE_LABELS = env.WEBHOOK_LABELS ?: ''
+                    env.EFFECTIVE_EVENT = env.WEBHOOK_EVENT ?: 'manual'
+
+                    def labels = (env.EFFECTIVE_LABELS ?: '').toLowerCase()
+                    def title = (env.EFFECTIVE_ISSUE_TITLE ?: '').toLowerCase()
+                    def body = env.EFFECTIVE_ISSUE_BODY ?: ''
+
+                    def hasIssueContext = env.EFFECTIVE_ISSUE_NUMBER?.trim() && body.trim()
+                    def looksLikeTestRequest = labels.contains('test-request') || title.startsWith('[test]') || body.contains('### Target Runner')
+
+                    env.SHOULD_RUN_REQUEST = (hasIssueContext && looksLikeTestRequest) ? 'true' : 'false'
+
+                    echo "Resolved trigger event: ${env.EFFECTIVE_EVENT}"
+                    echo "Resolved issue number: ${env.EFFECTIVE_ISSUE_NUMBER ?: 'n/a'}"
+                    echo "Resolved repository: ${env.EFFECTIVE_GITHUB_OWNER ?: 'n/a'}/${env.EFFECTIVE_GITHUB_REPO ?: 'n/a'}"
+                    echo "Should run request: ${env.SHOULD_RUN_REQUEST}"
+                }
+            }
+        }
+
+        stage('Checkout') {
+            when {
+                expression {
+                    return env.SHOULD_RUN_REQUEST == 'true'
+                }
+            }
+            steps {
+                script {
+                    if (env.EFFECTIVE_REPO_URL?.trim()) {
                         checkout([
                             $class: 'GitSCM',
-                            branches: [[name: params.REPO_REF]],
-                            userRemoteConfigs: [[url: params.REPO_URL]],
+                            branches: [[name: env.EFFECTIVE_REPO_REF]],
+                            userRemoteConfigs: [[url: env.EFFECTIVE_REPO_URL]],
                         ])
                     } else {
                         checkout scm
@@ -40,23 +109,48 @@ pipeline {
         }
 
         stage('Prepare Request') {
+            when {
+                expression {
+                    return env.SHOULD_RUN_REQUEST == 'true'
+                }
+            }
             steps {
                 script {
                     powershell '''
                         New-Item -ItemType Directory -Force -Path results | Out-Null
                     '''
-                    writeFile file: env.ISSUE_BODY_FILE, text: params.ISSUE_BODY ?: ''
+                    writeFile file: env.ISSUE_BODY_FILE, text: env.EFFECTIVE_ISSUE_BODY ?: ''
+                    writeFile(
+                        file: env.REQUEST_PAYLOAD_FILE,
+                        text: groovy.json.JsonOutput.prettyPrint(
+                            groovy.json.JsonOutput.toJson([
+                                event: env.EFFECTIVE_EVENT,
+                                issue_number: env.EFFECTIVE_ISSUE_NUMBER,
+                                issue_title: env.EFFECTIVE_ISSUE_TITLE,
+                                repo_url: env.EFFECTIVE_REPO_URL,
+                                repo_ref: env.EFFECTIVE_REPO_REF,
+                                github_owner: env.EFFECTIVE_GITHUB_OWNER,
+                                github_repo: env.EFFECTIVE_GITHUB_REPO,
+                                labels: env.EFFECTIVE_LABELS,
+                            ])
+                        )
+                    )
                 }
             }
         }
 
         stage('Checkout Requested Ref') {
+            when {
+                expression {
+                    return env.SHOULD_RUN_REQUEST == 'true'
+                }
+            }
             steps {
                 powershell '''
                     $issueBodyPath = $env:ISSUE_BODY_FILE
                     $issueBody = Get-Content -LiteralPath $issueBodyPath -Raw -Encoding utf8
                     if ($null -eq $issueBody -or -not $issueBody.Trim()) {
-                        throw "ISSUE_BODY is empty. Enter the GitHub issue body in Build with Parameters."
+                        throw "ISSUE_BODY is empty. Check the Generic Webhook Trigger mapping or enter the value in Build with Parameters."
                     }
 
                     $requestRef = $null
@@ -80,7 +174,7 @@ pipeline {
                     }
 
                     if (-not $requestRef) {
-                        $requestRef = "${params.REPO_REF}"
+                        $requestRef = "$env:EFFECTIVE_REPO_REF"
                     }
 
                     Write-Host "Requested Git ref: $requestRef"
@@ -92,27 +186,37 @@ pipeline {
         }
 
         stage('Run Test Request') {
+            when {
+                expression {
+                    return env.SHOULD_RUN_REQUEST == 'true'
+                }
+            }
             steps {
                 powershell '''
                     & "${params.PYTHON_EXE}" -m mcp.scripts.run_test_request `
-                        --issue-number "${params.ISSUE_NUMBER}" `
-                        --issue-title "${params.ISSUE_TITLE}" `
+                        --issue-number "$env:EFFECTIVE_ISSUE_NUMBER" `
+                        --issue-title "$env:EFFECTIVE_ISSUE_TITLE" `
                         --issue-body-file "$env:ISSUE_BODY_FILE" `
-                        --expected-runner "${params.EXPECTED_RUNNER}"
+                        --expected-runner "$env:EFFECTIVE_EXPECTED_RUNNER"
                 '''
             }
         }
 
         stage('Render Comment') {
+            when {
+                expression {
+                    return env.SHOULD_RUN_REQUEST == 'true'
+                }
+            }
             steps {
                 powershell '''
-                    $resultJson = "results/Github-ISSUE-TR-${params.ISSUE_NUMBER}.json"
-                    $resultComment = "results/test-request-comment-${params.ISSUE_NUMBER}.md"
+                    $resultJson = "results/Github-ISSUE-TR-$env:EFFECTIVE_ISSUE_NUMBER.json"
+                    $resultComment = "results/test-request-comment-$env:EFFECTIVE_ISSUE_NUMBER.md"
                     & "${params.PYTHON_EXE}" -m mcp.scripts.make_test_result `
                         --issue-body-file "$env:ISSUE_BODY_FILE" `
                         --result-path "$resultJson" `
                         --output-path "$resultComment" `
-                        --execution-platform "jenkins"
+                        --execution-platform "local-direct"
                 '''
             }
         }
@@ -120,13 +224,16 @@ pipeline {
         stage('Post GitHub Comment') {
             when {
                 expression {
-                    return params.GITHUB_OWNER?.trim() && params.GITHUB_REPO?.trim() && params.ISSUE_NUMBER?.trim()
+                    return env.SHOULD_RUN_REQUEST == 'true' &&
+                        env.EFFECTIVE_GITHUB_OWNER?.trim() &&
+                        env.EFFECTIVE_GITHUB_REPO?.trim() &&
+                        env.EFFECTIVE_ISSUE_NUMBER?.trim()
                 }
             }
             steps {
                 withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     powershell '''
-                        $commentPath = "results/test-request-comment-${params.ISSUE_NUMBER}.md"
+                        $commentPath = "results/test-request-comment-$env:EFFECTIVE_ISSUE_NUMBER.md"
                         $commentBody = Get-Content -LiteralPath $commentPath -Raw -Encoding utf8
                         $bodyJson = @{ body = $commentBody } | ConvertTo-Json -Depth 5
                         $headers = @{
@@ -135,11 +242,22 @@ pipeline {
                             "X-GitHub-Api-Version" = "2022-11-28"
                         }
 
-                        $url = "https://api.github.com/repos/${params.GITHUB_OWNER}/${params.GITHUB_REPO}/issues/${params.ISSUE_NUMBER}/comments"
+                        $url = "https://api.github.com/repos/$env:EFFECTIVE_GITHUB_OWNER/$env:EFFECTIVE_GITHUB_REPO/issues/$env:EFFECTIVE_ISSUE_NUMBER/comments"
                         Invoke-RestMethod -Method Post -Uri $url -Headers $headers -Body $bodyJson -ContentType "application/json; charset=utf-8" | Out-Null
-                        Write-Host "Posted GitHub issue comment to #${params.ISSUE_NUMBER}"
+                        Write-Host "Posted GitHub issue comment to #$env:EFFECTIVE_ISSUE_NUMBER"
                     '''
                 }
+            }
+        }
+
+        stage('Skip Non Test Request') {
+            when {
+                expression {
+                    return env.SHOULD_RUN_REQUEST != 'true'
+                }
+            }
+            steps {
+                echo 'Webhook payload did not look like a test-request issue, so the pipeline is exiting without running MCP.'
             }
         }
     }
