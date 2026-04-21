@@ -3,6 +3,7 @@ description: Request a local MCP-driven test run through Jenkins using mcp-serve
 title: "[TEST] [direct] "
 labels:
   - test-request
+  - test-request-direct
 body:
   - type: markdown
     attributes:

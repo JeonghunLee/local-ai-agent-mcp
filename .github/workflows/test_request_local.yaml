@@ -24,7 +24,7 @@ permissions:
 #
 jobs:
   run-local-test-request:
-    if: contains(github.event.issue.labels.*.name, 'test-request')
+    if: contains(github.event.issue.labels.*.name, 'test-request-runner')
     runs-on: [self-hosted, local-dev]
 
     steps:
