@@ -2,7 +2,6 @@ name: Test Request Runner
 description: Request a local MCP-driven test run on a GitHub self-hosted runner
 title: "[TEST] [runner] "
 labels:
-  - test-request
   - test-request-runner
 body:
   - type: markdown

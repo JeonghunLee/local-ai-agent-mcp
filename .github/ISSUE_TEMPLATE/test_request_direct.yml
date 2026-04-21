@@ -2,7 +2,6 @@ name: Test Request Direct
 description: Request a local MCP-driven test run through Jenkins using mcp-server-local-direct
 title: "[TEST] [direct] "
 labels:
-  - test-request
   - test-request-direct
 body:
   - type: markdown
