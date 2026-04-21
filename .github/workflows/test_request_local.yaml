@@ -63,7 +63,11 @@ jobs:
         uses: actions/github-script@v7
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+<<<<<<< HEAD
           RESULT_PATH: results/Github-ISSUE-TR-${{ github.event.issue.number }}.json
+=======
+          RESULT_PATH: results/issue-test-request-${{ github.event.issue.number }}.json
+>>>>>>> 5fb1813438aab81e6c8d2fc83dc73bc5d77ffd59
         with:
           script: |
             const fs = require("fs");
@@ -92,8 +96,8 @@ jobs:
                 "",
                 "### 2. Request Ref",
                 `- Template Version: ${extractField("Template Version") || "v0.0.1"}`,
-                `- MCP Server Mode : ${requestedMode}`,
-                `- Target Runner   : ${process.env.RUNNER_NAME || "local-dev"}`,
+                `- MCP Server Mode : ${requestedMode || "runner"}`,
+                `- Target Runner   : ${requestedRunner || "local-dev"}`,
                 `- Request Ref: ${requestRef}`,
               ].join("\n");
             } else {
@@ -146,6 +150,7 @@ jobs:
                 for (const toolRun of payload.tool_runs) {
                   lines.push("");
                   lines.push(`#### ${toolRun.tool_name}`);
+                  lines.push(`- Category: ${toolRun.tool_category || "n/a"}`);
                   lines.push(`- Status: ${toolRun.status || "unknown"}`);
                   if (toolRun.log_paths) {
                     lines.push(`- Server Log: ${toolRun.log_paths.server_log || "n/a"}`);
