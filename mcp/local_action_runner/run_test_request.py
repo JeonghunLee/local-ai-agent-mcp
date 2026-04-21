@@ -223,6 +223,12 @@ def parse_call_payload(call_response: dict[str, Any]) -> tuple[dict[str, Any] | 
         return {"raw_text": text_value}, bool(result.get("isError"))
 
 
+def annotate_tool_result(tool_result: dict[str, Any] | None, tool_log: str) -> dict[str, Any]:
+    annotated = dict(tool_result or {})
+    annotated["tool_log"] = tool_log
+    return annotated
+
+
 def write_result(issue_number: int, payload: dict[str, Any]) -> Path:
     results_dir = Path("results")
     results_dir.mkdir(exist_ok=True)
@@ -251,7 +257,7 @@ def resolve_log_paths(server_name: str, tool_name: str) -> dict[str, str]:
 
 
 def summarize_statuses(tool_results: list[dict[str, Any]]) -> str:
-    if any(item["status"] == "error" for item in tool_results):
+    if any(item.get("tool_result", {}).get("status") == "error" for item in tool_results):
         return "error"
     return "success"
 
@@ -306,14 +312,14 @@ def main() -> int:
         for tool_name, tool_arguments in selected_tools:
             mcp_result = call_local_mcp(server_mode, tool_name, tool_arguments)
             tool_payload, is_error = parse_call_payload(mcp_result["call_response"])
+            log_paths = resolve_log_paths(server_name, tool_name)
             executed_tools.append(
                 {
-                    "tool_name": tool_name,
                     "tool_category": TOOL_CATALOG[tool_name]["category"],
-                    "tool_arguments": tool_arguments,
-                    "log_paths": resolve_log_paths(server_name, tool_name),
-                    "status": "error" if is_error else "success",
-                    "tool_result": tool_payload,
+                    "tool_function": tool_name,
+                    "tool_args": tool_arguments,
+                    "log_mcp_server": log_paths["server_log"],
+                    "tool_result": annotate_tool_result(tool_payload, log_paths["tool_log"]),
                 }
             )
 
@@ -328,7 +334,7 @@ def main() -> int:
             "resolved_server_mode": server_mode,
             "resolved_server_name": server_name,
             "parsed_fields": fields,
-            "selected_tools": [item["tool_name"] for item in executed_tools],
+            "selected_tools": [item["tool_function"] for item in executed_tools],
             "tool_runs": executed_tools,
         }
         output_path = write_result(args.issue_number, payload)

@@ -191,7 +191,7 @@ def log_snapshot(arguments: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-TOOL_CATALOG: dict[str, dict[str, Any]] = {
+SETUP_TOOLS: dict[str, dict[str, Any]] = {
     "check_version": {
         "category": "setup",
         "description": "Check the local Python version.",
@@ -253,6 +253,10 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         },
         "handler": build_tool,
     },
+}
+
+
+TEST_TOOLS: dict[str, dict[str, Any]] = {
     "test_ping_00": {
         "category": "test",
         "description": "Ping smoke test stub.",
@@ -304,6 +308,10 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
         },
         "handler": test_ping_22,
     },
+}
+
+
+LOG_TOOLS: dict[str, dict[str, Any]] = {
     "get_serial_log": {
         "category": "log",
         "description": "Serial log capture stub.",
@@ -354,10 +362,17 @@ TOOL_CATALOG: dict[str, dict[str, Any]] = {
 }
 
 
+TOOL_CATALOG: dict[str, dict[str, Any]] = {
+    **SETUP_TOOLS,
+    **TEST_TOOLS,
+    **LOG_TOOLS,
+}
+
+
 TOOL_CATEGORIES = {
-    "setup": tuple(name for name, meta in TOOL_CATALOG.items() if meta["category"] == "setup"),
-    "test": tuple(name for name, meta in TOOL_CATALOG.items() if meta["category"] == "test"),
-    "log": tuple(name for name, meta in TOOL_CATALOG.items() if meta["category"] == "log"),
+    "setup": tuple(SETUP_TOOLS.keys()),
+    "test": tuple(TEST_TOOLS.keys()),
+    "log": tuple(LOG_TOOLS.keys()),
 }
 
 TOOL_ALIAS_MAP = {

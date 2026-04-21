@@ -137,20 +137,22 @@ jobs:
                 lines.push("");
                 lines.push("### 4. Logs");
                 for (const toolRun of payload.tool_runs) {
-                  const logs = toolRun.log_paths || {};
-                  lines.push(`- ${toolRun.tool_name}: ${logs.tool_log || "n/a"}`);
+                  const toolLog = toolRun.tool_result?.tool_log || "n/a";
+                  lines.push(`- ${toolRun.tool_function || "n/a"}: ${toolLog}`);
                 }
 
                 lines.push("");
                 lines.push("### 5. Tool Result");
                 for (const toolRun of payload.tool_runs) {
                   lines.push("");
-                  lines.push(`#### ${toolRun.tool_name}`);
+                  lines.push(`#### ${toolRun.tool_function || "n/a"}`);
                   lines.push(`- Category: ${toolRun.tool_category || "n/a"}`);
-                  lines.push(`- Status: ${toolRun.status || "unknown"}`);
-                  if (toolRun.log_paths) {
-                    lines.push(`- Server Log: ${toolRun.log_paths.server_log || "n/a"}`);
-                    lines.push(`- Tool Log: ${toolRun.log_paths.tool_log || "n/a"}`);
+                  if (toolRun.tool_args) {
+                    lines.push(`- Tool Args: ${JSON.stringify(toolRun.tool_args)}`);
+                  }
+                  lines.push(`- MCP Server Log: ${toolRun.log_mcp_server || "n/a"}`);
+                  if (toolRun.tool_result?.tool_log) {
+                    lines.push(`- Tool Log: ${toolRun.tool_result.tool_log}`);
                   }
                   if (toolRun.tool_result) {
                     lines.push("");

@@ -12,7 +12,7 @@ assignees: ""
 - Target Runner: local-dev
 - Branch / Tag / Commit: main 
 
-Select only one category.
+Select only one category(Setup/Test/Log).
 
 ## Setup Tools Checklist
 
