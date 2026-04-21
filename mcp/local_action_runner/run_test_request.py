@@ -13,7 +13,7 @@ from typing import Any
 from mcp.server_local.toolsets import TOOL_ALIAS_MAP, TOOL_CATALOG, TOOL_CATEGORIES
 
 
-DEFAULT_LOG_DIR = "results/log_mcp_server_local"
+DEFAULT_LOG_DIR = "results/logs/mcp/server_local"
 DEFAULT_TEMPLATE_VERSION = "v0.0.1"
 DEFAULT_SERVER_MODE = "runner"
 
@@ -82,6 +82,14 @@ def resolve_server_name(server_mode: str) -> str:
     if server_mode == "direct":
         return "mcp-server-local-direct"
     return "mcp-server-local-runner"
+
+
+def resolve_log_prefix(server_name: str) -> str:
+    if server_name.endswith("-direct"):
+        return "direct"
+    if server_name.endswith("-runner"):
+        return "runner"
+    return server_name
 
 
 def build_tool_arguments(tool_name: str, target_device_image: str) -> dict[str, Any]:
@@ -233,11 +241,12 @@ def append_summary(lines: list[str]) -> None:
         handle.write("\n".join(lines) + "\n")
 
 
-def resolve_log_paths(tool_name: str) -> dict[str, str]:
+def resolve_log_paths(server_name: str, tool_name: str) -> dict[str, str]:
+    log_prefix = resolve_log_prefix(server_name)
     return {
         "log_dir": DEFAULT_LOG_DIR,
-        "server_log": f"{DEFAULT_LOG_DIR}/mcp-server-local.log",
-        "tool_log": f"{DEFAULT_LOG_DIR}/mcp-server-local-{tool_name}.log",
+        "server_log": f"{DEFAULT_LOG_DIR}/{log_prefix}.log",
+        "tool_log": f"{DEFAULT_LOG_DIR}/{log_prefix}-{tool_name}.log",
     }
 
 
@@ -302,7 +311,7 @@ def main() -> int:
                     "tool_name": tool_name,
                     "tool_category": TOOL_CATALOG[tool_name]["category"],
                     "tool_arguments": tool_arguments,
-                    "log_paths": resolve_log_paths(tool_name),
+                    "log_paths": resolve_log_paths(server_name, tool_name),
                     "status": "error" if is_error else "success",
                     "tool_result": tool_payload,
                 }

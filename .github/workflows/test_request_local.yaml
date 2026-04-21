@@ -52,7 +52,7 @@ jobs:
         with:
           name: test-request-${{ github.event.issue.number }}
           path: |
-            results/log_mcp_server_local/*.log
+            results/logs/mcp/server_local/*.log
             results/*.json
 
 #
