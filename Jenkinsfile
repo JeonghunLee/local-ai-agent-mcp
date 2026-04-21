@@ -41,10 +41,12 @@ pipeline {
 
         stage('Prepare Request') {
             steps {
-                powershell '''
-                    New-Item -ItemType Directory -Force -Path results | Out-Null
-                    Set-Content -LiteralPath $env:ISSUE_BODY_FILE -Value $env:ISSUE_BODY -Encoding utf8
-                '''
+                script {
+                    powershell '''
+                        New-Item -ItemType Directory -Force -Path results | Out-Null
+                    '''
+                    writeFile file: env.ISSUE_BODY_FILE, text: params.ISSUE_BODY ?: ''
+                }
             }
         }
 
@@ -53,6 +55,9 @@ pipeline {
                 powershell '''
                     $issueBodyPath = $env:ISSUE_BODY_FILE
                     $issueBody = Get-Content -LiteralPath $issueBodyPath -Raw -Encoding utf8
+                    if ($null -eq $issueBody -or -not $issueBody.Trim()) {
+                        throw "ISSUE_BODY is empty. Enter the GitHub issue body in Build with Parameters."
+                    }
 
                     $requestRef = $null
                     $markdownMatch = [regex]::Match($issueBody, '^- Branch / Tag / Commit:\\s*(.+)$', 'Multiline')
