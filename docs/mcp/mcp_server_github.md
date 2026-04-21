@@ -2,6 +2,8 @@
 
 ![VS Code Extension -> MCP Servers](../imgs/mcp_server_github_00.png)
 
+현재 안쓰임 옵션 
+
 ## References
 
 - Manual: <https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server>

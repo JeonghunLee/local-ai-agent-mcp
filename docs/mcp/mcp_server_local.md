@@ -2,6 +2,8 @@
 
 ![VS Code Extension -> MCP Servers](../imgs/mcp_server_local_00.png)
 
+CLI와 연결해서만 쓰임 
+
 ## Overview
 
 현재 저장소는 하나의 공통 Local MCP core 위에 두 개의 entrypoint를 사용.
