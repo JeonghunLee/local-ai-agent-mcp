@@ -11,14 +11,24 @@ DEFAULT_TEMPLATE_VERSION = "v0.0.1"
 DEFAULT_SERVER_MODE = "runner"
 DEFAULT_TARGET_RUNNER = "local-dev"
 DEFAULT_RESULTS_DIR = r"actions-runner\_work\local-ai-agent-mcp\local-ai-agent-mcp\results"
+DEFAULT_EXECUTION_PLATFORM = "github-actions"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Render a test request issue comment body.")
-    parser.add_argument("--issue-body", required=True)
+    parser.add_argument("--issue-body")
+    parser.add_argument("--issue-body-file")
     parser.add_argument("--result-path", required=True)
     parser.add_argument("--output-path", required=True)
-    return parser.parse_args()
+    parser.add_argument(
+        "--execution-platform",
+        choices=["github-actions", "jenkins"],
+        default=DEFAULT_EXECUTION_PLATFORM,
+    )
+    args = parser.parse_args()
+    if not args.issue_body and not args.issue_body_file:
+        parser.error("one of --issue-body or --issue-body-file is required")
+    return args
 
 
 def extract_field(issue_body: str, label: str) -> str:
@@ -82,6 +92,24 @@ def resolve_server_log(server_mode: str) -> str:
     return f"results/logs/mcp/server_local/{prefix}.log"
 
 
+def resolve_test_env_lines(execution_platform: str, target_runner: str, server_name: str, server_log: str) -> list[str]:
+    if execution_platform == "jenkins":
+        return [
+            "* Target Runner : Jenkins",
+            "* result_path: ./results",
+            f"\t* MCP Server: {server_name}",
+            f"\t* MCP Server Log: {server_log}",
+        ]
+
+    return [
+        f"* Target Runner : {target_runner}   ",
+        "\t* self-hosted-runner \t",
+        f"* result_path: {DEFAULT_RESULTS_DIR}",
+        f"\t* MCP Server: {server_name} ",
+        f"\t* MCP Server Log: {server_log}",
+    ]
+
+
 def render_missing_result(issue_body: str) -> str:
     requested_mode = extract_field(issue_body, "MCP Server Mode")
     requested_runner = extract_field(issue_body, "Target Runner")
@@ -103,7 +131,7 @@ def render_missing_result(issue_body: str) -> str:
     )
 
 
-def render_payload(payload: dict[str, Any]) -> str:
+def render_payload(payload: dict[str, Any], execution_platform: str) -> str:
     parsed = payload.get("test_request_pared_fileds") or payload.get("parsed_fields", {})
     request_ref = parsed.get("request_ref") or "n/a"
     branch = parsed.get("resolved_branch") or "n/a"
@@ -137,11 +165,7 @@ def render_payload(payload: dict[str, Any]) -> str:
             "",
             "### 1.TEST Envs ",
             "",
-            f"* Target Runner : {target_runner}   ",
-            "\t* self-hosted-runner \t",
-            f"* result_path: {DEFAULT_RESULTS_DIR}",
-            f"\t* MCP Server: {server_name} ",
-            f"\t* MCP Server Log: {server_log}",
+            *resolve_test_env_lines(execution_platform, target_runner, server_name, server_log),
             "",
             "### 2.Tool Results ",
         ]
@@ -186,12 +210,15 @@ def render_payload(payload: dict[str, Any]) -> str:
 
 def main() -> int:
     args = parse_args()
-    issue_body = args.issue_body
+    if args.issue_body is not None:
+        issue_body = args.issue_body
+    else:
+        issue_body = Path(args.issue_body_file).read_text(encoding="utf-8")
     result_path = Path(args.result_path)
     output_path = Path(args.output_path)
 
     payload = load_payload(result_path)
-    body = render_missing_result(issue_body) if payload is None else render_payload(payload)
+    body = render_missing_result(issue_body) if payload is None else render_payload(payload, args.execution_platform)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(body, encoding="utf-8")
