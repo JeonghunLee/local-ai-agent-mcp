@@ -7,6 +7,9 @@ on:
       - edited
       - reopened
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 permissions:
   contents: read
   issues: write
@@ -24,17 +27,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@v6
+    #
+    #   Windows Powershell runner 
+    #
       - name: Show runner context
         shell: powershell
         run: |
           Write-Host "Runner Name: $env:RUNNER_NAME"
           Write-Host "Runner OS: $env:RUNNER_OS"
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
+          Write-Host "Actions Runner Version: $env:ACTIONS_RUNNER_VERSION"
     # 
     #   mcp.scripts is working 
-    #          
+    #   -> call mcp.server_local_runner 
+    #     -> toolset.py  
       - name: Run test request through local MCP
         shell: powershell
         env:
@@ -48,16 +55,16 @@ jobs:
 
       - name: Upload MCP logs and results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: test-request-${{ github.event.issue.number }}
           path: |
             results/logs/mcp/server_local/*.log
             results/*.json
 
-#
-#   Test Result Commenting
-#            
+      #
+      #   Test Result (json/markdown) rendering
+      #            
       - name: Render comment body
         if: always()
         shell: powershell
@@ -68,10 +75,12 @@ jobs:
             --issue-body "$env:ISSUE_BODY" `
             --result-path "results/Github-ISSUE-TR-${{ github.event.issue.number }}.json" `
             --output-path "results/test-request-comment-${{ github.event.issue.number }}.md"
-
+      #
+      #   Test Result Commenting to Github Issue
+      #   
       - name: Comment result on issue
         if: always()
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           COMMENT_BODY_PATH: results/test-request-comment-${{ github.event.issue.number }}.md
