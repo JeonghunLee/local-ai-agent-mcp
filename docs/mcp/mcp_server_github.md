@@ -32,7 +32,7 @@ GitHub Issue
   -> GitHub Actions
   -> Python bridge
   -> Local MCP Server
-  -> results/log_mcp_server_local + results JSON
+  -> results/logs/mcp/server_local + results JSON
   -> GitHub Issue comment
 ```
 
@@ -51,7 +51,7 @@ flowchart LR
     A["GitHub Issue"] --> B["GitHub Actions"]
     B --> C["Python bridge<br/>mcp.local_action_runner.run_test_request"]
     C --> D["Local MCP Server"]
-    D --> E["results/log_mcp_server_local<br/>results/*.json"]
+    D --> E["results/logs/mcp/server_local<br/>results/*.json"]
     B --> F["GitHub Issue comment"]
     D --> E
 ```

@@ -3,12 +3,13 @@ import logging
 from pathlib import Path
 import sys
 from datetime import datetime
+from logging import FileHandler
 from typing import Any, Callable
 
 
 JsonDict = dict[str, Any]
 ToolHandler = Callable[[JsonDict], JsonDict]
-LOG_DIR = Path("results") / "log_mcp_server_local"
+LOG_DIR = Path("results") / "logs" / "mcp" / "server_local"
 
 
 LOGGER = logging.getLogger("local_mcp")
@@ -17,12 +18,6 @@ if not LOGGER.handlers:
     stream_handler.setFormatter(logging.Formatter("[%(levelname)s] [%(name)s] %(message)s"))
     stream_handler.setLevel(logging.ERROR)
     LOGGER.addHandler(stream_handler)
-
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
-    file_handler = logging.FileHandler(LOG_DIR / "mcp-server-local.log", encoding="utf-8")
-    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] %(message)s"))
-    file_handler.setLevel(logging.INFO)
-    LOGGER.addHandler(file_handler)
 LOGGER.setLevel(logging.INFO)
 LOGGER.propagate = False
 
@@ -34,6 +29,27 @@ class MCPServer:
         self.tools = tools
         self.handlers = handlers
         self._transport_mode = "content-length"
+        self._log_prefix = self._resolve_log_prefix(name)
+        self._configure_file_logger()
+
+    def _resolve_log_prefix(self, server_name: str) -> str:
+        if server_name.endswith("-direct"):
+            return "direct"
+        if server_name.endswith("-runner"):
+            return "runner"
+        return server_name
+
+    def _configure_file_logger(self) -> None:
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        log_path = (LOG_DIR / f"{self._log_prefix}.log").resolve()
+        for handler in LOGGER.handlers:
+            if isinstance(handler, FileHandler) and Path(handler.baseFilename).resolve() == log_path:
+                return
+
+        file_handler = logging.FileHandler(log_path, encoding="utf-8")
+        file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] [%(name)s] %(message)s"))
+        file_handler.setLevel(logging.INFO)
+        LOGGER.addHandler(file_handler)
 
     def run(self) -> None:
         self._log_info(f"server.start name={self.name} version={self.version}")
@@ -202,7 +218,7 @@ class MCPServer:
     def _append_tool_log(self, tool_name: str, message: str) -> None:
         timestamp = datetime.now().isoformat(timespec="seconds")
         LOG_DIR.mkdir(parents=True, exist_ok=True)
-        log_path = LOG_DIR / f"mcp-server-local-{tool_name}.log"
+        log_path = LOG_DIR / f"{self._log_prefix}-{tool_name}.log"
         with log_path.open("a", encoding="utf-8") as handle:
             handle.write(f"{timestamp} {message}\n")
 

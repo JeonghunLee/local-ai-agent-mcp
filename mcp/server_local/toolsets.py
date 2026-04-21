@@ -7,7 +7,7 @@ from typing import Any
 
 
 LOGGER = logging.getLogger("local_mcp.tools")
-DEFAULT_LOG_DIR = "results/log_mcp_server_local"
+DEFAULT_LOG_DIR = "results/logs/mcp/server_local"
 
 ToolHandler = Callable[[dict[str, Any]], dict[str, Any]]
 
