@@ -81,7 +81,10 @@ jobs:
 
       #
       #   Test Result (json/markdown) rendering
-      #            
+      #    result-path:
+      #    output-path:
+      #     actions-runner\_work\local-ai-agent-mcp\local-ai-agent-mcp\results         
+      #
       - name: Render comment body
         if: always()
         shell: powershell
