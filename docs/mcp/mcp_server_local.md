@@ -251,7 +251,7 @@ Python bridge 는 선택된 tool 을 순서대로 실행하고, 결과를 하나
 
 현재 issue result JSON:
 
-- `results/issue-test-request-<issue_number>.json`
+- `results/Github-ISSUE-TR-<issue_number>.json`
 
 현재 result JSON 주요 항목:
 
