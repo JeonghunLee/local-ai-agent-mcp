@@ -15,7 +15,8 @@
 
 ```text
 mcp/
-├── local_action_runner/
+├── scripts/
+│   ├── make_test_result.py
 │   └── run_test_request.py
 ├── server_local/
 │   ├── runtime.py
@@ -89,7 +90,7 @@ flowchart LR
 ```text
 GitHub Issue
   -> GitHub Actions workflow
-  -> Python bridge (mcp.local_action_runner.run_test_request)
+  -> Python bridge (mcp.scripts.run_test_request)
   -> mcp-server-local-direct or mcp-server-local-runner
   -> results/logs/mcp/server_local + results/*.json
   -> GitHub Issue comment
@@ -116,7 +117,7 @@ GitHub Issue
 flowchart LR
     A["GitHub Issue<br/>Test Request"] --> B["GitHub Actions"]
     B --> D["Self-hosted Runner<br/>[self-hosted, local-dev]"]
-    D --> E["Python bridge<br/>mcp.local_action_runner.run_test_request"]
+    D --> E["Python bridge<br/>mcp.scripts.run_test_request"]
     E --> F["mcp-server-local-direct<br/>or<br/>mcp-server-local-runner"]
     F --> G["selected tools"]
     G --> I["results/logs/mcp/server_local<br/>results/*.json"]
@@ -149,7 +150,7 @@ issue 기반 runner flow 를 쓰는 경우:
 ```text
 GitHub Issue
   -> test_request_local.yaml
-  -> mcp.local_action_runner.run_test_request
+  -> mcp.scripts.run_test_request
   -> selected local MCP server
   -> selected tools
   -> results JSON + log files
@@ -180,7 +181,7 @@ issue body format source:
 
 bridge script:
 
-- `mcp/local_action_runner/run_test_request.py`
+- `mcp/scripts/run_test_request.py`
 
 역할:
 

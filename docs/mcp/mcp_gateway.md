@@ -71,7 +71,7 @@ AI Agent
 ```text
 GitHub Issue
   → GitHub Actions
-  → Python bridge (mcp.local_action_runner.run_test_request)
+  → Python bridge (mcp.scripts.run_test_request)
   → Local MCP Server
 ```
 
