@@ -941,10 +941,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example
+        Examples
       
     </span>
   </a>
@@ -1388,10 +1388,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example
+        Examples
       
     </span>
   </a>
@@ -1885,7 +1885,8 @@
 </tr>
 </tbody>
 </table>
-<h3 id="example">Example</h3>
+<p><img alt="" src="../imgs/github_issue_lable_00.png" /></p>
+<h3 id="examples">Examples</h3>
 <div class="highlight"><pre><span></span><code><span class="gu">## Request Ref</span>
 <span class="k">-</span><span class="w"> </span>Template Version: v0.0.1
 <span class="k">-</span><span class="w"> </span>Branch / Tag / Commit: main
@@ -1896,12 +1897,36 @@
 <span class="k">- [x]</span> test_ping_00
 <span class="k">- [ ]</span> test_ping_11
 <span class="k">- [ ]</span> test_ping_22
+</code></pre></div>
+<p>Runner example notes:</p>
+<ul>
+<li>label: <code>test-request-runner</code></li>
+<li>title: <code>[TEST] [runner]</code></li>
+<li>category selection: <code>Test</code> only</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gu">## Request Ref</span>
+<span class="k">-</span><span class="w"> </span>Template Version: v0.0.1
+<span class="k">-</span><span class="w"> </span>Branch / Tag / Commit: main
+<span class="k">-</span><span class="w"> </span>Target Runner: ai-agent
+<span class="k">-</span><span class="w"> </span>MCP Server Mode: direct
 
 <span class="gu">## Log Tool</span>
 <span class="k">- [x]</span> get_serial_log
 <span class="k">- [x]</span> log_analyzer
 <span class="k">- [ ]</span> log_snapshot
 </code></pre></div>
+<p>Direct example notes:</p>
+<ul>
+<li>label: <code>test-request-direct</code></li>
+<li>title: <code>[TEST] [direct]</code></li>
+<li>category selection: <code>Log</code> only</li>
+</ul>
+<p>Runner example notes:</p>
+<ul>
+<li>label: <code>test-request-runner</code></li>
+<li>title: <code>[TEST] [runner]</code></li>
+<li>category selection: <code>Log</code> only</li>
+</ul>
 <p><img alt="" src="../imgs/github_issue_runner_00.png" />
 <img alt="" src="../imgs/github_issue_runner_01.png" /></p>
 <hr />
@@ -1952,13 +1977,24 @@
 </ul>
 <hr />
 <h2 id="title-rule">Title Rule</h2>
-<div class="highlight"><pre><span></span><code>[TEST] [&lt;mcp mode&gt;] &lt;YYYY-MM-DD HH:MM&gt;
-[TEST] [&lt;mcp mode&gt;] [&lt;target runner&gt;] &lt;YYYY-MM-DD HH:MM&gt;
+<div class="highlight"><pre><span></span><code>[TEST] [runner]
+[TEST] [direct]
 </code></pre></div>
 <p>Examples:</p>
-<div class="highlight"><pre><span></span><code>[TEST] [direct] 2026-04-20 16:30
-[TEST] [runner] [local-dev] 2026-04-20 16:35
+<div class="highlight"><pre><span></span><code>[TEST] [runner]
+[TEST] [direct]
 </code></pre></div>
+<p>Current mapping:</p>
+<ul>
+<li>title prefix <code>"[TEST] [runner] "</code> -&gt; label <code>test-request-runner</code></li>
+<li>title prefix <code>"[TEST] [direct] "</code> -&gt; label <code>test-request-direct</code></li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>the current templates do not use date-based titles</li>
+<li>the current split is driven by two Issue labels</li>
+<li><code>Target Runner</code> is part of the Issue body, not the title</li>
+</ul>
 <hr />
 <h2 id="target-runner">Target Runner</h2>
 <h3 id="runner-template-examples">Runner Template Examples</h3>
