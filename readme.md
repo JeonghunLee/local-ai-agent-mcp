@@ -15,6 +15,7 @@ Most project details are maintained in the documentation site.
 
 - Docs entry: [docs/index.md](docs/index.md)
 - Architecture: [docs/architecture/system-design.md](docs/architecture/system-design.md)
+- Automation: [docs/architecture/automation-design.md](docs/architecture/automation-design.md)
 - MCP Gateway: [docs/mcp/mcp_gateway.md](docs/mcp/mcp_gateway.md)
 - Local MCP Server: [docs/mcp/mcp_server_local.md](docs/mcp/mcp_server_local.md)
 - GitHub MCP Server: [docs/mcp/mcp_server_github.md](docs/mcp/mcp_server_github.md)

@@ -15,6 +15,7 @@
 | Area | Document |
 |------|------|
 | Architecture | [System Design](architecture/system-design.md) |
+| Automation | [Automation Design](architecture/automation-design.md) |
 | MCP | [MCP Gateway](mcp/mcp_gateway.md) |
 | Local Tooling | [MCP Server-Local](mcp/mcp_server_local.md) |
 | GitHub Integration | [MCP Server-Github](mcp/mcp_server_github.md) |
@@ -36,11 +37,12 @@
 ## Reading Order
 
 1. [System Design](architecture/system-design.md)
-2. [MCP Gateway](mcp/mcp_gateway.md)
-3. [MCP Server-Local](mcp/mcp_server_local.md)
-4. [MCP Server-Github](mcp/mcp_server_github.md)
-5. Agent documents
-6. Environment documents
+2. [Automation Design](architecture/automation-design.md)
+3. [MCP Gateway](mcp/mcp_gateway.md)
+4. [MCP Server-Local](mcp/mcp_server_local.md)
+5. [MCP Server-Github](mcp/mcp_server_github.md)
+6. Agent documents
+7. Environment documents
 
 ---
 
@@ -53,3 +55,4 @@
 Reference:
 
 - [System Design](architecture/system-design.md)
+- [Automation Design](architecture/automation-design.md)
