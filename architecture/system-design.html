@@ -8,7 +8,7 @@
 <meta content="AI Agent with MCP" name="description"/>
 <meta content="Jeonghun Lee" name="author"/>
 <link href="../index.html" rel="prev"/>
-<link href="../agents/claude.html" rel="next"/>
+<link href="automation-design.html" rel="next"/>
 <link href="../imgs/logo.jpg" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
 <title>System Design - AI Agent with MCP</title>
@@ -212,6 +212,15 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#document-split">
+<span class="md-ellipsis">
+      
+        Document Split
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#ai-agents">
 <span class="md-ellipsis">
       
@@ -328,153 +337,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cicdct-automation">
-<span class="md-ellipsis">
-      
-        CI/CD/CT Automation
-      
-    </span>
-</a>
-<nav aria-label="CI/CD/CT Automation" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#scope_1">
-<span class="md-ellipsis">
-      
-        Scope
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#github-issue-based-entry">
-<span class="md-ellipsis">
-      
-        GitHub Issue Based Entry
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#automation-components">
-<span class="md-ellipsis">
-      
-        Automation Components
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#issue-based-flow">
-<span class="md-ellipsis">
-      
-        Issue Based Flow
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#main-flows">
-<span class="md-ellipsis">
-      
-        Main Flows
-      
-    </span>
-</a>
-<nav aria-label="Main Flows" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#direct-mcp-flow">
-<span class="md-ellipsis">
-      
-        Direct MCP Flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#runner-test-request-flow">
-<span class="md-ellipsis">
-      
-        Runner Test Request Flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#direct-test-request-flow">
-<span class="md-ellipsis">
-      
-        Direct Test Request Flow
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#component-details">
-<span class="md-ellipsis">
-      
-        Component Details
-      
-    </span>
-</a>
-<nav aria-label="Component Details" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#vs-code-mcp-gateway">
-<span class="md-ellipsis">
-      
-        VS Code MCP Gateway
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#local-mcp-server">
-<span class="md-ellipsis">
-      
-        Local MCP Server
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#github-mcp-server">
-<span class="md-ellipsis">
-      
-        GitHub MCP Server
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#python-bridge">
-<span class="md-ellipsis">
-      
-        Python Bridge
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#installation-locations">
-<span class="md-ellipsis">
-      
-        Installation Locations
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#design-principles">
 <span class="md-ellipsis">
       
@@ -494,6 +356,18 @@
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="automation-design.html">
+<span class="md-ellipsis">
+    
+  
+    Automation Design
+  
+
+    
+  </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -708,6 +582,15 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#document-split">
+<span class="md-ellipsis">
+      
+        Document Split
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#ai-agents">
 <span class="md-ellipsis">
       
@@ -824,153 +707,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cicdct-automation">
-<span class="md-ellipsis">
-      
-        CI/CD/CT Automation
-      
-    </span>
-</a>
-<nav aria-label="CI/CD/CT Automation" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#scope_1">
-<span class="md-ellipsis">
-      
-        Scope
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#github-issue-based-entry">
-<span class="md-ellipsis">
-      
-        GitHub Issue Based Entry
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#automation-components">
-<span class="md-ellipsis">
-      
-        Automation Components
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#issue-based-flow">
-<span class="md-ellipsis">
-      
-        Issue Based Flow
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#main-flows">
-<span class="md-ellipsis">
-      
-        Main Flows
-      
-    </span>
-</a>
-<nav aria-label="Main Flows" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#direct-mcp-flow">
-<span class="md-ellipsis">
-      
-        Direct MCP Flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#runner-test-request-flow">
-<span class="md-ellipsis">
-      
-        Runner Test Request Flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#direct-test-request-flow">
-<span class="md-ellipsis">
-      
-        Direct Test Request Flow
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#component-details">
-<span class="md-ellipsis">
-      
-        Component Details
-      
-    </span>
-</a>
-<nav aria-label="Component Details" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#vs-code-mcp-gateway">
-<span class="md-ellipsis">
-      
-        VS Code MCP Gateway
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#local-mcp-server">
-<span class="md-ellipsis">
-      
-        Local MCP Server
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#github-mcp-server">
-<span class="md-ellipsis">
-      
-        GitHub MCP Server
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#python-bridge">
-<span class="md-ellipsis">
-      
-        Python Bridge
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#installation-locations">
-<span class="md-ellipsis">
-      
-        Installation Locations
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="#design-principles">
 <span class="md-ellipsis">
       
@@ -1019,7 +755,14 @@
 <li>AI Agent structure</li>
 <li>MCP connection model</li>
 <li>GitHub integration model</li>
-<li>CI/CD/CT automation path</li>
+<li>system level role split</li>
+</ul>
+<hr/>
+<h2 id="document-split">Document Split</h2>
+<p>This document covers the top-level system structure.</p>
+<p>Execution flows and automation details are documented separately:</p>
+<ul>
+<li><a href="automation-design.html">Automation Design</a></li>
 </ul>
 <hr/>
 <h2 id="ai-agents">AI Agents</h2>
@@ -1037,7 +780,7 @@
 </tr>
 <tr>
 <td>Sub AI Agent</td>
-<td>review, test result analysis, issue and PR follow-up</td>
+<td>review, test result analysis, Issue and PR follow-up</td>
 </tr>
 <tr>
 <td>Local AI Agent</td>
@@ -1220,222 +963,6 @@
   -&gt; code or document update
 </code></pre></div>
 <hr/>
-<h2 id="cicdct-automation">CI/CD/CT Automation</h2>
-<h3 id="scope_1">Scope</h3>
-<ul>
-<li>CI automation</li>
-<li>Pull Request, Review, Actions follow-up</li>
-<li>CD automation</li>
-<li>workflow based delivery path</li>
-<li>CT automation</li>
-<li>Local MCP tool based test execution</li>
-<li>JSON, log, comment trace</li>
-</ul>
-<h3 id="github-issue-based-entry">GitHub Issue Based Entry</h3>
-<table>
-<thead>
-<tr>
-<th>Request Type</th>
-<th>Label</th>
-<th>Template</th>
-<th>Execution Path</th>
-<th>Main Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Runner TEST Request</td>
-<td><code>test-request-runner</code></td>
-<td><code>test_request_runner.yml</code></td>
-<td>GitHub Actions -&gt; self-hosted runner</td>
-<td>runner based automated test execution</td>
-</tr>
-<tr>
-<td>Direct TEST Request</td>
-<td><code>test-request-direct</code></td>
-<td><code>test_request_direct.yml</code></td>
-<td>Jenkins -&gt; direct MCP execution</td>
-<td>direct local test execution</td>
-</tr>
-<tr>
-<td>General Issue / PR</td>
-<td>normal workflow</td>
-<td>standard templates</td>
-<td>GitHub MCP Server, AI Agent, GitHub Actions</td>
-<td>review, update, tracking</td>
-</tr>
-</tbody>
-</table>
-<h3 id="automation-components">Automation Components</h3>
-<ul>
-<li>GitHub Actions</li>
-<li>runner TEST Request execution</li>
-<li>self-hosted runner integration</li>
-<li>artifact and comment trace</li>
-<li>Jenkins</li>
-<li>direct TEST Request execution</li>
-<li>webhook trigger</li>
-<li>requested ref checkout</li>
-<li>Python Bridge</li>
-<li>issue body parsing</li>
-<li>selected tool mapping</li>
-<li>Local MCP Server call</li>
-<li>JSON and Markdown result generation</li>
-</ul>
-<h3 id="issue-based-flow">Issue Based Flow</h3>
-<div class="highlight"><pre><span></span><code>runner test request issue
-  -&gt; GitHub Actions
-  -&gt; self-hosted runner
-  -&gt; Python bridge
-  -&gt; mcp-server-local-runner
-
-direct test request issue
-  -&gt; Jenkins
-  -&gt; Python bridge
-  -&gt; mcp-server-local-direct
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>GitHub Issue / PR
-  -&gt; GitHub Actions or Jenkins
-  -&gt; Python bridge
-  -&gt; Local MCP Server
-  -&gt; JSON / log / comment
-  -&gt; GitHub traceability
-</code></pre></div>
-<hr/>
-<h2 id="main-flows">Main Flows</h2>
-<h3 id="direct-mcp-flow">Direct MCP Flow</h3>
-<div class="highlight"><pre><span></span><code>AI Agent or local client
-  -&gt; VS Code MCP Gateway
-  -&gt; mcp-server-local-direct
-  -&gt; local tools
-  -&gt; log files + tool result payload
-</code></pre></div>
-<h3 id="runner-test-request-flow">Runner Test Request Flow</h3>
-<div class="highlight"><pre><span></span><code>GitHub Issue
-  -&gt; GitHub Actions workflow
-  -&gt; self-hosted runner
-  -&gt; mcp.scripts.run_test_request
-  -&gt; mcp-server-local-runner
-  -&gt; selected tools
-  -&gt; results JSON + logs
-  -&gt; GitHub Issue comment
-</code></pre></div>
-<p>Related:</p>
-<ul>
-<li><a href="../../.github/workflows/test_request_local.yaml">.github/workflows/test_request_local.yaml</a></li>
-<li><a href="../../.github/ISSUE_TEMPLATE/test_request_runner.yml">.github/ISSUE_TEMPLATE/test_request_runner.yml</a></li>
-</ul>
-<h3 id="direct-test-request-flow">Direct Test Request Flow</h3>
-<div class="highlight"><pre><span></span><code>GitHub Issue
-  -&gt; Jenkins webhook trigger
-  -&gt; mcp.scripts.run_test_request
-  -&gt; mcp-server-local-direct
-  -&gt; selected tools
-  -&gt; results JSON + logs
-  -&gt; GitHub Issue comment
-</code></pre></div>
-<p>Related:</p>
-<ul>
-<li><a href="../../Jenkinsfile">Jenkinsfile</a></li>
-<li><a href="../../.github/ISSUE_TEMPLATE/test_request_direct.yml">.github/ISSUE_TEMPLATE/test_request_direct.yml</a></li>
-</ul>
-<hr/>
-<h2 id="component-details">Component Details</h2>
-<h3 id="vs-code-mcp-gateway">VS Code MCP Gateway</h3>
-<ul>
-<li>VS Code internal</li>
-<li>MCP Server connection</li>
-<li>tool discovery</li>
-<li>tool routing</li>
-</ul>
-<p>Reference:</p>
-<ul>
-<li><a href="../mcp/mcp_gateway.html">MCP Gateway</a></li>
-</ul>
-<h3 id="local-mcp-server">Local MCP Server</h3>
-<ul>
-<li>local process</li>
-<li>build, flash, test, log tools</li>
-<li>direct mode</li>
-<li>runner mode</li>
-</ul>
-<p>Reference:</p>
-<ul>
-<li><a href="../mcp/mcp_server_local.html">MCP Server-Local</a></li>
-</ul>
-<h3 id="github-mcp-server">GitHub MCP Server</h3>
-<ul>
-<li>local process + GitHub API integration</li>
-<li>Issue, Pull Request, Review, Actions access</li>
-<li>no local execution hosting</li>
-</ul>
-<p>Reference:</p>
-<ul>
-<li><a href="../mcp/mcp_server_github.html">MCP Server-GitHub</a></li>
-</ul>
-<h3 id="python-bridge">Python Bridge</h3>
-<ul>
-<li>repository script layer</li>
-<li>issue body parsing</li>
-<li>tool mapping</li>
-<li>server mode selection</li>
-<li>result JSON generation</li>
-<li>Markdown comment generation</li>
-</ul>
-<p>Target scripts:</p>
-<ul>
-<li><code>mcp/scripts/run_test_request.py</code></li>
-<li><code>mcp/scripts/make_test_result.py</code></li>
-</ul>
-<hr/>
-<h2 id="installation-locations">Installation Locations</h2>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Location</th>
-<th>Entry</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>VS Code MCP Gateway</td>
-<td>VS Code internal</td>
-<td>VS Code feature</td>
-</tr>
-<tr>
-<td>Local MCP Server</td>
-<td>Local process</td>
-<td>Python module</td>
-</tr>
-<tr>
-<td>GitHub MCP Server</td>
-<td>Local process</td>
-<td>GitHub API integration</td>
-</tr>
-<tr>
-<td>GitHub Actions</td>
-<td>GitHub runner</td>
-<td>workflow</td>
-</tr>
-<tr>
-<td>Jenkins</td>
-<td>Jenkins agent</td>
-<td>webhook trigger</td>
-</tr>
-<tr>
-<td>Local AI</td>
-<td>Local host</td>
-<td>runtime</td>
-</tr>
-<tr>
-<td>Remote AI</td>
-<td>cloud or local CLI</td>
-<td>provider dependent</td>
-</tr>
-</tbody>
-</table>
-<hr/>
 <h2 id="design-principles">Design Principles</h2>
 <ul>
 <li>simple execution path first</li>
@@ -1448,6 +975,7 @@ direct test request issue
 <hr/>
 <h2 id="related">Related</h2>
 <ul>
+<li><a href="automation-design.html">Automation Design</a></li>
 <li><a href="../agents/claude.html">Claude</a></li>
 <li><a href="../agents/codex.html">Codex</a></li>
 <li><a href="../agents/ollama.html">Ollama</a></li>
@@ -1481,13 +1009,13 @@ direct test request issue
               </div>
 </div>
 </a>
-<a aria-label="Next: Claude" class="md-footer__link md-footer__link--next" href="../agents/claude.html">
+<a aria-label="Next: Automation Design" class="md-footer__link md-footer__link--next" href="automation-design.html">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Claude
+                Automation Design
               </div>
 </div>
 <div class="md-footer__button md-icon">
