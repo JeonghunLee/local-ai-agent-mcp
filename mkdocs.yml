@@ -1,7 +1,13 @@
+#
+# Site information
+#
 site_name: AI Agent with MCP
 site_description: AI Agent with MCP 
-docs_dir: docs
 site_author: Jeonghun Lee
+
+#
+#  Repository information  (우측 GitHub Icon 클릭 시, 해당 링크로 이동)
+#
 repo_url: https://github.com/JeonghunLee/local-ai-agent-mcp
 repo_name: JeonghunLee/local-ai-agent-mcp
 
@@ -26,7 +32,9 @@ nav:
       - GitHub Templates: envs/github_templates.md
       - GitHub Self Hosted Runner: envs/github_self_hosted_runner.md
 
-
+#
+# Plugins configuration
+# 
 plugins:
   - search
   - mermaid2
