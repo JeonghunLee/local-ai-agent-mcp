@@ -4,7 +4,7 @@
 
 - CI automation
 - CD automation
-- CT automation
+- **CT automation**
 - GitHub Issue based execution paths
 - direct and runner flow split
 
@@ -97,10 +97,16 @@ GitHub Issue
   -> GitHub Issue comment
 ```
 
+Example:
+
+![](../imgs/github_issue_runner_00.png)
+![](../imgs/github_issue_runner_01.png)
+
 Related:
 
 - [.github/workflows/test_request_local.yaml](../../.github/workflows/test_request_local.yaml)
 - [.github/ISSUE_TEMPLATE/test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
+
 
 ### Direct Test Request Flow
 
