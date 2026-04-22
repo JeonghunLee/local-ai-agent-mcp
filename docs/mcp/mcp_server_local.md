@@ -339,5 +339,5 @@ Current position:
 - [MCP Server-GitHub](mcp_server_github.md)
 - [GitHub Templates](../envs/github_templates.md)
 - [GitHub Self Hosted Runner](../envs/github_self_hosted_runner.md)
-- [test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
-- [test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
+- `.github/ISSUE_TEMPLATE/test_request_direct.yml`
+- `.github/ISSUE_TEMPLATE/test_request_runner.yml`
