@@ -176,7 +176,7 @@ issue body format source:
 
 관련 문서:
 
-- [github_templates.md](../github/github_templates.md)
+- [github_templates.md](../envs/github_templates.md)
 
 ### Python Bridge
 
@@ -335,7 +335,7 @@ workflow 는 이 파일을 artifact 로 업로드하고, formatting 후 issue co
 
 - [mcp_gateway.md](mcp_gateway.md)
 - [mcp_server_github.md](mcp_server_github.md)
-- [github_templates.md](../github/github_templates.md)
-- [self-hosted_runner.md](../github/self-hosted_runner.md)
+- [github_templates.md](../envs/github_templates.md)
+- [github_self_hosted_runner.md](../envs/github_self_hosted_runner.md)
 - [test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
 - [test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)

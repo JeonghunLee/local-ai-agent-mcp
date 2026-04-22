@@ -37,20 +37,18 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 └── docs/
     ├── architecture/       시스템 설계 및 Agent 토폴로지
     ├── agents/             Agent별 설정 및 인증
-    ├── environments/       환경 설치 가이드 (WSL2 등)
+    ├── envs/               환경 및 GitHub 운영 문서
     ├── mcp/                MCP 서버 설정 및 Tool 정의
-    ├── experiments/        테스트 실행 및 Prompt 실험
     ├── logs/               구조화된 실행 로그
     └── imgs/               다이어그램 및 스크린샷
 ```
 
 ## Quick Start
 
-1. Ollama 설치 (Windows): [docs/agents/ollama_setup.md](docs/agents/ollama_setup.md)
-2. OpenClaw 설치 (WSL2): [docs/environments/window_wsl2_setup.md](docs/environments/window_wsl2_setup.md)
+1. Ollama 설치 (Windows): [docs/agents/ollama.md](docs/agents/ollama.md)
+2. OpenClaw 설치 (WSL2, optional): [docs/envs/openclaw_wsl2_setup.md](docs/envs/openclaw_wsl2_setup.md)
 3. MCP Gateway: [docs/mcp/mcp_gateway.md](docs/mcp/mcp_gateway.md)
 4. Agent 설정: [docs/agents/](docs/agents/)
-5. 실험 실행: [docs/experiments/openclaw_test.md](docs/experiments/openclaw_test.md)
 
 ## Documents
 
@@ -59,21 +57,17 @@ OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude,
 
 ### Agents
 - [Claude](docs/agents/claude.md) — 추론/분석, Anthropic API
-- [Claude Setup](docs/agents/claude_setup.md) — 인증, Windows 디렉토리 구조
-- [Claude MCP](docs/agents/claude_mcp.md) — MCP Tool Signature
 - [Codex](docs/agents/codex.md) — 코드 생성, OpenAI API
 - [Ollama](docs/agents/ollama.md) — 로컬 추론, API 키 불필요
-- [Ollama Setup](docs/agents/ollama_setup.md) — Windows 설치 및 WSL2 연결
 
 ### MCP
 - [MCP Gateway](docs/mcp/mcp_gateway.md) — Tool 라우팅 계층, 다중 MCP Server 연결
 - [MCP 서버](docs/mcp/mcp_server_local.md) — 서버 설정, Tool 정의, 프로토콜 흐름
 
-### Environments
-- [Windows WSL2 Setup](docs/environments/window_wsl2_setup.md) — WSL2에서 OpenClaw 설치
-
-### Experiments
-- [openclaw_test.md](docs/experiments/openclaw_test.md) — Agent 라우팅 검증 테스트
+### Envs
+- [OpenClaw WSL2 Setup](docs/envs/openclaw_wsl2_setup.md) — optional WSL2 setup experiment
+- [GitHub Templates](docs/envs/github_templates.md) — Issue / PR / TEST 요청 템플릿
+- [GitHub Self Hosted Runner](docs/envs/github_self_hosted_runner.md) — self-hosted runner 운영
 
 ### Logs
 - [run_001.md](docs/logs/run_001.md) — 첫 번째 실행 로그

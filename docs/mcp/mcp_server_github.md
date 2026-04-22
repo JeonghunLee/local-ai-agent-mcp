@@ -187,5 +187,5 @@ VS Code MCP server setup 예시:
 
 - [mcp_server_local.md](mcp_server_local.md)
 - [mcp_gateway.md](mcp_gateway.md)
-- [github_templates.md](../github/github_templates.md)
-- [self-hosted_runner.md](../github/self-hosted_runner.md)
+- [github_templates.md](../envs/github_templates.md)
+- [github_self_hosted_runner.md](../envs/github_self_hosted_runner.md)

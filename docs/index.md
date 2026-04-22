@@ -1,51 +1,55 @@
 # AI Agent with MCP
 
-OpenClaw 기반의 MCP(Model Context Protocol) 사용     
-다양한 AI Agent(Codex, Claude, Ollama) 비롯하여 로컬 멀티 Agent 과 MCP 사용     
+## Scope
 
-## Project Goals
+- AI Agent usage
+- MCP Tool integration
+- GitHub automation
+- Local TEST execution
+- CI/CD/CT workflow
 
-- OpenClaw의 필요성 확인   
-- MCP Tool을 통해 Agent 간 통신 과 AI Agent 의 수 제한 
-- 다양한 AI Agent 기반의 TEST 진행    
+---
 
-### Architecture
+## Entry Points
 
-| 문서 | 설명 |
+| Area | Document |
 |------|------|
-| [System Design](architecture/system-design.md) | Agent 토폴로지, 라우팅 로직, MCP 흐름 |
+| Architecture | [System Design](architecture/system-design.md) |
+| MCP | [MCP Gateway](mcp/mcp_gateway.md) |
+| Local Tooling | [MCP Server-Local](mcp/mcp_server_local.md) |
+| GitHub Integration | [MCP Server-Github](mcp/mcp_server_github.md) |
 
-### Agents
+---
 
+## Document Groups
 
-| 문서 | 설명 |
+| Group | Coverage |
 |------|------|
-| [Claude](agents/claude.md) | 추론·분석, Anthropic API |
-| [Claude Setup](agents/claude_setup.md) | 인증, Windows 디렉토리 구조 |
-| [Claude MCP](agents/claude_mcp.md) | MCP Tool Signature |
-| [Codex](agents/codex.md) | 코드 생성, OpenAI API |
-| [Ollama](agents/ollama.md) | 로컬 추론, API 키 불필요 |
-| [Ollama Setup](agents/ollama_setup.md) | Windows 설치 및 WSL2 연결 |
+| Architecture | system structure, automation, role split |
+| Agents | Claude, Codex, Ollama |
+| MCP | Gateway, Local MCP Server, GitHub MCP Server |
+| Envs | Windows, WSL2, GitHub operation docs |
+| Logs | run records |
 
+---
 
-### MCP System   
+## Reading Order
 
+1. [System Design](architecture/system-design.md)
+2. [MCP Gateway](mcp/mcp_gateway.md)
+3. [MCP Server-Local](mcp/mcp_server_local.md)
+4. [MCP Server-Github](mcp/mcp_server_github.md)
+5. Agent documents
+6. Environment documents
 
-| 문서 | 설명 |
-|------|------|
-| [MCP Gateway](mcp/mcp_gateway.md) | Tool 라우팅 계층, 다중 MCP Server 연결 |
-| [MCP Server-Local](mcp/mcp_server_local.md) | 서버 설정, Tool 정의, Protocol Flow |
-| [MCP Server-Github](mcp/mcp_server_github.md) | 서버 설정, Tool 정의, Protocol Flow |
+---
 
-### GitHub
+## Automation
 
-| 문서 | 설명 |
-|------|------|
-| [GitHub Templates](github/github_templates.md) | Issue · PR · Release · Discussion 템플릿, CT 연동 |
-| [self-hosted_runner](github/self-hosted_runner.md) | Self Hosted Runner |
+- runner TEST Request
+- direct TEST Request
+- GitHub comment / artifact / log / JSON trace
 
-### Environments
+Reference:
 
-| 문서 | 설명 |
-|------|------|
-| [Windows WSL2 Setup](environments/window_wsl2_setup.md) | WSL2에서 OpenClaw 설치 전체 절차 |
+- [System Design](architecture/system-design.md)

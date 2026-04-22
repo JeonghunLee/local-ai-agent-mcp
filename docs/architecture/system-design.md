@@ -1,318 +1,368 @@
 # System Design
 
-## AI Agents  
+## Scope
 
-* AI Agent 갯수     
-    * Max 3개 (Main/Sub/Local AI 각자) 
-    * Min 1개 (Main/Sub/Local AI 동시) 
+- AI Agent structure
+- MCP connection model
+- GitHub integration model
+- CI/CD/CT automation path
 
-## Remote AI Agents   
-     
-* Main AI Agent        
-  - 역할: 코드 생성, 문서 생성    
+---
 
-* Sub AI Agent       
-  - 역할: 코드 리뷰, 테스트 분석, 테스트 문서 작성     
+## AI Agents
 
-* Agent (default)      
-    - Main: Claude (코드/문서 생성)     
-    - Sub: Codex (리뷰/테스트 분석)    
+| Agent | Main Role |
+|------|------|
+| Main AI Agent | code generation, document updates, task structure |
+| Sub AI Agent | review, test result analysis, issue and PR follow-up |
+| Local AI Agent | optional local helper, repeated execution support, environment side tasks |
 
-Gemini/Copliot/이외 더 고려 
+Notes:
 
-## Local AI Agents      
+- role split first
+- deployment shape second
+- fixed product mapping not required
 
-* Local AI Agent    
-    - Sub AI Agent로 대체 가능     
-    - Local로 동작할 경우 아래로 구성        
+Examples:
 
-* Agent 구성방법      
-    - **Ollama (Windows / Linux / Mac)**   
-    - MLX (Mac only)         
-    - vLLM (고성능 Local / Server)   
+- Main: Claude or Codex
+- Sub: Codex or Claude
+- Local: Ollama
 
-* Agent 모델 선택  
-    - 각 목적에 맞게 선택 
+---
 
-* Local 사용목적     
-    - Remote API 비용절감 (Main AI/Sub AI)          
-    - Local 반복 자동화     
-    - CI/CD 후 CT 주목적    
+## Remote AI Agents
 
-최근에는 Remote AI만으로도 대부분 가능하며, 비용 부담이 없다면 Local 대신 Remote 중심으로 운영.    
+### Responsibility
+
+- code generation
+- document writing
+- task split
+- review
+- test result analysis
+- GitHub follow-up
+
+### Deployment
+
+- baseline
+  - one Remote AI Agent
+- optional extension
+  - add Local AI Agent
+
+### Practical Model
+
+- one Remote AI Agent can perform both Main AI and Sub AI roles
+- separate Main AI and Sub AI is an operating model, not a hard requirement
+
+---
+
+## Local AI Agents
+
+### Characteristics
+
+- optional component
+- local execution support
+- partial Sub AI replacement possible
+
+### Examples
+
+- Ollama
+- MLX
+- vLLM
+
+### Usage
+
+- remote API cost reduction
+- repeated local test support
+- local log and file based analysis support
+
+---
+
+## System Diagram
+
+```mermaid
+graph TD
+    subgraph UserLayer["User / IDE"]
+        User["User"]
+        VSCode["VS Code"]
+    end
+
+    subgraph Agents["AI Agents"]
+        MainAI["Main AI Agent"]
+        SubAI["Sub AI Agent"]
+        LocalAI["Local AI Agent"]
+    end
+
+    subgraph MCP["MCP Layer"]
+        Gateway["VS Code MCP Gateway"]
+        LocalMCP["Local MCP Server"]
+        GitHubMCP["GitHub MCP Server"]
+    end
+
+    subgraph Automation["Automation"]
+        GHA["GitHub Actions"]
+        Jenkins["Jenkins"]
+        Bridge["Python Bridge"]
+    end
+
+    subgraph GitHub["GitHub"]
+        Issue["Issue"]
+        PR["Pull Request"]
+        Actions["Actions"]
+    end
+
+    User --> VSCode
+    VSCode --> MainAI
+    VSCode --> SubAI
+    VSCode --> LocalAI
+
+    MainAI --> Gateway
+    SubAI --> Gateway
+    LocalAI --> Gateway
+
+    Gateway --> LocalMCP
+    Gateway --> GitHubMCP
+
+    Issue --> GHA
+    Issue --> Jenkins
+    GHA --> Bridge
+    Jenkins --> Bridge
+    Bridge --> LocalMCP
+
+    GitHubMCP --> Issue
+    GitHubMCP --> PR
+    GitHubMCP --> Actions
+```
+
+---
 
 ## AI Agent Working
 
-* AI Agent 역할 과 순서 
-    * Main AI: 코드 생성, 문서 생성
-    * Sub AI: 코드 리뷰, TEST 분석, TEST 문서 작성
-    * Local AI: 실행 전담 + result.json 와 Log 확인 + 에러 시 반복 실행 (기본: Ollama)
-    * User: 최종 승인
+| Step | Work Type | Owner |
+|------|------|------|
+| 1 | task structure | Main AI |
+| 2 | code and document generation | Main AI |
+| 3 | review and risk check | Sub AI |
+| 4 | local tool execution | Local MCP Server or Local AI |
+| 5 | test result analysis | Sub AI |
+| 6 | Issue and PR follow-up | GitHub MCP Server or automation |
+| 7 | final decision | User |
 
-* AI Agent 와 Openclaw 연결 
-    * openclaw 
-    * 각 Channel 연결  
-    * E-Mail 자동발송  
-    * Github 비롯하여, Slack 과 연결 
+Notes:
 
+- execution layer and analysis layer split
+- one Remote AI Agent can cover step 1, 2, 3, 5, and 6 together
+
+---
 
 ## Agent Interference
 
-- Agent 간 직접 호출 없음 — `result.json` 과 'log' 을 매개로 연결
-- Local AI: Tool 실행 후 `result.json` 과 'log' 저장, 이후 관여 없음
-- Sub AI: `result.json` 과 'log' 읽어 분석, 에러 시에만 개입
-- 각 Agent는 자신의 역할 범위 밖에 간섭하지 않음
+- direct overlap minimization
+- JSON, log, and comment based handoff
+- execution result first
+- analysis result second
 
-
-```
-Local AI  →  result.json  →  Sub AI
-  (실행)      (매개)        (감시·분석)
-```
-
-
-| 원칙 | 내용 |
-|------|------|
-| 단방향 데이터 흐름 | Local AI → JSON → Remote Sub, 역방향 없음 |
-| 역할 분리 | Local AI: 실행·반복 / Sub: 깊은 분석·문서 |
-| 반복 실행 | Local AI가 result.json 확인 후 에러 시 재실행, 여러 TEST 반복으로 문제 패턴 수집 |
-| 에러 시에만 개입 | 정상 완료 시 Sub는 완료 보고만, 불필요한 호출 없음 |
-| Remote Agent 최소화 | Max 2개 (Main + Sub), 1개 구성도 가능 |
-
-
-
-![](../imgs/openclaw_00.png)
-
-## System Diagram 
-
-### Version A
-
-**with OpenClaw**
-
-OpenClaw이 채널 담당, MCP는 `channels()` 미사용.
-
-```mermaid
-graph TD
-    subgraph UserCLI["Local User"]
-        MainAICLI["Main AI CLI"]
-        SubAICLI["Sub AI CLI"]
-    end
-
-    subgraph Remote["Remote Cloud"]
-        MainAI["Main AI API"]
-        SubAI["Sub AI API"]
-    end
-
-    subgraph LocalWSL2["Local WSL2"]
-        OpenClaw["OpenClaw\n문서 생성 · 공유 · 알림"]
-    end
-
-    subgraph LocalWindows["Local Windows 11"]
-        LocalAI["Local AI"]
-        subgraph MCPGatewayA["MCP Gateway "]
-            subgraph MCPTools["Local MCP Server )"]
-                Build["build_tool()\nmake · cmake · bitbake"]
-                Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
-                Uart["uart_capture()\npyserial · minicom"]
-                Qemu["qemu_spawn()\nQEMU instance"]
-                LogA["log_analyzer()\noops · panic · assert"]
-                Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
-                TestR["test_result()\nTEST RESULT 문서 생성"]
-            end
-            GHMC["GitHub MCP Server\nPR · Issue · Actions"]
-        end
-    end
-
-    subgraph Channels["Remote Channels"]
-        GitHub["GitHub\n Issue ,PR, Review"]
-        Slack["Slack AI"]
-        EMail["E-Mail"]              
-    end
-
-    MainAICLI --> MainAI
-    SubAICLI --> SubAI
-
-    MainAI --> OpenClaw
-    SubAI --> OpenClaw
-    LocalAI --> OpenClaw
-
-    LocalAI -->|HTTP| MCPGatewayA
-    SubAI -->|HTTP| MCPGatewayA
-
-    GHMC -->|API| GitHub
-
-    OpenClaw -->|API| GitHub
-    OpenClaw -->|API| Slack
-    OpenClaw -->|API| EMail        
+```text
+Local MCP execution
+  -> result.json + log
+  -> analysis
+  -> code or document update
 ```
 
-### Version B
+---
 
-**without Openclaw** and **MCP Server Only**
+## CI/CD/CT Automation
 
-MCP Server가 Tool 라우팅 + 문서 생성·공유·알림까지 담당하는 단순화된 구조.
+### Scope
 
-```mermaid
-graph TD
-    subgraph UserCLI["Local User"]
-        MainAICLI["Main AI CLI"]
-        SubAICLI["Sub AI CLI"]
+- CI automation
+  - Pull Request, Review, Actions follow-up
+- CD automation
+  - workflow based delivery path
+- CT automation
+  - Local MCP tool based test execution
+  - JSON, log, comment trace
 
-    end
+### GitHub Issue Based Entry
 
-    subgraph Remote["Remote Cloud"]
-        MainAI["Main AI API"]
-        SubAI["Sub AI API"]
-    end
+| Request Type | Label | Template | Execution Path | Main Purpose |
+|------|------|------|------|------|
+| Runner TEST Request | `test-request-runner` | `test_request_runner.yml` | GitHub Actions -> self-hosted runner | runner based automated test execution |
+| Direct TEST Request | `test-request-direct` | `test_request_direct.yml` | Jenkins -> direct MCP execution | direct local test execution |
+| General Issue / PR | normal workflow | standard templates | GitHub MCP Server, AI Agent, GitHub Actions | review, update, tracking |
 
-    subgraph LocalWindows["Local Windows 11"]
-        LocalAI["Local AI"]
-        subgraph MCPGatewayB["MCP Gateway "]
-            subgraph MCPTools["Local MCP Server "]
-                Build["build_tool()\nmake · cmake · bitbake"]
-                Chan["channels()\nGitHub · Slack · E-Mail"]
-                Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
-                Uart["uart_capture()\npyserial · minicom"]
-                Qemu["qemu_spawn()\nQEMU instance"]
-                LogA["log_analyzer()\noops · panic · assert"]
-                Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
-                TestR["test_result()\nTEST RESULT 문서 생성"]
-            end
-            GHMC["GitHub MCP Server\nPR · Issue · Actions"]
-        end
-    end
+### Automation Components
 
-    subgraph Channels["Remote Channels"]
-        GitHub["GitHub\nCopilot PR Review"]
-        Slack["Slack AI"]
-        EMail["E-Mail"]        
-    end
+- GitHub Actions
+  - runner TEST Request execution
+  - self-hosted runner integration
+  - artifact and comment trace
+- Jenkins
+  - direct TEST Request execution
+  - webhook trigger
+  - requested ref checkout
+- Python Bridge
+  - issue body parsing
+  - selected tool mapping
+  - Local MCP Server call
+  - JSON and Markdown result generation
 
-    MainAICLI --> MainAI
-    SubAICLI --> SubAI
-   
+### Issue Based Flow
 
-    LocalAI -->|HTTP| MCPGatewayB
-    SubAI -->|HTTP| MCPGatewayB
+```text
+runner test request issue
+  -> GitHub Actions
+  -> self-hosted runner
+  -> Python bridge
+  -> mcp-server-local-runner
 
-    Chan -->|API| GitHub
-    Chan -->|API| Slack
-    Chan -->|API| EMail
-
-    GHMC -->|API| GitHub
+direct test request issue
+  -> Jenkins
+  -> Python bridge
+  -> mcp-server-local-direct
 ```
 
+```text
+GitHub Issue / PR
+  -> GitHub Actions or Jenkins
+  -> Python bridge
+  -> Local MCP Server
+  -> JSON / log / comment
+  -> GitHub traceability
+```
+
+---
+
+## Main Flows
+
+### Direct MCP Flow
+
+```text
+AI Agent or local client
+  -> VS Code MCP Gateway
+  -> mcp-server-local-direct
+  -> local tools
+  -> log files + tool result payload
+```
+
+### Runner Test Request Flow
+
+```text
+GitHub Issue
+  -> GitHub Actions workflow
+  -> self-hosted runner
+  -> mcp.scripts.run_test_request
+  -> mcp-server-local-runner
+  -> selected tools
+  -> results JSON + logs
+  -> GitHub Issue comment
+```
+
+Related:
+
+- [.github/workflows/test_request_local.yaml](../../.github/workflows/test_request_local.yaml)
+- [.github/ISSUE_TEMPLATE/test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
+
+### Direct Test Request Flow
+
+```text
+GitHub Issue
+  -> Jenkins webhook trigger
+  -> mcp.scripts.run_test_request
+  -> mcp-server-local-direct
+  -> selected tools
+  -> results JSON + logs
+  -> GitHub Issue comment
+```
+
+Related:
+
+- [Jenkinsfile](../../Jenkinsfile)
+- [.github/ISSUE_TEMPLATE/test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
 
 ---
 
 ## Component Details
 
-1. User Access    
-브라우저에서 `http://127.0.0.1:18789` 로 OpenClaw Dashboard에 접속합니다.   
-Prompt를 입력하면 Orchestrator가 작업 유형에 맞는 Agent를 선택해 라우팅합니다.
+### VS Code MCP Gateway
 
-2. OpenClaw Orchestrator (WSL2)
-    - **설치 위치**: WSL2 (Ubuntu)   
-    - **역할**: Prompt를 받아 적합한 Agent 결정 → MCP 서버로 전달   
-    - **포트**: `:18789` (Dashboard + Gateway)   
-    - WSL2에 설치하는 이유: 공식 권장 환경, Linux 네이티브 안정성
+- VS Code internal
+- MCP Server connection
+- tool discovery
+- tool routing
 
-3. MCP Gateway 
-    - **설치 위치**: Window 11
-    - **역할**: AI Agent Tool 호출 수신 → Tool prefix 기준으로 하위 MCP Server에 라우팅
-    - **포트**: `:4000`
-    - **하위 서버**: Local MCP Server (`:3000`) · GitHub MCP Server
-        - [MCP Gateway](../mcp/mcp_gateway.md) — MCP Gateway 라우팅 설정     
-        - [MCP Server-Local](../mcp/mcp_server_local.md) — Local MCP 서버 설정    
-        - [MCP Server-Github](../mcp/mcp_server_github.md) — Github MCP 서버 설정      
+Reference:
 
-4. **AI Agents**  
-    - Local AI 
-    - Main AI 
-    - Sub AI 
+- [MCP Gateway](../mcp/mcp_gateway.md)
 
-4.1. Local AI (Windows Native)       
-    - **설치 위치**: Windows 11 호스트   
-    - **역할**: 로컬 LLM 추론, 인터넷 없이 동작   
-    - **포트**: `:11434`   
-    - **모델**: `llama3.2` (범용), `codellama` (코드 특화)   
-        - Windows에 설치하는 이유: GPU 직접 접근으로 추론 성능 최적화    
-        - WSL2 → Windows 연결: `localhost:11434` 로 투명하게 접근 가능      
+### Local MCP Server
 
-4.2. Main AI API (Cloud)       
-    - **설치 위치**: 없음 — Anthropic 클라우드에서 실행   
-    - **연결 방식**: CLI or API_KEY  환경변수   
-    - **용도**: 추론, 분석, 장문 컨텍스트 처리
+- local process
+- build, flash, test, log tools
+- direct mode
+- runner mode
 
-4.3. Sub AI API (Cloud)           
-    - **설치 위치**: 없음 — OpenAI 클라우드에서 실행   
-    - **연결 방식**: CLI or API_KEY 환경변수   
-    - **용도**: 코드 생성, 리팩토링, 언어 변환
+Reference:
 
+- [MCP Server-Local](../mcp/mcp_server_local.md)
+
+### GitHub MCP Server
+
+- local process + GitHub API integration
+- Issue, Pull Request, Review, Actions access
+- no local execution hosting
+
+Reference:
+
+- [MCP Server-GitHub](../mcp/mcp_server_github.md)
+
+### Python Bridge
+
+- repository script layer
+- issue body parsing
+- tool mapping
+- server mode selection
+- result JSON generation
+- Markdown comment generation
+
+Target scripts:
+
+- `mcp/scripts/run_test_request.py`
+- `mcp/scripts/make_test_result.py`
 
 ---
 
 ## Installation Locations
 
-| 컴포넌트           | 설치 위치            | 포트    |
-|-------------------|---------------------|---------|
-| OpenClaw          | WSL2 (Ubuntu)       | :18789  |
-| MCP Gateway       | WSL2 (Ubuntu)       | :4000   |
-| Local MCP Server  | WSL2 (Ubuntu)       | :3000   |
-| GitHub MCP Server | Local Process       | —       |
-| Node.js 24        | WSL2 (Ubuntu)       | —       |
-| Local AI          | Windows 11 (호스트) | :11434  |
-| Main AI API       | Cloud               | —       |
-| Sub AI API        | Cloud               | —       |
+| Component | Location | Entry |
+|------|------|------|
+| VS Code MCP Gateway | VS Code internal | VS Code feature |
+| Local MCP Server | Local process | Python module |
+| GitHub MCP Server | Local process | GitHub API integration |
+| GitHub Actions | GitHub runner | workflow |
+| Jenkins | Jenkins agent | webhook trigger |
+| Local AI | Local host | runtime |
+| Remote AI | cloud or local CLI | provider dependent |
 
 ---
 
-## Agent Workflow
+## Design Principles
 
-Agent 역할은 고정, 아래 순서로 실행.
-
-### Harness Version A
-
-OpenClaw가 문서 생성·공유·알림을 담당하는 구조.
-
-| 순서 | 작업 유형 | Agent | Orchestrator | User 검토 |
-|-----|-----------|-------|-------------|----------|
-| 1 | 구조 설계 / 작업 분해 | Main AI (Main) | OpenClaw | — |
-| 2 | 코드 생성 | Main AI (Main) | OpenClaw | 1차 승인 / 수정 |
-| 3 | 문서 생성 | Main AI (Main) | OpenClaw | 2차 승인 / 수정 |
-| 4 | 코드 리뷰 / 회귀 위험 지적 / patch 초안 | Sub AI (Sub) | OpenClaw | 3차 승인 / 수정 |
-| 5 | GitHub PR 요청 | GitHub | OpenClaw | — |
-| 6 | PR Review | Sub AI (Sub) + GitHub Users | OpenClaw | 4차 승인 / 수정 |
-| 7 | TEST 분석 | Sub AI (Sub) | OpenClaw | 5차 승인 / 수정 |
-| 8 | TEST 문서 작성 | Sub AI (Sub) | OpenClaw | 6차 승인 / 수정 |
-
-> Local AI: 각 단계에서 MCP Tool(`build_tool`, `uart_capture`, `qemu_spawn`, `reg_dump`) 실행 담당
-
-### Harness Version B
-
-MCP Server 내부에 Channel 추가, Orchestrator 제거 후 단순화된 구조.
-
-| 순서 | 작업 유형 | Agent | Orchestrator | User 검토 |
-|-----|-----------|-------|-------------|----------|
-| 1 | 구조 설계 / 작업 분해 | Main AI (Main) | CLI | — |
-| 2 | 코드 생성 | Main AI (Main) | CLI | 1차 승인 / 수정 |
-| 3 | 문서 생성 | Main AI (Main) | CLI | 2차 승인 / 수정 |
-| 4 | 코드 리뷰 / 회귀 위험 지적 / patch 초안 | Sub AI (Sub) | CLI | 3차 승인 / 수정 |
-| 5 | GitHub PR 요청 | GitHub | MCP | — |
-| 6 | PR Review | Sub AI (Sub) + GitHub Users | MCP | 4차 승인 / 수정 |
-| 7 | TEST 분석 | Sub AI (Sub) | MCP | 5차 승인 / 수정 |
-| 8 | TEST 문서 작성 | Sub AI (Sub) | MCP | 6차 승인 / 수정 |
-
-> Local AI: 각 단계에서 MCP Tool(`build_tool`, `uart_capture`, `qemu_spawn`, `reg_dump`) 실행 담당
+- simple execution path first
+- clear split between `direct` and `runner`
+- GitHub collaboration and local execution separation
+- JSON, log, Markdown comment trace
+- Local AI stays optional
+- role split does not require fixed process split
 
 ---
 
 ## Related
 
-- [agents/claude.md](../agents/claude.md) — Main AI 설정 예시
-- [agents/ollama.md](../agents/ollama.md) — Local AI 설정 예시
-- [agents/codex.md](../agents/codex.md) — Sub AI 설정 예시
-- [mcp/mcp_gateway.md](../mcp/mcp_gateway.md) — MCP Gateway 라우팅 설정
-- [mcp/mcp_server_local.md](../mcp/mcp_server_local.md) — MCP Server-Local 설정
-- [mcp/mcp_server_github.md](../mcp/mcp_server_github.md) — MCP Server-Github 설정
-- [environments/window_wsl2_setup.md](../environments/window_wsl2_setup.md) — WSL2 설치 실험
-- [agents/ollama_setup.md](../agents/ollama_setup.md) — Local AI 설치 실험
+- [Claude](../agents/claude.md)
+- [Codex](../agents/codex.md)
+- [Ollama](../agents/ollama.md)
+- [MCP Gateway](../mcp/mcp_gateway.md)
+- [MCP Server-Local](../mcp/mcp_server_local.md)
+- [MCP Server-GitHub](../mcp/mcp_server_github.md)
+- [OpenClaw WSL2 Setup](../envs/openclaw_wsl2_setup.md)

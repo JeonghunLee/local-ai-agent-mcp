@@ -1,5 +1,5 @@
 site_name: AI Agent MCP Docs
-site_description: AI Agent Orchestration with MCP 
+site_description: AI Agent with MCP 
 docs_dir: docs
 site_author: Jeonghun Lee
 repo_url: https://github.com/JeonghunLee/local-ai-agent-mcp
@@ -14,21 +14,17 @@ nav:
       - System Design: architecture/system-design.md
   - Agents:
       - Claude: agents/claude.md
-      - Claude Setup: agents/claude_setup.md
-      - Claude MCP: agents/claude_mcp.md
       - Codex: agents/codex.md
       - Ollama: agents/ollama.md
-      - Ollama Setup: agents/ollama_setup.md
   - MCP Gateway:
       - Overview: mcp/mcp_gateway.md
       - MCP Server-Github: mcp/mcp_server_github.md
       - MCP Server-Local: mcp/mcp_server_local.md
-  - Environments:
-      - Windows WSL2 Setup: environments/window_wsl2_setup.md
-  - Experiments:
-      - OpenClaw Test: experiments/openclaw_test.md
-  - Logs:
-      - run_001: logs/run_001.md
+  - Envs:
+      - OpenClaw WSL2 Setup: envs/openclaw_wsl2_setup.md
+      - GitHub Templates: envs/github_templates.md
+      - GitHub Self Hosted Runner: envs/github_self_hosted_runner.md
+
 
 plugins:
   - search
