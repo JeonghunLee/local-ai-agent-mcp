@@ -1,78 +1,31 @@
-# local-ai-agent-mcp 
+# local-ai-agent-mcp
 
+Local AI Agent workflow with MCP, GitHub automation, and local test execution.
 
-* **RAG TEST**          
-이전에 MCP Server로 좀 부족할 거 같아, 다양한 부분 테스트  
-llamindex/langraph 부터 기타사항      
-    https://github.com/JeonghunLee/rag_test
+This repository focuses on:
 
-* **Local AI Agent Orchestration with MCP**           
-OpenClaw은 MCP(Model Context Protocol)를 통해 여러 AI Agent(Codex, Claude, Ollama, Copliot, Gemini)를 조율.     
-**1.로컬 AI Agent 필요성 판단**   
-**2.AI Agent 수를 최대한 줄이며, 간단한 연결 방법 모색**           
-**3.OpenClaw 필요성 여부 판단**   
+- AI Agent integration through MCP
+- Local MCP based tool execution
+- GitHub Issue based TEST automation
+- documentation-first project structure
 
-* **with OpenClaw 사용**         
-    - 나중에 자동채널 비롯하여, E-Mail 부터 Slack을 비롯하여, 관련부분을 연결  
-    - Github 의 자동연결    
-    - 별도의 Linux 기반 서버로 사용   
-    - 각 MCP Server 동작 확인 및 결과 문서 작성  
+## Documentation
 
-* **without OpenClaw 사용**         
-    - 각 MCP Server 의 세부작업    
+Most project details are maintained in the documentation site.
 
+- Docs entry: [docs/index.md](docs/index.md)
+- Architecture: [docs/architecture/system-design.md](docs/architecture/system-design.md)
+- MCP Gateway: [docs/mcp/mcp_gateway.md](docs/mcp/mcp_gateway.md)
+- Local MCP Server: [docs/mcp/mcp_server_local.md](docs/mcp/mcp_server_local.md)
+- GitHub MCP Server: [docs/mcp/mcp_server_github.md](docs/mcp/mcp_server_github.md)
 
-## Project Goals
+## Main Topics
 
-* 개발의 AI Agent와 테스트의 자동화   
-    - 작업 유형과 맥락에 따라 최적의 Agent로 라우팅     
-    - MCP Tool을 통해 Agent 간 통신 및 작업 인계   
-    - 가능한 한 로컬에서 실행 (Ollama), 클라우드 Fallback (Claude, Codex)   
-    - 재현성과 분석을 위해 모든 실행 로그 기록     
+- Agents: [docs/agents/](docs/agents/)
+- Environments: [docs/envs/](docs/envs/)
+- GitHub automation: [docs/envs/github_templates.md](docs/envs/github_templates.md)
 
+## Notes
 
-## Structure
-
-```
-└── docs/
-    ├── architecture/       시스템 설계 및 Agent 토폴로지
-    ├── agents/             Agent별 설정 및 인증
-    ├── envs/               환경 및 GitHub 운영 문서
-    ├── mcp/                MCP 서버 설정 및 Tool 정의
-    ├── logs/               구조화된 실행 로그
-    └── imgs/               다이어그램 및 스크린샷
-```
-
-## Quick Start
-
-1. Ollama 설치 (Windows): [docs/agents/ollama.md](docs/agents/ollama.md)
-2. OpenClaw 설치 (WSL2, optional): [docs/envs/openclaw_wsl2_setup.md](docs/envs/openclaw_wsl2_setup.md)
-3. MCP Gateway: [docs/mcp/mcp_gateway.md](docs/mcp/mcp_gateway.md)
-4. Agent 설정: [docs/agents/](docs/agents/)
-
-## Documents
-
-### Architecture
-- [시스템 설계](docs/architecture/system-design.md) — Agent 토폴로지, 라우팅 로직, MCP 흐름
-
-### Agents
-- [Claude](docs/agents/claude.md) — 추론/분석, Anthropic API
-- [Codex](docs/agents/codex.md) — 코드 생성, OpenAI API
-- [Ollama](docs/agents/ollama.md) — 로컬 추론, API 키 불필요
-
-### MCP
-- [MCP Gateway](docs/mcp/mcp_gateway.md) — Tool 라우팅 계층, 다중 MCP Server 연결
-- [MCP 서버](docs/mcp/mcp_server_local.md) — 서버 설정, Tool 정의, 프로토콜 흐름
-
-### Envs
-- [OpenClaw WSL2 Setup](docs/envs/openclaw_wsl2_setup.md) — optional WSL2 setup experiment
-- [GitHub Templates](docs/envs/github_templates.md) — Issue / PR / TEST 요청 템플릿
-- [GitHub Self Hosted Runner](docs/envs/github_self_hosted_runner.md) — self-hosted runner 운영
-
-### Logs
-- [run_001.md](docs/logs/run_001.md) — 첫 번째 실행 로그
-
-## Status
-
-설치완료 — Ollama (Windows) + OpenClaw (WSL2)
-기본테스트만 진행   
+- keep the README short
+- use the web documentation for detailed explanations
