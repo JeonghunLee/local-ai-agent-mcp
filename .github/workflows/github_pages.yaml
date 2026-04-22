@@ -30,7 +30,7 @@ jobs:
           pip install -r readthedoc_requirements.txt
           sudo apt-get update
           sudo apt-get install -y doxygen graphviz
-          
+
       - name: Configure Git user
         run: |
           git config user.name "github-actions[bot]"
@@ -46,3 +46,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mkdocs gh-deploy --config-file mkdocs.yml --force
+
+
+      # 
+      #  Automation for GitHub Release (Tag Push 시, 자동으로 Release 생성 및 Build 업로드)
+      #     - https://github.com/JeonghunLee/wifisniffer/blob/main/.github/workflows/esp-idf.yml
+      #    
+      - name: Create GitHub Release and upload build
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          files: 
+          body: |
+            🚀 AI Agent with MCP Release
+            ------------------------------------------
+            * **Version**: ${{ github.ref_name }}            
+            * **Release Date**: ${{ github.event.head_commit.timestamp }}      
+            
+            <br/>
+
+            📄 **Documentation: (Supported Mkdocs)**
+              -  [GitHub Pages: Mkdocs ](https://jeonghunlee.github.io/local-ai-agent-mcp/)
+           
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

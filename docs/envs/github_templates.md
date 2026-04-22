@@ -23,19 +23,21 @@ Key point:
 | Runner TEST Request | GitHub Issue with `test-request-runner` | GitHub Actions | self-hosted runner based TEST automation |
 | Direct TEST Request | GitHub Issue with `test-request-direct` | Jenkins or AI Agent | direct MCP execution request |
 | Docs Site Publish | repository event | GitHub Actions | GitHub Pages publish |
+| Tag Release Publish | Git tag `v*` | GitHub Actions | GitHub Release creation and asset upload |
 
 ### Workflow Files
 
 | Workflow | File | Role |
 |------|------|------|
 | Test Request Local Runner | `.github/workflows/test_request_local.yaml` | Issue based TEST automation on self-hosted runner |
-| GitHub Pages | `.github/workflows/github_pages.yaml` | documentation build and publish |
+| GitHub Pages | `.github/workflows/github_pages.yaml` | documentation build, Pages publish, and tag-based release step |
 
 Notes:
 
 - workflow count: `2`
 - the TEST request flow is the operationally important GitHub Actions automation path
 - the Pages workflow is the documentation delivery path
+- tag-based release publishing is handled in `github_pages.yaml`
 
 ---
 
@@ -123,13 +125,6 @@ Direct example notes:
 
 - label: `test-request-direct`
 - title: `[TEST] [direct]`
-- category selection: `Log` only
-
-
-Runner example notes:
-
-- label: `test-request-runner`
-- title: `[TEST] [runner]`
 - category selection: `Log` only
 
 
@@ -278,6 +273,30 @@ Typical contents:
 - key updates
 - test result summary
 - related document updates
+
+---
+
+## Release Publishing
+
+File:
+
+- [.github/workflows/github_pages.yaml](../../.github/workflows/github_pages.yaml)
+
+Purpose:
+
+- tag-based GitHub Release creation
+- release asset upload
+- release body generation inside the workflow
+
+Trigger:
+
+- Git tag matching `v*`
+
+Notes:
+
+- release publishing is workflow-based
+- there is no separate release template file
+- the current workflow includes a release upload step using `softprops/action-gh-release`
 
 ---
 
