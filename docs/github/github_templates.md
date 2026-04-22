@@ -18,6 +18,10 @@ TEST 실행 요청을 분리하는 것이 중요하다.
 
 ## Template List
 
+Direct request execution path:
+
+- `test_request_direct.yml`: one direct template with an execution path field for `jenkins` or `ai-agent`
+
 | Template | File | Purpose |
 |----------|------|---------|
 | Bug Report | `.github/ISSUE_TEMPLATE/bug_report.md` | 재현 가능한 버그 보고 |

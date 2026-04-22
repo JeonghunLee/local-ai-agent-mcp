@@ -105,8 +105,10 @@ pipeline {
                     def body = normalize(env.EFFECTIVE_ISSUE_BODY)
                     def hasIssueContext = normalize(env.EFFECTIVE_ISSUE_NUMBER) && body
                     def isDirectRequest = labels.contains('test-request-direct')
+                    def isJenkinsExecutionPath = body.toLowerCase().contains('### target runner') &&
+                        body.toLowerCase().contains('jenkins')
 
-                    env.SHOULD_RUN_REQUEST = (hasIssueContext && isDirectRequest) ? 'true' : 'false'
+                    env.SHOULD_RUN_REQUEST = (hasIssueContext && isDirectRequest && isJenkinsExecutionPath) ? 'true' : 'false'
 
                     echo "Resolved trigger event: ${env.EFFECTIVE_EVENT}"
                     echo "Webhook detected: ${webhookTriggered}"
