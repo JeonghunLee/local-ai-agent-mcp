@@ -1168,6 +1168,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#release-publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release Publishing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#recommended-labels" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1615,6 +1626,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#release-publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Release Publishing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#recommended-labels" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1759,6 +1781,12 @@
 <td>GitHub Actions</td>
 <td>GitHub Pages publish</td>
 </tr>
+<tr>
+<td>Tag Release Publish</td>
+<td>Git tag <code>v*</code></td>
+<td>GitHub Actions</td>
+<td>GitHub Release creation and asset upload</td>
+</tr>
 </tbody>
 </table>
 <h3 id="workflow-files">Workflow Files</h3>
@@ -1779,7 +1807,7 @@
 <tr>
 <td>GitHub Pages</td>
 <td><code>.github/workflows/github_pages.yaml</code></td>
-<td>documentation build and publish</td>
+<td>documentation build, Pages publish, and tag-based release step</td>
 </tr>
 </tbody>
 </table>
@@ -1788,6 +1816,7 @@
 <li>workflow count: <code>2</code></li>
 <li>the TEST request flow is the operationally important GitHub Actions automation path</li>
 <li>the Pages workflow is the documentation delivery path</li>
+<li>tag-based release publishing is handled in <code>github_pages.yaml</code></li>
 </ul>
 <hr />
 <h2 id="template-list">Template List</h2>
@@ -1847,8 +1876,8 @@
 </ul>
 <h3 id="files">Files</h3>
 <ul>
-<li><a href="../../.github/ISSUE_TEMPLATE/test_request_direct.yml">.github/ISSUE_TEMPLATE/test_request_direct.yml</a></li>
-<li><a href="../../.github/ISSUE_TEMPLATE/test_request_runner.yml">.github/ISSUE_TEMPLATE/test_request_runner.yml</a></li>
+<li><code>.github/ISSUE_TEMPLATE/test_request_direct.yml</code></li>
+<li><code>.github/ISSUE_TEMPLATE/test_request_runner.yml</code></li>
 </ul>
 <h3 id="shared-fields">Shared Fields</h3>
 <ul>
@@ -1921,12 +1950,6 @@
 <li>title: <code>[TEST] [direct]</code></li>
 <li>category selection: <code>Log</code> only</li>
 </ul>
-<p>Runner example notes:</p>
-<ul>
-<li>label: <code>test-request-runner</code></li>
-<li>title: <code>[TEST] [runner]</code></li>
-<li>category selection: <code>Log</code> only</li>
-</ul>
 <p><img alt="" src="../imgs/github_issue_runner_00.png" />
 <img alt="" src="../imgs/github_issue_runner_01.png" /></p>
 <hr />
@@ -1943,8 +1966,8 @@
 </code></pre></div>
 <h3 id="related-files">Related Files</h3>
 <ul>
-<li><a href="../../.github/workflows/test_request_local.yaml">.github/workflows/test_request_local.yaml</a></li>
-<li><a href="../../.github/ISSUE_TEMPLATE/test_request_runner.yml">.github/ISSUE_TEMPLATE/test_request_runner.yml</a></li>
+<li><code>.github/workflows/test_request_local.yaml</code></li>
+<li><code>.github/ISSUE_TEMPLATE/test_request_runner.yml</code></li>
 </ul>
 <h3 id="characteristics">Characteristics</h3>
 <ul>
@@ -1966,8 +1989,8 @@
 </code></pre></div>
 <h3 id="related-files_1">Related Files</h3>
 <ul>
-<li><a href="../../.github/ISSUE_TEMPLATE/test_request_direct.yml">.github/ISSUE_TEMPLATE/test_request_direct.yml</a></li>
-<li><a href="../../Jenkinsfile">Jenkinsfile</a></li>
+<li><code>.github/ISSUE_TEMPLATE/test_request_direct.yml</code></li>
+<li><code>Jenkinsfile</code></li>
 </ul>
 <h3 id="characteristics_1">Characteristics</h3>
 <ul>
@@ -2040,7 +2063,7 @@
 <h2 id="pull-request-template">Pull Request Template</h2>
 <p>File:</p>
 <ul>
-<li><a href="../../.github/pull_request_template.md">.github/pull_request_template.md</a></li>
+<li><code>.github/pull_request_template.md</code></li>
 </ul>
 <p>Typical contents:</p>
 <ul>
@@ -2048,6 +2071,28 @@
 <li>key updates</li>
 <li>test result summary</li>
 <li>related document updates</li>
+</ul>
+<hr />
+<h2 id="release-publishing">Release Publishing</h2>
+<p>File:</p>
+<ul>
+<li><code>.github/workflows/github_pages.yaml</code></li>
+</ul>
+<p>Purpose:</p>
+<ul>
+<li>tag-based GitHub Release creation</li>
+<li>release asset upload</li>
+<li>release body generation inside the workflow</li>
+</ul>
+<p>Trigger:</p>
+<ul>
+<li>Git tag matching <code>v*</code></li>
+</ul>
+<p>Notes:</p>
+<ul>
+<li>release publishing is workflow-based</li>
+<li>there is no separate release template file</li>
+<li>the current workflow includes a release upload step using <code>softprops/action-gh-release</code></li>
 </ul>
 <hr />
 <h2 id="recommended-labels">Recommended Labels</h2>
@@ -2173,6 +2218,14 @@
       
         
 <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://jeonghunlee.github.io/" target="_blank" rel="noopener" title="User Profile" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240m-29.7 56C95.8 304 16 383.8 16 482.3c0 16.4 13.3 29.7 29.7 29.7h356.6c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3z"/></svg>
+    </a>
   
     
     
