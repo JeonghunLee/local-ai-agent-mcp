@@ -14,7 +14,7 @@ ToolHandler = Callable[[dict[str, Any]], dict[str, Any]]
 
 
 def _ping_count_flag() -> str:
-    return "-n" if platform.system().lower().startswith("win") else "-c"
+    return "-n" if platform.system() == "Windows" else "-c"
 
 
 def check_version(arguments: dict[str, Any]) -> dict[str, Any]:
