@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import platform
 import subprocess
 from collections.abc import Callable
 from typing import Any
@@ -10,6 +11,10 @@ LOGGER = logging.getLogger("local_mcp.tools")
 DEFAULT_LOG_DIR = "results/logs/mcp/server_local"
 
 ToolHandler = Callable[[dict[str, Any]], dict[str, Any]]
+
+
+def _ping_count_flag() -> str:
+    return "-n" if platform.system().lower().startswith("win") else "-c"
 
 
 def check_version(arguments: dict[str, Any]) -> dict[str, Any]:
@@ -72,8 +77,9 @@ def build_tool(arguments: dict[str, Any]) -> dict[str, Any]:
         arguments.get("target", "all"),
         arguments.get("working_dir", "."),
     )
+    ping_count_flag = _ping_count_flag()
     result = subprocess.run(
-        ["ping", "-n", "5", "127.0.0.1"],
+        ["ping", ping_count_flag, "5", "127.0.0.1"],
         capture_output=True,
         text=True,
         check=False,
@@ -81,7 +87,7 @@ def build_tool(arguments: dict[str, Any]) -> dict[str, Any]:
     return {
         "tool": "build_tool",
         "status": "success" if result.returncode == 0 else "error",
-        "command": "ping -n 5 127.0.0.1",
+        "command": f"ping {ping_count_flag} 5 127.0.0.1",
         "target": arguments.get("target", "all"),
         "working_dir": arguments.get("working_dir", "."),
         "exit_code": result.returncode,
@@ -93,9 +99,10 @@ def build_tool(arguments: dict[str, Any]) -> dict[str, Any]:
 def test_ping_00(arguments: dict[str, Any]) -> dict[str, Any]:
     count = str(arguments.get("count", 2))
     target = arguments.get("target", "127.0.0.1")
+    ping_count_flag = _ping_count_flag()
     LOGGER.info("tool.call name=test_ping_00 target=%s count=%s", target, count)
     result = subprocess.run(
-        ["ping", "-n", count, target],
+        ["ping", ping_count_flag, count, target],
         capture_output=True,
         text=True,
         check=False,
@@ -103,7 +110,7 @@ def test_ping_00(arguments: dict[str, Any]) -> dict[str, Any]:
     return {
         "tool": "test_ping_00",
         "status": "success" if result.returncode == 0 else "error",
-        "command": f"ping -n {count} {target}",
+        "command": f"ping {ping_count_flag} {count} {target}",
         "target": target,
         "count": int(count),
         "exit_code": result.returncode,
@@ -115,9 +122,10 @@ def test_ping_00(arguments: dict[str, Any]) -> dict[str, Any]:
 def test_ping_11(arguments: dict[str, Any]) -> dict[str, Any]:
     count = str(arguments.get("count", 4))
     target = arguments.get("target", "127.0.0.1")
+    ping_count_flag = _ping_count_flag()
     LOGGER.info("tool.call name=test_ping_11 target=%s count=%s", target, count)
     result = subprocess.run(
-        ["ping", "-n", count, target],
+        ["ping", ping_count_flag, count, target],
         capture_output=True,
         text=True,
         check=False,
@@ -125,7 +133,7 @@ def test_ping_11(arguments: dict[str, Any]) -> dict[str, Any]:
     return {
         "tool": "test_ping_11",
         "status": "success" if result.returncode == 0 else "error",
-        "command": f"ping -n {count} {target}",
+        "command": f"ping {ping_count_flag} {count} {target}",
         "target": target,
         "count": int(count),
         "exit_code": result.returncode,
@@ -137,9 +145,10 @@ def test_ping_11(arguments: dict[str, Any]) -> dict[str, Any]:
 def test_ping_22(arguments: dict[str, Any]) -> dict[str, Any]:
     count = str(arguments.get("count", 6))
     target = arguments.get("target", "127.0.0.1")
+    ping_count_flag = _ping_count_flag()
     LOGGER.info("tool.call name=test_ping_22 target=%s count=%s", target, count)
     result = subprocess.run(
-        ["ping", "-n", count, target],
+        ["ping", ping_count_flag, count, target],
         capture_output=True,
         text=True,
         check=False,
@@ -147,7 +156,7 @@ def test_ping_22(arguments: dict[str, Any]) -> dict[str, Any]:
     return {
         "tool": "test_ping_22",
         "status": "success" if result.returncode == 0 else "error",
-        "command": f"ping -n {count} {target}",
+        "command": f"ping {ping_count_flag} {count} {target}",
         "target": target,
         "count": int(count),
         "exit_code": result.returncode,
