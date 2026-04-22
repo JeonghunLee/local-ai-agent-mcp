@@ -1,14 +1,34 @@
 # AI Agent with MCP
 
-## Scope
+<br>
 
-- AI Agent usage
-- MCP Tool integration
-- GitHub automation
-- Local TEST execution
-- CI/CD/CT workflow
+* **Purpose**
+  AI Agent workflow based on MCP  
+  Connect Claude, Codex, Ollama, and GitHub operations through MCP  
+  Support Local MCP execution, GitHub Issue based TEST automation, and documentation-first project flow
 
----
+<br>
+
+* **Links**
+  * GIT: https://github.com/JeonghunLee/local-ai-agent-mcp
+  * DOCS: [System Design](architecture/system-design.md)
+  * DOCS: [Automation Design](architecture/automation-design.md)
+
+<br>
+
+* **Scope**
+  * AI Agent usage
+  * MCP Tool integration
+  * GitHub automation
+  * Local TEST execution
+  * CI/CD/CT workflow
+
+<br>
+
+!!! success "Summary"
+    Multi-agent workflow with MCP, Local MCP execution, GitHub Issue based TEST automation, and documentation-first project structure.
+
+<br>
 
 ## Entry Points
 
@@ -43,16 +63,3 @@
 5. [MCP Server-Github](mcp/mcp_server_github.md)
 6. Agent documents
 7. Environment documents
-
----
-
-## Automation
-
-- runner TEST Request
-- direct TEST Request
-- GitHub comment / artifact / log / JSON trace
-
-Reference:
-
-- [System Design](architecture/system-design.md)
-- [Automation Design](architecture/automation-design.md)
