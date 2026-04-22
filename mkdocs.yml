@@ -124,7 +124,7 @@ extra:
   # My Social Meida Icons Links (FontAwesome Icons)  
   social:
     
-    - icon: fontawesome/brands/user
+    - icon: fontawesome/solid/user
       link: https://jeonghunlee.github.io/
       name: User Profile
 
