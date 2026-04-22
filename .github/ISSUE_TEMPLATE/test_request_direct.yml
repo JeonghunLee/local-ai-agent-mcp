@@ -1,5 +1,5 @@
 name: Test Request Direct
-description: Request a local MCP-driven test run through Jenkins using mcp-server-local-direct
+description: Request a direct MCP test run using either Jenkins or an AI Agent
 title: "[TEST] [direct] "
 labels:
   - test-request-direct
@@ -7,8 +7,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this template for Jenkins-driven direct MCP execution.
-        Target Runner and MCP Server Mode are fixed for this flow.
+        Use this template for direct MCP execution.
+        Choose whether Jenkins or an AI Agent will execute the request.
         Select tools from only one category: Setup, Test, or Log.
 
   - type: dropdown
@@ -25,9 +25,10 @@ body:
     id: target_runner
     attributes:
       label: Target Runner
-      description: Fixed to Jenkins for the direct execution flow.
+      description: Choose who will execute this direct request.
       options:
         - jenkins
+        - ai-agent
       default: 0
     validations:
       required: true
@@ -45,7 +46,7 @@ body:
     id: mcp_server_mode
     attributes:
       label: MCP Server Mode
-      description: Fixed to direct for the Jenkins execution flow.
+      description: Fixed to direct for this flow.
       options:
         - direct
       default: 0
@@ -82,3 +83,10 @@ body:
         - label: get_serial_log
         - label: log_analyzer
         - label: log_snapshot
+
+  - type: textarea
+    id: execution_notes
+    attributes:
+      label: Execution Notes
+      description: Optional instructions for Jenkins or the AI Agent handling this direct request.
+      placeholder: If execution path is ai-agent, reply with the result in the test result comment format.
