@@ -140,7 +140,7 @@ Meaning:
 
 더 자세한 설명:
 
-- [self-hosted_runner.md](self-hosted_runner.md)
+- [github_self_hosted_runner.md](github_self_hosted_runner.md)
 
 ---
 
@@ -227,7 +227,7 @@ TEST 요청 운영 시 함께 쓰기 좋은 label 예시:
 
 ## Related
 
-- [self-hosted_runner.md](self-hosted_runner.md) — Target Runner와 self-hosted runner 개념 정리
+- [github_self_hosted_runner.md](github_self_hosted_runner.md) — Target Runner와 self-hosted runner 개념 정리
 - [mcp_server_local.md](../mcp/mcp_server_local.md) — Local MCP Server와 TEST 요청 흐름
 - [mcp_server_github.md](../mcp/mcp_server_github.md) — GitHub MCP Server 역할
 - [mcp_gateway.md](../mcp/mcp_gateway.md) — VS Code MCP Gateway와 다중 MCP Server 연결

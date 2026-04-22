@@ -2,20 +2,32 @@
 
 ## Purpose
 
-코드 생성, 완성, 변환 작업
+- code generation
+- patch writing
+- refactoring
+- implementation support
 
-## Model
-
-- 제공자: OpenAI
-- 모델: `gpt-4o` (레거시는 `code-davinci-002`)
-- API: OpenAI Completions / Chat API
+---
 
 ## When to Use
 
-- 보일러플레이트 또는 스캐폴딩 생성
-- 기존 코드 리팩토링
-- 함수 시그니처로부터 단위 테스트 작성
-- 언어 간 코드 변환
+- code creation
+- existing code updates
+- boilerplate cleanup
+- test code draft
+
+---
+
+## Model
+
+| Item | Value |
+|------|------|
+| Provider | OpenAI |
+| Default Model | `gpt-4o` |
+| Role | code-focused generation |
+| API | OpenAI API |
+
+---
 
 ## Configuration
 
@@ -29,14 +41,34 @@
 }
 ```
 
-## MCP Tool Signature
+---
 
+## Setup
+
+### Authentication
+
+```powershell
+$env:OPENAI_API_KEY = "sk-..."
 ```
-codex.run(prompt: string, language?: string, context_files?: string[]) → CodeResult
+
+### Verify
+
+```powershell
+echo $env:OPENAI_API_KEY
 ```
+
+---
+
+## MCP Notes
+
+- MCP tool integration available
+- better fit for implementation than long-form reasoning
+- low temperature recommended for stable output
+
+---
 
 ## Notes
 
-- 결정론적 출력을 위해 temperature를 낮게 유지 (0.1–0.3)
-- 정확도 향상을 위해 `context_files`로 관련 파일 컨텍스트 전달
-- 추론 없이 순수 코드 출력이 필요할 때 Claude 대신 이 Agent 선택
+- strong fit for code generation
+- better fit for patches than long architecture narratives
+- useful for review, refactor, and implementation support

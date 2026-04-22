@@ -2,20 +2,32 @@
 
 ## Purpose
 
-추론, 분석, 장문 컨텍스트 이해, 다단계 계획 수립
+- reasoning
+- long-context analysis
+- document writing
+- architecture discussion
 
-## Model
-
-- 제공자: Anthropic
-- 모델: `claude-sonnet-4-6` (기본), 복잡한 작업엔 `claude-opus-4-6`
-- API: Anthropic Messages API
+---
 
 ## When to Use
 
-- 다단계 추론 또는 계획 수립 작업
-- 문서 분석 및 요약
-- 코드나 아키텍처 결정 설명
-- 세밀한 판단이 필요한 작업
+- structure design
+- long document review
+- workflow organization
+- change plan review before implementation
+
+---
+
+## Model
+
+| Item | Value |
+|------|------|
+| Provider | Anthropic |
+| Default Model | `claude-sonnet-4-6` |
+| Higher Tier | `claude-opus-4-6` |
+| API | Anthropic Messages API |
+
+---
 
 ## Configuration
 
@@ -28,13 +40,48 @@
 }
 ```
 
-## Notes
+---
 
-- 깊은 추론이 필요한 작업엔 `claude-opus-4-6` 사용 (비용 높음)
-- 복잡한 다단계 문제엔 extended thinking 활성화
-- 코드 이해 + 설명이 결합된 작업에 가장 적합한 Agent
+## Setup
 
-## Related
+### Rule Files
 
-- [claude_setup.md](claude_setup.md) — 인증 및 Windows 설정
-- [claude_mcp.md](claude_mcp.md) — MCP Tool Signature
+| Path | Role |
+|------|------|
+| `claude.md` | project rule file |
+| `C:\\Users\\<user>\\.claude\\projects\\d--works-projects-local-ai-agent-mcp\\memory` | project memory |
+
+### Authentication
+
+Method 1:
+
+```bash
+claude auth login
+```
+
+Method 2:
+
+```bash
+export ANTHROPIC_API_KEY="sk-ant-..."
+```
+
+Method 3:
+
+```powershell
+$env:ANTHROPIC_API_KEY = "sk-ant-..."
+```
+
+### Verify
+
+```bash
+claude auth status
+claude -p "hello"
+```
+
+---
+
+## MCP Notes
+
+- MCP tool usage available
+- strong on long-context reasoning work
+- better fit for analysis and design than local execution itself
