@@ -65,8 +65,8 @@ Notes:
 
 ### Files
 
-- [.github/ISSUE_TEMPLATE/test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
-- [.github/ISSUE_TEMPLATE/test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
+- `.github/ISSUE_TEMPLATE/test_request_direct.yml`
+- `.github/ISSUE_TEMPLATE/test_request_runner.yml`
 
 ### Shared Fields
 
@@ -150,8 +150,8 @@ GitHub Issue
 
 ### Related Files
 
-- [.github/workflows/test_request_local.yaml](../../.github/workflows/test_request_local.yaml)
-- [.github/ISSUE_TEMPLATE/test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
+- `.github/workflows/test_request_local.yaml`
+- `.github/ISSUE_TEMPLATE/test_request_runner.yml`
 
 ### Characteristics
 
@@ -178,8 +178,8 @@ GitHub Issue
 
 ### Related Files
 
-- [.github/ISSUE_TEMPLATE/test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
-- [Jenkinsfile](../../Jenkinsfile)
+- `.github/ISSUE_TEMPLATE/test_request_direct.yml`
+- `Jenkinsfile`
 
 ### Characteristics
 
@@ -265,7 +265,7 @@ Key point:
 
 File:
 
-- [.github/pull_request_template.md](../../.github/pull_request_template.md)
+- `.github/pull_request_template.md`
 
 Typical contents:
 
@@ -280,7 +280,7 @@ Typical contents:
 
 File:
 
-- [.github/workflows/github_pages.yaml](../../.github/workflows/github_pages.yaml)
+- `.github/workflows/github_pages.yaml`
 
 Purpose:
 
