@@ -559,27 +559,29 @@
 <article class="md-content__inner md-typeset">
 <h1 id="local-mcp-server">Local MCP Server</h1>
 <p><img alt="VS Code Extension -&gt; MCP Servers" src="../imgs/mcp_server_local_00.png"/></p>
-<p>로컬 환경에서 사용하는 MCP Server 구조와 GitHub Issue 기반 Test Request 흐름을 정리한 문서다.</p>
 <h2 id="overview">Overview</h2>
-<p>현재 저장소는 하나의 공통 Local MCP core 위에 두 개의 entrypoint를 둔다.</p>
+<p>This document describes the Local MCP Server structure used in the local environment and the GitHub Issue based TEST request flow.</p>
+<p>Current repository design:</p>
 <ul>
+<li>one shared Local MCP core</li>
+<li>two entrypoints</li>
 <li><code>mcp.server_local_direct.server</code></li>
 <li><code>mcp.server_local_runner.server</code></li>
 </ul>
-<p>공통 runtime 과 tool 정의는 <code>mcp/server_local/</code> 아래에 있다.</p>
+<p>Shared runtime and tool definitions are under <code>mcp/server_local/</code>.</p>
 <div class="highlight"><pre><span></span><code>mcp/
-├── scripts/
-│   ├── make_test_result.py
-│   └── run_test_request.py
-├── server_local/
-│   ├── runtime.py
-│   └── toolsets.py
-├── server_local_direct/
-│   └── server.py
-└── server_local_runner/
-    └── server.py
+  scripts/
+    make_test_result.py
+    run_test_request.py
+  server_local/
+    runtime.py
+    toolsets.py
+  server_local_direct/
+    server.py
+  server_local_runner/
+    server.py
 </code></pre></div>
-<p>핵심 차이는 codebase 가 아니라 시작 방식이다.</p>
+<p>The key difference is the startup path, not the codebase.</p>
 <table>
 <thead>
 <tr>
@@ -591,35 +593,35 @@
 <tbody>
 <tr>
 <td><code>direct</code></td>
-<td>VS Code MCP client 가 직접 실행</td>
-<td>로컬 개발, direct MCP test</td>
+<td>started directly by a VS Code MCP client</td>
+<td>local development, direct MCP test</td>
 </tr>
 <tr>
 <td><code>runner</code></td>
-<td>GitHub Actions issue flow 에서 self-hosted runner 를 통해 실행</td>
-<td>GitHub Issue 기반 자동 test</td>
+<td>started through the GitHub Actions Issue flow on a self-hosted runner</td>
+<td>GitHub Issue based automated test</td>
 </tr>
 </tbody>
 </table>
 <hr/>
 <h2 id="current-flows-direct">Current Flows - direct</h2>
-<p>이 경로는 GitHub Actions 나 self-hosted runner 가 필요 없다.</p>
+<p>This path does not require GitHub Actions or a self-hosted runner.</p>
 <div class="highlight"><pre><span></span><code>VS Code MCP Gateway
   -&gt; mcp-server-local-direct
   -&gt; local MCP tools
   -&gt; log files + tool result payload
 </code></pre></div>
-<p>주요 목적:</p>
+<p>Main purpose:</p>
 <ul>
-<li>로컬 개발</li>
+<li>local development</li>
 <li>direct MCP client test</li>
-<li>manual tool 확인</li>
+<li>manual tool verification</li>
 </ul>
 <p>Entrypoint:</p>
 <ul>
 <li><code>python -m mcp.server_local_direct.server</code></li>
 </ul>
-<p>VS Code 설정 예시:</p>
+<p>VS Code configuration example:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"mcp-server-local-direct"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -638,7 +640,7 @@
     C --&gt; D["log files + tool result payload"]</code></pre>
 <hr/>
 <h2 id="current-flows-runner">Current Flows - runner</h2>
-<p>이 경로는 GitHub Actions 와 self-hosted runner 가 필요하다.</p>
+<p>This path requires GitHub Actions and a self-hosted runner.</p>
 <div class="highlight"><pre><span></span><code>GitHub Issue
   -&gt; GitHub Actions workflow
   -&gt; Python bridge (mcp.scripts.run_test_request)
@@ -646,19 +648,19 @@
   -&gt; results/logs/mcp/server_local + results/*.json
   -&gt; GitHub Issue comment
 </code></pre></div>
-<p>현재 workflow:</p>
+<p>Current workflow:</p>
 <ul>
 <li><code>.github/workflows/test_request_local.yaml</code></li>
 </ul>
-<p>현재 runner requirement:</p>
+<p>Current runner requirement:</p>
 <ul>
 <li><code>runs-on: [self-hosted, local-dev]</code></li>
 </ul>
-<p>즉 issue 기반 test 요청은 <code>local-dev</code> 라벨을 가진 self-hosted runner 가 online 상태일 때 동작한다.</p>
-<p>중요한 점:</p>
+<p>This means Issue-based test requests work only when a self-hosted runner with the <code>local-dev</code> label is online.</p>
+<p>Important points:</p>
 <ul>
-<li><code>server_local_direct</code> 자체는 GitHub Actions 없이도 실행 가능</li>
-<li>하지만 <code>Issue -&gt; Action -&gt; result comment</code> 경로는 workflow 가 self-hosted runner 위에서 동작하므로 runner 가 필요</li>
+<li><code>server_local_direct</code> can run without GitHub Actions</li>
+<li>however, the <code>Issue -&gt; Action -&gt; result comment</code> path requires a self-hosted runner because the workflow executes there</li>
 </ul>
 <h3 id="flow_1">Flow</h3>
 <pre class="mermaid"><code>flowchart LR
@@ -672,21 +674,21 @@
     C --&gt; H["Comment result on issue"]</code></pre>
 <hr/>
 <h2 id="flow-decision">Flow Decision</h2>
-<p><code>direct</code> 를 쓰는 경우:</p>
+<p>Use <code>direct</code> when:</p>
 <ul>
-<li>VS Code 나 local client 에서 Local MCP Server 를 직접 띄우고 싶을 때</li>
-<li>GitHub Issue 자동화가 필요 없을 때</li>
-<li>server 자체를 빠르게 검증하고 싶을 때</li>
+<li>a VS Code or local client should start the Local MCP Server directly</li>
+<li>GitHub Issue automation is not needed</li>
+<li>the server should be verified quickly</li>
 </ul>
-<p>issue 기반 runner flow 를 쓰는 경우:</p>
+<p>Use the Issue-based runner flow when:</p>
 <ul>
-<li>GitHub Test Request issue 로 실행을 시작하고 싶을 때</li>
-<li>결과를 artifact, JSON, log, issue comment 로 남기고 싶을 때</li>
-<li>특정 self-hosted runner 로 라우팅하고 싶을 때</li>
+<li>execution should start from a GitHub TEST Request Issue</li>
+<li>results should remain as artifact, JSON, log, and Issue comment</li>
+<li>routing to a specific self-hosted runner is required</li>
 </ul>
 <hr/>
 <h2 id="test-request-flow">Test Request Flow</h2>
-<p>현재 자동 Test Request 흐름:</p>
+<p>Current automated TEST Request flow:</p>
 <div class="highlight"><pre><span></span><code>GitHub Issue
   -&gt; test_request_local.yaml
   -&gt; mcp.scripts.run_test_request
@@ -696,12 +698,12 @@
   -&gt; GitHub Issue result comment
 </code></pre></div>
 <h3 id="request-source">Request Source</h3>
-<p>issue body format source:</p>
+<p>Issue body format source:</p>
 <ul>
 <li><code>.github/ISSUE_TEMPLATE/test_request_direct.yml</code></li>
 <li><code>.github/ISSUE_TEMPLATE/test_request_runner.yml</code></li>
 </ul>
-<p>현재 template 주요 항목:</p>
+<p>Current template fields:</p>
 <ul>
 <li><code>Template Version</code></li>
 <li><code>Target Runner</code></li>
@@ -711,83 +713,83 @@
 <li><code>Test Tools Checklist</code></li>
 <li><code>Log Tools Checklist</code></li>
 </ul>
-<p>관련 문서:</p>
+<p>Reference:</p>
 <ul>
-<li><a href="../envs/github_templates.html">github_templates.md</a></li>
+<li><a href="../envs/github_templates.html">GitHub Templates</a></li>
 </ul>
 <h3 id="python-bridge">Python Bridge</h3>
-<p>bridge script:</p>
+<p>Bridge script:</p>
 <ul>
 <li><code>mcp/scripts/run_test_request.py</code></li>
 </ul>
-<p>역할:</p>
+<p>Role:</p>
 <ol>
-<li>issue body parsing</li>
-<li><code>MCP Server Mode</code> 검증</li>
-<li><code>runner</code> mode 일 때 <code>Target Runner</code> 검증</li>
-<li>체크된 category 와 tool 목록 해석</li>
-<li>Local MCP Server subprocess 실행</li>
-<li>MCP tool 호출</li>
-<li>result JSON 저장</li>
-<li>workflow 가 최종 issue comment 를 달 수 있도록 결과 제공</li>
+<li>parse Issue body</li>
+<li>validate <code>MCP Server Mode</code></li>
+<li>validate <code>Target Runner</code> when mode is <code>runner</code></li>
+<li>resolve checked category and tool list</li>
+<li>start the Local MCP Server subprocess</li>
+<li>call MCP tools</li>
+<li>save result JSON</li>
+<li>provide output for the final Issue comment step</li>
 </ol>
-<p>실행 방식:</p>
+<p>Execution model:</p>
 <ul>
-<li><code>run_test_request.py</code> 는 tool 을 직접 실행하지 않음</li>
-<li><code>resolve_server_module()</code> 로 선택된 mode 에 따라 server module 결정</li>
-<li><code>direct</code> 면 <code>mcp.server_local_direct.server</code></li>
-<li><code>runner</code> 면 <code>mcp.server_local_runner.server</code></li>
-<li>이후 <code>call_local_mcp()</code> 에서 <code>python -m &lt;server module&gt;</code> 형태로 subprocess 실행</li>
-<li>표준입력(stdin) 으로 JSON-RPC 요청 전달</li>
-<li>요청 순서:</li>
+<li><code>run_test_request.py</code> does not execute tools directly</li>
+<li><code>resolve_server_module()</code> selects the server module from the mode</li>
+<li><code>direct</code> maps to <code>mcp.server_local_direct.server</code></li>
+<li><code>runner</code> maps to <code>mcp.server_local_runner.server</code></li>
+<li><code>call_local_mcp()</code> starts <code>python -m &lt;server module&gt;</code> as a subprocess</li>
+<li>JSON-RPC requests are sent over <code>stdin</code></li>
+<li>request order:</li>
 <li><code>initialize</code></li>
 <li><code>notifications/initialized</code></li>
 <li><code>tools/list</code></li>
 <li><code>tools/call</code></li>
-<li>표준출력(stdout) 으로 반환된 <code>tools/call</code> 응답을 파싱해서 결과 JSON 과 issue comment payload 생성</li>
+<li><code>stdout</code> is parsed to build the result JSON and Issue comment payload</li>
 </ul>
-<p>즉 실제 runner flow 는 다음처럼 동작한다.</p>
+<p>Practical runner flow:</p>
 <div class="highlight"><pre><span></span><code>run_test_request.py
-  -&gt; mcp.server_local_runner.server subprocess 실행
-  -&gt; JSON-RPC 요청 전송
-  -&gt; tool execution result 수신
-  -&gt; results/Github-ISSUE-TR-&lt;issue_number&gt;.json 저장
+  -&gt; start mcp.server_local_runner.server as subprocess
+  -&gt; send JSON-RPC request
+  -&gt; receive tool execution result
+  -&gt; write results/Github-ISSUE-TR-&lt;issue_number&gt;.json
 </code></pre></div>
 <pre class="mermaid"><code>flowchart LR
     A["run_test_request.py"] --&gt; B["resolve_server_module()"]
     B --&gt; C["mcp.server_local_runner.server&lt;br/&gt;subprocess"]
-    A --&gt; D["JSON-RPC payload 생성"]
+    A --&gt; D["build JSON-RPC payload"]
     D --&gt; C
     C --&gt; E["initialize"]
     C --&gt; F["tools/list"]
     C --&gt; G["tools/call"]
     G --&gt; H["tool execution result"]
     H --&gt; I["results/Github-ISSUE-TR-&lt;issue_number&gt;.json"]
-    H --&gt; J["GitHub issue comment payload"]</code></pre>
+    H --&gt; J["GitHub Issue comment payload"]</code></pre>
 <h3 id="server-resolution">Server Resolution</h3>
-<p>현재 resolution logic:</p>
+<p>Current resolution logic:</p>
 <ul>
 <li><code>direct</code> -&gt; <code>mcp.server_local_direct.server</code></li>
 <li><code>runner</code> -&gt; <code>mcp.server_local_runner.server</code></li>
 </ul>
-<p>현재 server name:</p>
+<p>Current server names:</p>
 <ul>
 <li><code>mcp-server-local-direct</code></li>
 <li><code>mcp-server-local-runner</code></li>
 </ul>
 <hr/>
 <h2 id="tool-execution">Tool Execution</h2>
-<p>현재 tool set 정의 위치:</p>
+<p>Current tool set definition:</p>
 <ul>
 <li><code>mcp/server_local/toolsets.py</code></li>
 </ul>
-<p>현재 tool catalog 는 category 기반으로 관리된다.</p>
+<p>Current tool catalog structure:</p>
 <ul>
 <li><code>setup</code></li>
 <li><code>test</code></li>
 <li><code>log</code></li>
 </ul>
-<p>예시 tool:</p>
+<p>Example tools:</p>
 <ul>
 <li><code>check_version</code></li>
 <li><code>setup_python</code></li>
@@ -799,63 +801,63 @@
 <li><code>log_analyzer</code></li>
 <li><code>log_snapshot</code></li>
 </ul>
-<p>Test Request template 은 한 issue 에서 하나의 category 만 선택하도록 설계되어 있다.</p>
-<p>Python bridge 는 체크된 category 안의 tool 들을 순서대로 실행하고, 결과를 하나의 JSON 에 저장한다.</p>
-<p>전체 status 규칙:</p>
+<p>The TEST Request template is designed so that one Issue selects one category at a time.</p>
+<p>The Python bridge runs the tools from the checked category in sequence and stores the combined result in one JSON file.</p>
+<p>Status rule:</p>
 <ul>
-<li>모든 tool 이 성공하면 <code>success</code></li>
-<li>하나라도 실패하면 <code>error</code></li>
+<li><code>success</code> if all tools succeed</li>
+<li><code>error</code> if any tool fails</li>
 </ul>
 <hr/>
 <h2 id="outputs">Outputs</h2>
-<p>현재 output directory:</p>
+<p>Current output directories:</p>
 <ul>
 <li><code>results/logs/mcp/server_local/</code></li>
 <li><code>results/</code></li>
 </ul>
-<p>현재 runtime log 예시:</p>
+<p>Current runtime log examples:</p>
 <ul>
 <li><code>results/logs/mcp/server_local/runner.log</code></li>
 <li><code>results/logs/mcp/server_local/runner-check_version.log</code></li>
 <li><code>results/logs/mcp/server_local/runner-flash_tool.log</code></li>
 <li><code>results/logs/mcp/server_local/runner-log_analyzer.log</code></li>
 </ul>
-<p>현재 issue result JSON:</p>
+<p>Current Issue result JSON:</p>
 <ul>
 <li><code>results/Github-ISSUE-TR-&lt;issue_number&gt;.json</code></li>
 </ul>
-<p>현재 result JSON 주요 항목:</p>
+<p>Current result JSON fields:</p>
 <ul>
 <li>request metadata</li>
 <li>template version</li>
 <li>resolved MCP server</li>
 <li>selected tools</li>
-<li>tool 별 실행 결과</li>
-<li>tool 별 log path</li>
+<li>per-tool execution result</li>
+<li>per-tool log path</li>
 </ul>
-<p>workflow 는 이 파일을 artifact 로 업로드하고, formatting 후 issue comment 를 작성한다.</p>
+<p>The workflow uploads this file as an artifact and then formats it into an Issue comment.</p>
 <hr/>
 <h2 id="current-limitations">Current Limitations</h2>
-<p>현재 구현은 테스트 중심의 local harness 성격이 강하다.</p>
+<p>The current implementation is still closer to a test-focused local harness.</p>
 <ul>
-<li>일부 tool 은 stub 구현</li>
-<li>log file naming 은 timestamp 기반이 아니라 tool name 기반</li>
-<li>issue comment formatting 은 workflow script 에서 수행</li>
-<li>issue 기반 flow 는 self-hosted runner availability 에 의존</li>
+<li>some tools are stubs</li>
+<li>log file naming is tool-name based, not timestamp based</li>
+<li>Issue comment formatting is handled by the workflow script</li>
+<li>Issue-based flow depends on self-hosted runner availability</li>
 </ul>
-<p>즉 현재 포지션은 다음처럼 보는 것이 맞다.</p>
+<p>Current position:</p>
 <ul>
-<li>practical 한 Local MCP Server 기반</li>
-<li>GitHub Issue 기반 test harness</li>
-<li>이후 실제 build, flash, log analysis 동작으로 확장 가능한 구조</li>
+<li>practical Local MCP Server base</li>
+<li>GitHub Issue based test harness</li>
+<li>expandable to real build, flash, and log analysis behavior</li>
 </ul>
 <hr/>
 <h2 id="related-files">Related Files</h2>
 <ul>
-<li><a href="mcp_gateway.html">mcp_gateway.md</a></li>
-<li><a href="mcp_server_github.html">mcp_server_github.md</a></li>
-<li><a href="../envs/github_templates.html">github_templates.md</a></li>
-<li><a href="../envs/github_self_hosted_runner.html">github_self_hosted_runner.md</a></li>
+<li><a href="mcp_gateway.html">MCP Gateway</a></li>
+<li><a href="mcp_server_github.html">MCP Server-GitHub</a></li>
+<li><a href="../envs/github_templates.html">GitHub Templates</a></li>
+<li><a href="../envs/github_self_hosted_runner.html">GitHub Self Hosted Runner</a></li>
 <li><a href="../../.github/ISSUE_TEMPLATE/test_request_direct.yml">test_request_direct.yml</a></li>
 <li><a href="../../.github/ISSUE_TEMPLATE/test_request_runner.yml">test_request_runner.yml</a></li>
 </ul>

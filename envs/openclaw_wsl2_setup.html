@@ -1067,15 +1067,17 @@
 <li>experiment</li>
 <li>not required for the default document flow</li>
 </ul>
+<hr />
 <h2 id="goal">Goal</h2>
-<p>Windows 11 + WSL2(Ubuntu) 환경에서 OpenClaw를 설치하고 동작을 검증한다.</p>
-<p>기본 경로가 아닌 선택 실험 항목이다.</p>
+<p>Validate OpenClaw installation and basic operation on Windows 11 with WSL2 Ubuntu.</p>
+<p>This is an optional experiment, not the default setup path.</p>
+<hr />
 <h2 id="environment">Environment</h2>
 <table>
 <thead>
 <tr>
-<th>항목</th>
-<th>값</th>
+<th>Item</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
@@ -1097,6 +1099,7 @@
 </tr>
 </tbody>
 </table>
+<hr />
 <h2 id="setup-steps">Setup Steps</h2>
 <h3 id="step-1-enter-wsl2-ubuntu">Step 1: Enter WSL2 Ubuntu</h3>
 <div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="n">-d</span> <span class="n">Ubuntu</span>
@@ -1114,10 +1117,10 @@ npm<span class="w"> </span>-v
 <div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openclaw.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div>
 <h3 id="step-4-authenticate-claude-cli">Step 4: Authenticate Claude CLI</h3>
-<p>Claude CLI를 사용하는 경우 인증이 필요하다.</p>
+<p>If Claude CLI is used, authentication is required.</p>
 <p>Reference:</p>
 <ul>
-<li><a href="../agents/claude.html#setup">claude.md - Setup</a></li>
+<li><a href="../agents/claude.html#setup">Claude - Setup</a></li>
 </ul>
 <p>Option A:</p>
 <div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/mnt/c/Users/ahyuo/.claude/.credentials<span class="w"> </span>~/.claude/.credentials
@@ -1130,7 +1133,7 @@ npm<span class="w"> </span>-v
 <p>General:</p>
 <div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>onboard<span class="w"> </span>--install-daemon
 </code></pre></div>
-<p>Skip channel:</p>
+<p>Skip channels:</p>
 <div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>onboard<span class="w"> </span>--install-daemon<span class="w"> </span>--skip-channels
 </code></pre></div>
 <h3 id="step-6-verify-gateway">Step 6: Verify Gateway</h3>
@@ -1140,21 +1143,23 @@ openclaw<span class="w"> </span>gateway<span class="w"> </span>status<span class
 <h3 id="step-7-open-dashboard">Step 7: Open Dashboard</h3>
 <div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>dashboard
 </code></pre></div>
+<hr />
 <h2 id="checklist">Checklist</h2>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> WSL2 Ubuntu 확인</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Node.js 24 설치</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> OpenClaw 설치</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Claude CLI 인증</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>openclaw onboard</code> 완료</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>openclaw gateway status</code> 확인</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> dashboard 접속 확인</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> confirm WSL2 Ubuntu</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> install Node.js 24</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> install OpenClaw</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> authenticate Claude CLI</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> complete <code>openclaw onboard</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> verify <code>openclaw gateway status</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> confirm dashboard access</li>
 </ul>
+<hr />
 <h2 id="notes">Notes</h2>
 <ul>
 <li>optional setup</li>
 <li>experiment only</li>
-<li>기본 문서 흐름의 필수 항목 아님</li>
+<li>not required for the default documentation flow</li>
 </ul>
 
 

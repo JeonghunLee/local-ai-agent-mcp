@@ -528,24 +528,24 @@
 <article class="md-content__inner md-typeset">
 <h1 id="github-mcp-server">GitHub MCP Server</h1>
 <p><img alt="VS Code Extension -&gt; MCP Servers" src="../imgs/mcp_server_github_00.png"/></p>
-<p>현재 안쓰임 옵션 </p>
 <h2 id="references">References</h2>
 <ul>
 <li>Manual: <a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server">https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server</a></li>
 <li>Node.js server: <a href="https://github.com/github/github-mcp-server">https://github.com/github/github-mcp-server</a></li>
 </ul>
+<hr/>
 <h2 id="overview">Overview</h2>
-<p>GitHub MCP Server는 VS Code 같은 MCP Client에서 GitHub 자원을 읽고 쓰기 위한 MCP Server.</p>
-<p>현재 저장소 기준 역할:</p>
+<p>GitHub MCP Server is the MCP Server used by MCP clients such as VS Code to read and update GitHub resources.</p>
+<p>Current role in this repository:</p>
 <ul>
-<li>GitHub Repository, Issue, Pull Request, Actions 정보 조회</li>
-<li>GitHub Issue, comment, label, assignee 같은 협업 정보 갱신</li>
-<li>Local MCP Server 기반 TEST 흐름의 GitHub 측 연계</li>
+<li>Repository, Issue, Pull Request, and Actions access</li>
+<li>Issue, comment, label, and assignee updates</li>
+<li>GitHub-side integration for the Local MCP based TEST flow</li>
 </ul>
-<p>직접 Local test tool을 실행하는 주체는 아님.</p>
+<p>It is not the component that directly executes local test tools.</p>
 <hr/>
 <h2 id="current-position-in-this-repository">Current Position In This Repository</h2>
-<p>현재 자동 TEST 흐름:</p>
+<p>Current automated TEST flow:</p>
 <div class="highlight"><pre><span></span><code>GitHub Issue
   -&gt; GitHub Actions
   -&gt; Python bridge
@@ -553,24 +553,26 @@
   -&gt; results/logs/mcp/server_local + results JSON
   -&gt; GitHub Issue comment
 </code></pre></div>
-<p>의미:</p>
+<p>Meaning:</p>
 <ul>
-<li>GitHub MCP Server: GitHub 측 조회 / 갱신 담당</li>
-<li>Local MCP Server: 실제 tool 실행 담당</li>
-<li>GitHub Actions: Issue 기반 자동화 bridge 담당</li>
+<li>GitHub MCP Server</li>
+<li>GitHub-side read and write operations</li>
+<li>Local MCP Server</li>
+<li>actual tool execution</li>
+<li>GitHub Actions</li>
+<li>Issue-based automation bridge</li>
 </ul>
-<p>즉 현재 구조에서 GitHub MCP Server는 Local tool 실행 경로를 직접 host 하거나 trigger 하는 주체가 아니라, GitHub 연계 역할에 집중.</p>
+<p>In the current structure, GitHub MCP Server does not host or trigger the local tool execution path directly. Its focus is GitHub integration.</p>
 <h3 id="flow">Flow</h3>
 <pre class="mermaid"><code>flowchart LR
     A["GitHub Issue"] --&gt; B["GitHub Actions"]
     B --&gt; C["Python bridge&lt;br/&gt;mcp.scripts.run_test_request"]
     C --&gt; D["Local MCP Server"]
     D --&gt; E["results/logs/mcp/server_local&lt;br/&gt;results/*.json"]
-    B --&gt; F["GitHub Issue comment"]
-    D --&gt; E</code></pre>
+    B --&gt; F["GitHub Issue comment"]</code></pre>
 <hr/>
 <h2 id="vs-code-configuration">VS Code Configuration</h2>
-<p>VS Code MCP server setup 예시:</p>
+<p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"io.github.github/github-mcp-server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -596,15 +598,15 @@
 </code></pre></div>
 <hr/>
 <h2 id="main-capabilities">Main Capabilities</h2>
-<p>주요 capability group:</p>
+<p>Capability groups:</p>
 <ul>
-<li>Repository 조회 / 검색</li>
-<li>branch, commit, file 조회</li>
-<li>Issue 생성 / 수정 / label / assignee / comment 처리</li>
-<li>Pull Request 조회 / diff / review / merge 처리</li>
-<li>GitHub Actions run / job / step / log 조회</li>
+<li>Repository lookup and search</li>
+<li>branch, commit, and file lookup</li>
+<li>Issue creation, update, labels, assignees, and comments</li>
+<li>Pull Request lookup, diff, review, and merge</li>
+<li>GitHub Actions runs, jobs, steps, and logs</li>
 </ul>
-<p>실무 관점에서는 GitHub 측 control plane 역할.</p>
+<p>Operationally, this is the GitHub control plane.</p>
 <h3 id="roles">Roles</h3>
 <table>
 <thead>
@@ -619,265 +621,265 @@
 <tr>
 <td>1</td>
 <td><code>Repository Metadata</code></td>
-<td>저장소 정보, default branch 조회</td>
+<td>repository metadata, default branch lookup</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>2</td>
 <td><code>Repository Search</code></td>
-<td>접근 가능한 저장소 검색</td>
+<td>accessible repository search</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>3</td>
 <td><code>Branch Search</code></td>
-<td>branch 검색, 기준 branch 선택</td>
+<td>branch search and base branch selection</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>4</td>
 <td><code>File Fetch</code></td>
-<td>특정 ref 파일 조회</td>
+<td>fetch file by ref</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>5</td>
 <td><code>Blob Fetch</code></td>
-<td>blob SHA 기반 조회</td>
+<td>fetch by blob SHA</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>6</td>
 <td><code>Commit Fetch</code></td>
-<td>단일 commit 메타데이터, 변경 내용 조회</td>
+<td>single commit metadata and change lookup</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>7</td>
 <td><code>Commit Compare</code></td>
-<td>두 ref 간 변경 파일, 통계 비교</td>
+<td>compare changed files and stats between refs</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>8</td>
 <td><code>Commit Search</code></td>
-<td>commit 검색</td>
+<td>commit search</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>9</td>
 <td><code>Commit Status</code></td>
-<td>combined status, check 결과 조회</td>
+<td>combined status and check result lookup</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>10</td>
 <td><code>Workflow Run Lookup</code></td>
-<td>특정 commit의 Actions run 조회</td>
+<td>lookup Actions runs for a commit</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>11</td>
 <td><code>Workflow Jobs</code></td>
-<td>run 내부 job 목록 조회</td>
+<td>workflow job listing</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>12</td>
 <td><code>Workflow Steps</code></td>
-<td>job step 상태 조회</td>
+<td>workflow step status lookup</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>13</td>
 <td><code>Workflow Logs</code></td>
-<td>실패 job log 조회</td>
+<td>failed job log lookup</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>14</td>
 <td><code>PR Metadata</code></td>
-<td>PR 제목, 상태, base/head branch 조회</td>
+<td>PR title, status, base and head branch</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>15</td>
 <td><code>PR Diff</code></td>
-<td>PR diff, patch 조회</td>
+<td>PR diff and patch</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>16</td>
 <td><code>PR Patch By File</code></td>
-<td>파일 단위 PR patch 조회</td>
+<td>per-file PR patch lookup</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>17</td>
 <td><code>PR File List</code></td>
-<td>변경 파일 목록 조회</td>
+<td>changed file listing</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>18</td>
 <td><code>PR Discussion</code></td>
-<td>PR comment, review comment, review event 조회</td>
+<td>PR comments, review comments, review events</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>19</td>
 <td><code>PR Reviews</code></td>
-<td>review 목록 조회</td>
+<td>review listing</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>20</td>
 <td><code>PR Review Threads</code></td>
-<td>inline review thread, resolve 상태 조회</td>
+<td>inline review thread and resolution status</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>21</td>
 <td><code>PR Reactions</code></td>
-<td>reaction 조회, 추가</td>
+<td>reaction lookup and creation</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>22</td>
 <td><code>PR Comment Reply</code></td>
-<td>inline review comment reply 작성</td>
+<td>inline review comment reply</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>23</td>
 <td><code>PR Review Submit</code></td>
-<td>approve, request changes, review 제출</td>
+<td>approve, request changes, submit review</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>24</td>
 <td><code>PR Reviewer Request</code></td>
-<td>reviewer, team reviewer 요청</td>
+<td>request reviewer or team reviewer</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>25</td>
 <td><code>PR Ready/Draft</code></td>
-<td>Draft, Ready for Review 전환</td>
+<td>change Draft or Ready for Review state</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>26</td>
 <td><code>PR Update</code></td>
-<td>제목, 본문, 상태, base branch 수정</td>
+<td>update title, body, state, or base branch</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>27</td>
 <td><code>PR Merge</code></td>
-<td>merge, squash, rebase 실행</td>
+<td>merge, squash, or rebase</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>28</td>
 <td><code>PR Auto Merge</code></td>
-<td>auto-merge 설정</td>
+<td>enable auto-merge</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>29</td>
 <td><code>Issue Fetch</code></td>
-<td>Issue 본문, 상태, 메타데이터 조회</td>
+<td>Issue body, state, metadata</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>30</td>
 <td><code>Issue Comments</code></td>
-<td>Issue comment 조회</td>
+<td>Issue comment lookup</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>31</td>
 <td><code>Issue Create</code></td>
-<td>Issue 생성</td>
+<td>create Issue</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>32</td>
 <td><code>Issue Update</code></td>
-<td>제목, 본문, 상태, milestone 수정</td>
+<td>update title, body, state, or milestone</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>33</td>
 <td><code>Issue Labels</code></td>
-<td>label 추가, 제거</td>
+<td>add or remove labels</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>34</td>
 <td><code>Issue Assignees</code></td>
-<td>assignee 추가, 제거</td>
+<td>add or remove assignees</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>35</td>
 <td><code>Issue Lock</code></td>
-<td>conversation lock, unlock</td>
+<td>lock or unlock conversation</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>36</td>
 <td><code>Issue Comment Update</code></td>
-<td>top-level comment 수정</td>
+<td>update top-level comment</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>37</td>
 <td><code>Issue Reactions</code></td>
-<td>Issue comment reaction 처리</td>
+<td>Issue comment reactions</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>38</td>
 <td><code>File Create</code></td>
-<td>파일 생성</td>
+<td>create file</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>39</td>
 <td><code>File Update</code></td>
-<td>파일 수정</td>
+<td>update file</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>40</td>
 <td><code>File Delete</code></td>
-<td>파일 삭제</td>
+<td>delete file</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>41</td>
 <td><code>Blob Create</code></td>
-<td>blob 생성</td>
+<td>create blob</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>42</td>
 <td><code>Tree Create</code></td>
-<td>Git tree 생성</td>
+<td>create Git tree</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>43</td>
 <td><code>Commit Create</code></td>
-<td>Git commit 생성</td>
+<td>create Git commit</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>44</td>
 <td><code>Ref Update</code></td>
-<td>branch ref 이동, branch 생성</td>
+<td>move branch ref or create branch</td>
 <td>Inferred</td>
 </tr>
 </tbody>
@@ -893,11 +895,11 @@
 <tbody>
 <tr>
 <td>Read</td>
-<td><code>Repository</code>, <code>File</code>, <code>Commit</code>, <code>PR</code>, <code>Issue</code> 조회</td>
+<td><code>Repository</code>, <code>File</code>, <code>Commit</code>, <code>PR</code>, <code>Issue</code> lookup</td>
 </tr>
 <tr>
 <td>Search</td>
-<td><code>Repository</code>, <code>Branch</code>, code, <code>PR</code>, <code>Issue</code>, <code>Commit</code> 검색</td>
+<td><code>Repository</code>, <code>Branch</code>, code, <code>PR</code>, <code>Issue</code>, <code>Commit</code> search</td>
 </tr>
 <tr>
 <td>Collaboration</td>
@@ -905,35 +907,35 @@
 </tr>
 <tr>
 <td>CI / Verification</td>
-<td><code>Actions</code> run, job, step, log</td>
+<td><code>Actions</code> runs, jobs, steps, logs</td>
 </tr>
 <tr>
 <td>Write</td>
-<td>파일 생성 / 수정 / 삭제, branch, commit, merge</td>
+<td>file create, update, delete, branch, commit, merge</td>
 </tr>
 </tbody>
 </table>
 <hr/>
 <h2 id="role-separation">Role Separation</h2>
-<p>현재 역할 분리:</p>
+<p>Current separation:</p>
 <ul>
 <li>GitHub MCP Server</li>
-<li>GitHub 상태 조회</li>
-<li>Issue / comment / review / Actions 결과 조회 및 갱신</li>
+<li>GitHub state lookup</li>
+<li>Issue, comment, review, and Actions result lookup and update</li>
 <li>Local MCP Server</li>
-<li><code>build_tool</code>, <code>flash_tool</code>, <code>log_analyzer</code> 같은 local tool 실행</li>
-<li>log file, result JSON 저장</li>
+<li>local tool execution such as <code>build_tool</code>, <code>flash_tool</code>, and <code>log_analyzer</code></li>
+<li>log files and result JSON output</li>
 <li>GitHub Actions</li>
-<li>Issue event와 Local MCP 실행 경로 연결</li>
+<li>bridge between Issue events and Local MCP execution</li>
 </ul>
-<p>이 구분이 중요한 이유는, IDE 안에 GitHub MCP Server가 있어도 Issue 기반 Local TEST는 workflow runner 의존성이 남는다는 점을 설명하기 때문.</p>
+<p>This distinction matters because even if GitHub MCP Server is available inside the IDE, Issue-based local TEST execution still depends on the workflow runner path.</p>
 <hr/>
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="mcp_server_local.html">mcp_server_local.md</a></li>
-<li><a href="mcp_gateway.html">mcp_gateway.md</a></li>
-<li><a href="../envs/github_templates.html">github_templates.md</a></li>
-<li><a href="../envs/github_self_hosted_runner.html">github_self_hosted_runner.md</a></li>
+<li><a href="mcp_server_local.html">MCP Server-Local</a></li>
+<li><a href="mcp_gateway.html">MCP Gateway</a></li>
+<li><a href="../envs/github_templates.html">GitHub Templates</a></li>
+<li><a href="../envs/github_self_hosted_runner.html">GitHub Self Hosted Runner</a></li>
 </ul>
 </article>
 </div>

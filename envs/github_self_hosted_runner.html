@@ -826,6 +826,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1114,121 +1125,131 @@
 
 
 <h1 id="self-hosted-runner">Self-hosted Runner</h1>
-<p>References:</p>
+<h2 id="references">References</h2>
 <ul>
-<li>GitHub-hosted runners    <br />
-<a href="https://docs.github.com/ko/actions/reference/runners/github-hosted-runners">https://docs.github.com/ko/actions/reference/runners/github-hosted-runners</a></li>
-<li>Self-hosted runners    <br />
-<a href="https://docs.github.com/ko/actions/reference/runners/self-hosted-runners">https://docs.github.com/ko/actions/reference/runners/self-hosted-runners</a></li>
+<li>GitHub-hosted runners<br />
+<a href="https://docs.github.com/en/actions/reference/runners/github-hosted-runners">https://docs.github.com/en/actions/reference/runners/github-hosted-runners</a></li>
+<li>Self-hosted runners<br />
+<a href="https://docs.github.com/en/actions/reference/runners/self-hosted-runners">https://docs.github.com/en/actions/reference/runners/self-hosted-runners</a></li>
 </ul>
+<hr />
 <h2 id="overview">Overview</h2>
-<p><code>Target Runner</code>와 GitHub <code>self-hosted runner</code>의 관계  </p>
-<p>핵심 개념:
-  - <code>Target Runner</code>는 TEST 요청을 처리할 실행 주체를 가리키는 논리적 이름      <br />
-  - 이 실행 주체는 GitHub Actions의 <code>self-hosted runner</code>일 수도 있고, 원격 worker / lab node / 전용 테스트 머신일 수도 있다 
-  - 현재 프로젝트에서는 <code>Target Runner</code>를 더 넓은 개념으로 사용하되, 가능하면 GitHub runner label과 같은 이름으로 맞춘다 </p>
-<p>즉:
-  - 문서 설계 관점: <code>Target Runner</code> = TEST 요청을 담당할 실행 노드
-  - GitHub Actions 관점: <code>self-hosted runner</code> = GitHub가 job을 보내는 실행 노드</p>
+<p>This document explains the relationship between <code>Target Runner</code> and a GitHub <code>self-hosted runner</code>.</p>
+<p>Key points:</p>
+<ul>
+<li><code>Target Runner</code> is the logical execution owner for a TEST request</li>
+<li>the execution owner can be a GitHub Actions <code>self-hosted runner</code>, a remote worker, a lab node, or a dedicated test machine</li>
+<li>in this repository, <code>Target Runner</code> is used as a broader routing name</li>
+<li>when possible, align <code>Target Runner</code> with the GitHub runner label</li>
+</ul>
+<p>Interpretation:</p>
+<ul>
+<li>document view</li>
+<li><code>Target Runner</code> = execution node responsible for the TEST request</li>
+<li>GitHub Actions view</li>
+<li><code>self-hosted runner</code> = execution node that receives the job from GitHub</li>
+</ul>
 <hr />
 <h2 id="quick-start">Quick Start</h2>
-<p>내 PC를 연결하려면 아래 순서로 진행하면 된다.</p>
 <ol>
-<li>GitHub 저장소의 <code>Settings &gt; Actions &gt; Runners</code>로 이동.</li>
-<li><code>New self-hosted runner</code>를 runner 등록 명령 (등록을 Token 과 최신 Action Download)         </li>
-<li>설치 Manaul 과 설정 Manaul (<strong>Token 확인</strong>)              </li>
-<li>Runner image : Window/Linux/MacOS 선택 </li>
-<li>Architecture : x86</li>
-<li>Self-hosted Runner 설정 (<code>config.cmd</code>)<ul>
-<li>Group : default </li>
-</ul>
-</li>
-<li><code>runs-on</code>에 <code>self-hosted</code>와 해당 label을 지정.</li>
+<li>Open <code>Settings &gt; Actions &gt; Runners</code> in the GitHub repository.</li>
+<li>Select <code>New self-hosted runner</code>.</li>
+<li>Choose the runner image and architecture.</li>
+<li>Run <code>config.cmd</code> and complete registration.</li>
+<li>Use <code>runs-on</code> with <code>self-hosted</code> and the project label.</li>
 </ol>
-<p>이 프로젝트 기준으로는 <code>Target Runner: local-dev</code>와 runner label <code>local-dev</code>를 맞추는 방식을 권장한다.</p>
+<p>Recommended mapping for this repository:</p>
+<ul>
+<li><code>Target Runner</code>: <code>local-dev</code></li>
+<li>runner label: <code>local-dev</code></li>
+</ul>
 <p><img alt="" src="../imgs/github_runner_00.png" /></p>
-<div class="highlight"><pre><span></span><code>√ Connected to GitHub
+<div class="highlight"><pre><span></span><code>Connected to GitHub
 
 Current runner version: &#39;2.333.1&#39;
 2026-04-20 05:30:21Z: Listening for Jobs
 </code></pre></div>
+<hr />
 <h2 id="recommended-naming">Recommended Naming</h2>
-<p>내 PC를 self-hosted runner로 붙일 때는 runner label을 <code>Target Runner</code>와 같은 값으로 맞추는 것이 가장 단순하다.</p>
-<p>예:</p>
+<p>The simplest rule is to use the same value for the GitHub runner label and the TEST request <code>Target Runner</code>.</p>
+<p>Example:</p>
 <ul>
-<li>내 PC 이름 역할: <code>local-dev</code></li>
+<li>local machine role: <code>local-dev</code></li>
 <li>GitHub runner label: <code>local-dev</code></li>
-<li>TEST 이슈의 <code>Target Runner</code>: <code>local-dev</code></li>
+<li>TEST request <code>Target Runner</code>: <code>local-dev</code></li>
 </ul>
-<p>이렇게 하면 이슈 운영과 Actions 라우팅이 같은 기준으로 움직인다.</p>
-<p>권장 예시:</p>
+<p>Benefits:</p>
+<ul>
+<li>easier Issue routing</li>
+<li>easier Actions routing</li>
+<li>less naming ambiguity</li>
+</ul>
 <hr />
 <h2 id="connect-my-pc">Connect My PC</h2>
 <h3 id="1-prepare-runner-directory">1. Prepare Runner Directory</h3>
-<p>이 문서에서는 runner 작업 폴더를 repository 내부에 두는 방식을 기준으로 설명한다.</p>
-<p>예:</p>
+<p>This document assumes the runner workspace is placed inside the repository root.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">D</span><span class="p">:\</span><span class="n">works</span><span class="p">\</span><span class="n">projects</span><span class="p">\</span><span class="n">local-ai-agent-mcp</span>
 <span class="n">mkdir</span> <span class="n">action-runner</span>
 <span class="nb">cd </span><span class="p">.\</span><span class="n">action-runner</span>
 </code></pre></div>
-<p>권장 이유:</p>
+<p>Reasons:</p>
 <ul>
-<li>이 프로젝트와 runner 관련 파일 위치를 같이 관리하기 쉽다</li>
-<li>로컬 문서와 실제 작업 경로가 일치한다</li>
-<li>테스트용 스크립트나 로그 경로를 repository 기준으로 설명하기 편하다</li>
+<li>easier local path management</li>
+<li>repository path and runner path stay aligned</li>
+<li>simpler explanation for logs and scripts</li>
 </ul>
-<p>주의:</p>
+<p>Notes:</p>
 <ul>
-<li><code>action-runner</code> 폴더는 보통 Git으로 추적하지 않는다</li>
-<li>필요하면 <code>.gitignore</code>에 추가해서 관리한다</li>
+<li><code>action-runner</code> is usually not tracked by Git</li>
+<li>add it to <code>.gitignore</code> if needed</li>
 </ul>
 <h3 id="2-get-registration-commands-from-github">2. Get Registration Commands from GitHub</h3>
-<p>저장소 기준:</p>
+<p>Repository path:</p>
 <ul>
 <li><code>Settings</code></li>
 <li><code>Actions</code></li>
 <li><code>Runners</code></li>
 <li><code>New self-hosted runner</code></li>
 </ul>
-<p>action/runner version 확인<br />
-<a href="https://github.com/actions/runner/releases">https://github.com/actions/runner/releases</a></p>
+<p>Runner release reference:</p>
+<ul>
+<li><a href="https://github.com/actions/runner/releases">https://github.com/actions/runner/releases</a></li>
+</ul>
 <h3 id="3-set-runner-name-and-labels">3. Set Runner Name and Labels</h3>
-<p><code>config.cmd</code> 실행 중 아래 항목을 묻는다.</p>
+<p>During <code>config.cmd</code>, GitHub asks for:</p>
 <ul>
 <li>runner group</li>
 <li>runner name</li>
 <li>labels</li>
-<li>service로 설치할지 여부</li>
+<li>service installation choice</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th>Target Runner[]</th>
+<th>Target Runner</th>
 <th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>local-dev_00</code></td>
-<td>개발자가 직접 관리하는 로컬 실행 환경</td>
+<td>developer-managed local execution environment</td>
 </tr>
 <tr>
 <td><code>qemu-runner</code></td>
-<td>에뮬레이션 기반 테스트 전용 환경</td>
+<td>emulator-based test environment</td>
 </tr>
 <tr>
 <td><code>lab-node-01</code></td>
-<td>특정 장비실/하드웨어 노드</td>
+<td>hardware lab node</td>
 </tr>
 <tr>
 <td><code>windows-hw-01</code></td>
-<td>Windows 기반 실장비 테스트 노드</td>
+<td>Windows hardware test node</td>
 </tr>
 </tbody>
 </table>
-<ul>
-<li>반드시 관리자 권한 </li>
-</ul>
+<p>Administrator privileges are recommended.</p>
 <div class="highlight"><pre><span></span><code><span class="p">--------------------------------------------------------------------------------</span>
 <span class="p">|</span>        <span class="n">____</span> <span class="n">_</span> <span class="n">_</span>   <span class="n">_</span>   <span class="n">_</span>       <span class="n">_</span>          <span class="n">_</span>        <span class="n">_</span>   <span class="n">_</span>                      <span class="p">|</span>
 <span class="p">|</span>       <span class="p">/</span> <span class="n">___</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="p">|</span><span class="n">_</span><span class="p">|</span> <span class="p">|</span> <span class="p">|</span> <span class="p">|</span><span class="n">_</span>   <span class="n">_</span><span class="p">|</span> <span class="p">|</span><span class="n">__</span>      <span class="p">/</span> <span class="p">\</span>   <span class="n">___</span><span class="p">|</span> <span class="p">|</span><span class="n">_</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="n">___</span>  <span class="n">_</span> <span class="n">__</span>  <span class="n">___</span>      <span class="p">|</span>
@@ -1242,54 +1263,53 @@ Current runner version: &#39;2.333.1&#39;
 
 <span class="c"># Authentication</span>
 
-
-<span class="err">√</span> <span class="n">Connected</span> <span class="n">to</span> <span class="n">GitHub</span>
+<span class="n">Connected</span> <span class="n">to</span> <span class="n">GitHub</span>
 
 <span class="c"># Runner Registration</span>
 
-<span class="n">Enter</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">runner</span> <span class="nb">group </span><span class="n">to</span> <span class="n">add</span> <span class="n">this</span> <span class="n">runner</span> <span class="n">to</span><span class="p">:</span> <span class="no">[press Enter for Default]</span> 
-
+<span class="n">Enter</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">runner</span> <span class="nb">group </span><span class="n">to</span> <span class="n">add</span> <span class="n">this</span> <span class="n">runner</span> <span class="n">to</span><span class="p">:</span> <span class="no">[press Enter for Default]</span>
 <span class="n">Enter</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">runner</span><span class="p">:</span> <span class="no">[press Enter for JHLEE]</span> <span class="n">local-dev_00</span>
-
 <span class="n">This</span> <span class="n">runner</span> <span class="n">will</span> <span class="n">have</span> <span class="n">the</span> <span class="n">following</span> <span class="n">labels</span><span class="p">:</span> <span class="s1">&#39;self-hosted&#39;</span><span class="p">,</span> <span class="s1">&#39;Windows&#39;</span><span class="p">,</span> <span class="s1">&#39;X64&#39;</span>
 <span class="n">Enter</span> <span class="n">any</span> <span class="n">additional</span> <span class="n">labels</span> <span class="p">(</span><span class="n">ex</span><span class="p">.</span> <span class="n">label</span><span class="p">-</span><span class="n">1</span><span class="p">,</span><span class="n">label</span><span class="p">-</span><span class="n">2</span><span class="p">):</span> <span class="no">[press Enter to skip]</span> <span class="n">local-dev</span>
 
-<span class="err">√</span> <span class="n">Runner</span> <span class="n">successfully</span> <span class="n">added</span>
+<span class="n">Runner</span> <span class="n">successfully</span> <span class="n">added</span>
 
 <span class="c"># Runner settings</span>
 
 <span class="n">Enter</span> <span class="n">name</span> <span class="n">of</span> <span class="n">work</span> <span class="n">folder</span><span class="p">:</span> <span class="no">[press Enter for _work]</span>
 
-<span class="err">√</span> <span class="n">Settings</span> <span class="n">Saved</span><span class="p">.</span>
+<span class="n">Settings</span> <span class="n">Saved</span><span class="p">.</span>
 
 <span class="n">Would</span> <span class="n">you</span> <span class="n">like</span> <span class="n">to</span> <span class="n">run</span> <span class="n">the</span> <span class="n">runner</span> <span class="n">as</span> <span class="n">service</span><span class="p">?</span> <span class="p">(</span><span class="n">Y</span><span class="p">/</span><span class="n">N</span><span class="p">)</span> <span class="no">[press Enter for N]</span>
 </code></pre></div>
+<p>Example:</p>
 <div class="highlight"><pre><span></span><code>runner name: my-pc
 labels: self-hosted, Windows, X64, local-dev
 </code></pre></div>
-<p>핵심은 기본 label 외에 <code>local-dev</code> 같은 프로젝트용 label을 추가하는 것이다.</p>
+<p>The important part is adding a project-specific label such as <code>local-dev</code>.</p>
 <h3 id="4-choose-how-to-run-it">4. Choose How to Run It</h3>
-<p>일회성 확인은 repository 내부의 <code>action-runner</code> 폴더에서 콘솔 실행으로 충분하다.</p>
+<p>For a quick check, run it directly from the <code>action-runner</code> directory:</p>
 <div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">run</span><span class="p">.</span><span class="n">cmd</span>
 </code></pre></div>
-<p>PC를 켤 때마다 자동으로 붙게 하려면 같은 폴더에서 서비스 설치를 해두는 편이 좋다.</p>
+<p><img alt="" src="../imgs/github_runner_01.png" /></p>
+<p>To keep it available after reboot, install it as a service:</p>
 <div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">svc</span> <span class="n">install</span>
 <span class="p">.\</span><span class="n">svc</span> <span class="nb">start</span>
 </code></pre></div>
-<p>서비스로 실행하면 로그아웃 후에도 runner가 계속 대기할 수 있다.</p>
+<p>Running as a service keeps the runner available after logout.</p>
 <h3 id="5-verify-runner-status-in-github">5. Verify Runner Status in GitHub</h3>
-<p>등록이 끝나면 <code>Settings &gt; Actions &gt; Runners</code> 화면에 runner가 <code>Idle</code> 또는 <code>Online</code> 상태로 보여야 한다.</p>
-<p>보이지 않으면 보통 아래를 확인하면 된다.</p>
+<p>After registration, the runner should appear as <code>Idle</code> or <code>Online</code> in <code>Settings &gt; Actions &gt; Runners</code>.</p>
+<p>If not, check:</p>
 <ul>
-<li>방화벽 또는 프록시 제한</li>
-<li>토큰 만료 후 등록 실패</li>
-<li><code>run.cmd</code> 또는 서비스가 실제로 실행 중인지</li>
-<li>label이 기대한 값으로 들어갔는지</li>
+<li>firewall or proxy restrictions</li>
+<li>expired registration token</li>
+<li>whether <code>run.cmd</code> or the service is actually running</li>
+<li>whether the label matches the expected value</li>
 </ul>
 <hr />
 <h2 id="workflow-mapping">Workflow Mapping</h2>
-<p>runner를 붙여도 workflow가 그 runner를 사용하도록 지정하지 않으면 실제 job은 내려오지 않는다.</p>
-<p>예를 들어 내 PC label이 <code>local-dev</code>라면:</p>
+<p>Registering a runner is not enough. A workflow must explicitly target that runner.</p>
+<p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">jobs</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">test-on-local-dev</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">self-hosted</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">local-dev</span><span class="p p-Indicator">]</span>
@@ -1298,60 +1318,64 @@ labels: self-hosted, Windows, X64, local-dev
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Show runner</span>
 <span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;running on self-hosted local-dev&quot;</span>
 </code></pre></div>
-<p><code>runs-on: [self-hosted, local-dev]</code>는 <code>self-hosted</code>이면서 <code>local-dev</code> label을 가진 runner만 잡겠다는 뜻이다.</p>
+<p><code>runs-on: [self-hosted, local-dev]</code> means GitHub selects only a runner that has both labels.</p>
 <hr />
 <h2 id="current-repository-status">Current Repository Status</h2>
-<p>현재 저장소의 workflow는 <code>.github/workflows/github_pages.yaml</code> 하나이며, 이 파일은 <code>ubuntu-latest</code>를 사용한다.</p>
-<p>즉 지금 상태에서는 내 PC를 self-hosted runner로 등록해도 자동으로 사용되지는 않는다. 실제로 사용하려면:</p>
+<p>Current repository workflows:</p>
 <ul>
-<li>새 workflow를 추가하거나</li>
-<li>기존 workflow의 <code>runs-on</code>을 self-hosted label 기반으로 바꿔야 한다</li>
+<li><code>.github/workflows/github_pages.yaml</code></li>
+<li><code>.github/workflows/test_request_local.yaml</code></li>
+</ul>
+<p>Current TEST automation path:</p>
+<ul>
+<li><code>test_request_local.yaml</code> uses a self-hosted runner</li>
+<li>current label expectation is <code>local-dev</code></li>
 </ul>
 <hr />
 <h2 id="issue-based-flow">Issue-Based Flow</h2>
-<div class="highlight"><pre><span></span><code>GitHub Issue (TEST 요청)
-  → Target Runner 확인
-  → 해당 Runner / Worker가 요청 처리
-  → Local MCP Tool 실행
-  → logs + result.json 생성
-  → GitHub Issue 댓글로 결과 보고
+<div class="highlight"><pre><span></span><code>GitHub Issue
+  -&gt; resolve Target Runner
+  -&gt; selected Runner or Worker processes the request
+  -&gt; Local MCP tool execution
+  -&gt; logs + result.json
+  -&gt; GitHub Issue comment
 </code></pre></div>
-<p>이 구조에서는 <code>Target Runner</code>가 단순 메모가 아니라 실제 실행 소유권과 라우팅 기준이 된다.</p>
+<p>In this model, <code>Target Runner</code> is not just metadata. It is an execution ownership and routing key.</p>
 <hr />
 <h2 id="mapping-strategy">Mapping Strategy</h2>
-<p>권장 매핑은 아래와 같다.</p>
+<p>Recommended mapping:</p>
 <ul>
 <li>Issue <code>Target Runner</code>: <code>local-dev</code></li>
 <li>GitHub Actions self-hosted runner label: <code>local-dev</code></li>
 </ul>
-<p>이렇게 맞추면 사람이 이슈를 보고 판단할 때도 쉽고, 나중에 Actions workflow를 붙일 때도 혼동이 적다.</p>
+<p>This keeps human routing and workflow routing aligned.</p>
 <hr />
 <h2 id="multiple-runners">Multiple Runners</h2>
-<p><code>Target Runner</code>는 단일 값만 사용할 수도 있고, 여러 후보를 둘 수도 있다.</p>
-<p>권장 규칙:</p>
+<p><code>Target Runner</code> can be a single value or a comma-separated candidate list.</p>
+<p>Recommended rules:</p>
 <ul>
-<li>기본은 단일 runner</li>
-<li>여러 runner가 필요하면 쉼표 구분 목록 사용</li>
-<li>의미는 우선 <code>OR</code>로 해석</li>
+<li>use a single runner by default</li>
+<li>use a comma-separated list only when needed</li>
+<li>interpret multiple values as <code>OR</code></li>
 </ul>
-<p>예:</p>
+<p>Example:</p>
 <div class="highlight"><pre><span></span><code>Target Runner: qemu-runner, lab-node-01
 </code></pre></div>
-<p>의미:</p>
+<p>Meaning:</p>
 <ul>
-<li><code>qemu-runner</code> 또는 <code>lab-node-01</code> 중 하나가 처리 가능</li>
-<li>먼저 claim한 실행 주체가 처리</li>
+<li>either <code>qemu-runner</code> or <code>lab-node-01</code> may process the request</li>
+<li>the first claimer handles it</li>
 </ul>
 <hr />
 <h2 id="ownership-rules">Ownership Rules</h2>
-<p>여러 runner가 동시에 존재할 경우 최소한 아래 규칙이 필요하다.</p>
+<p>When multiple runners exist, the minimum coordination rules are:</p>
 <ol>
-<li>TEST 요청에는 <code>Target Runner</code>를 명시한다.</li>
-<li>각 runner는 자신이 처리 가능한 요청만 선택한다.</li>
-<li>처리 시작 시 assignee 또는 label로 claim 상태를 남긴다.</li>
-<li>완료 후 <code>test-done</code> 또는 <code>test-failed</code> 같은 상태를 기록한다.</li>
+<li>Each TEST request must declare <code>Target Runner</code>.</li>
+<li>Each runner should pick only executable requests.</li>
+<li>Claim the request with an assignee or label when work starts.</li>
+<li>Record completion with labels such as <code>test-done</code> or <code>test-failed</code>.</li>
 </ol>
-<p>추천 label 예시:</p>
+<p>Suggested labels:</p>
 <ul>
 <li><code>test-request</code></li>
 <li><code>test-running</code></li>
@@ -1360,35 +1384,40 @@ labels: self-hosted, Windows, X64, local-dev
 </ul>
 <hr />
 <h2 id="relationship-with-mcp">Relationship with MCP</h2>
-<p>self-hosted runner 자체가 곧 MCP Server는 아니다.</p>
-<p>역할은 다르다.</p>
+<p>A self-hosted runner is not the same thing as an MCP Server.</p>
+<p>Roles:</p>
 <ul>
-<li>Runner / Worker: TEST 요청을 실제로 수행하는 실행 환경</li>
-<li>Local MCP Server: 실행 환경에서 tool을 노출하는 인터페이스</li>
-<li>GitHub MCP Server: GitHub Issue/댓글/상태 변경을 다루는 인터페이스</li>
+<li>Runner or Worker</li>
+<li>execution environment for the TEST request</li>
+<li>Local MCP Server</li>
+<li>tool interface exposed in the execution environment</li>
+<li>GitHub MCP Server</li>
+<li>interface for Issue, comment, and status operations on GitHub</li>
 </ul>
-<p>즉 실제 구조는 다음에 가깝다.</p>
+<p>Practical flow:</p>
 <div class="highlight"><pre><span></span><code>GitHub Issue
-  → Runner / Worker
-  → GitHub MCP Server로 요청 확인
-  → Local MCP Server tool 실행
-  → 결과 생성
-  → GitHub MCP Server로 결과 보고
+  -&gt; Runner or Worker
+  -&gt; request inspection through GitHub integration
+  -&gt; Local MCP Server tool execution
+  -&gt; result generation
+  -&gt; result reporting back to GitHub
 </code></pre></div>
 <hr />
 <h2 id="recommended-position">Recommended Position</h2>
-<p>현재 프로젝트에서는 <code>Target Runner</code>를 다음처럼 이해하는 것이 가장 안전하다.</p>
+<p>In this repository, the safest interpretation is:</p>
 <ul>
-<li>지금: self-hosted runner와 유사한 논리적 실행 노드 이름</li>
-<li>나중: 필요하면 GitHub Actions self-hosted runner label과 1:1 매핑</li>
+<li>now</li>
+<li><code>Target Runner</code> is a logical execution node name</li>
+<li>later</li>
+<li>it can map 1:1 to a GitHub Actions self-hosted runner label</li>
 </ul>
-<p>특히 내 PC를 runner로 연결할 때는 <code>local-dev</code> 같은 label 하나를 기준 이름으로 정해 두는 편이 운영상 가장 편하다.</p>
+<p>For a local machine, a stable label such as <code>local-dev</code> is the simplest operating model.</p>
 <hr />
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="github_templates.html">github_templates.md</a> — Issue / PR / TEST 요청 템플릿</li>
-<li><a href="../mcp/mcp_server_local.html">mcp_server_local.md</a> — Local MCP Server와 TEST 요청 흐름</li>
-<li><a href="../mcp/mcp_server_github.html">mcp_server_github.md</a> — GitHub MCP Server 역할</li>
+<li><a href="github_templates.html">GitHub Templates</a></li>
+<li><a href="../mcp/mcp_server_local.html">MCP Server-Local</a></li>
+<li><a href="../mcp/mcp_server_github.html">MCP Server-GitHub</a></li>
 </ul>
 
 
