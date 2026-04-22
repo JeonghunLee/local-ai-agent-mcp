@@ -6,20 +6,26 @@
 - experiment
 - not required for the default document flow
 
+---
+
 ## Goal
 
-Windows 11 + WSL2(Ubuntu) 환경에서 OpenClaw를 설치하고 동작을 검증한다.
+Validate OpenClaw installation and basic operation on Windows 11 with WSL2 Ubuntu.
 
-기본 경로가 아닌 선택 실험 항목이다.
+This is an optional experiment, not the default setup path.
+
+---
 
 ## Environment
 
-| 항목 | 값 |
+| Item | Value |
 |------|------|
 | OS | Windows 11 Pro |
 | WSL Version | WSL2 |
 | Distribution | Ubuntu |
 | Type | optional experiment |
+
+---
 
 ## Setup Steps
 
@@ -49,11 +55,11 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 
 ### Step 4: Authenticate Claude CLI
 
-Claude CLI를 사용하는 경우 인증이 필요하다.
+If Claude CLI is used, authentication is required.
 
 Reference:
 
-- [claude.md - Setup](../agents/claude.md#setup)
+- [Claude - Setup](../agents/claude.md#setup)
 
 Option A:
 
@@ -76,7 +82,7 @@ General:
 openclaw onboard --install-daemon
 ```
 
-Skip channel:
+Skip channels:
 
 ```bash
 openclaw onboard --install-daemon --skip-channels
@@ -95,18 +101,22 @@ openclaw gateway status --token <token>
 openclaw dashboard
 ```
 
+---
+
 ## Checklist
 
-- [ ] WSL2 Ubuntu 확인
-- [ ] Node.js 24 설치
-- [ ] OpenClaw 설치
-- [ ] Claude CLI 인증
-- [ ] `openclaw onboard` 완료
-- [ ] `openclaw gateway status` 확인
-- [ ] dashboard 접속 확인
+- [ ] confirm WSL2 Ubuntu
+- [ ] install Node.js 24
+- [ ] install OpenClaw
+- [ ] authenticate Claude CLI
+- [ ] complete `openclaw onboard`
+- [ ] verify `openclaw gateway status`
+- [ ] confirm dashboard access
+
+---
 
 ## Notes
 
 - optional setup
 - experiment only
-- 기본 문서 흐름의 필수 항목 아님
+- not required for the default documentation flow

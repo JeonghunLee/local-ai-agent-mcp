@@ -2,30 +2,30 @@
 
 ![VS Code Extension -> MCP Servers](../imgs/mcp_server_github_00.png)
 
-현재 안쓰임 옵션 
-
 ## References
 
 - Manual: <https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server>
 - Node.js server: <https://github.com/github/github-mcp-server>
 
+---
+
 ## Overview
 
-GitHub MCP Server는 VS Code 같은 MCP Client에서 GitHub 자원을 읽고 쓰기 위한 MCP Server.
+GitHub MCP Server is the MCP Server used by MCP clients such as VS Code to read and update GitHub resources.
 
-현재 저장소 기준 역할:
+Current role in this repository:
 
-- GitHub Repository, Issue, Pull Request, Actions 정보 조회
-- GitHub Issue, comment, label, assignee 같은 협업 정보 갱신
-- Local MCP Server 기반 TEST 흐름의 GitHub 측 연계
+- Repository, Issue, Pull Request, and Actions access
+- Issue, comment, label, and assignee updates
+- GitHub-side integration for the Local MCP based TEST flow
 
-직접 Local test tool을 실행하는 주체는 아님.
+It is not the component that directly executes local test tools.
 
 ---
 
 ## Current Position In This Repository
 
-현재 자동 TEST 흐름:
+Current automated TEST flow:
 
 ```text
 GitHub Issue
@@ -36,13 +36,16 @@ GitHub Issue
   -> GitHub Issue comment
 ```
 
-의미:
+Meaning:
 
-- GitHub MCP Server: GitHub 측 조회 / 갱신 담당
-- Local MCP Server: 실제 tool 실행 담당
-- GitHub Actions: Issue 기반 자동화 bridge 담당
+- GitHub MCP Server
+  - GitHub-side read and write operations
+- Local MCP Server
+  - actual tool execution
+- GitHub Actions
+  - Issue-based automation bridge
 
-즉 현재 구조에서 GitHub MCP Server는 Local tool 실행 경로를 직접 host 하거나 trigger 하는 주체가 아니라, GitHub 연계 역할에 집중.
+In the current structure, GitHub MCP Server does not host or trigger the local tool execution path directly. Its focus is GitHub integration.
 
 ### Flow
 
@@ -53,14 +56,13 @@ flowchart LR
     C --> D["Local MCP Server"]
     D --> E["results/logs/mcp/server_local<br/>results/*.json"]
     B --> F["GitHub Issue comment"]
-    D --> E
 ```
 
 ---
 
 ## VS Code Configuration
 
-VS Code MCP server setup 예시:
+Example:
 
 ```json
 {
@@ -95,97 +97,97 @@ VS Code MCP server setup 예시:
 
 ## Main Capabilities
 
-주요 capability group:
+Capability groups:
 
-- Repository 조회 / 검색
-- branch, commit, file 조회
-- Issue 생성 / 수정 / label / assignee / comment 처리
-- Pull Request 조회 / diff / review / merge 처리
-- GitHub Actions run / job / step / log 조회
+- Repository lookup and search
+- branch, commit, and file lookup
+- Issue creation, update, labels, assignees, and comments
+- Pull Request lookup, diff, review, and merge
+- GitHub Actions runs, jobs, steps, and logs
 
-실무 관점에서는 GitHub 측 control plane 역할.
+Operationally, this is the GitHub control plane.
 
 ### Roles
 
 | No. | Role Group | Example Tasks | Verification |
 |------|------|-----------|------|
-| 1 | `Repository Metadata` | 저장소 정보, default branch 조회 | Inferred |
-| 2 | `Repository Search` | 접근 가능한 저장소 검색 | Inferred |
-| 3 | `Branch Search` | branch 검색, 기준 branch 선택 | Inferred |
-| 4 | `File Fetch` | 특정 ref 파일 조회 | Inferred |
-| 5 | `Blob Fetch` | blob SHA 기반 조회 | Inferred |
-| 6 | `Commit Fetch` | 단일 commit 메타데이터, 변경 내용 조회 | Inferred |
-| 7 | `Commit Compare` | 두 ref 간 변경 파일, 통계 비교 | Inferred |
-| 8 | `Commit Search` | commit 검색 | Inferred |
-| 9 | `Commit Status` | combined status, check 결과 조회 | Inferred |
-| 10 | `Workflow Run Lookup` | 특정 commit의 Actions run 조회 | Inferred |
-| 11 | `Workflow Jobs` | run 내부 job 목록 조회 | Inferred |
-| 12 | `Workflow Steps` | job step 상태 조회 | Inferred |
-| 13 | `Workflow Logs` | 실패 job log 조회 | Inferred |
-| 14 | `PR Metadata` | PR 제목, 상태, base/head branch 조회 | Inferred |
-| 15 | `PR Diff` | PR diff, patch 조회 | Inferred |
-| 16 | `PR Patch By File` | 파일 단위 PR patch 조회 | Inferred |
-| 17 | `PR File List` | 변경 파일 목록 조회 | Inferred |
-| 18 | `PR Discussion` | PR comment, review comment, review event 조회 | Inferred |
-| 19 | `PR Reviews` | review 목록 조회 | Inferred |
-| 20 | `PR Review Threads` | inline review thread, resolve 상태 조회 | Inferred |
-| 21 | `PR Reactions` | reaction 조회, 추가 | Inferred |
-| 22 | `PR Comment Reply` | inline review comment reply 작성 | Inferred |
-| 23 | `PR Review Submit` | approve, request changes, review 제출 | Inferred |
-| 24 | `PR Reviewer Request` | reviewer, team reviewer 요청 | Inferred |
-| 25 | `PR Ready/Draft` | Draft, Ready for Review 전환 | Inferred |
-| 26 | `PR Update` | 제목, 본문, 상태, base branch 수정 | Inferred |
-| 27 | `PR Merge` | merge, squash, rebase 실행 | Inferred |
-| 28 | `PR Auto Merge` | auto-merge 설정 | Inferred |
-| 29 | `Issue Fetch` | Issue 본문, 상태, 메타데이터 조회 | Inferred |
-| 30 | `Issue Comments` | Issue comment 조회 | Inferred |
-| 31 | `Issue Create` | Issue 생성 | Inferred |
-| 32 | `Issue Update` | 제목, 본문, 상태, milestone 수정 | Inferred |
-| 33 | `Issue Labels` | label 추가, 제거 | Inferred |
-| 34 | `Issue Assignees` | assignee 추가, 제거 | Inferred |
-| 35 | `Issue Lock` | conversation lock, unlock | Inferred |
-| 36 | `Issue Comment Update` | top-level comment 수정 | Inferred |
-| 37 | `Issue Reactions` | Issue comment reaction 처리 | Inferred |
-| 38 | `File Create` | 파일 생성 | Inferred |
-| 39 | `File Update` | 파일 수정 | Inferred |
-| 40 | `File Delete` | 파일 삭제 | Inferred |
-| 41 | `Blob Create` | blob 생성 | Inferred |
-| 42 | `Tree Create` | Git tree 생성 | Inferred |
-| 43 | `Commit Create` | Git commit 생성 | Inferred |
-| 44 | `Ref Update` | branch ref 이동, branch 생성 | Inferred |
+| 1 | `Repository Metadata` | repository metadata, default branch lookup | Inferred |
+| 2 | `Repository Search` | accessible repository search | Inferred |
+| 3 | `Branch Search` | branch search and base branch selection | Inferred |
+| 4 | `File Fetch` | fetch file by ref | Inferred |
+| 5 | `Blob Fetch` | fetch by blob SHA | Inferred |
+| 6 | `Commit Fetch` | single commit metadata and change lookup | Inferred |
+| 7 | `Commit Compare` | compare changed files and stats between refs | Inferred |
+| 8 | `Commit Search` | commit search | Inferred |
+| 9 | `Commit Status` | combined status and check result lookup | Inferred |
+| 10 | `Workflow Run Lookup` | lookup Actions runs for a commit | Inferred |
+| 11 | `Workflow Jobs` | workflow job listing | Inferred |
+| 12 | `Workflow Steps` | workflow step status lookup | Inferred |
+| 13 | `Workflow Logs` | failed job log lookup | Inferred |
+| 14 | `PR Metadata` | PR title, status, base and head branch | Inferred |
+| 15 | `PR Diff` | PR diff and patch | Inferred |
+| 16 | `PR Patch By File` | per-file PR patch lookup | Inferred |
+| 17 | `PR File List` | changed file listing | Inferred |
+| 18 | `PR Discussion` | PR comments, review comments, review events | Inferred |
+| 19 | `PR Reviews` | review listing | Inferred |
+| 20 | `PR Review Threads` | inline review thread and resolution status | Inferred |
+| 21 | `PR Reactions` | reaction lookup and creation | Inferred |
+| 22 | `PR Comment Reply` | inline review comment reply | Inferred |
+| 23 | `PR Review Submit` | approve, request changes, submit review | Inferred |
+| 24 | `PR Reviewer Request` | request reviewer or team reviewer | Inferred |
+| 25 | `PR Ready/Draft` | change Draft or Ready for Review state | Inferred |
+| 26 | `PR Update` | update title, body, state, or base branch | Inferred |
+| 27 | `PR Merge` | merge, squash, or rebase | Inferred |
+| 28 | `PR Auto Merge` | enable auto-merge | Inferred |
+| 29 | `Issue Fetch` | Issue body, state, metadata | Inferred |
+| 30 | `Issue Comments` | Issue comment lookup | Inferred |
+| 31 | `Issue Create` | create Issue | Inferred |
+| 32 | `Issue Update` | update title, body, state, or milestone | Inferred |
+| 33 | `Issue Labels` | add or remove labels | Inferred |
+| 34 | `Issue Assignees` | add or remove assignees | Inferred |
+| 35 | `Issue Lock` | lock or unlock conversation | Inferred |
+| 36 | `Issue Comment Update` | update top-level comment | Inferred |
+| 37 | `Issue Reactions` | Issue comment reactions | Inferred |
+| 38 | `File Create` | create file | Inferred |
+| 39 | `File Update` | update file | Inferred |
+| 40 | `File Delete` | delete file | Inferred |
+| 41 | `Blob Create` | create blob | Inferred |
+| 42 | `Tree Create` | create Git tree | Inferred |
+| 43 | `Commit Create` | create Git commit | Inferred |
+| 44 | `Ref Update` | move branch ref or create branch | Inferred |
 
 ### Practical Grouping
 
 | Group | Included Capabilities |
 |------|-----------|
-| Read | `Repository`, `File`, `Commit`, `PR`, `Issue` 조회 |
-| Search | `Repository`, `Branch`, code, `PR`, `Issue`, `Commit` 검색 |
+| Read | `Repository`, `File`, `Commit`, `PR`, `Issue` lookup |
+| Search | `Repository`, `Branch`, code, `PR`, `Issue`, `Commit` search |
 | Collaboration | `Review`, comment, reaction, label, assignee |
-| CI / Verification | `Actions` run, job, step, log |
-| Write | 파일 생성 / 수정 / 삭제, branch, commit, merge |
+| CI / Verification | `Actions` runs, jobs, steps, logs |
+| Write | file create, update, delete, branch, commit, merge |
 
 ---
 
 ## Role Separation
 
-현재 역할 분리:
+Current separation:
 
 - GitHub MCP Server
-   - GitHub 상태 조회
-   - Issue / comment / review / Actions 결과 조회 및 갱신
+  - GitHub state lookup
+  - Issue, comment, review, and Actions result lookup and update
 - Local MCP Server
-   - `build_tool`, `flash_tool`, `log_analyzer` 같은 local tool 실행
-   - log file, result JSON 저장
+  - local tool execution such as `build_tool`, `flash_tool`, and `log_analyzer`
+  - log files and result JSON output
 - GitHub Actions
-   - Issue event와 Local MCP 실행 경로 연결
+  - bridge between Issue events and Local MCP execution
 
-이 구분이 중요한 이유는, IDE 안에 GitHub MCP Server가 있어도 Issue 기반 Local TEST는 workflow runner 의존성이 남는다는 점을 설명하기 때문.
+This distinction matters because even if GitHub MCP Server is available inside the IDE, Issue-based local TEST execution still depends on the workflow runner path.
 
 ---
 
 ## Related
 
-- [mcp_server_local.md](mcp_server_local.md)
-- [mcp_gateway.md](mcp_gateway.md)
-- [github_templates.md](../envs/github_templates.md)
-- [github_self_hosted_runner.md](../envs/github_self_hosted_runner.md)
+- [MCP Server-Local](mcp_server_local.md)
+- [MCP Gateway](mcp_gateway.md)
+- [GitHub Templates](../envs/github_templates.md)
+- [GitHub Self Hosted Runner](../envs/github_self_hosted_runner.md)
