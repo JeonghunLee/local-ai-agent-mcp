@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="AI Agent Orchestration with MCP" name="description"/>
+<meta content="AI Agent with MCP" name="description"/>
 <meta content="Jeonghun Lee" name="author"/>
 <link href="mcp_server_github.html" rel="prev"/>
-<link href="../environments/window_wsl2_setup.html" rel="next"/>
+<link href="../envs/openclaw_wsl2_setup.html" rel="next"/>
 <link href="../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
 <title>MCP Server-Local - AI Agent MCP Docs</title>
@@ -224,30 +224,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../agents/claude_setup.html">
-<span class="md-ellipsis">
-    
-  
-    Claude Setup
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../agents/claude_mcp.html">
-<span class="md-ellipsis">
-    
-  
-    Claude MCP
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="../agents/codex.html">
 <span class="md-ellipsis">
     
@@ -265,18 +241,6 @@
     
   
     Ollama
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../agents/ollama_setup.html">
-<span class="md-ellipsis">
-    
-  
-    Ollama Setup
   
 
     
@@ -372,38 +336,20 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#current-direction">
+<a class="md-nav__link" href="#current-flows-direct">
 <span class="md-ellipsis">
       
-        Current Direction
+        Current Flows - direct
       
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#mcp-server-local">
-<span class="md-ellipsis">
-      
-        MCP Server Local
-      
-    </span>
-</a>
-<nav aria-label="MCP Server Local" class="md-nav">
+<nav aria-label="Current Flows - direct" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#github-issue-trigger">
+<a class="md-nav__link" href="#flow">
 <span class="md-ellipsis">
       
-        Github Issue Trigger
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#runner-assignment">
-<span class="md-ellipsis">
-      
-        Runner Assignment
+        Flow
       
     </span>
 </a>
@@ -412,65 +358,20 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#vs-code-configuration">
+<a class="md-nav__link" href="#current-flows-runner">
 <span class="md-ellipsis">
       
-        VS Code Configuration
+        Current Flows - runner
       
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#tool-set">
-<span class="md-ellipsis">
-      
-        Tool Set
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#protocol-flow">
-<span class="md-ellipsis">
-      
-        Protocol Flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#output-rules">
-<span class="md-ellipsis">
-      
-        Output Rules
-      
-    </span>
-</a>
-<nav aria-label="Output Rules" class="md-nav">
+<nav aria-label="Current Flows - runner" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#file-naming">
+<a class="md-nav__link" href="#flow_1">
 <span class="md-ellipsis">
       
-        File Naming
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#result-json-example">
-<span class="md-ellipsis">
-      
-        Result JSON Example
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#required-fields">
-<span class="md-ellipsis">
-      
-        Required Fields
+        Flow
       
     </span>
 </a>
@@ -479,56 +380,47 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#tool-definition-notes">
+<a class="md-nav__link" href="#flow-decision">
 <span class="md-ellipsis">
       
-        Tool Definition Notes
+        Flow Decision
       
     </span>
 </a>
-<nav aria-label="Tool Definition Notes" class="md-nav">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#test-request-flow">
+<span class="md-ellipsis">
+      
+        Test Request Flow
+      
+    </span>
+</a>
+<nav aria-label="Test Request Flow" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#flash_tool">
+<a class="md-nav__link" href="#request-source">
 <span class="md-ellipsis">
       
-        flash_tool()
+        Request Source
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#uart_capture">
+<a class="md-nav__link" href="#python-bridge">
 <span class="md-ellipsis">
       
-        uart_capture()
+        Python Bridge
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#get_debug">
+<a class="md-nav__link" href="#server-resolution">
 <span class="md-ellipsis">
       
-        get_debug()
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#channels">
-<span class="md-ellipsis">
-      
-        channels()
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#do_test_type_nn">
-<span class="md-ellipsis">
-      
-        do_test_&lt;type&gt;_&lt;nn&gt;()
+        Server Resolution
       
     </span>
 </a>
@@ -537,28 +429,37 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#agent-role">
+<a class="md-nav__link" href="#tool-execution">
 <span class="md-ellipsis">
       
-        Agent Role
+        Tool Execution
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#practical-usage">
+<a class="md-nav__link" href="#outputs">
 <span class="md-ellipsis">
       
-        Practical Usage
+        Outputs
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#related">
+<a class="md-nav__link" href="#current-limitations">
 <span class="md-ellipsis">
       
-        Related
+        Current Limitations
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related-files">
+<span class="md-ellipsis">
+      
+        Related Files
       
     </span>
 </a>
@@ -575,7 +476,7 @@
 <span class="md-ellipsis">
     
   
-    Environments
+    Envs
   
 
     
@@ -587,93 +488,41 @@
 <span class="md-nav__icon md-icon"></span>
             
   
-    Environments
+    Envs
   
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../environments/window_wsl2_setup.html">
+<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
 <span class="md-ellipsis">
     
   
-    Windows WSL2 Setup
+    OpenClaw WSL2 Setup
   
 
     
   </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Experiments
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_6">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Experiments
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../experiments/openclaw_test.html">
+<a class="md-nav__link" href="../envs/github_templates.html">
 <span class="md-ellipsis">
     
   
-    OpenClaw Test
+    GitHub Templates
   
 
     
   </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Logs
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_7">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Logs
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../logs/run_001.html">
+<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
 <span class="md-ellipsis">
     
   
-    run_001
+    GitHub Self Hosted Runner
   
 
     
@@ -709,339 +558,306 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="local-mcp-server">Local MCP Server</h1>
-<ul>
-<li>VSCode Extension -&gt; MCP Servers            <br/>
-<img alt="" src="../imgs/mcp_server_local_00.png"/></li>
-</ul>
+<p><img alt="VS Code Extension -&gt; MCP Servers" src="../imgs/mcp_server_local_00.png"/></p>
+<p>로컬 환경에서 사용하는 MCP Server 구조와 GitHub Issue 기반 Test Request 흐름을 정리한 문서다.</p>
 <h2 id="overview">Overview</h2>
-<p>Local MCP Server는 **VS Code MCP Gateway**를 통해 연결되는 로컬 실행용 MCP Server이다.</p>
-<p>현재 문서의 기준은 다음과 같다.</p>
+<p>현재 저장소는 하나의 공통 Local MCP core 위에 두 개의 entrypoint를 둔다.</p>
 <ul>
-<li>OpenClaw는 사용하지 않는다</li>
-<li>서버 등록과 실행은 <code>.vscode/mcp.json</code> 기준으로 설명한다</li>
-<li>테스트 요청의 시작점은 <code>Tag Event</code>가 아니라 **GitHub Issue Event / TEST Issue 요청**이다</li>
-<li>각 MCP Tool은 실행 결과를 **log 파일**과 **JSON 결과 파일**로 남긴다</li>
-<li>Tool 종류는 현재 운영 방향에 맞춰 최소 집합으로 유지한다</li>
+<li><code>mcp.server_local_direct.server</code></li>
+<li><code>mcp.server_local_runner.server</code></li>
 </ul>
-<p>권장 흐름:</p>
-<div class="highlight"><pre><span></span><code>GitHub Issue (TEST 요청)
-  → GitHub MCP Server로 Issue 내용 확인
-  → Local MCP Server Tool 실행
-  → logs + results JSON 저장
-  → GitHub Issue 댓글 또는 후속 문서로 보고
+<p>공통 runtime 과 tool 정의는 <code>mcp/server_local/</code> 아래에 있다.</p>
+<div class="highlight"><pre><span></span><code>mcp/
+├── scripts/
+│   ├── make_test_result.py
+│   └── run_test_request.py
+├── server_local/
+│   ├── runtime.py
+│   └── toolsets.py
+├── server_local_direct/
+│   └── server.py
+└── server_local_runner/
+    └── server.py
 </code></pre></div>
+<p>핵심 차이는 codebase 가 아니라 시작 방식이다.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Start</th>
+<th>Main Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>direct</code></td>
+<td>VS Code MCP client 가 직접 실행</td>
+<td>로컬 개발, direct MCP test</td>
+</tr>
+<tr>
+<td><code>runner</code></td>
+<td>GitHub Actions issue flow 에서 self-hosted runner 를 통해 실행</td>
+<td>GitHub Issue 기반 자동 test</td>
+</tr>
+</tbody>
+</table>
 <hr/>
-<h2 id="current-direction">Current Direction</h2>
-<p>이 문서는 현재 구현 완료 상태를 모두 설명하는 문서라기보다,<br/>
-**VS Code 기반 Local MCP Server의 목표 운영 방식**을 정리한 문서다.</p>
-<p>현재 코드 기준으로 일부 Tool은 stub이거나 축소 구현일 수 있다.<br/>
-문서의 초점은 다음 구조를 명확히 하는 데 있다.</p>
-<ol>
-<li>VS Code가 MCP Server를 시작한다</li>
-<li>GitHub Issue 기반으로 테스트 요청을 읽는다</li>
-<li>Local MCP Tool이 실제 장치/로그/디버그 데이터를 수집한다</li>
-<li>각 Tool은 <code>.log</code>와 <code>.json</code> 결과를 남긴다</li>
-<li>이후 분석 또는 보고는 GitHub MCP와 연계해 처리한다</li>
-</ol>
-<hr/>
-<h2 id="mcp-server-local">MCP Server Local</h2>
-<h3 id="github-issue-trigger">Github Issue Trigger</h3>
+<h2 id="current-flows-direct">Current Flows - direct</h2>
+<p>이 경로는 GitHub Actions 나 self-hosted runner 가 필요 없다.</p>
+<div class="highlight"><pre><span></span><code>VS Code MCP Gateway
+  -&gt; mcp-server-local-direct
+  -&gt; local MCP tools
+  -&gt; log files + tool result payload
+</code></pre></div>
+<p>주요 목적:</p>
 <ul>
-<li><strong>GitHub Issue 기반 TEST 요청</strong> </li>
-<li>사용자는 <a href="../../.github/issue_template/test_request.md">test_request.md</a> 템플릿으로 TEST 이슈생성    <ul>
-<li><a href="../github/github_templates.html">Github Template</a> </li>
+<li>로컬 개발</li>
+<li>direct MCP client test</li>
+<li>manual tool 확인</li>
 </ul>
-</li>
-<li><code>Target Runner</code>, 테스트 종류, 장치/이미지, 반복 횟수, 제약 사항을 기록       <ul>
-<li><a href="../github/self-hosted_runner.html">Self-Hosted Runner</a> </li>
-</ul>
-</li>
-<li>AI Agent 또는 운영자가 GitHub MCP Server로 이슈 내용 분석   </li>
-<li>Local MCP Tool 실행    </li>
-<li>TEST 결과보고     <ul>
-<li>Result : Json 과 Log    </li>
-<li>GitHub Issue 보고       </li>
-</ul>
-</li>
-</ul>
-<h3 id="runner-assignment">Runner Assignment</h3>
-<p>여러 실행 주체가 있을 경우 <code>Target Runner</code> 값으로 담당 대상을 구분한다.</p>
+<p>Entrypoint:</p>
 <ul>
-<li>예: <code>local-dev</code>, <code>lab-node-01</code>, <code>qemu-runner</code>, <code>windows-host</code></li>
-<li>실행 주체는 자신에게 해당하는 <code>Target Runner</code> 요청만 처리한다</li>
-<li>처리 시작 시 assignee 또는 label로 실행 중 상태를 표시할 수 있다</li>
+<li><code>python -m mcp.server_local_direct.server</code></li>
 </ul>
-<hr/>
-<h2 id="vs-code-configuration">VS Code Configuration</h2>
-<p>Local MCP Server는 <code>.vscode/mcp.json</code>으로 등록.   </p>
-<p>예시:</p>
+<p>VS Code 설정 예시:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"mcp-server-local"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"mcp-server-local-direct"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stdio"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:\\Python314\\python.exe"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"-X"</span><span class="p">,</span><span class="w"> </span><span class="s2">"utf8"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-m"</span><span class="p">,</span><span class="w"> </span><span class="s2">"mcp.main.server_local"</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"-m"</span><span class="p">,</span><span class="w"> </span><span class="s2">"mcp.server_local_direct.server"</span><span class="p">],</span>
 <span class="w">      </span><span class="nt">"cwd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${workspaceFolder}"</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>의미:</p>
-<ul>
-<li>VS Code가 <code>mcp-server-local</code> 프로세스를 시작</li>
-<li>MCP <code>initialize</code>, <code>tools/list</code>, <code>tools/call</code>은 VS Code MCP Gateway를 통해 전달</li>
-<li>Tool discovery와 Tool 호출은 VS Code 내부 MCP 시스템이 처리</li>
-</ul>
+<h3 id="flow">Flow</h3>
+<pre class="mermaid"><code>flowchart LR
+    A["VS Code MCP Gateway"] --&gt; B["mcp-server-local-direct"]
+    B --&gt; C["Local tools"]
+    C --&gt; D["log files + tool result payload"]</code></pre>
 <hr/>
-<h2 id="tool-set">Tool Set</h2>
-<p>문서 기준 Local MCP Server의 목표 Tool 집합.</p>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>목적</th>
-<th>설명</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>flash_tool()</code></td>
-<td>이미지 반영</td>
-<td>장치 또는 대상 환경에 펌웨어/이미지 반영</td>
-</tr>
-<tr>
-<td><code>uart_capture()</code></td>
-<td>UART 로그 수집</td>
-<td>시리얼 포트 기반 런타임 로그 수집</td>
-</tr>
-<tr>
-<td><code>get_debug()</code></td>
-<td>디버그 정보 수집</td>
-<td>디버그 덤프, 상태 정보, 추가 진단 데이터 수집</td>
-</tr>
-<tr>
-<td><code>channels()</code></td>
-<td>결과 전달</td>
-<td>GitHub 등 외부 채널로 결과 또는 알림 전달</td>
-</tr>
-<tr>
-<td><code>do_test_&lt;type&gt;_&lt;nn&gt;()</code></td>
-<td>테스트 실행 단위</td>
-<td>특정 테스트 시나리오를 독립 Tool로 정의</td>
-</tr>
-</tbody>
-</table>
-<p>설계 의도:</p>
-<ul>
-<li>Tool은 너무 크게 뭉치지 않고 역할별로 나눈다</li>
-<li><code>do_test_&lt;type&gt;_&lt;nn&gt;()</code>는 실제 테스트 시나리오 단위를 표현한다</li>
-<li><code>uart_capture()</code>와 <code>get_debug()</code>는 테스트 내부 또는 독립 단계에서 사용될 수 있다</li>
-<li>결과 전달은 <code>channels()</code>가 담당한다</li>
-</ul>
-<hr/>
-<h2 id="protocol-flow">Protocol Flow</h2>
-<pre class="mermaid"><code>sequenceDiagram
-    participant U as User / Operator
-    participant GH as GitHub Issue
-    participant GM as GitHub MCP Server
-    participant VG as VS Code MCP Gateway
-    participant LM as Local MCP Server
-    participant J as log + result.json
-
-    U-&gt;&gt;GH: TEST Issue 생성
-    GM-&gt;&gt;GH: Issue 내용 조회
-    VG-&gt;&gt;LM: tools/call
-    LM-&gt;&gt;LM: flash_tool / uart_capture / get_debug / do_test_* 실행
-    LM--&gt;&gt;J: .log + .json 저장
-    VG-&gt;&gt;GM: 결과 보고용 후속 호출</code></pre>
-<p>실행 관점에서 보면:</p>
-<ol>
-<li>GitHub Issue가 테스트 요청을 담는다</li>
-<li>GitHub MCP Server가 요청 내용을 읽는다</li>
-<li>VS Code MCP Gateway를 통해 Local MCP Tool이 호출된다</li>
-<li>Local MCP Server는 로그와 JSON 결과를 저장한다</li>
-<li>이후 요약/분석/보고는 GitHub MCP와 연계한다</li>
-</ol>
-<hr/>
-<h2 id="output-rules">Output Rules</h2>
-<p>각 Tool 실행 결과는 최소 두 가지 산출물을 남기는 것을 목표로 한다.</p>
-<ul>
-<li><strong>Log file</strong>: 원시 실행 로그</li>
-<li><strong>JSON result file</strong>: 구조화된 실행 결과 요약</li>
-</ul>
-<h3 id="file-naming">File Naming</h3>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Log file</th>
-<th>JSON result</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>flash_tool()</code></td>
-<td><code>logs/flash_&lt;timestamp&gt;.log</code></td>
-<td><code>results/flash_&lt;timestamp&gt;.json</code></td>
-</tr>
-<tr>
-<td><code>uart_capture()</code></td>
-<td><code>logs/uart_&lt;timestamp&gt;.log</code></td>
-<td><code>results/uart_&lt;timestamp&gt;.json</code></td>
-</tr>
-<tr>
-<td><code>get_debug()</code></td>
-<td><code>logs/debug_&lt;timestamp&gt;.log</code></td>
-<td><code>results/debug_&lt;timestamp&gt;.json</code></td>
-</tr>
-<tr>
-<td><code>do_test_&lt;type&gt;_&lt;nn&gt;()</code></td>
-<td><code>logs/test_&lt;type&gt;_&lt;nn&gt;_&lt;timestamp&gt;.log</code></td>
-<td><code>results/test_&lt;type&gt;_&lt;nn&gt;_&lt;timestamp&gt;.json</code></td>
-</tr>
-<tr>
-<td><code>channels()</code></td>
-<td><code>logs/channels_&lt;timestamp&gt;.log</code></td>
-<td><code>results/channels_&lt;timestamp&gt;.json</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="result-json-example">Result JSON Example</h3>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"tool"</span><span class="p">:</span><span class="w"> </span><span class="s2">"do_test_uart_01"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-04-17T10:00:00Z"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"exit_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"log_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logs/test_uart_01_20260417T100000.log"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"duration_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">1200</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"context"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/dev/ttyUSB0"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"issue_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<h2 id="current-flows-runner">Current Flows - runner</h2>
+<p>이 경로는 GitHub Actions 와 self-hosted runner 가 필요하다.</p>
+<div class="highlight"><pre><span></span><code>GitHub Issue
+  -&gt; GitHub Actions workflow
+  -&gt; Python bridge (mcp.scripts.run_test_request)
+  -&gt; mcp-server-local-direct or mcp-server-local-runner
+  -&gt; results/logs/mcp/server_local + results/*.json
+  -&gt; GitHub Issue comment
 </code></pre></div>
-<h3 id="required-fields">Required Fields</h3>
-<table>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>tool</code></td>
-<td>실행한 Tool 이름</td>
-</tr>
-<tr>
-<td><code>timestamp</code></td>
-<td>실행 시각</td>
-</tr>
-<tr>
-<td><code>status</code></td>
-<td><code>success</code> / <code>error</code></td>
-</tr>
-<tr>
-<td><code>exit_code</code></td>
-<td>프로세스 또는 실행 결과 코드</td>
-</tr>
-<tr>
-<td><code>log_path</code></td>
-<td>관련 로그 파일 경로</td>
-</tr>
-<tr>
-<td><code>duration_ms</code></td>
-<td>실행 시간</td>
-</tr>
-<tr>
-<td><code>context</code></td>
-<td>Issue 요청 또는 테스트 파라미터</td>
-</tr>
-</tbody>
-</table>
+<p>현재 workflow:</p>
+<ul>
+<li><code>.github/workflows/test_request_local.yaml</code></li>
+</ul>
+<p>현재 runner requirement:</p>
+<ul>
+<li><code>runs-on: [self-hosted, local-dev]</code></li>
+</ul>
+<p>즉 issue 기반 test 요청은 <code>local-dev</code> 라벨을 가진 self-hosted runner 가 online 상태일 때 동작한다.</p>
+<p>중요한 점:</p>
+<ul>
+<li><code>server_local_direct</code> 자체는 GitHub Actions 없이도 실행 가능</li>
+<li>하지만 <code>Issue -&gt; Action -&gt; result comment</code> 경로는 workflow 가 self-hosted runner 위에서 동작하므로 runner 가 필요</li>
+</ul>
+<h3 id="flow_1">Flow</h3>
+<pre class="mermaid"><code>flowchart LR
+    A["GitHub Issue&lt;br/&gt;Test Request"] --&gt; B["GitHub Actions"]
+    B --&gt; D["Self-hosted Runner&lt;br/&gt;[self-hosted, local-dev]"]
+    D --&gt; E["Python bridge&lt;br/&gt;mcp.scripts.run_test_request"]
+    E --&gt; F["mcp-server-local-direct&lt;br/&gt;or&lt;br/&gt;mcp-server-local-runner"]
+    F --&gt; G["selected tools"]
+    G --&gt; I["results/logs/mcp/server_local&lt;br/&gt;results/*.json"]
+    I --&gt; C["GitHub MCP Server"]
+    C --&gt; H["Comment result on issue"]</code></pre>
 <hr/>
-<h2 id="tool-definition-notes">Tool Definition Notes</h2>
-<h3 id="flash_tool"><code>flash_tool()</code></h3>
+<h2 id="flow-decision">Flow Decision</h2>
+<p><code>direct</code> 를 쓰는 경우:</p>
 <ul>
-<li>목적: 테스트 대상 장치/환경에 이미지 반영</li>
-<li>입력 예시: <code>image</code>, <code>interface</code>, <code>target</code></li>
-<li>출력: flash 로그 + flash 결과 JSON</li>
+<li>VS Code 나 local client 에서 Local MCP Server 를 직접 띄우고 싶을 때</li>
+<li>GitHub Issue 자동화가 필요 없을 때</li>
+<li>server 자체를 빠르게 검증하고 싶을 때</li>
 </ul>
-<h3 id="uart_capture"><code>uart_capture()</code></h3>
+<p>issue 기반 runner flow 를 쓰는 경우:</p>
 <ul>
-<li>목적: UART 기반 로그 수집</li>
-<li>입력 예시: <code>port</code>, <code>baudrate</code>, <code>timeout</code></li>
-<li>출력: uart 로그 + uart 결과 JSON</li>
-</ul>
-<h3 id="get_debug"><code>get_debug()</code></h3>
-<ul>
-<li>목적: 추가 디버그 정보 수집</li>
-<li>예: 레지스터 상태, 진단 텍스트, 디버그 덤프, 상태 파일</li>
-<li>출력: debug 로그 + debug 결과 JSON</li>
-</ul>
-<h3 id="channels"><code>channels()</code></h3>
-<ul>
-<li>목적: 결과 전달 또는 알림 전송</li>
-<li>예: GitHub Issue 댓글, Slack, 이메일</li>
-<li>출력: channels 로그 + channels 결과 JSON</li>
-</ul>
-<h3 id="do_test_type_nn"><code>do_test_&lt;type&gt;_&lt;nn&gt;()</code></h3>
-<ul>
-<li>목적: 구체적인 테스트 시나리오 1개를 독립 Tool로 정의</li>
-<li>예: <code>do_test_uart_01</code>, <code>do_test_smoke_01</code>, <code>do_test_boot_01</code></li>
-<li>출력: 각 테스트별 로그 + 결과 JSON</li>
-</ul>
-<p>이 naming 방식의 장점:</p>
-<ul>
-<li>테스트 시나리오가 Tool 이름만으로 드러남</li>
-<li>GitHub Issue 요청과 테스트 결과를 쉽게 매핑 가능</li>
-<li>이후 실패 패턴 분석과 문서화가 쉬움</li>
+<li>GitHub Test Request issue 로 실행을 시작하고 싶을 때</li>
+<li>결과를 artifact, JSON, log, issue comment 로 남기고 싶을 때</li>
+<li>특정 self-hosted runner 로 라우팅하고 싶을 때</li>
 </ul>
 <hr/>
-<h2 id="agent-role">Agent Role</h2>
-<table>
-<thead>
-<tr>
-<th>Agent</th>
-<th>Role</th>
-<th>Access</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Local AI</td>
-<td>실행 전담</td>
-<td><code>flash_tool</code>, <code>uart_capture</code>, <code>get_debug</code>, <code>do_test_*</code>, <code>channels</code></td>
-</tr>
-<tr>
-<td>Remote / Sub AI</td>
-<td>분석 및 보고</td>
-<td>JSON 결과와 로그를 읽고 요약/분석</td>
-</tr>
-<tr>
-<td>GitHub MCP</td>
-<td>요청/보고 연결</td>
-<td>Issue 조회, 댓글 작성, 상태 반영</td>
-</tr>
-</tbody>
-</table>
-<hr/>
-<h2 id="practical-usage">Practical Usage</h2>
-<p>현재 구조에서 현실적인 사용 예시는 아래와 같다.</p>
+<h2 id="test-request-flow">Test Request Flow</h2>
+<p>현재 자동 Test Request 흐름:</p>
+<div class="highlight"><pre><span></span><code>GitHub Issue
+  -&gt; test_request_local.yaml
+  -&gt; mcp.scripts.run_test_request
+  -&gt; selected local MCP server
+  -&gt; selected tools
+  -&gt; results JSON + log files
+  -&gt; GitHub Issue result comment
+</code></pre></div>
+<h3 id="request-source">Request Source</h3>
+<p>issue body format source:</p>
+<ul>
+<li><code>.github/ISSUE_TEMPLATE/test_request_direct.yml</code></li>
+<li><code>.github/ISSUE_TEMPLATE/test_request_runner.yml</code></li>
+</ul>
+<p>현재 template 주요 항목:</p>
+<ul>
+<li><code>Template Version</code></li>
+<li><code>Target Runner</code></li>
+<li><code>Branch / Tag / Commit</code></li>
+<li>category checklist</li>
+<li><code>Setup Tools Checklist</code></li>
+<li><code>Test Tools Checklist</code></li>
+<li><code>Log Tools Checklist</code></li>
+</ul>
+<p>관련 문서:</p>
+<ul>
+<li><a href="../envs/github_templates.html">github_templates.md</a></li>
+</ul>
+<h3 id="python-bridge">Python Bridge</h3>
+<p>bridge script:</p>
+<ul>
+<li><code>mcp/scripts/run_test_request.py</code></li>
+</ul>
+<p>역할:</p>
 <ol>
-<li>GitHub에 <code>Test Request</code> 이슈 생성</li>
-<li>이슈에 대상 ref, 테스트 종류, 장치 정보 기록</li>
-<li>GitHub MCP Server로 이슈 확인</li>
-<li>Local MCP Server에서 필요한 Tool 실행</li>
-<li><code>logs/</code>와 <code>results/</code>에 실행 결과 저장</li>
-<li>GitHub MCP Server로 결과를 이슈에 댓글 또는 상태로 보고</li>
+<li>issue body parsing</li>
+<li><code>MCP Server Mode</code> 검증</li>
+<li><code>runner</code> mode 일 때 <code>Target Runner</code> 검증</li>
+<li>체크된 category 와 tool 목록 해석</li>
+<li>Local MCP Server subprocess 실행</li>
+<li>MCP tool 호출</li>
+<li>result JSON 저장</li>
+<li>workflow 가 최종 issue comment 를 달 수 있도록 결과 제공</li>
 </ol>
-<hr/>
-<h2 id="related">Related</h2>
+<p>실행 방식:</p>
 <ul>
-<li><a href="mcp_gateway.html">mcp_gateway.md</a> — VS Code MCP Gateway와 다중 MCP Server 연결</li>
-<li><a href="mcp_server_github.html">mcp_server_github.md</a> — GitHub MCP Server 역할</li>
-<li><a href="../../.github/issue_template/test_request.md">test_request.md</a> — TEST 요청용 Issue 템플릿</li>
+<li><code>run_test_request.py</code> 는 tool 을 직접 실행하지 않음</li>
+<li><code>resolve_server_module()</code> 로 선택된 mode 에 따라 server module 결정</li>
+<li><code>direct</code> 면 <code>mcp.server_local_direct.server</code></li>
+<li><code>runner</code> 면 <code>mcp.server_local_runner.server</code></li>
+<li>이후 <code>call_local_mcp()</code> 에서 <code>python -m &lt;server module&gt;</code> 형태로 subprocess 실행</li>
+<li>표준입력(stdin) 으로 JSON-RPC 요청 전달</li>
+<li>요청 순서:</li>
+<li><code>initialize</code></li>
+<li><code>notifications/initialized</code></li>
+<li><code>tools/list</code></li>
+<li><code>tools/call</code></li>
+<li>표준출력(stdout) 으로 반환된 <code>tools/call</code> 응답을 파싱해서 결과 JSON 과 issue comment payload 생성</li>
+</ul>
+<p>즉 실제 runner flow 는 다음처럼 동작한다.</p>
+<div class="highlight"><pre><span></span><code>run_test_request.py
+  -&gt; mcp.server_local_runner.server subprocess 실행
+  -&gt; JSON-RPC 요청 전송
+  -&gt; tool execution result 수신
+  -&gt; results/Github-ISSUE-TR-&lt;issue_number&gt;.json 저장
+</code></pre></div>
+<pre class="mermaid"><code>flowchart LR
+    A["run_test_request.py"] --&gt; B["resolve_server_module()"]
+    B --&gt; C["mcp.server_local_runner.server&lt;br/&gt;subprocess"]
+    A --&gt; D["JSON-RPC payload 생성"]
+    D --&gt; C
+    C --&gt; E["initialize"]
+    C --&gt; F["tools/list"]
+    C --&gt; G["tools/call"]
+    G --&gt; H["tool execution result"]
+    H --&gt; I["results/Github-ISSUE-TR-&lt;issue_number&gt;.json"]
+    H --&gt; J["GitHub issue comment payload"]</code></pre>
+<h3 id="server-resolution">Server Resolution</h3>
+<p>현재 resolution logic:</p>
+<ul>
+<li><code>direct</code> -&gt; <code>mcp.server_local_direct.server</code></li>
+<li><code>runner</code> -&gt; <code>mcp.server_local_runner.server</code></li>
+</ul>
+<p>현재 server name:</p>
+<ul>
+<li><code>mcp-server-local-direct</code></li>
+<li><code>mcp-server-local-runner</code></li>
+</ul>
+<hr/>
+<h2 id="tool-execution">Tool Execution</h2>
+<p>현재 tool set 정의 위치:</p>
+<ul>
+<li><code>mcp/server_local/toolsets.py</code></li>
+</ul>
+<p>현재 tool catalog 는 category 기반으로 관리된다.</p>
+<ul>
+<li><code>setup</code></li>
+<li><code>test</code></li>
+<li><code>log</code></li>
+</ul>
+<p>예시 tool:</p>
+<ul>
+<li><code>check_version</code></li>
+<li><code>setup_python</code></li>
+<li><code>flash_tool</code></li>
+<li><code>test_ping_00</code></li>
+<li><code>test_ping_11</code></li>
+<li><code>test_ping_22</code></li>
+<li><code>get_serial_log</code></li>
+<li><code>log_analyzer</code></li>
+<li><code>log_snapshot</code></li>
+</ul>
+<p>Test Request template 은 한 issue 에서 하나의 category 만 선택하도록 설계되어 있다.</p>
+<p>Python bridge 는 체크된 category 안의 tool 들을 순서대로 실행하고, 결과를 하나의 JSON 에 저장한다.</p>
+<p>전체 status 규칙:</p>
+<ul>
+<li>모든 tool 이 성공하면 <code>success</code></li>
+<li>하나라도 실패하면 <code>error</code></li>
+</ul>
+<hr/>
+<h2 id="outputs">Outputs</h2>
+<p>현재 output directory:</p>
+<ul>
+<li><code>results/logs/mcp/server_local/</code></li>
+<li><code>results/</code></li>
+</ul>
+<p>현재 runtime log 예시:</p>
+<ul>
+<li><code>results/logs/mcp/server_local/runner.log</code></li>
+<li><code>results/logs/mcp/server_local/runner-check_version.log</code></li>
+<li><code>results/logs/mcp/server_local/runner-flash_tool.log</code></li>
+<li><code>results/logs/mcp/server_local/runner-log_analyzer.log</code></li>
+</ul>
+<p>현재 issue result JSON:</p>
+<ul>
+<li><code>results/Github-ISSUE-TR-&lt;issue_number&gt;.json</code></li>
+</ul>
+<p>현재 result JSON 주요 항목:</p>
+<ul>
+<li>request metadata</li>
+<li>template version</li>
+<li>resolved MCP server</li>
+<li>selected tools</li>
+<li>tool 별 실행 결과</li>
+<li>tool 별 log path</li>
+</ul>
+<p>workflow 는 이 파일을 artifact 로 업로드하고, formatting 후 issue comment 를 작성한다.</p>
+<hr/>
+<h2 id="current-limitations">Current Limitations</h2>
+<p>현재 구현은 테스트 중심의 local harness 성격이 강하다.</p>
+<ul>
+<li>일부 tool 은 stub 구현</li>
+<li>log file naming 은 timestamp 기반이 아니라 tool name 기반</li>
+<li>issue comment formatting 은 workflow script 에서 수행</li>
+<li>issue 기반 flow 는 self-hosted runner availability 에 의존</li>
+</ul>
+<p>즉 현재 포지션은 다음처럼 보는 것이 맞다.</p>
+<ul>
+<li>practical 한 Local MCP Server 기반</li>
+<li>GitHub Issue 기반 test harness</li>
+<li>이후 실제 build, flash, log analysis 동작으로 확장 가능한 구조</li>
+</ul>
+<hr/>
+<h2 id="related-files">Related Files</h2>
+<ul>
+<li><a href="mcp_gateway.html">mcp_gateway.md</a></li>
+<li><a href="mcp_server_github.html">mcp_server_github.md</a></li>
+<li><a href="../envs/github_templates.html">github_templates.md</a></li>
+<li><a href="../envs/github_self_hosted_runner.html">github_self_hosted_runner.md</a></li>
+<li><a href="../../.github/ISSUE_TEMPLATE/test_request_direct.yml">test_request_direct.yml</a></li>
+<li><a href="../../.github/ISSUE_TEMPLATE/test_request_runner.yml">test_request_runner.yml</a></li>
 </ul>
 </article>
 </div>
@@ -1068,13 +884,13 @@
               </div>
 </div>
 </a>
-<a aria-label="다음: Windows WSL2 Setup" class="md-footer__link md-footer__link--next" href="../environments/window_wsl2_setup.html">
+<a aria-label="다음: OpenClaw WSL2 Setup" class="md-footer__link md-footer__link--next" href="../envs/openclaw_wsl2_setup.html">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 다음
               </span>
 <div class="md-ellipsis">
-                Windows WSL2 Setup
+                OpenClaw WSL2 Setup
               </div>
 </div>
 <div class="md-footer__button md-icon">

@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="AI Agent Orchestration with MCP" name="description"/>
+<meta content="AI Agent with MCP" name="description"/>
 <meta content="Jeonghun Lee" name="author"/>
 <link href="../index.html" rel="prev"/>
 <link href="../agents/claude.html" rel="next"/>
@@ -203,6 +203,15 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#scope">
+<span class="md-ellipsis">
+      
+        Scope
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#ai-agents">
 <span class="md-ellipsis">
       
@@ -219,12 +228,83 @@
       
     </span>
 </a>
+<nav aria-label="Remote AI Agents" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#responsibility">
+<span class="md-ellipsis">
+      
+        Responsibility
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment">
+<span class="md-ellipsis">
+      
+        Deployment
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-model">
+<span class="md-ellipsis">
+      
+        Practical Model
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#local-ai-agents">
 <span class="md-ellipsis">
       
         Local AI Agents
+      
+    </span>
+</a>
+<nav aria-label="Local AI Agents" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#characteristics">
+<span class="md-ellipsis">
+      
+        Characteristics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examples">
+<span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage">
+<span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-diagram">
+<span class="md-ellipsis">
+      
+        System Diagram
       
     </span>
 </a>
@@ -248,29 +328,87 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#system-diagram">
+<a class="md-nav__link" href="#cicdct-automation">
 <span class="md-ellipsis">
       
-        System Diagram
+        CI/CD/CT Automation
       
     </span>
 </a>
-<nav aria-label="System Diagram" class="md-nav">
+<nav aria-label="CI/CD/CT Automation" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#version-a">
+<a class="md-nav__link" href="#scope_1">
 <span class="md-ellipsis">
       
-        Version A
+        Scope
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#version-b">
+<a class="md-nav__link" href="#github-issue-based-entry">
 <span class="md-ellipsis">
       
-        Version B
+        GitHub Issue Based Entry
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#automation-components">
+<span class="md-ellipsis">
+      
+        Automation Components
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#issue-based-flow">
+<span class="md-ellipsis">
+      
+        Issue Based Flow
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#main-flows">
+<span class="md-ellipsis">
+      
+        Main Flows
+      
+    </span>
+</a>
+<nav aria-label="Main Flows" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct-mcp-flow">
+<span class="md-ellipsis">
+      
+        Direct MCP Flow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#runner-test-request-flow">
+<span class="md-ellipsis">
+      
+        Runner Test Request Flow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#direct-test-request-flow">
+<span class="md-ellipsis">
+      
+        Direct Test Request Flow
       
     </span>
 </a>
@@ -286,6 +424,46 @@
       
     </span>
 </a>
+<nav aria-label="Component Details" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vs-code-mcp-gateway">
+<span class="md-ellipsis">
+      
+        VS Code MCP Gateway
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-mcp-server">
+<span class="md-ellipsis">
+      
+        Local MCP Server
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#github-mcp-server">
+<span class="md-ellipsis">
+      
+        GitHub MCP Server
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python-bridge">
+<span class="md-ellipsis">
+      
+        Python Bridge
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#installation-locations">
@@ -297,35 +475,13 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#agent-workflow">
+<a class="md-nav__link" href="#design-principles">
 <span class="md-ellipsis">
       
-        Agent Workflow
+        Design Principles
       
     </span>
 </a>
-<nav aria-label="Agent Workflow" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#harness-version-a">
-<span class="md-ellipsis">
-      
-        Harness Version A
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#harness-version-b">
-<span class="md-ellipsis">
-      
-        Harness Version B
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#related">
@@ -378,30 +534,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../agents/claude_setup.html">
-<span class="md-ellipsis">
-    
-  
-    Claude Setup
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../agents/claude_mcp.html">
-<span class="md-ellipsis">
-    
-  
-    Claude MCP
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="../agents/codex.html">
 <span class="md-ellipsis">
     
@@ -419,18 +551,6 @@
     
   
     Ollama
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../agents/ollama_setup.html">
-<span class="md-ellipsis">
-    
-  
-    Ollama Setup
   
 
     
@@ -508,7 +628,7 @@
 <span class="md-ellipsis">
     
   
-    Environments
+    Envs
   
 
     
@@ -520,93 +640,41 @@
 <span class="md-nav__icon md-icon"></span>
             
   
-    Environments
+    Envs
   
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../environments/window_wsl2_setup.html">
+<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
 <span class="md-ellipsis">
     
   
-    Windows WSL2 Setup
+    OpenClaw WSL2 Setup
   
 
     
   </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Experiments
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_6">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Experiments
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../experiments/openclaw_test.html">
+<a class="md-nav__link" href="../envs/github_templates.html">
 <span class="md-ellipsis">
     
   
-    OpenClaw Test
+    GitHub Templates
   
 
     
   </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Logs
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_7">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Logs
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../logs/run_001.html">
+<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
 <span class="md-ellipsis">
     
   
-    run_001
+    GitHub Self Hosted Runner
   
 
     
@@ -642,508 +710,447 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="system-design">System Design</h1>
+<h2 id="scope">Scope</h2>
+<ul>
+<li>AI Agent structure</li>
+<li>MCP connection model</li>
+<li>GitHub integration model</li>
+<li>CI/CD/CT automation path</li>
+</ul>
+<hr/>
 <h2 id="ai-agents">AI Agents</h2>
-<ul>
-<li>AI Agent 갯수     <ul>
-<li>Max 3개 (Main/Sub/Local AI 각자) </li>
-<li>Min 1개 (Main/Sub/Local AI 동시) </li>
-</ul>
-</li>
-</ul>
-<h2 id="remote-ai-agents">Remote AI Agents</h2>
-<ul>
-<li>Main AI Agent        </li>
-<li>
-<p>역할: 코드 생성, 문서 생성    </p>
-</li>
-<li>
-<p>Sub AI Agent       </p>
-</li>
-<li>
-<p>역할: 코드 리뷰, 테스트 분석, 테스트 문서 작성     </p>
-</li>
-<li>
-<p>Agent (default)      </p>
-<ul>
-<li>Main: Claude (코드/문서 생성)     </li>
-<li>Sub: Codex (리뷰/테스트 분석)    </li>
-</ul>
-</li>
-</ul>
-<p>Gemini/Copliot/이외 더 고려 </p>
-<h2 id="local-ai-agents">Local AI Agents</h2>
-<ul>
-<li>
-<p>Local AI Agent    </p>
-<ul>
-<li>Sub AI Agent로 대체 가능     </li>
-<li>Local로 동작할 경우 아래로 구성        </li>
-</ul>
-</li>
-<li>
-<p>Agent 구성방법      </p>
-<ul>
-<li><strong>Ollama (Windows / Linux / Mac)</strong> </li>
-<li>MLX (Mac only)         </li>
-<li>vLLM (고성능 Local / Server)   </li>
-</ul>
-</li>
-<li>
-<p>Agent 모델 선택  </p>
-<ul>
-<li>각 목적에 맞게 선택 </li>
-</ul>
-</li>
-<li>
-<p>Local 사용목적     </p>
-<ul>
-<li>Remote API 비용절감 (Main AI/Sub AI)          </li>
-<li>Local 반복 자동화     </li>
-<li>CI/CD 후 CT 주목적    </li>
-</ul>
-</li>
-</ul>
-<p>최근에는 Remote AI만으로도 대부분 가능하며, 비용 부담이 없다면 Local 대신 Remote 중심으로 운영.    </p>
-<h2 id="ai-agent-working">AI Agent Working</h2>
-<ul>
-<li>
-<p>AI Agent 역할 과 순서 </p>
-<ul>
-<li>Main AI: 코드 생성, 문서 생성</li>
-<li>Sub AI: 코드 리뷰, TEST 분석, TEST 문서 작성</li>
-<li>Local AI: 실행 전담 + result.json 와 Log 확인 + 에러 시 반복 실행 (기본: Ollama)</li>
-<li>User: 최종 승인</li>
-</ul>
-</li>
-<li>
-<p>AI Agent 와 Openclaw 연결 </p>
-<ul>
-<li>openclaw </li>
-<li>각 Channel 연결  </li>
-<li>E-Mail 자동발송  </li>
-<li>Github 비롯하여, Slack 과 연결 </li>
-</ul>
-</li>
-</ul>
-<h2 id="agent-interference">Agent Interference</h2>
-<ul>
-<li>Agent 간 직접 호출 없음 — <code>result.json</code> 과 'log' 을 매개로 연결</li>
-<li>Local AI: Tool 실행 후 <code>result.json</code> 과 'log' 저장, 이후 관여 없음</li>
-<li>Sub AI: <code>result.json</code> 과 'log' 읽어 분석, 에러 시에만 개입</li>
-<li>각 Agent는 자신의 역할 범위 밖에 간섭하지 않음</li>
-</ul>
-<div class="highlight"><pre><span></span><code>Local AI  →  result.json  →  Sub AI
-  (실행)      (매개)        (감시·분석)
-</code></pre></div>
 <table>
 <thead>
 <tr>
-<th>원칙</th>
-<th>내용</th>
+<th>Agent</th>
+<th>Main Role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>단방향 데이터 흐름</td>
-<td>Local AI → JSON → Remote Sub, 역방향 없음</td>
+<td>Main AI Agent</td>
+<td>code generation, document updates, task structure</td>
 </tr>
 <tr>
-<td>역할 분리</td>
-<td>Local AI: 실행·반복 / Sub: 깊은 분석·문서</td>
+<td>Sub AI Agent</td>
+<td>review, test result analysis, issue and PR follow-up</td>
 </tr>
 <tr>
-<td>반복 실행</td>
-<td>Local AI가 result.json 확인 후 에러 시 재실행, 여러 TEST 반복으로 문제 패턴 수집</td>
-</tr>
-<tr>
-<td>에러 시에만 개입</td>
-<td>정상 완료 시 Sub는 완료 보고만, 불필요한 호출 없음</td>
-</tr>
-<tr>
-<td>Remote Agent 최소화</td>
-<td>Max 2개 (Main + Sub), 1개 구성도 가능</td>
+<td>Local AI Agent</td>
+<td>optional local helper, repeated execution support, environment side tasks</td>
 </tr>
 </tbody>
 </table>
-<p><img alt="" src="../imgs/openclaw_00.png"/></p>
+<p>Notes:</p>
+<ul>
+<li>role split first</li>
+<li>deployment shape second</li>
+<li>fixed product mapping not required</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>Main: Claude or Codex</li>
+<li>Sub: Codex or Claude</li>
+<li>Local: Ollama</li>
+</ul>
+<hr/>
+<h2 id="remote-ai-agents">Remote AI Agents</h2>
+<h3 id="responsibility">Responsibility</h3>
+<ul>
+<li>code generation</li>
+<li>document writing</li>
+<li>task split</li>
+<li>review</li>
+<li>test result analysis</li>
+<li>GitHub follow-up</li>
+</ul>
+<h3 id="deployment">Deployment</h3>
+<ul>
+<li>baseline</li>
+<li>one Remote AI Agent</li>
+<li>optional extension</li>
+<li>add Local AI Agent</li>
+</ul>
+<h3 id="practical-model">Practical Model</h3>
+<ul>
+<li>one Remote AI Agent can perform both Main AI and Sub AI roles</li>
+<li>separate Main AI and Sub AI is an operating model, not a hard requirement</li>
+</ul>
+<hr/>
+<h2 id="local-ai-agents">Local AI Agents</h2>
+<h3 id="characteristics">Characteristics</h3>
+<ul>
+<li>optional component</li>
+<li>local execution support</li>
+<li>partial Sub AI replacement possible</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<ul>
+<li>Ollama</li>
+<li>MLX</li>
+<li>vLLM</li>
+</ul>
+<h3 id="usage">Usage</h3>
+<ul>
+<li>remote API cost reduction</li>
+<li>repeated local test support</li>
+<li>local log and file based analysis support</li>
+</ul>
+<hr/>
 <h2 id="system-diagram">System Diagram</h2>
-<h3 id="version-a">Version A</h3>
-<p><strong>with OpenClaw</strong></p>
-<p>OpenClaw이 채널 담당, MCP는 <code>channels()</code> 미사용.</p>
 <pre class="mermaid"><code>graph TD
-    subgraph UserCLI["Local User"]
-        MainAICLI["Main AI CLI"]
-        SubAICLI["Sub AI CLI"]
-        VSCode["VS Code · Copilot"]
+    subgraph UserLayer["User / IDE"]
+        User["User"]
+        VSCode["VS Code"]
     end
 
-    subgraph Remote["Remote Cloud"]
-        MainAI["Main AI API"]
-        SubAI["Sub AI API"]
+    subgraph Agents["AI Agents"]
+        MainAI["Main AI Agent"]
+        SubAI["Sub AI Agent"]
+        LocalAI["Local AI Agent"]
     end
 
-    subgraph LocalWSL2["Local WSL2"]
-        OpenClaw["OpenClaw\n문서 생성 · 공유 · 알림"]
+    subgraph MCP["MCP Layer"]
+        Gateway["VS Code MCP Gateway"]
+        LocalMCP["Local MCP Server"]
+        GitHubMCP["GitHub MCP Server"]
     end
 
-    subgraph LocalWindows["Local Windows 11"]
-        LocalAI["Local AI"]
-        subgraph MCPGatewayA["MCP Gateway (:4000)"]
-            subgraph MCPTools["Local MCP Server (:3000)"]
-                Build["build_tool()\nmake · cmake · bitbake"]
-                Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
-                Uart["uart_capture()\npyserial · minicom"]
-                Qemu["qemu_spawn()\nQEMU instance"]
-                LogA["log_analyzer()\noops · panic · assert"]
-                Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
-                TestR["test_result()\nTEST RESULT 문서 생성"]
-            end
-            GHMC["GitHub MCP Server\nPR · Issue · Actions"]
-        end
+    subgraph Automation["Automation"]
+        GHA["GitHub Actions"]
+        Jenkins["Jenkins"]
+        Bridge["Python Bridge"]
     end
 
-    subgraph Channels["Remote Channels"]
-        GitHub["GitHub\nCopilot PR Review"]
-        Slack["Slack AI"]
-        EMail["E-Mail"]              
+    subgraph GitHub["GitHub"]
+        Issue["Issue"]
+        PR["Pull Request"]
+        Actions["Actions"]
     end
 
-    MainAICLI --&gt; MainAI
-    SubAICLI --&gt; SubAI
-    VSCode --&gt;|Copilot| GitHub
+    User --&gt; VSCode
+    VSCode --&gt; MainAI
+    VSCode --&gt; SubAI
+    VSCode --&gt; LocalAI
 
-    MainAI --&gt; OpenClaw
-    SubAI --&gt; OpenClaw
-    LocalAI --&gt; OpenClaw
+    MainAI --&gt; Gateway
+    SubAI --&gt; Gateway
+    LocalAI --&gt; Gateway
 
-    LocalAI --&gt;|HTTP| MCPGatewayA
-    SubAI --&gt;|HTTP| MCPGatewayA
+    Gateway --&gt; LocalMCP
+    Gateway --&gt; GitHubMCP
 
-    GHMC --&gt;|API| GitHub
+    Issue --&gt; GHA
+    Issue --&gt; Jenkins
+    GHA --&gt; Bridge
+    Jenkins --&gt; Bridge
+    Bridge --&gt; LocalMCP
 
-    OpenClaw --&gt;|API| GitHub
-    OpenClaw --&gt;|API| Slack
-    OpenClaw --&gt;|API| EMail        </code></pre>
-<h3 id="version-b">Version B</h3>
-<p><strong>without Openclaw</strong> and <strong>MCP Server Only</strong></p>
-<p>MCP Server가 Tool 라우팅 + 문서 생성·공유·알림까지 담당하는 단순화된 구조.</p>
-<pre class="mermaid"><code>graph TD
-    subgraph UserCLI["Local User"]
-        MainAICLI["Main AI CLI"]
-        SubAICLI["Sub AI CLI"]
-        VSCode["VS Code · Copilot"]
-    end
+    GitHubMCP --&gt; Issue
+    GitHubMCP --&gt; PR
+    GitHubMCP --&gt; Actions</code></pre>
+<hr/>
+<h2 id="ai-agent-working">AI Agent Working</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Work Type</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>task structure</td>
+<td>Main AI</td>
+</tr>
+<tr>
+<td>2</td>
+<td>code and document generation</td>
+<td>Main AI</td>
+</tr>
+<tr>
+<td>3</td>
+<td>review and risk check</td>
+<td>Sub AI</td>
+</tr>
+<tr>
+<td>4</td>
+<td>local tool execution</td>
+<td>Local MCP Server or Local AI</td>
+</tr>
+<tr>
+<td>5</td>
+<td>test result analysis</td>
+<td>Sub AI</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Issue and PR follow-up</td>
+<td>GitHub MCP Server or automation</td>
+</tr>
+<tr>
+<td>7</td>
+<td>final decision</td>
+<td>User</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ul>
+<li>execution layer and analysis layer split</li>
+<li>one Remote AI Agent can cover step 1, 2, 3, 5, and 6 together</li>
+</ul>
+<hr/>
+<h2 id="agent-interference">Agent Interference</h2>
+<ul>
+<li>direct overlap minimization</li>
+<li>JSON, log, and comment based handoff</li>
+<li>execution result first</li>
+<li>analysis result second</li>
+</ul>
+<div class="highlight"><pre><span></span><code>Local MCP execution
+  -&gt; result.json + log
+  -&gt; analysis
+  -&gt; code or document update
+</code></pre></div>
+<hr/>
+<h2 id="cicdct-automation">CI/CD/CT Automation</h2>
+<h3 id="scope_1">Scope</h3>
+<ul>
+<li>CI automation</li>
+<li>Pull Request, Review, Actions follow-up</li>
+<li>CD automation</li>
+<li>workflow based delivery path</li>
+<li>CT automation</li>
+<li>Local MCP tool based test execution</li>
+<li>JSON, log, comment trace</li>
+</ul>
+<h3 id="github-issue-based-entry">GitHub Issue Based Entry</h3>
+<table>
+<thead>
+<tr>
+<th>Request Type</th>
+<th>Label</th>
+<th>Template</th>
+<th>Execution Path</th>
+<th>Main Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runner TEST Request</td>
+<td><code>test-request-runner</code></td>
+<td><code>test_request_runner.yml</code></td>
+<td>GitHub Actions -&gt; self-hosted runner</td>
+<td>runner based automated test execution</td>
+</tr>
+<tr>
+<td>Direct TEST Request</td>
+<td><code>test-request-direct</code></td>
+<td><code>test_request_direct.yml</code></td>
+<td>Jenkins -&gt; direct MCP execution</td>
+<td>direct local test execution</td>
+</tr>
+<tr>
+<td>General Issue / PR</td>
+<td>normal workflow</td>
+<td>standard templates</td>
+<td>GitHub MCP Server, AI Agent, GitHub Actions</td>
+<td>review, update, tracking</td>
+</tr>
+</tbody>
+</table>
+<h3 id="automation-components">Automation Components</h3>
+<ul>
+<li>GitHub Actions</li>
+<li>runner TEST Request execution</li>
+<li>self-hosted runner integration</li>
+<li>artifact and comment trace</li>
+<li>Jenkins</li>
+<li>direct TEST Request execution</li>
+<li>webhook trigger</li>
+<li>requested ref checkout</li>
+<li>Python Bridge</li>
+<li>issue body parsing</li>
+<li>selected tool mapping</li>
+<li>Local MCP Server call</li>
+<li>JSON and Markdown result generation</li>
+</ul>
+<h3 id="issue-based-flow">Issue Based Flow</h3>
+<div class="highlight"><pre><span></span><code>runner test request issue
+  -&gt; GitHub Actions
+  -&gt; self-hosted runner
+  -&gt; Python bridge
+  -&gt; mcp-server-local-runner
 
-    subgraph Remote["Remote Cloud"]
-        MainAI["Main AI API"]
-        SubAI["Sub AI API"]
-    end
-
-    subgraph LocalWindows["Local Windows 11"]
-        LocalAI["Local AI"]
-        subgraph MCPGatewayB["MCP Gateway (:4000)"]
-            subgraph MCPTools["Local MCP Server (:3000)"]
-                Build["build_tool()\nmake · cmake · bitbake"]
-                Chan["channels()\nGitHub · Slack · E-Mail"]
-                Flash["flash_tool()\nOpenOCD · JLink · dfu-util"]
-                Uart["uart_capture()\npyserial · minicom"]
-                Qemu["qemu_spawn()\nQEMU instance"]
-                LogA["log_analyzer()\noops · panic · assert"]
-                Reg["reg_dump()\n/dev/mem · devmem2 · debugfs"]
-                TestR["test_result()\nTEST RESULT 문서 생성"]
-            end
-            GHMC["GitHub MCP Server\nPR · Issue · Actions"]
-        end
-    end
-
-    subgraph Channels["Remote Channels"]
-        GitHub["GitHub\nCopilot PR Review"]
-        Slack["Slack AI"]
-        EMail["E-Mail"]        
-    end
-
-    MainAICLI --&gt; MainAI
-    SubAICLI --&gt; SubAI
-    VSCode --&gt;|Copilot| GitHub
-
-    LocalAI --&gt;|HTTP| MCPGatewayB
-    SubAI --&gt;|HTTP| MCPGatewayB
-
-    Chan --&gt;|API| GitHub
-    Chan --&gt;|API| Slack
-    Chan --&gt;|API| EMail
-
-    GHMC --&gt;|API| GitHub</code></pre>
+direct test request issue
+  -&gt; Jenkins
+  -&gt; Python bridge
+  -&gt; mcp-server-local-direct
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>GitHub Issue / PR
+  -&gt; GitHub Actions or Jenkins
+  -&gt; Python bridge
+  -&gt; Local MCP Server
+  -&gt; JSON / log / comment
+  -&gt; GitHub traceability
+</code></pre></div>
+<hr/>
+<h2 id="main-flows">Main Flows</h2>
+<h3 id="direct-mcp-flow">Direct MCP Flow</h3>
+<div class="highlight"><pre><span></span><code>AI Agent or local client
+  -&gt; VS Code MCP Gateway
+  -&gt; mcp-server-local-direct
+  -&gt; local tools
+  -&gt; log files + tool result payload
+</code></pre></div>
+<h3 id="runner-test-request-flow">Runner Test Request Flow</h3>
+<div class="highlight"><pre><span></span><code>GitHub Issue
+  -&gt; GitHub Actions workflow
+  -&gt; self-hosted runner
+  -&gt; mcp.scripts.run_test_request
+  -&gt; mcp-server-local-runner
+  -&gt; selected tools
+  -&gt; results JSON + logs
+  -&gt; GitHub Issue comment
+</code></pre></div>
+<p>Related:</p>
+<ul>
+<li><a href="../../.github/workflows/test_request_local.yaml">.github/workflows/test_request_local.yaml</a></li>
+<li><a href="../../.github/ISSUE_TEMPLATE/test_request_runner.yml">.github/ISSUE_TEMPLATE/test_request_runner.yml</a></li>
+</ul>
+<h3 id="direct-test-request-flow">Direct Test Request Flow</h3>
+<div class="highlight"><pre><span></span><code>GitHub Issue
+  -&gt; Jenkins webhook trigger
+  -&gt; mcp.scripts.run_test_request
+  -&gt; mcp-server-local-direct
+  -&gt; selected tools
+  -&gt; results JSON + logs
+  -&gt; GitHub Issue comment
+</code></pre></div>
+<p>Related:</p>
+<ul>
+<li><a href="../../Jenkinsfile">Jenkinsfile</a></li>
+<li><a href="../../.github/ISSUE_TEMPLATE/test_request_direct.yml">.github/ISSUE_TEMPLATE/test_request_direct.yml</a></li>
+</ul>
 <hr/>
 <h2 id="component-details">Component Details</h2>
-<ol>
-<li>
-<p>User Access  <br/>
-브라우저에서 <code>http://127.0.0.1:18789</code> 로 OpenClaw Dashboard에 접속합니다. <br/>
-Prompt를 입력하면 Orchestrator가 작업 유형에 맞는 Agent를 선택해 라우팅합니다.</p>
-</li>
-<li>
-<p>OpenClaw Orchestrator (WSL2)</p>
+<h3 id="vs-code-mcp-gateway">VS Code MCP Gateway</h3>
 <ul>
-<li><strong>설치 위치</strong>: WSL2 (Ubuntu)   </li>
-<li><strong>역할</strong>: Prompt를 받아 적합한 Agent 결정 → MCP 서버로 전달   </li>
-<li><strong>포트</strong>: <code>:18789</code> (Dashboard + Gateway)   </li>
-<li>WSL2에 설치하는 이유: 공식 권장 환경, Linux 네이티브 안정성</li>
+<li>VS Code internal</li>
+<li>MCP Server connection</li>
+<li>tool discovery</li>
+<li>tool routing</li>
 </ul>
-</li>
-<li>
-<p>MCP Gateway </p>
+<p>Reference:</p>
 <ul>
-<li><strong>설치 위치</strong>: Window 11</li>
-<li><strong>역할</strong>: AI Agent Tool 호출 수신 → Tool prefix 기준으로 하위 MCP Server에 라우팅</li>
-<li><strong>포트</strong>: <code>:4000</code></li>
-<li><strong>하위 서버</strong>: Local MCP Server (<code>:3000</code>) · GitHub MCP Server<ul>
-<li><a href="../mcp/mcp_gateway.html">MCP Gateway</a> — MCP Gateway 라우팅 설정     </li>
-<li><a href="../mcp/mcp_server_local.html">MCP Server-Local</a> — Local MCP 서버 설정    </li>
-<li><a href="../mcp/mcp_server_github.html">MCP Server-Github</a> — Github MCP 서버 설정      </li>
+<li><a href="../mcp/mcp_gateway.html">MCP Gateway</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>AI Agents</strong> </p>
+<h3 id="local-mcp-server">Local MCP Server</h3>
 <ul>
-<li>Local AI </li>
-<li>Main AI </li>
-<li>Sub AI </li>
+<li>local process</li>
+<li>build, flash, test, log tools</li>
+<li>direct mode</li>
+<li>runner mode</li>
 </ul>
-</li>
-</ol>
-<p>4.1. Local AI (Windows Native)     <br/>
-    - <strong>설치 위치</strong>: Windows 11 호스트 <br/>
-    - <strong>역할</strong>: 로컬 LLM 추론, 인터넷 없이 동작 <br/>
-    - <strong>포트</strong>: <code>:11434</code> <br/>
-    - <strong>모델</strong>: <code>llama3.2</code> (범용), <code>codellama</code> (코드 특화) <br/>
-        - Windows에 설치하는 이유: GPU 직접 접근으로 추론 성능 최적화  <br/>
-        - WSL2 → Windows 연결: <code>localhost:11434</code> 로 투명하게 접근 가능      </p>
-<p>4.2. Main AI API (Cloud)     <br/>
-    - <strong>설치 위치</strong>: 없음 — Anthropic 클라우드에서 실행 <br/>
-    - <strong>연결 방식</strong>: CLI or API_KEY  환경변수 <br/>
-    - <strong>용도</strong>: 추론, 분석, 장문 컨텍스트 처리</p>
-<p>4.3. Sub AI API (Cloud)         <br/>
-    - <strong>설치 위치</strong>: 없음 — OpenAI 클라우드에서 실행 <br/>
-    - <strong>연결 방식</strong>: CLI or API_KEY 환경변수 <br/>
-    - <strong>용도</strong>: 코드 생성, 리팩토링, 언어 변환</p>
+<p>Reference:</p>
+<ul>
+<li><a href="../mcp/mcp_server_local.html">MCP Server-Local</a></li>
+</ul>
+<h3 id="github-mcp-server">GitHub MCP Server</h3>
+<ul>
+<li>local process + GitHub API integration</li>
+<li>Issue, Pull Request, Review, Actions access</li>
+<li>no local execution hosting</li>
+</ul>
+<p>Reference:</p>
+<ul>
+<li><a href="../mcp/mcp_server_github.html">MCP Server-GitHub</a></li>
+</ul>
+<h3 id="python-bridge">Python Bridge</h3>
+<ul>
+<li>repository script layer</li>
+<li>issue body parsing</li>
+<li>tool mapping</li>
+<li>server mode selection</li>
+<li>result JSON generation</li>
+<li>Markdown comment generation</li>
+</ul>
+<p>Target scripts:</p>
+<ul>
+<li><code>mcp/scripts/run_test_request.py</code></li>
+<li><code>mcp/scripts/make_test_result.py</code></li>
+</ul>
 <hr/>
 <h2 id="installation-locations">Installation Locations</h2>
 <table>
 <thead>
 <tr>
-<th>컴포넌트</th>
-<th>설치 위치</th>
-<th>포트</th>
+<th>Component</th>
+<th>Location</th>
+<th>Entry</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>OpenClaw</td>
-<td>WSL2 (Ubuntu)</td>
-<td>:18789</td>
-</tr>
-<tr>
-<td>MCP Gateway</td>
-<td>WSL2 (Ubuntu)</td>
-<td>:4000</td>
+<td>VS Code MCP Gateway</td>
+<td>VS Code internal</td>
+<td>VS Code feature</td>
 </tr>
 <tr>
 <td>Local MCP Server</td>
-<td>WSL2 (Ubuntu)</td>
-<td>:3000</td>
+<td>Local process</td>
+<td>Python module</td>
 </tr>
 <tr>
 <td>GitHub MCP Server</td>
-<td>Local Process</td>
-<td>—</td>
+<td>Local process</td>
+<td>GitHub API integration</td>
 </tr>
 <tr>
-<td>Node.js 24</td>
-<td>WSL2 (Ubuntu)</td>
-<td>—</td>
+<td>GitHub Actions</td>
+<td>GitHub runner</td>
+<td>workflow</td>
+</tr>
+<tr>
+<td>Jenkins</td>
+<td>Jenkins agent</td>
+<td>webhook trigger</td>
 </tr>
 <tr>
 <td>Local AI</td>
-<td>Windows 11 (호스트)</td>
-<td>:11434</td>
+<td>Local host</td>
+<td>runtime</td>
 </tr>
 <tr>
-<td>Main AI API</td>
-<td>Cloud</td>
-<td>—</td>
-</tr>
-<tr>
-<td>Sub AI API</td>
-<td>Cloud</td>
-<td>—</td>
+<td>Remote AI</td>
+<td>cloud or local CLI</td>
+<td>provider dependent</td>
 </tr>
 </tbody>
 </table>
 <hr/>
-<h2 id="agent-workflow">Agent Workflow</h2>
-<p>Agent 역할은 고정, 아래 순서로 실행.</p>
-<h3 id="harness-version-a">Harness Version A</h3>
-<p>OpenClaw가 문서 생성·공유·알림을 담당하는 구조.</p>
-<table>
-<thead>
-<tr>
-<th>순서</th>
-<th>작업 유형</th>
-<th>Agent</th>
-<th>Orchestrator</th>
-<th>User 검토</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>구조 설계 / 작업 분해</td>
-<td>Main AI (Main)</td>
-<td>OpenClaw</td>
-<td>—</td>
-</tr>
-<tr>
-<td>2</td>
-<td>코드 생성</td>
-<td>Main AI (Main)</td>
-<td>OpenClaw</td>
-<td>1차 승인 / 수정</td>
-</tr>
-<tr>
-<td>3</td>
-<td>문서 생성</td>
-<td>Main AI (Main)</td>
-<td>OpenClaw</td>
-<td>2차 승인 / 수정</td>
-</tr>
-<tr>
-<td>4</td>
-<td>코드 리뷰 / 회귀 위험 지적 / patch 초안</td>
-<td>Sub AI (Sub)</td>
-<td>OpenClaw</td>
-<td>3차 승인 / 수정</td>
-</tr>
-<tr>
-<td>5</td>
-<td>GitHub PR 요청</td>
-<td>GitHub</td>
-<td>OpenClaw</td>
-<td>—</td>
-</tr>
-<tr>
-<td>6</td>
-<td>PR Review</td>
-<td>Sub AI (Sub) + GitHub Users</td>
-<td>OpenClaw</td>
-<td>4차 승인 / 수정</td>
-</tr>
-<tr>
-<td>7</td>
-<td>TEST 분석</td>
-<td>Sub AI (Sub)</td>
-<td>OpenClaw</td>
-<td>5차 승인 / 수정</td>
-</tr>
-<tr>
-<td>8</td>
-<td>TEST 문서 작성</td>
-<td>Sub AI (Sub)</td>
-<td>OpenClaw</td>
-<td>6차 승인 / 수정</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>Local AI: 각 단계에서 MCP Tool(<code>build_tool</code>, <code>uart_capture</code>, <code>qemu_spawn</code>, <code>reg_dump</code>) 실행 담당</p>
-</blockquote>
-<h3 id="harness-version-b">Harness Version B</h3>
-<p>MCP Server 내부에 Channel 추가, Orchestrator 제거 후 단순화된 구조.</p>
-<table>
-<thead>
-<tr>
-<th>순서</th>
-<th>작업 유형</th>
-<th>Agent</th>
-<th>Orchestrator</th>
-<th>User 검토</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>구조 설계 / 작업 분해</td>
-<td>Main AI (Main)</td>
-<td>CLI</td>
-<td>—</td>
-</tr>
-<tr>
-<td>2</td>
-<td>코드 생성</td>
-<td>Main AI (Main)</td>
-<td>CLI</td>
-<td>1차 승인 / 수정</td>
-</tr>
-<tr>
-<td>3</td>
-<td>문서 생성</td>
-<td>Main AI (Main)</td>
-<td>CLI</td>
-<td>2차 승인 / 수정</td>
-</tr>
-<tr>
-<td>4</td>
-<td>코드 리뷰 / 회귀 위험 지적 / patch 초안</td>
-<td>Sub AI (Sub)</td>
-<td>CLI</td>
-<td>3차 승인 / 수정</td>
-</tr>
-<tr>
-<td>5</td>
-<td>GitHub PR 요청</td>
-<td>GitHub</td>
-<td>MCP</td>
-<td>—</td>
-</tr>
-<tr>
-<td>6</td>
-<td>PR Review</td>
-<td>Sub AI (Sub) + GitHub Users</td>
-<td>MCP</td>
-<td>4차 승인 / 수정</td>
-</tr>
-<tr>
-<td>7</td>
-<td>TEST 분석</td>
-<td>Sub AI (Sub)</td>
-<td>MCP</td>
-<td>5차 승인 / 수정</td>
-</tr>
-<tr>
-<td>8</td>
-<td>TEST 문서 작성</td>
-<td>Sub AI (Sub)</td>
-<td>MCP</td>
-<td>6차 승인 / 수정</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>Local AI: 각 단계에서 MCP Tool(<code>build_tool</code>, <code>uart_capture</code>, <code>qemu_spawn</code>, <code>reg_dump</code>) 실행 담당</p>
-</blockquote>
+<h2 id="design-principles">Design Principles</h2>
+<ul>
+<li>simple execution path first</li>
+<li>clear split between <code>direct</code> and <code>runner</code></li>
+<li>GitHub collaboration and local execution separation</li>
+<li>JSON, log, Markdown comment trace</li>
+<li>Local AI stays optional</li>
+<li>role split does not require fixed process split</li>
+</ul>
 <hr/>
 <h2 id="related">Related</h2>
 <ul>
-<li><a href="../agents/claude.html">agents/claude.md</a> — Main AI 설정 예시</li>
-<li><a href="../agents/ollama.html">agents/ollama.md</a> — Local AI 설정 예시</li>
-<li><a href="../agents/codex.html">agents/codex.md</a> — Sub AI 설정 예시</li>
-<li><a href="../mcp/mcp_gateway.html">mcp/mcp_gateway.md</a> — MCP Gateway 라우팅 설정</li>
-<li><a href="../mcp/mcp_server_local.html">mcp/mcp_server_local.md</a> — MCP Server-Local 설정</li>
-<li><a href="../mcp/mcp_server_github.html">mcp/mcp_server_github.md</a> — MCP Server-Github 설정</li>
-<li><a href="../environments/window_wsl2_setup.html">environments/window_wsl2_setup.md</a> — WSL2 설치 실험</li>
-<li><a href="../agents/ollama_setup.html">agents/ollama_setup.md</a> — Local AI 설치 실험</li>
+<li><a href="../agents/claude.html">Claude</a></li>
+<li><a href="../agents/codex.html">Codex</a></li>
+<li><a href="../agents/ollama.html">Ollama</a></li>
+<li><a href="../mcp/mcp_gateway.html">MCP Gateway</a></li>
+<li><a href="../mcp/mcp_server_local.html">MCP Server-Local</a></li>
+<li><a href="../mcp/mcp_server_github.html">MCP Server-GitHub</a></li>
+<li><a href="../envs/openclaw_wsl2_setup.html">OpenClaw WSL2 Setup</a></li>
 </ul>
 </article>
 </div>

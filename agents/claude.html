@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AI Agent Orchestration with MCP">
+        <meta name="description" content="AI Agent with MCP">
       
       
         <meta name="author" content="Jeonghun Lee">
@@ -16,7 +16,7 @@
         <link rel="prev" href="../architecture/system-design.html">
       
       
-        <link rel="next" href="claude_setup.html">
+        <link rel="next" href="codex.html">
       
       
         
@@ -507,10 +507,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#model" class="md-nav__link">
+  <a href="#when-to-use" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Model
+        When to Use
       
     </span>
   </a>
@@ -518,10 +518,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-to-use" class="md-nav__link">
+  <a href="#model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        When to Use
+        Model
       
     </span>
   </a>
@@ -540,21 +540,60 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
+  <a href="#setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Notes
+        Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rule-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rule Files
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#related" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#authentication" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Related
+        Authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Notes
       
     </span>
   </a>
@@ -565,62 +604,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="claude_setup.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Claude Setup
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="claude_mcp.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Claude MCP
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -669,34 +652,6 @@
     
   
     Ollama
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="ollama_setup.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ollama Setup
   
 
     
@@ -880,7 +835,7 @@
   <span class="md-ellipsis">
     
   
-    Environments
+    Envs
   
 
     
@@ -896,7 +851,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Environments
+    Envs
   
 
           </label>
@@ -909,14 +864,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../environments/window_wsl2_setup.html" class="md-nav__link">
+      <a href="../envs/openclaw_wsl2_setup.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Windows WSL2 Setup
+    OpenClaw WSL2 Setup
   
 
     
@@ -930,60 +885,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Experiments
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Experiments
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -991,14 +892,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../experiments/openclaw_test.html" class="md-nav__link">
+      <a href="../envs/github_templates.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    OpenClaw Test
+    GitHub Templates
   
 
     
@@ -1012,60 +913,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Logs
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Logs
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -1073,14 +920,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../logs/run_001.html" class="md-nav__link">
+      <a href="../envs/github_self_hosted_runner.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    run_001
+    GitHub Self Hosted Runner
   
 
     
@@ -1171,20 +1018,49 @@
 
 <h1 id="agent-claude">Agent: Claude</h1>
 <h2 id="purpose">Purpose</h2>
-<p>추론, 분석, 장문 컨텍스트 이해, 다단계 계획 수립</p>
-<h2 id="model">Model</h2>
 <ul>
-<li>제공자: Anthropic</li>
-<li>모델: <code>claude-sonnet-4-6</code> (기본), 복잡한 작업엔 <code>claude-opus-4-6</code></li>
-<li>API: Anthropic Messages API</li>
+<li>reasoning</li>
+<li>long-context analysis</li>
+<li>document writing</li>
+<li>architecture discussion</li>
 </ul>
+<hr />
 <h2 id="when-to-use">When to Use</h2>
 <ul>
-<li>다단계 추론 또는 계획 수립 작업</li>
-<li>문서 분석 및 요약</li>
-<li>코드나 아키텍처 결정 설명</li>
-<li>세밀한 판단이 필요한 작업</li>
+<li>structure design</li>
+<li>long document review</li>
+<li>workflow organization</li>
+<li>change plan review before implementation</li>
 </ul>
+<hr />
+<h2 id="model">Model</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provider</td>
+<td>Anthropic</td>
+</tr>
+<tr>
+<td>Default Model</td>
+<td><code>claude-sonnet-4-6</code></td>
+</tr>
+<tr>
+<td>Higher Tier</td>
+<td><code>claude-opus-4-6</code></td>
+</tr>
+<tr>
+<td>API</td>
+<td>Anthropic Messages API</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="configuration">Configuration</h2>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;agent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;claude&quot;</span><span class="p">,</span>
@@ -1193,16 +1069,47 @@
 <span class="w">  </span><span class="nt">&quot;system_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;You are a helpful assistant with strong reasoning skills.&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="notes">Notes</h2>
+<hr />
+<h2 id="setup">Setup</h2>
+<h3 id="rule-files">Rule Files</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>claude.md</code></td>
+<td>project rule file</td>
+</tr>
+<tr>
+<td><code>C:\\Users\\&lt;user&gt;\\.claude\\projects\\d--works-projects-local-ai-agent-mcp\\memory</code></td>
+<td>project memory</td>
+</tr>
+</tbody>
+</table>
+<h3 id="authentication">Authentication</h3>
+<p>Method 1:</p>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>auth<span class="w"> </span>login
+</code></pre></div>
+<p>Method 2:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-ant-...&quot;</span>
+</code></pre></div>
+<p>Method 3:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">$env:ANTHROPIC_API_KEY</span> <span class="p">=</span> <span class="s2">&quot;sk-ant-...&quot;</span>
+</code></pre></div>
+<h3 id="verify">Verify</h3>
+<div class="highlight"><pre><span></span><code>claude<span class="w"> </span>auth<span class="w"> </span>status
+claude<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;hello&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="mcp-notes">MCP Notes</h2>
 <ul>
-<li>깊은 추론이 필요한 작업엔 <code>claude-opus-4-6</code> 사용 (비용 높음)</li>
-<li>복잡한 다단계 문제엔 extended thinking 활성화</li>
-<li>코드 이해 + 설명이 결합된 작업에 가장 적합한 Agent</li>
-</ul>
-<h2 id="related">Related</h2>
-<ul>
-<li><a href="claude_setup.html">claude_setup.md</a> — 인증 및 Windows 설정</li>
-<li><a href="claude_mcp.html">claude_mcp.md</a> — MCP Tool Signature</li>
+<li>MCP tool usage available</li>
+<li>strong on long-context reasoning work</li>
+<li>better fit for analysis and design than local execution itself</li>
 </ul>
 
 
@@ -1258,13 +1165,13 @@
         
         
           
-          <a href="claude_setup.html" class="md-footer__link md-footer__link--next" aria-label="다음: Claude Setup">
+          <a href="codex.html" class="md-footer__link md-footer__link--next" aria-label="다음: Codex">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 다음
               </span>
               <div class="md-ellipsis">
-                Claude Setup
+                Codex
               </div>
             </div>
             <div class="md-footer__button md-icon">

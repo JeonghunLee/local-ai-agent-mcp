@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<meta content="AI Agent Orchestration with MCP" name="description"/>
+<meta content="AI Agent with MCP" name="description"/>
 <meta content="Jeonghun Lee" name="author"/>
 <link href="mcp_gateway.html" rel="prev"/>
 <link href="mcp_server_local.html" rel="next"/>
@@ -224,30 +224,6 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../agents/claude_setup.html">
-<span class="md-ellipsis">
-    
-  
-    Claude Setup
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../agents/claude_mcp.html">
-<span class="md-ellipsis">
-    
-  
-    Claude MCP
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
 <a class="md-nav__link" href="../agents/codex.html">
 <span class="md-ellipsis">
     
@@ -265,18 +241,6 @@
     
   
     Ollama
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../agents/ollama_setup.html">
-<span class="md-ellipsis">
-    
-  
-    Ollama Setup
   
 
     
@@ -351,6 +315,15 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      
+        References
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#overview">
 <span class="md-ellipsis">
       
@@ -360,42 +333,55 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#mcp-server-gitub">
+<a class="md-nav__link" href="#current-position-in-this-repository">
 <span class="md-ellipsis">
       
-        MCP Server-Gitub
+        Current Position In This Repository
       
     </span>
 </a>
-<nav aria-label="MCP Server-Gitub" class="md-nav">
+<nav aria-label="Current Position In This Repository" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#vs-code-config">
+<a class="md-nav__link" href="#flow">
 <span class="md-ellipsis">
       
-        VS Code Config
+        Flow
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vs-code-configuration">
+<span class="md-ellipsis">
+      
+        VS Code Configuration
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#capabilities">
+<a class="md-nav__link" href="#example-startup-log">
 <span class="md-ellipsis">
       
-        Capabilities
+        Example Startup Log
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#capability-diagram">
+<a class="md-nav__link" href="#main-capabilities">
 <span class="md-ellipsis">
       
-        Capability Diagram
+        Main Capabilities
       
     </span>
 </a>
-</li>
+<nav aria-label="Main Capabilities" class="md-nav">
+<ul class="md-nav__list">
 <li class="md-nav__item">
 <a class="md-nav__link" href="#roles">
 <span class="md-ellipsis">
@@ -418,53 +404,22 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#custom-tool-extensibility">
+<a class="md-nav__link" href="#role-separation">
 <span class="md-ellipsis">
       
-        Custom Tool Extensibility
-      
-    </span>
-</a>
-<nav aria-label="Custom Tool Extensibility" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#conclusion">
-<span class="md-ellipsis">
-      
-        Conclusion
+        Role Separation
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#a-extend-the-github-mcp-server-itself">
+<a class="md-nav__link" href="#related">
 <span class="md-ellipsis">
       
-        A. Extend the GitHub MCP Server Itself
+        Related
       
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#b-add-a-separate-custom-mcp-server">
-<span class="md-ellipsis">
-      
-        B. Add a Separate Custom MCP Server
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#c-add-a-wrapper-orchestrator-tool">
-<span class="md-ellipsis">
-      
-        C. Add a Wrapper / Orchestrator Tool
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -490,7 +445,7 @@
 <span class="md-ellipsis">
     
   
-    Environments
+    Envs
   
 
     
@@ -502,93 +457,41 @@
 <span class="md-nav__icon md-icon"></span>
             
   
-    Environments
+    Envs
   
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../environments/window_wsl2_setup.html">
+<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
 <span class="md-ellipsis">
     
   
-    Windows WSL2 Setup
+    OpenClaw WSL2 Setup
   
 
     
   </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
-<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Experiments
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_6">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Experiments
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../experiments/openclaw_test.html">
+<a class="md-nav__link" href="../envs/github_templates.html">
 <span class="md-ellipsis">
     
   
-    OpenClaw Test
+    GitHub Templates
   
 
     
   </span>
 </a>
 </li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Logs
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_7">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Logs
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../logs/run_001.html">
+<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
 <span class="md-ellipsis">
     
   
-    run_001
+    GitHub Self Hosted Runner
   
 
     
@@ -624,23 +527,64 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="github-mcp-server">GitHub MCP Server</h1>
+<p><img alt="VS Code Extension -&gt; MCP Servers" src="../imgs/mcp_server_github_00.png"/></p>
+<p>현재 안쓰임 옵션 </p>
+<h2 id="references">References</h2>
 <ul>
-<li>
-<p>VSCode Extension -&gt; MCP Servers   <br/>
-<img alt="" src="../imgs/mcp_server_github_00.png"/></p>
-</li>
-<li>
-<p>Manaul
-<a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server">https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server</a></p>
-</li>
-<li>
-<p>Node.js 
-<a href="https://github.com/github/github-mcp-server">https://github.com/github/github-mcp-server</a> </p>
-</li>
+<li>Manual: <a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server">https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server</a></li>
+<li>Node.js server: <a href="https://github.com/github/github-mcp-server">https://github.com/github/github-mcp-server</a></li>
 </ul>
 <h2 id="overview">Overview</h2>
-<p>GitHub 대상 MCP(Model Context Protocol) <code>Tool</code> 제공용 전용 서버.</p>
-<p>VS Code MCP Server Github Log:
+<p>GitHub MCP Server는 VS Code 같은 MCP Client에서 GitHub 자원을 읽고 쓰기 위한 MCP Server.</p>
+<p>현재 저장소 기준 역할:</p>
+<ul>
+<li>GitHub Repository, Issue, Pull Request, Actions 정보 조회</li>
+<li>GitHub Issue, comment, label, assignee 같은 협업 정보 갱신</li>
+<li>Local MCP Server 기반 TEST 흐름의 GitHub 측 연계</li>
+</ul>
+<p>직접 Local test tool을 실행하는 주체는 아님.</p>
+<hr/>
+<h2 id="current-position-in-this-repository">Current Position In This Repository</h2>
+<p>현재 자동 TEST 흐름:</p>
+<div class="highlight"><pre><span></span><code>GitHub Issue
+  -&gt; GitHub Actions
+  -&gt; Python bridge
+  -&gt; Local MCP Server
+  -&gt; results/logs/mcp/server_local + results JSON
+  -&gt; GitHub Issue comment
+</code></pre></div>
+<p>의미:</p>
+<ul>
+<li>GitHub MCP Server: GitHub 측 조회 / 갱신 담당</li>
+<li>Local MCP Server: 실제 tool 실행 담당</li>
+<li>GitHub Actions: Issue 기반 자동화 bridge 담당</li>
+</ul>
+<p>즉 현재 구조에서 GitHub MCP Server는 Local tool 실행 경로를 직접 host 하거나 trigger 하는 주체가 아니라, GitHub 연계 역할에 집중.</p>
+<h3 id="flow">Flow</h3>
+<pre class="mermaid"><code>flowchart LR
+    A["GitHub Issue"] --&gt; B["GitHub Actions"]
+    B --&gt; C["Python bridge&lt;br/&gt;mcp.scripts.run_test_request"]
+    C --&gt; D["Local MCP Server"]
+    D --&gt; E["results/logs/mcp/server_local&lt;br/&gt;results/*.json"]
+    B --&gt; F["GitHub Issue comment"]
+    D --&gt; E</code></pre>
+<hr/>
+<h2 id="vs-code-configuration">VS Code Configuration</h2>
+<p>VS Code MCP server setup 예시:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"io.github.github/github-mcp-server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.githubcopilot.com/mcp/"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"gallery"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.mcp.github.com"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.33.0"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr/>
+<h2 id="example-startup-log">Example Startup Log</h2>
 <div class="highlight"><pre><span></span><code>2026-04-17 10:33:22.770 [info] Starting server io.github.github/github-mcp-server
 2026-04-17 10:33:22.770 [info] Connection state: Starting
 2026-04-17 10:33:22.770 [info] Starting server from LocalProcess extension host
@@ -649,68 +593,24 @@
 2026-04-17 10:33:25.037 [info] Using auth server metadata url: https://github.com/login/oauth
 2026-04-17 10:33:25.440 [info] Discovered authorization server metadata at https://github.com/.well-known/oauth-authorization-server/login/oauth
 2026-04-17 10:33:33.737 [info] Discovered 44 tools
-</code></pre></div></p>
-<ul>
-<li>GitHub 전용 MCP Server </li>
-<li>Local 실행 + Remote GitHub 인증/데이터 구조</li>
-</ul>
+</code></pre></div>
 <hr/>
-<h2 id="mcp-server-gitub">MCP Server-Gitub</h2>
-<p>상위 아이콘의 설정메뉴에서 확인 </p>
+<h2 id="main-capabilities">Main Capabilities</h2>
+<p>주요 capability group:</p>
 <ul>
-<li>
-<p><strong>Default Manaul</strong> <br/>
-<a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server">https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/set-up-the-github-mcp-server</a></p>
-</li>
-<li>
-<p><strong>JSON Setup</strong> <br/>
-<a href="https://github.com/github/github-mcp-server/blob/main/docs/server-configuration.md">https://github.com/github/github-mcp-server/blob/main/docs/server-configuration.md</a></p>
-</li>
+<li>Repository 조회 / 검색</li>
+<li>branch, commit, file 조회</li>
+<li>Issue 생성 / 수정 / label / assignee / comment 처리</li>
+<li>Pull Request 조회 / diff / review / merge 처리</li>
+<li>GitHub Actions run / job / step / log 조회</li>
 </ul>
-<h3 id="vs-code-config">VS Code Config</h3>
-<ul>
-<li>MCP Server Setup (Remote/HTTP)
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">"io.github.github/github-mcp-server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.githubcopilot.com/mcp/"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"gallery"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://api.mcp.github.com"</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.33.0"</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
-<span class="p">}</span>
-</code></pre></div></li>
-</ul>
-<h3 id="capabilities">Capabilities</h3>
-<p>주요 기능군:</p>
-<ul>
-<li><code>Repository</code> 조회 / 검색</li>
-<li><code>Pull Request</code> 조회 / diff / review</li>
-<li><code>Issue</code> 생성 / 수정 / label / assignee</li>
-<li><code>Commit</code> / <code>Branch</code> / <code>File</code> 조회 및 갱신</li>
-<li><code>GitHub Actions</code> run / job / step / log</li>
-<li><code>Review Thread</code> / <code>Reaction</code> / reply / resolve</li>
-</ul>
-<h3 id="capability-diagram">Capability Diagram</h3>
-<pre class="mermaid"><code>flowchart LR
-    Client["IDE / MCP Client"]
-    Server["GitHub MCP Server\nLocal Process"]
-    OAuth["GitHub OAuth\nRemote"]
-    Meta["Protected Resource Metadata\napi.githubcopilot.com"]
-    API["GitHub API\nRepository / PR / Issue / Actions"]
-
-    Client --&gt;|start session| Server
-    Server --&gt;|discover metadata| Meta
-    Server --&gt;|authenticate| OAuth
-    Server --&gt;|read / write tools| API</code></pre>
+<p>실무 관점에서는 GitHub 측 control plane 역할.</p>
 <h3 id="roles">Roles</h3>
 <table>
 <thead>
 <tr>
 <th>No.</th>
-<th>Inferred Role Group</th>
+<th>Role Group</th>
 <th>Example Tasks</th>
 <th>Verification</th>
 </tr>
@@ -719,7 +619,7 @@
 <tr>
 <td>1</td>
 <td><code>Repository Metadata</code></td>
-<td>저장소 정보, default branch</td>
+<td>저장소 정보, default branch 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
@@ -749,7 +649,7 @@
 <tr>
 <td>6</td>
 <td><code>Commit Fetch</code></td>
-<td>단일 commit 메타데이터, 변경 내용</td>
+<td>단일 commit 메타데이터, 변경 내용 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
@@ -767,73 +667,73 @@
 <tr>
 <td>9</td>
 <td><code>Commit Status</code></td>
-<td>combined status, check 결과</td>
+<td>combined status, check 결과 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>10</td>
 <td><code>Workflow Run Lookup</code></td>
-<td>특정 commit의 Actions run</td>
+<td>특정 commit의 Actions run 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>11</td>
 <td><code>Workflow Jobs</code></td>
-<td>run 내 job 목록</td>
+<td>run 내부 job 목록 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>12</td>
 <td><code>Workflow Steps</code></td>
-<td>job step 상태</td>
+<td>job step 상태 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>13</td>
 <td><code>Workflow Logs</code></td>
-<td>실패 job log</td>
+<td>실패 job log 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>14</td>
 <td><code>PR Metadata</code></td>
-<td>PR 제목, 상태, base/head branch</td>
+<td>PR 제목, 상태, base/head branch 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>15</td>
 <td><code>PR Diff</code></td>
-<td>PR diff, patch</td>
+<td>PR diff, patch 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>16</td>
 <td><code>PR Patch By File</code></td>
-<td>파일 단위 PR patch</td>
+<td>파일 단위 PR patch 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>17</td>
 <td><code>PR File List</code></td>
-<td>변경 파일 목록</td>
+<td>변경 파일 목록 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>18</td>
 <td><code>PR Discussion</code></td>
-<td>PR comment, review comment, review event</td>
+<td>PR comment, review comment, review event 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>19</td>
 <td><code>PR Reviews</code></td>
-<td>review 목록</td>
+<td>review 목록 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>20</td>
 <td><code>PR Review Threads</code></td>
-<td>inline review thread, resolve 상태</td>
+<td>inline review thread, resolve 상태 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
@@ -845,7 +745,7 @@
 <tr>
 <td>22</td>
 <td><code>PR Comment Reply</code></td>
-<td>inline review comment reply</td>
+<td>inline review comment reply 작성</td>
 <td>Inferred</td>
 </tr>
 <tr>
@@ -875,25 +775,25 @@
 <tr>
 <td>27</td>
 <td><code>PR Merge</code></td>
-<td>merge, squash, rebase</td>
+<td>merge, squash, rebase 실행</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>28</td>
 <td><code>PR Auto Merge</code></td>
-<td>auto-merge</td>
+<td>auto-merge 설정</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>29</td>
 <td><code>Issue Fetch</code></td>
-<td>Issue 본문, 상태, 메타데이터</td>
+<td>Issue 본문, 상태, 메타데이터 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
 <td>30</td>
 <td><code>Issue Comments</code></td>
-<td>Issue comment</td>
+<td>Issue comment 조회</td>
 <td>Inferred</td>
 </tr>
 <tr>
@@ -935,7 +835,7 @@
 <tr>
 <td>37</td>
 <td><code>Issue Reactions</code></td>
-<td>Issue comment reaction</td>
+<td>Issue comment reaction 처리</td>
 <td>Inferred</td>
 </tr>
 <tr>
@@ -1009,105 +909,31 @@
 </tr>
 <tr>
 <td>Write</td>
-<td>파일 생성/수정/삭제, branch, commit, merge</td>
+<td>파일 생성 / 수정 / 삭제, branch, commit, merge</td>
 </tr>
 </tbody>
 </table>
 <hr/>
-<h2 id="custom-tool-extensibility">Custom Tool Extensibility</h2>
-<h3 id="conclusion">Conclusion</h3>
-<p>확장 가능성은 있으나, 현재 문서의 근거만으로는 범위를 단정할 수 없음.</p>
-<p>구분 기준:</p>
+<h2 id="role-separation">Role Separation</h2>
+<p>현재 역할 분리:</p>
 <ul>
-<li>GitHub MCP Server 내부 확장</li>
-<li>별도 Custom MCP Server 추가</li>
-<li>Wrapper / Orchestrator 계층 추가</li>
+<li>GitHub MCP Server</li>
+<li>GitHub 상태 조회</li>
+<li>Issue / comment / review / Actions 결과 조회 및 갱신</li>
+<li>Local MCP Server</li>
+<li><code>build_tool</code>, <code>flash_tool</code>, <code>log_analyzer</code> 같은 local tool 실행</li>
+<li>log file, result JSON 저장</li>
+<li>GitHub Actions</li>
+<li>Issue event와 Local MCP 실행 경로 연결</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>Approach</th>
-<th>Confidence</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Modify GitHub MCP Server itself</td>
-<td>Medium</td>
-<td>서버 소스 접근 가능 시 <code>Tool</code> 추가 가능성이 높음</td>
-</tr>
-<tr>
-<td>Add tools by config only</td>
-<td>Low</td>
-<td>설정만으로 임의 <code>Tool</code> 추가 가능 여부는 현재 근거 부족</td>
-</tr>
-<tr>
-<td>Add a separate Custom MCP Server</td>
-<td>High</td>
-<td>GitHub 전용 서버와 별도 프로젝트 서버 병행은 일반적으로 현실적</td>
-</tr>
-<tr>
-<td>Build a Wrapper Server</td>
-<td>High</td>
-<td>여러 GitHub <code>Tool</code> 호출을 상위 <code>Tool</code>로 추상화하는 방식은 일반적으로 가능</td>
-</tr>
-</tbody>
-</table>
-<h3 id="a-extend-the-github-mcp-server-itself">A. Extend the GitHub MCP Server Itself</h3>
-<p>예시:</p>
+<p>이 구분이 중요한 이유는, IDE 안에 GitHub MCP Server가 있어도 Issue 기반 Local TEST는 workflow runner 의존성이 남는다는 점을 설명하기 때문.</p>
+<hr/>
+<h2 id="related">Related</h2>
 <ul>
-<li><code>create_release_summary()</code></li>
-<li><code>bulk_label_pull_requests()</code></li>
-<li><code>sync_project_board_item()</code></li>
-</ul>
-<p>장점:</p>
-<ul>
-<li>GitHub 기능과 직접 통합</li>
-<li>단일 MCP Server 관점</li>
-</ul>
-<p>주의:</p>
-<ul>
-<li>공식 서버 직접 수정 난이도</li>
-<li>업스트림 업데이트 시 유지보수 비용</li>
-</ul>
-<h3 id="b-add-a-separate-custom-mcp-server">B. Add a Separate Custom MCP Server</h3>
-<p>예시:</p>
-<ul>
-<li><code>ct_report_publish()</code></li>
-<li><code>jira_sync()</code></li>
-<li><code>firmware_test_summary()</code></li>
-<li><code>local_policy_check()</code></li>
-</ul>
-<p>장점:</p>
-<ul>
-<li>GitHub MCP Server 비수정</li>
-<li>프로젝트별 기능 자유도</li>
-<li>운영 측면 현실성</li>
-</ul>
-<p>주의:</p>
-<ul>
-<li>MCP Client 추가 등록 필요</li>
-<li>역할 경계 문서화 필요</li>
-</ul>
-<h3 id="c-add-a-wrapper-orchestrator-tool">C. Add a Wrapper / Orchestrator Tool</h3>
-<p>예시:</p>
-<ul>
-<li><code>prepare_release_pr()</code></li>
-<li><code>review_failed_ci_and_comment()</code></li>
-</ul>
-<p>조합 예:</p>
-<ol>
-<li>PR 조회</li>
-<li>변경 파일 목록 확인</li>
-<li>Actions 실패 log 수집</li>
-<li>comment 작성</li>
-<li>label 추가</li>
-</ol>
-<p>장점:</p>
-<ul>
-<li>사용자 직접 조합 부담 감소</li>
-<li>workflow 표준화 용이</li>
+<li><a href="mcp_server_local.html">mcp_server_local.md</a></li>
+<li><a href="mcp_gateway.html">mcp_gateway.md</a></li>
+<li><a href="../envs/github_templates.html">github_templates.md</a></li>
+<li><a href="../envs/github_self_hosted_runner.html">github_self_hosted_runner.md</a></li>
 </ul>
 </article>
 </div>

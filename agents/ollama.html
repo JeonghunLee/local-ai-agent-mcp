@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AI Agent Orchestration with MCP">
+        <meta name="description" content="AI Agent with MCP">
       
       
         <meta name="author" content="Jeonghun Lee">
@@ -16,7 +16,7 @@
         <link rel="prev" href="codex.html">
       
       
-        <link rel="next" href="ollama_setup.html">
+        <link rel="next" href="../mcp/mcp_gateway.html">
       
       
         
@@ -464,62 +464,6 @@
   
   
     <li class="md-nav__item">
-      <a href="claude_setup.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Claude Setup
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="claude_mcp.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Claude MCP
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="codex.html" class="md-nav__link">
         
   
@@ -619,38 +563,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#models" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Models
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Models">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#model-selection-guide" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Model Selection Guide
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#when-to-use" class="md-nav__link">
     <span class="md-ellipsis">
       
         When to Use
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Options
       
     </span>
   </a>
@@ -669,21 +596,71 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mcp-tool-signature" class="md-nav__link">
+  <a href="#setup" class="md-nav__link">
     <span class="md-ellipsis">
       
-        MCP Tool Signature
+        Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#linux-macos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setup
+        Linux / macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pull Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Notes
       
     </span>
   </a>
@@ -705,34 +682,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="ollama_setup.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ollama Setup
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -908,7 +857,7 @@
   <span class="md-ellipsis">
     
   
-    Environments
+    Envs
   
 
     
@@ -924,7 +873,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Environments
+    Envs
   
 
           </label>
@@ -937,14 +886,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../environments/window_wsl2_setup.html" class="md-nav__link">
+      <a href="../envs/openclaw_wsl2_setup.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Windows WSL2 Setup
+    OpenClaw WSL2 Setup
   
 
     
@@ -958,60 +907,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Experiments
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Experiments
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -1019,14 +914,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../experiments/openclaw_test.html" class="md-nav__link">
+      <a href="../envs/github_templates.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    OpenClaw Test
+    GitHub Templates
   
 
     
@@ -1040,60 +935,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Logs
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Logs
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -1101,14 +942,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../logs/run_001.html" class="md-nav__link">
+      <a href="../envs/github_self_hosted_runner.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    run_001
+    GitHub Self Hosted Runner
   
 
     
@@ -1199,68 +1040,54 @@
 
 <h1 id="agent-ollama">Agent: Ollama</h1>
 <h2 id="purpose">Purpose</h2>
-<p>로컬, 오프라인 AI 추론. API 키 불필요.</p>
-<h2 id="models">Models</h2>
+<ul>
+<li>local inference</li>
+<li>offline usage</li>
+<li>lightweight analysis</li>
+<li>local model experimentation</li>
+</ul>
+<hr />
+<h2 id="when-to-use">When to Use</h2>
+<ul>
+<li>offline environment</li>
+<li>low-cost local inference</li>
+<li>local log summary</li>
+<li>simple repeated analysis</li>
+</ul>
+<hr />
+<h2 id="model-options">Model Options</h2>
 <table>
 <thead>
 <tr>
-<th>모델</th>
-<th>강점</th>
-<th>VRAM</th>
-<th>이 프로젝트 용도</th>
+<th>Model</th>
+<th>Strength</th>
+<th>Typical Use</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>llama3.2</code></td>
-<td>일반 추론, 요약, 자연어 이해</td>
-<td>4 GB</td>
-<td>로그 요약, 이상 탐지</td>
+<td>general reasoning</td>
+<td>summary, general analysis</td>
 </tr>
 <tr>
 <td><code>mistral</code></td>
-<td>빠른 처리, 지시 따르기</td>
-<td>4 GB</td>
-<td>대량 로그 분석, 반복 변환 작업</td>
+<td>fast response</td>
+<td>quick log check</td>
 </tr>
 <tr>
 <td><code>codellama</code></td>
-<td>코드 생성, 코드 설명</td>
-<td>4 GB</td>
-<td>테스트 초안 생성, 단순 변환 스크립트</td>
+<td>code-oriented</td>
+<td>simple code draft</td>
 </tr>
 <tr>
 <td><code>deepseek-r1</code></td>
-<td>단계적 추론, 수학</td>
-<td>8 GB+</td>
-<td>복잡한 로그 패턴 분석 (고사양 필요)</td>
+<td>deeper reasoning</td>
+<td>more complex local analysis</td>
 </tr>
 </tbody>
 </table>
-<h3 id="model-selection-guide">Model Selection Guide</h3>
-<p><strong>로그 분석 / 요약</strong></p>
-<ul>
-<li>로그 양이 많고 빠른 처리가 우선 → <code>mistral</code></li>
-<li>맥락 이해·이상 탐지 정확도가 우선 → <code>llama3.2</code></li>
-<li>패턴이 복잡하고 추론이 필요 → <code>deepseek-r1</code> (VRAM 8 GB 이상)</li>
-</ul>
-<p><strong>테스트 자동화</strong></p>
-<ul>
-<li>테스트 초안 코드 생성 → <code>codellama</code></li>
-<li>단순 반복 변환 스크립트 → <code>mistral</code></li>
-<li>복잡한 테스트 로직 설계 → Claude (Ollama 범위 아님)</li>
-</ul>
-<p><strong>권장 기본 구성</strong></p>
-<div class="highlight"><pre><span></span><code>로그 분석: mistral
-테스트 초안: codellama
-</code></pre></div>
-<h2 id="when-to-use">When to Use</h2>
-<ul>
-<li>오프라인 또는 클라우드 의존성 없이 실행해야 하는 작업</li>
-<li>대용량 / 저비용 추론</li>
-<li>클라우드 모델 전환 전 프로토타이핑</li>
-<li>개인정보에 민감한 입력</li>
-</ul>
+<hr />
 <h2 id="configuration">Configuration</h2>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;agent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span>
@@ -1270,40 +1097,37 @@
 <span class="w">  </span><span class="nt">&quot;stream&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="mcp-tool-signature">MCP Tool Signature</h2>
-<div class="highlight"><pre><span></span><code>ollama.run(prompt: string, model?: string) → TextResult
-</code></pre></div>
+<hr />
 <h2 id="setup">Setup</h2>
-<p><strong>Windows</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c"># 방법 1: PowerShell 공식 인스톨러 (권장)</span>
-<span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">ollama</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
+<h3 id="windows">Windows</h3>
+<div class="highlight"><pre><span></span><code><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">ollama</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c"># 방법 2: winget</span>
-<span class="n">winget</span> <span class="n">install</span> <span class="n">Ollama</span><span class="p">.</span><span class="n">Ollama</span>
+<p>or</p>
+<div class="highlight"><pre><span></span><code><span class="n">winget</span> <span class="n">install</span> <span class="n">Ollama</span><span class="p">.</span><span class="n">Ollama</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c"># 방법 3: https://ollama.com/download 에서 .exe 직접 다운로드</span>
+<h3 id="linux-macos">Linux / macOS</h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://ollama.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="c"># 모델 다운로드</span>
-<span class="n">ollama</span> <span class="n">pull</span> <span class="n">llama3</span><span class="p">.</span><span class="n">2</span>
-
-<span class="c"># 실행 확인</span>
+<h3 id="pull-model">Pull Model</h3>
+<div class="highlight"><pre><span></span><code><span class="n">ollama</span> <span class="n">pull</span> <span class="n">llama3</span><span class="p">.</span><span class="n">2</span>
 <span class="n">ollama</span> <span class="n">list</span>
 </code></pre></div>
-<p><strong>Linux / macOS</strong>
-<div class="highlight"><pre><span></span><code><span class="c1"># Ollama 설치</span>
-curl<span class="w"> </span>-fsSL<span class="w"> </span>https://ollama.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
-
-<span class="c1"># 모델 다운로드</span>
-ollama<span class="w"> </span>pull<span class="w"> </span>llama3.2
-
-<span class="c1"># 실행 확인</span>
-ollama<span class="w"> </span>list
-</code></pre></div></p>
+<h3 id="verify-api">Verify API</h3>
+<div class="highlight"><pre><span></span><code><span class="nb">curl </span><span class="n">http</span><span class="p">://</span><span class="n">localhost</span><span class="p">:</span><span class="n">11434</span><span class="p">/</span><span class="n">api</span><span class="p">/</span><span class="n">tags</span>
+</code></pre></div>
+<hr />
+<h2 id="mcp-notes">MCP Notes</h2>
+<ul>
+<li>local runtime required</li>
+<li>Ollama should be running before MCP server usage</li>
+<li>suitable for local tool support and lightweight analysis</li>
+</ul>
+<hr />
 <h2 id="notes">Notes</h2>
 <ul>
-<li>MCP 서버 시작 전에 Ollama가 로컬에서 실행 중이어야 함</li>
-<li>클라우드 모델보다 응답 품질이 낮음 — 빠른 필터링이나 단순 작업에 사용</li>
-<li>실시간 출력이 필요하면 stream 모드 활성화</li>
+<li>strong fit for Local AI role</li>
+<li>better fit for support analysis than complex architecture planning</li>
+<li>WSL2 can access <code>localhost:11434</code></li>
 </ul>
 
 
@@ -1359,13 +1183,13 @@ ollama<span class="w"> </span>list
         
         
           
-          <a href="ollama_setup.html" class="md-footer__link md-footer__link--next" aria-label="다음: Ollama Setup">
+          <a href="../mcp/mcp_gateway.html" class="md-footer__link md-footer__link--next" aria-label="다음: Overview">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 다음
               </span>
               <div class="md-ellipsis">
-                Ollama Setup
+                Overview
               </div>
             </div>
             <div class="md-footer__button md-icon">

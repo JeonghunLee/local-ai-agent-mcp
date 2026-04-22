@@ -6,17 +6,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AI Agent Orchestration with MCP">
+        <meta name="description" content="AI Agent with MCP">
       
       
         <meta name="author" content="Jeonghun Lee">
       
       
       
-        <link rel="prev" href="ollama.html">
+        <link rel="prev" href="../mcp/mcp_server_local.html">
       
       
-        <link rel="next" href="../mcp/mcp_gateway.html">
+        <link rel="next" href="github_templates.html">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Ollama Setup - AI Agent MCP Docs</title>
+        <title>OpenClaw WSL2 Setup - AI Agent MCP Docs</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#experiment-ollama-setup-on-windows" class="md-skip">
+        <a href="#experiment-openclaw-setup-on-wsl2" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ollama Setup
+              OpenClaw WSL2 Setup
             
           </span>
         </div>
@@ -384,20 +384,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -418,7 +416,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -436,7 +434,7 @@
   
   
     <li class="md-nav__item">
-      <a href="claude.html" class="md-nav__link">
+      <a href="../agents/claude.html" class="md-nav__link">
         
   
   
@@ -464,63 +462,7 @@
   
   
     <li class="md-nav__item">
-      <a href="claude_setup.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Claude Setup
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="claude_mcp.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Claude MCP
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="codex.html" class="md-nav__link">
+      <a href="../agents/codex.html" class="md-nav__link">
         
   
   
@@ -548,7 +490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="ollama.html" class="md-nav__link">
+      <a href="../agents/ollama.html" class="md-nav__link">
         
   
   
@@ -564,208 +506,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ollama Setup
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="ollama_setup.html" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ollama Setup
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="목차">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      목차
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#goal" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Goal
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#environment" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Environment
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setup-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Setup Steps
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Setup Steps">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-install-ollama-on-windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Install Ollama on Windows
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-pull-models" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Pull Models
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-verify-api" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Verify API
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-4-verify-from-wsl2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Verify from WSL2
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Checklist
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#result" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Result
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#related" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Related
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -920,18 +660,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -941,7 +683,7 @@
   <span class="md-ellipsis">
     
   
-    Environments
+    Envs
   
 
     
@@ -952,12 +694,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Environments
+    Envs
   
 
           </label>
@@ -967,17 +709,241 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../environments/window_wsl2_setup.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenClaw WSL2 Setup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="openclaw_wsl2_setup.html" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    Windows WSL2 Setup
+    OpenClaw WSL2 Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environment
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Steps
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup Steps">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-enter-wsl2-ubuntu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Enter WSL2 Ubuntu
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-install-nodejs-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Install Node.js 24
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-install-openclaw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Install OpenClaw
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-authenticate-claude-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Authenticate Claude CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-onboarding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Onboarding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-verify-gateway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Verify Gateway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-open-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: Open Dashboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="github_templates.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GitHub Templates
   
 
     
@@ -991,60 +957,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Experiments
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Experiments
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -1052,96 +964,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../experiments/openclaw_test.html" class="md-nav__link">
+      <a href="github_self_hosted_runner.html" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    OpenClaw Test
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Logs
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Logs
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../logs/run_001.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    run_001
+    GitHub Self Hosted Runner
   
 
     
@@ -1205,10 +1035,10 @@
     
     
       <li class="md-path__item">
-        <a href="claude.html" class="md-path__link">
+        <a href="openclaw_wsl2_setup.html" class="md-path__link">
           
   <span class="md-ellipsis">
-    Agents
+    Envs
   </span>
 
         </a>
@@ -1230,9 +1060,16 @@
   
 
 
-<h1 id="experiment-ollama-setup-on-windows">Experiment: Ollama Setup on Windows</h1>
+<h1 id="experiment-openclaw-setup-on-wsl2">Experiment: OpenClaw Setup on WSL2</h1>
+<h2 id="status">Status</h2>
+<ul>
+<li>optional</li>
+<li>experiment</li>
+<li>not required for the default document flow</li>
+</ul>
 <h2 id="goal">Goal</h2>
-<p>Windows 11에서 Ollama를 설치하고, WSL2의 OpenClaw와 <code>localhost:11434</code>로 연결되는지 검증합니다.</p>
+<p>Windows 11 + WSL2(Ubuntu) 환경에서 OpenClaw를 설치하고 동작을 검증한다.</p>
+<p>기본 경로가 아닌 선택 실험 항목이다.</p>
 <h2 id="environment">Environment</h2>
 <table>
 <thead>
@@ -1247,90 +1084,77 @@
 <td>Windows 11 Pro</td>
 </tr>
 <tr>
-<td>설치 방법</td>
-<td>winget</td>
+<td>WSL Version</td>
+<td>WSL2</td>
 </tr>
 <tr>
-<td>버전</td>
-<td>0.20.7</td>
+<td>Distribution</td>
+<td>Ubuntu</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>optional experiment</td>
 </tr>
 </tbody>
 </table>
 <h2 id="setup-steps">Setup Steps</h2>
-<h3 id="step-1-install-ollama-on-windows">Step 1: Install Ollama on Windows</h3>
-<p><strong>방법 1 — PowerShell 공식 인스톨러 (권장):</strong>
-<div class="highlight"><pre><span></span><code><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">ollama</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
-</code></pre></div></p>
-<p><strong>방법 2 — winget:</strong>
-<div class="highlight"><pre><span></span><code><span class="n">winget</span> <span class="n">install</span> <span class="n">Ollama</span><span class="p">.</span><span class="n">Ollama</span>
-</code></pre></div></p>
-<p><strong>방법 3 — 직접 다운로드:</strong> <a href="https://ollama.com/download">https://ollama.com/download</a> 에서 <code>.exe</code> 설치</p>
-<p>설치 후 시스템 트레이에 Ollama 아이콘이 생기고 자동으로 서비스가 시작됩니다.</p>
-<h3 id="step-2-pull-models">Step 2: Pull Models</h3>
-<div class="highlight"><pre><span></span><code><span class="c"># 경량 범용 모델 (권장 시작점, 약 2GB)</span>
-<span class="n">ollama</span> <span class="n">pull</span> <span class="n">llama3</span><span class="p">.</span><span class="n">2</span>
+<h3 id="step-1-enter-wsl2-ubuntu">Step 1: Enter WSL2 Ubuntu</h3>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="n">-d</span> <span class="n">Ubuntu</span>
+</code></pre></div>
+<h3 id="step-2-install-nodejs-24">Step 2: Install Node.js 24</h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://fnm.vercel.app/install<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
 
-<span class="c"># 코드 특화 모델 (선택)</span>
-<span class="n">ollama</span> <span class="n">pull</span> <span class="n">codellama</span>
-
-<span class="c"># 설치된 모델 확인</span>
-<span class="n">ollama</span> <span class="n">list</span>
+fnm<span class="w"> </span>install<span class="w"> </span><span class="m">24</span>
+fnm<span class="w"> </span>use<span class="w"> </span><span class="m">24</span>
+node<span class="w"> </span>-v
+npm<span class="w"> </span>-v
 </code></pre></div>
-<h3 id="step-3-verify-api">Step 3: Verify API</h3>
-<div class="highlight"><pre><span></span><code><span class="c"># API 응답 확인</span>
-<span class="nb">curl </span><span class="n">http</span><span class="p">://</span><span class="n">localhost</span><span class="p">:</span><span class="n">11434</span><span class="p">/</span><span class="n">api</span><span class="p">/</span><span class="n">tags</span>
+<h3 id="step-3-install-openclaw">Step 3: Install OpenClaw</h3>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://openclaw.ai/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div>
-<h3 id="step-4-verify-from-wsl2">Step 4: Verify from WSL2</h3>
-<p>WSL2 안에서도 Windows의 Ollama에 접근 가능합니다.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># WSL2 터미널에서</span>
-curl<span class="w"> </span>http://localhost:11434/api/tags
+<h3 id="step-4-authenticate-claude-cli">Step 4: Authenticate Claude CLI</h3>
+<p>Claude CLI를 사용하는 경우 인증이 필요하다.</p>
+<p>Reference:</p>
+<ul>
+<li><a href="../agents/claude.html#setup">claude.md - Setup</a></li>
+</ul>
+<p>Option A:</p>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>/mnt/c/Users/ahyuo/.claude/.credentials<span class="w"> </span>~/.claude/.credentials
 </code></pre></div>
-<blockquote>
-<p>WSL2는 <code>localhost</code>를 통해 Windows 호스트 포트에 자동으로 접근됩니다.</p>
-</blockquote>
+<p>Option B:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;export ANTHROPIC_API_KEY=&quot;sk-ant-...&quot;&#39;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<h3 id="step-5-onboarding">Step 5: Onboarding</h3>
+<p>General:</p>
+<div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>onboard<span class="w"> </span>--install-daemon
+</code></pre></div>
+<p>Skip channel:</p>
+<div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>onboard<span class="w"> </span>--install-daemon<span class="w"> </span>--skip-channels
+</code></pre></div>
+<h3 id="step-6-verify-gateway">Step 6: Verify Gateway</h3>
+<div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>config<span class="w"> </span>get<span class="w"> </span>gateway.token
+openclaw<span class="w"> </span>gateway<span class="w"> </span>status<span class="w"> </span>--token<span class="w"> </span>&lt;token&gt;
+</code></pre></div>
+<h3 id="step-7-open-dashboard">Step 7: Open Dashboard</h3>
+<div class="highlight"><pre><span></span><code>openclaw<span class="w"> </span>dashboard
+</code></pre></div>
 <h2 id="checklist">Checklist</h2>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Ollama 설치 완료 (<code>irm https://ollama.com/install.ps1 | iex</code> 또는 winget)</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 시스템 트레이에 Ollama 아이콘 확인</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>ollama pull llama3.2</code> 완료</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>curl http://localhost:11434/api/tags</code> → 모델 목록 응답</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> WSL2에서도 동일 주소로 접근 확인</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> WSL2 Ubuntu 확인</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Node.js 24 설치</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> OpenClaw 설치</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Claude CLI 인증</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>openclaw onboard</code> 완료</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>openclaw gateway status</code> 확인</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> dashboard 접속 확인</li>
 </ul>
-<h2 id="result">Result</h2>
-<table>
-<thead>
-<tr>
-<th>항목</th>
-<th>결과</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Windows 설치</td>
-<td>대기 중</td>
-</tr>
-<tr>
-<td>모델 다운로드</td>
-<td>대기 중</td>
-</tr>
-<tr>
-<td>API 응답</td>
-<td>대기 중</td>
-</tr>
-<tr>
-<td>WSL2 연결</td>
-<td>대기 중</td>
-</tr>
-</tbody>
-</table>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>(실행 후 기록)</li>
-</ul>
-<h2 id="related">Related</h2>
-<ul>
-<li><a href="../environments/window_wsl2_setup.html">window_wsl2_setup.md</a> — WSL2에서 OpenClaw 설치</li>
-<li><a href="ollama.html">../agents/ollama.md</a> — Ollama 에이전트 설정</li>
+<li>optional setup</li>
+<li>experiment only</li>
+<li>기본 문서 흐름의 필수 항목 아님</li>
 </ul>
 
 
@@ -1369,7 +1193,7 @@ curl<span class="w"> </span>http://localhost:11434/api/tags
       <nav class="md-footer__inner md-grid" aria-label="하단/푸터" >
         
           
-          <a href="ollama.html" class="md-footer__link md-footer__link--prev" aria-label="이전: Ollama">
+          <a href="../mcp/mcp_server_local.html" class="md-footer__link md-footer__link--prev" aria-label="이전: MCP Server-Local">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1379,20 +1203,20 @@ curl<span class="w"> </span>http://localhost:11434/api/tags
                 이전
               </span>
               <div class="md-ellipsis">
-                Ollama
+                MCP Server-Local
               </div>
             </div>
           </a>
         
         
           
-          <a href="../mcp/mcp_gateway.html" class="md-footer__link md-footer__link--next" aria-label="다음: Overview">
+          <a href="github_templates.html" class="md-footer__link md-footer__link--next" aria-label="다음: GitHub Templates">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 다음
               </span>
               <div class="md-ellipsis">
-                Overview
+                GitHub Templates
               </div>
             </div>
             <div class="md-footer__button md-icon">
