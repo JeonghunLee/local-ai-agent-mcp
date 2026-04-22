@@ -12,6 +12,7 @@ nav:
   - Home: index.md
   - Architecture:
       - System Design: architecture/system-design.md
+      - Automation Design: architecture/automation-design.md
   - Agents:
       - Claude: agents/claude.md
       - Codex: agents/codex.md
