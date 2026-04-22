@@ -83,7 +83,9 @@ Notes:
 | Runner | `test-request-runner` | GitHub Actions -> self-hosted runner -> `mcp-server-local-runner` | GitHub Actions automation path |
 | Direct | `test-request-direct` | Jenkins or AI Agent -> `mcp-server-local-direct` | direct execution path |
 
-### Example
+![](../imgs/github_issue_lable_00.png)
+
+### Examples
 
 ```md
 ## Request Ref
@@ -96,12 +98,40 @@ Notes:
 - [x] test_ping_00
 - [ ] test_ping_11
 - [ ] test_ping_22
+```
+
+Runner example notes:
+
+- label: `test-request-runner`
+- title: `[TEST] [runner]`
+- category selection: `Test` only
+
+```md
+## Request Ref
+- Template Version: v0.0.1
+- Branch / Tag / Commit: main
+- Target Runner: ai-agent
+- MCP Server Mode: direct
 
 ## Log Tool
 - [x] get_serial_log
 - [x] log_analyzer
 - [ ] log_snapshot
 ```
+
+Direct example notes:
+
+- label: `test-request-direct`
+- title: `[TEST] [direct]`
+- category selection: `Log` only
+
+
+Runner example notes:
+
+- label: `test-request-runner`
+- title: `[TEST] [runner]`
+- category selection: `Log` only
+
 
 ![](../imgs/github_issue_runner_00.png)
 ![](../imgs/github_issue_runner_01.png)
@@ -167,16 +197,27 @@ GitHub Issue
 ## Title Rule
 
 ```text
-[TEST] [<mcp mode>] <YYYY-MM-DD HH:MM>
-[TEST] [<mcp mode>] [<target runner>] <YYYY-MM-DD HH:MM>
+[TEST] [runner]
+[TEST] [direct]
 ```
 
 Examples:
 
 ```text
-[TEST] [direct] 2026-04-20 16:30
-[TEST] [runner] [local-dev] 2026-04-20 16:35
+[TEST] [runner]
+[TEST] [direct]
 ```
+
+Current mapping:
+
+- title prefix `"[TEST] [runner] "` -> label `test-request-runner`
+- title prefix `"[TEST] [direct] "` -> label `test-request-direct`
+
+Notes:
+
+- the current templates do not use date-based titles
+- the current split is driven by two Issue labels
+- `Target Runner` is part of the Issue body, not the title
 
 ---
 
