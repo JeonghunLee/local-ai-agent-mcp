@@ -1,67 +1,73 @@
 # Self-hosted Runner
 
-References:
+## References
 
-- GitHub-hosted runners      
-  https://docs.github.com/ko/actions/reference/runners/github-hosted-runners
-- Self-hosted runners      
-  https://docs.github.com/ko/actions/reference/runners/self-hosted-runners
+- GitHub-hosted runners  
+  https://docs.github.com/en/actions/reference/runners/github-hosted-runners
+- Self-hosted runners  
+  https://docs.github.com/en/actions/reference/runners/self-hosted-runners
+
+---
 
 ## Overview
 
-`Target Runner`와 GitHub `self-hosted runner`의 관계  
+This document explains the relationship between `Target Runner` and a GitHub `self-hosted runner`.
 
+Key points:
 
-핵심 개념:
-  - `Target Runner`는 TEST 요청을 처리할 실행 주체를 가리키는 논리적 이름        
-  - 이 실행 주체는 GitHub Actions의 `self-hosted runner`일 수도 있고, 원격 worker / lab node / 전용 테스트 머신일 수도 있다 
-  - 현재 프로젝트에서는 `Target Runner`를 더 넓은 개념으로 사용하되, 가능하면 GitHub runner label과 같은 이름으로 맞춘다 
+- `Target Runner` is the logical execution owner for a TEST request
+- the execution owner can be a GitHub Actions `self-hosted runner`, a remote worker, a lab node, or a dedicated test machine
+- in this repository, `Target Runner` is used as a broader routing name
+- when possible, align `Target Runner` with the GitHub runner label
 
-즉:
-  - 문서 설계 관점: `Target Runner` = TEST 요청을 담당할 실행 노드
-  - GitHub Actions 관점: `self-hosted runner` = GitHub가 job을 보내는 실행 노드
+Interpretation:
+
+- document view
+  - `Target Runner` = execution node responsible for the TEST request
+- GitHub Actions view
+  - `self-hosted runner` = execution node that receives the job from GitHub
 
 ---
 
 ## Quick Start
 
-내 PC를 연결하려면 아래 순서로 진행하면 된다.
+1. Open `Settings > Actions > Runners` in the GitHub repository.
+2. Select `New self-hosted runner`.
+3. Choose the runner image and architecture.
+4. Run `config.cmd` and complete registration.
+5. Use `runs-on` with `self-hosted` and the project label.
 
-1. GitHub 저장소의 `Settings > Actions > Runners`로 이동.
-2. `New self-hosted runner`를 runner 등록 명령 (등록을 Token 과 최신 Action Download)         
-3.  설치 Manaul 과 설정 Manaul (**Token 확인**)              
-   - Runner image : Window/Linux/MacOS 선택 
-   - Architecture : x86
-4. Self-hosted Runner 설정 (`config.cmd`)
-      -  Group : default 
-5. `runs-on`에 `self-hosted`와 해당 label을 지정.
+Recommended mapping for this repository:
 
-이 프로젝트 기준으로는 `Target Runner: local-dev`와 runner label `local-dev`를 맞추는 방식을 권장한다.
+- `Target Runner`: `local-dev`
+- runner label: `local-dev`
 
 ![](../imgs/github_runner_00.png)
 
-```
-√ Connected to GitHub
+```text
+Connected to GitHub
 
 Current runner version: '2.333.1'
 2026-04-20 05:30:21Z: Listening for Jobs
 ```
 
+---
+
 ## Recommended Naming
 
-내 PC를 self-hosted runner로 붙일 때는 runner label을 `Target Runner`와 같은 값으로 맞추는 것이 가장 단순하다.
+The simplest rule is to use the same value for the GitHub runner label and the TEST request `Target Runner`.
 
-예:
+Example:
 
-- 내 PC 이름 역할: `local-dev`
+- local machine role: `local-dev`
 - GitHub runner label: `local-dev`
-- TEST 이슈의 `Target Runner`: `local-dev`
+- TEST request `Target Runner`: `local-dev`
 
-이렇게 하면 이슈 운영과 Actions 라우팅이 같은 기준으로 움직인다.
+Benefits:
 
-권장 예시:
-
-
+- easier Issue routing
+- easier Actions routing
+- less naming ambiguity
 
 ---
 
@@ -69,9 +75,7 @@ Current runner version: '2.333.1'
 
 ### 1. Prepare Runner Directory
 
-이 문서에서는 runner 작업 폴더를 repository 내부에 두는 방식을 기준으로 설명한다.
-
-예:
+This document assumes the runner workspace is placed inside the repository root.
 
 ```powershell
 cd D:\works\projects\local-ai-agent-mcp
@@ -79,53 +83,49 @@ mkdir action-runner
 cd .\action-runner
 ```
 
-권장 이유:
+Reasons:
 
-- 이 프로젝트와 runner 관련 파일 위치를 같이 관리하기 쉽다
-- 로컬 문서와 실제 작업 경로가 일치한다
-- 테스트용 스크립트나 로그 경로를 repository 기준으로 설명하기 편하다
+- easier local path management
+- repository path and runner path stay aligned
+- simpler explanation for logs and scripts
 
-주의:
+Notes:
 
-- `action-runner` 폴더는 보통 Git으로 추적하지 않는다
-- 필요하면 `.gitignore`에 추가해서 관리한다
+- `action-runner` is usually not tracked by Git
+- add it to `.gitignore` if needed
 
 ### 2. Get Registration Commands from GitHub
 
-저장소 기준:
+Repository path:
 
 - `Settings`
 - `Actions`
 - `Runners`
 - `New self-hosted runner`
 
+Runner release reference:
 
-action/runner version 확인  
-  https://github.com/actions/runner/releases
-
-
-
+- https://github.com/actions/runner/releases
 
 ### 3. Set Runner Name and Labels
 
-`config.cmd` 실행 중 아래 항목을 묻는다.
+During `config.cmd`, GitHub asks for:
 
 - runner group
 - runner name
 - labels
-- service로 설치할지 여부
+- service installation choice
 
-| Target Runner[] | Meaning |
-|---------------|---------|
-| `local-dev_00` | 개발자가 직접 관리하는 로컬 실행 환경 |
-| `qemu-runner` | 에뮬레이션 기반 테스트 전용 환경 |
-| `lab-node-01` | 특정 장비실/하드웨어 노드 |
-| `windows-hw-01` | Windows 기반 실장비 테스트 노드 |
+| Target Runner | Meaning |
+|------|------|
+| `local-dev_00` | developer-managed local execution environment |
+| `qemu-runner` | emulator-based test environment |
+| `lab-node-01` | hardware lab node |
+| `windows-hw-01` | Windows hardware test node |
 
+Administrator privileges are recommended.
 
-* 반드시 관리자 권한 
-
-```Powershell
+```powershell
 --------------------------------------------------------------------------------
 |        ____ _ _   _   _       _          _        _   _                      |
 |       / ___(_) |_| | | |_   _| |__      / \   ___| |_(_) ___  _ __  ___      |
@@ -139,75 +139,72 @@ action/runner version 확인
 
 # Authentication
 
-
-√ Connected to GitHub
+Connected to GitHub
 
 # Runner Registration
 
-Enter the name of the runner group to add this runner to: [press Enter for Default] 
-
+Enter the name of the runner group to add this runner to: [press Enter for Default]
 Enter the name of runner: [press Enter for JHLEE] local-dev_00
-
 This runner will have the following labels: 'self-hosted', 'Windows', 'X64'
 Enter any additional labels (ex. label-1,label-2): [press Enter to skip] local-dev
 
-√ Runner successfully added
+Runner successfully added
 
 # Runner settings
 
 Enter name of work folder: [press Enter for _work]
 
-√ Settings Saved.
+Settings Saved.
 
 Would you like to run the runner as service? (Y/N) [press Enter for N]
-
 ```
 
-
-
+Example:
 
 ```text
 runner name: my-pc
 labels: self-hosted, Windows, X64, local-dev
 ```
 
-핵심은 기본 label 외에 `local-dev` 같은 프로젝트용 label을 추가하는 것이다.
+The important part is adding a project-specific label such as `local-dev`.
 
 ### 4. Choose How to Run It
 
-일회성 확인은 repository 내부의 `action-runner` 폴더에서 콘솔 실행으로 충분하다.
+For a quick check, run it directly from the `action-runner` directory:
 
 ```powershell
 .\run.cmd
 ```
 
-PC를 켤 때마다 자동으로 붙게 하려면 같은 폴더에서 서비스 설치를 해두는 편이 좋다.
+![](../imgs/github_runner_01.png)
+
+To keep it available after reboot, install it as a service:
 
 ```powershell
 .\svc install
 .\svc start
 ```
 
-서비스로 실행하면 로그아웃 후에도 runner가 계속 대기할 수 있다.
+Running as a service keeps the runner available after logout.
 
 ### 5. Verify Runner Status in GitHub
 
-등록이 끝나면 `Settings > Actions > Runners` 화면에 runner가 `Idle` 또는 `Online` 상태로 보여야 한다.
+After registration, the runner should appear as `Idle` or `Online` in `Settings > Actions > Runners`.
 
-보이지 않으면 보통 아래를 확인하면 된다.
+If not, check:
 
-- 방화벽 또는 프록시 제한
-- 토큰 만료 후 등록 실패
-- `run.cmd` 또는 서비스가 실제로 실행 중인지
-- label이 기대한 값으로 들어갔는지
+- firewall or proxy restrictions
+- expired registration token
+- whether `run.cmd` or the service is actually running
+- whether the label matches the expected value
 
 ---
 
 ## Workflow Mapping
 
-runner를 붙여도 workflow가 그 runner를 사용하도록 지정하지 않으면 실제 job은 내려오지 않는다.
+Registering a runner is not enough. A workflow must explicitly target that runner.
 
-예를 들어 내 PC label이 `local-dev`라면:
+Example:
 
 ```yaml
 jobs:
@@ -219,80 +216,83 @@ jobs:
         run: echo "running on self-hosted local-dev"
 ```
 
-`runs-on: [self-hosted, local-dev]`는 `self-hosted`이면서 `local-dev` label을 가진 runner만 잡겠다는 뜻이다.
+`runs-on: [self-hosted, local-dev]` means GitHub selects only a runner that has both labels.
 
 ---
 
 ## Current Repository Status
 
-현재 저장소의 workflow는 `.github/workflows/github_pages.yaml` 하나이며, 이 파일은 `ubuntu-latest`를 사용한다.
+Current repository workflows:
 
-즉 지금 상태에서는 내 PC를 self-hosted runner로 등록해도 자동으로 사용되지는 않는다. 실제로 사용하려면:
+- `.github/workflows/github_pages.yaml`
+- `.github/workflows/test_request_local.yaml`
 
-- 새 workflow를 추가하거나
-- 기존 workflow의 `runs-on`을 self-hosted label 기반으로 바꿔야 한다
+Current TEST automation path:
+
+- `test_request_local.yaml` uses a self-hosted runner
+- current label expectation is `local-dev`
 
 ---
 
 ## Issue-Based Flow
 
 ```text
-GitHub Issue (TEST 요청)
-  → Target Runner 확인
-  → 해당 Runner / Worker가 요청 처리
-  → Local MCP Tool 실행
-  → logs + result.json 생성
-  → GitHub Issue 댓글로 결과 보고
+GitHub Issue
+  -> resolve Target Runner
+  -> selected Runner or Worker processes the request
+  -> Local MCP tool execution
+  -> logs + result.json
+  -> GitHub Issue comment
 ```
 
-이 구조에서는 `Target Runner`가 단순 메모가 아니라 실제 실행 소유권과 라우팅 기준이 된다.
+In this model, `Target Runner` is not just metadata. It is an execution ownership and routing key.
 
 ---
 
 ## Mapping Strategy
 
-권장 매핑은 아래와 같다.
+Recommended mapping:
 
 - Issue `Target Runner`: `local-dev`
 - GitHub Actions self-hosted runner label: `local-dev`
 
-이렇게 맞추면 사람이 이슈를 보고 판단할 때도 쉽고, 나중에 Actions workflow를 붙일 때도 혼동이 적다.
+This keeps human routing and workflow routing aligned.
 
 ---
 
 ## Multiple Runners
 
-`Target Runner`는 단일 값만 사용할 수도 있고, 여러 후보를 둘 수도 있다.
+`Target Runner` can be a single value or a comma-separated candidate list.
 
-권장 규칙:
+Recommended rules:
 
-- 기본은 단일 runner
-- 여러 runner가 필요하면 쉼표 구분 목록 사용
-- 의미는 우선 `OR`로 해석
+- use a single runner by default
+- use a comma-separated list only when needed
+- interpret multiple values as `OR`
 
-예:
+Example:
 
 ```text
 Target Runner: qemu-runner, lab-node-01
 ```
 
-의미:
+Meaning:
 
-- `qemu-runner` 또는 `lab-node-01` 중 하나가 처리 가능
-- 먼저 claim한 실행 주체가 처리
+- either `qemu-runner` or `lab-node-01` may process the request
+- the first claimer handles it
 
 ---
 
 ## Ownership Rules
 
-여러 runner가 동시에 존재할 경우 최소한 아래 규칙이 필요하다.
+When multiple runners exist, the minimum coordination rules are:
 
-1. TEST 요청에는 `Target Runner`를 명시한다.
-2. 각 runner는 자신이 처리 가능한 요청만 선택한다.
-3. 처리 시작 시 assignee 또는 label로 claim 상태를 남긴다.
-4. 완료 후 `test-done` 또는 `test-failed` 같은 상태를 기록한다.
+1. Each TEST request must declare `Target Runner`.
+2. Each runner should pick only executable requests.
+3. Claim the request with an assignee or label when work starts.
+4. Record completion with labels such as `test-done` or `test-failed`.
 
-추천 label 예시:
+Suggested labels:
 
 - `test-request`
 - `test-running`
@@ -303,40 +303,45 @@ Target Runner: qemu-runner, lab-node-01
 
 ## Relationship with MCP
 
-self-hosted runner 자체가 곧 MCP Server는 아니다.
+A self-hosted runner is not the same thing as an MCP Server.
 
-역할은 다르다.
+Roles:
 
-- Runner / Worker: TEST 요청을 실제로 수행하는 실행 환경
-- Local MCP Server: 실행 환경에서 tool을 노출하는 인터페이스
-- GitHub MCP Server: GitHub Issue/댓글/상태 변경을 다루는 인터페이스
+- Runner or Worker
+  - execution environment for the TEST request
+- Local MCP Server
+  - tool interface exposed in the execution environment
+- GitHub MCP Server
+  - interface for Issue, comment, and status operations on GitHub
 
-즉 실제 구조는 다음에 가깝다.
+Practical flow:
 
 ```text
 GitHub Issue
-  → Runner / Worker
-  → GitHub MCP Server로 요청 확인
-  → Local MCP Server tool 실행
-  → 결과 생성
-  → GitHub MCP Server로 결과 보고
+  -> Runner or Worker
+  -> request inspection through GitHub integration
+  -> Local MCP Server tool execution
+  -> result generation
+  -> result reporting back to GitHub
 ```
 
 ---
 
 ## Recommended Position
 
-현재 프로젝트에서는 `Target Runner`를 다음처럼 이해하는 것이 가장 안전하다.
+In this repository, the safest interpretation is:
 
-- 지금: self-hosted runner와 유사한 논리적 실행 노드 이름
-- 나중: 필요하면 GitHub Actions self-hosted runner label과 1:1 매핑
+- now
+  - `Target Runner` is a logical execution node name
+- later
+  - it can map 1:1 to a GitHub Actions self-hosted runner label
 
-특히 내 PC를 runner로 연결할 때는 `local-dev` 같은 label 하나를 기준 이름으로 정해 두는 편이 운영상 가장 편하다.
+For a local machine, a stable label such as `local-dev` is the simplest operating model.
 
 ---
 
 ## Related
 
-- [github_templates.md](github_templates.md) — Issue / PR / TEST 요청 템플릿
-- [mcp_server_local.md](../mcp/mcp_server_local.md) — Local MCP Server와 TEST 요청 흐름
-- [mcp_server_github.md](../mcp/mcp_server_github.md) — GitHub MCP Server 역할
+- [GitHub Templates](github_templates.md)
+- [MCP Server-Local](../mcp/mcp_server_local.md)
+- [MCP Server-GitHub](../mcp/mcp_server_github.md)
