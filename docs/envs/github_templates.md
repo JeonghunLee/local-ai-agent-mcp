@@ -2,107 +2,169 @@
 
 ## Overview
 
-이 문서는 현재 저장소에서 사용하는 GitHub 템플릿과  
-TEST 요청 흐름에서 각 템플릿이 어떤 역할을 하는지 정리한다.
+- GitHub Issue templates
+- Pull Request template
+- GitHub Actions automation entry
+- TEST request structure
 
-현재 기준:
+Key point:
 
-- Issue 템플릿은 `.github/ISSUE_TEMPLATE/*`
-- Pull Request 템플릿은 `.github/pull_request_template.md`
-- TEST 요청은 별도 `Test Request` 이슈 템플릿으로 받는다
+- this document is not only about templates
+- the main purpose is GitHub Action Automation based on Issue input
 
-이 프로젝트에서는 일반 기능 요청/문서 요청과  
-TEST 실행 요청을 분리하는 것이 중요하다.
+---
+
+## Automation First
+
+### Main Automation Paths
+
+| Path | Trigger | Main Engine | Purpose |
+|------|------|------|------|
+| Runner TEST Request | GitHub Issue with `test-request-runner` | GitHub Actions | self-hosted runner based TEST automation |
+| Direct TEST Request | GitHub Issue with `test-request-direct` | Jenkins or AI Agent | direct MCP execution request |
+| Docs Site Publish | repository event | GitHub Actions | GitHub Pages publish |
+
+### Workflow Files
+
+| Workflow | File | Role |
+|------|------|------|
+| Test Request Local Runner | `.github/workflows/test_request_local.yaml` | Issue based TEST automation on self-hosted runner |
+| GitHub Pages | `.github/workflows/github_pages.yaml` | documentation build and publish |
+
+Notes:
+
+- workflow count: `2`
+- the TEST request flow is the operationally important GitHub Actions automation path
+- the Pages workflow is the documentation delivery path
 
 ---
 
 ## Template List
 
-Direct request execution path:
-
-- `test_request_direct.yml`: one direct template with an execution path field for `jenkins` or `ai-agent`
-
 | Template | File | Purpose |
-|----------|------|---------|
-| Bug Report | `.github/ISSUE_TEMPLATE/bug_report.md` | 재현 가능한 버그 보고 |
-| Documentation | `.github/ISSUE_TEMPLATE/documentation.md` | 문서 수정/개선 요청 |
-| Feature Request | `.github/ISSUE_TEMPLATE/feature_request.md` | 기능 추가/개선 요청 |
-| Question | `.github/ISSUE_TEMPLATE/question.md` | 질문 또는 확인 요청 |
-| Test Request Direct | `.github/ISSUE_TEMPLATE/test_request_direct.yml` | Jenkins + direct MCP TEST 실행 요청 |
-| Test Request Runner | `.github/ISSUE_TEMPLATE/test_request_runner.yml` | self-hosted runner TEST 실행 요청 |
-| Pull Request | `.github/pull_request_template.md` | PR 설명, 변경점, 테스트 결과 정리 |
+|------|------|------|
+| Bug Report | `.github/ISSUE_TEMPLATE/bug_report.md` | reproducible bug report |
+| Documentation | `.github/ISSUE_TEMPLATE/documentation.md` | documentation update request |
+| Feature Request | `.github/ISSUE_TEMPLATE/feature_request.md` | feature addition or improvement request |
+| Question | `.github/ISSUE_TEMPLATE/question.md` | question or clarification |
+| Test Request Direct | `.github/ISSUE_TEMPLATE/test_request_direct.yml` | direct MCP execution request |
+| Test Request Runner | `.github/ISSUE_TEMPLATE/test_request_runner.yml` | GitHub Actions runner based TEST request |
+| Pull Request | `.github/pull_request_template.md` | change summary and review context |
 
 ---
 
-## Test Request Template
+## TEST Request Templates
 
-TEST 실행은 일반 feature/bug issue와 분리해서 받는다.
+### Purpose
 
-파일:
+- TEST execution request
+- ref based execution request
+- result trace through JSON, log, and Issue comment
+
+### Files
 
 - [.github/ISSUE_TEMPLATE/test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
 - [.github/ISSUE_TEMPLATE/test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
 
-주요 필드:
+### Shared Fields
 
-- `Branch / Tag / Commit`
+- `Template Version`
 - `Target Runner`
+- `Branch / Tag / Commit`
 - `MCP Server Mode`
-- `Test Type`
-- `Target Device / Image`
-- `Iterations`
+- setup tool checklist
+- test tool checklist
+- log tool checklist
 
-예시:
+### Current Split
+
+| Request Type | Label | Execution Path | Notes |
+|------|------|------|------|
+| Runner | `test-request-runner` | GitHub Actions -> self-hosted runner -> `mcp-server-local-runner` | GitHub Actions automation path |
+| Direct | `test-request-direct` | Jenkins or AI Agent -> `mcp-server-local-direct` | direct execution path |
+
+### Example
 
 ```md
 ## Request Ref
 - Template Version: v0.0.1
-- Branch / Tag / Commit: 29e157c0
-- Target Runner: qemu-runner
+- Branch / Tag / Commit: main
+- Target Runner: local-dev
 - MCP Server Mode: runner
 
 ## Test Tool
-- [x] `build_tool`
-- [ ] `flash_tool`
-- [x] `log_analyzer`
+- [x] test_ping_00
+- [ ] test_ping_11
+- [ ] test_ping_22
 
-## Test Scope
-- Test Type: smoke
-- Target Device / Image: zephyr.elf
-- Iterations: 3
+## Log Tool
+- [x] get_serial_log
+- [x] log_analyzer
+- [ ] log_snapshot
 ```
 
-One Test Request issue may select multiple tools.
-
-`Template Version` is used to track the request body format.
-When the Test Request structure changes, bump this version.
-
-모드 선택 예시:
-
-```md
-ex.1
-- Target Runner: none
-- MCP Server Mode: direct
-
-ex.2
-- Target Runner: local-dev
-- MCP Server Mode: runner
-```
-
-이 템플릿은 다음 흐름을 전제로 한다.
-
-```text
-GitHub Issue (TEST 요청)
-  → GitHub MCP Server로 이슈 조회
-  → Target Runner 확인
-  → Local MCP Server Tool 실행
-  → logs + result.json 생성
-  → GitHub Issue 댓글로 결과 보고
-```
+![](../imgs/github_issue_runner_00.png)
+![](../imgs/github_issue_runner_01.png)
 
 ---
 
-Recommended title rule:
+## Runner Automation
+
+### Flow
+
+```text
+GitHub Issue
+  -> label: test-request-runner
+  -> GitHub Actions
+  -> self-hosted runner
+  -> mcp.scripts.run_test_request
+  -> mcp-server-local-runner
+  -> results JSON + logs
+  -> issue comment
+```
+
+### Related Files
+
+- [.github/workflows/test_request_local.yaml](../../.github/workflows/test_request_local.yaml)
+- [.github/ISSUE_TEMPLATE/test_request_runner.yml](../../.github/ISSUE_TEMPLATE/test_request_runner.yml)
+
+### Characteristics
+
+- GitHub Actions driven
+- self-hosted runner required
+- artifact upload included
+- result comment generation included
+
+---
+
+## Direct Execution
+
+### Flow
+
+```text
+GitHub Issue
+  -> label: test-request-direct
+  -> Jenkins or AI Agent
+  -> mcp.scripts.run_test_request
+  -> mcp-server-local-direct
+  -> results JSON + logs
+  -> issue comment
+```
+
+### Related Files
+
+- [.github/ISSUE_TEMPLATE/test_request_direct.yml](../../.github/ISSUE_TEMPLATE/test_request_direct.yml)
+- [Jenkinsfile](../../Jenkinsfile)
+
+### Characteristics
+
+- direct MCP mode
+- execution owner selected by `Target Runner`
+- GitHub Actions workflow is not the main engine in this path
+
+---
+
+## Title Rule
 
 ```text
 [TEST] [<mcp mode>] <YYYY-MM-DD HH:MM>
@@ -116,31 +178,27 @@ Examples:
 [TEST] [runner] [local-dev] 2026-04-20 16:35
 ```
 
-Meaning:
-
-- `mcp mode`: `direct` or `runner`
-- `YYYY-MM-DD HH:MM`: local request date/time
-- Add `[<target runner>]` when `mcp mode` is `runner`
+---
 
 ## Target Runner
 
-`Test Request` 템플릿의 `Target Runner`는 요청을 처리할 실행 노드를 지정한다.
-
-예:
+### Runner Template Examples
 
 - `local-dev`
-- `qemu-runner`
-- `lab-node-01`
-- `windows-hw-01`
 
-이 값은:
+### Direct Template Examples
 
-- Local MCP Server를 실행할 환경을 구분하는 데 쓰일 수 있고
-- 나중에 GitHub Actions `self-hosted runner` label과 맞출 수도 있다
+- `jenkins`
+- `ai-agent`
 
-더 자세한 설명:
+Notes:
 
-- [github_self_hosted_runner.md](github_self_hosted_runner.md)
+- runner template target values are tied to self-hosted runner selection
+- direct template target values are execution owner values
+
+Reference:
+
+- [GitHub Self Hosted Runner](github_self_hosted_runner.md)
 
 ---
 
@@ -148,62 +206,47 @@ Meaning:
 
 ### Use Bug Report When
 
-- 이미 발생한 문제를 재현하고 싶을 때
-- 증상, 재현 단계, 환경 정보가 핵심일 때
+- a defect needs reproduction and tracking
 
 ### Use Feature Request When
 
-- 기능 추가나 구조 변경을 제안할 때
-- 실행 요청이 아니라 설계/개선 요청일 때
+- a change proposal or feature idea is needed
 
-### Use Test Request When
+### Use TEST Request When
 
-- 특정 ref/commit에 대해 테스트를 실행해달라고 요청할 때
-- Runner를 지정해야 할 때
-- 결과를 로그/JSON/Issue 댓글로 남기고 싶을 때
+- a specific ref needs execution
+- logs and JSON output are needed
+- execution trace must remain on GitHub
 
-즉 TEST는 기능 요청이 아니라 **운영 실행 요청**이므로 별도 템플릿이 더 적합하다.
+Key point:
+
+- TEST Request is an execution request
+- Pull Request is a code change request
 
 ---
 
 ## Pull Request Template
 
-파일:
+File:
 
 - [.github/pull_request_template.md](../../.github/pull_request_template.md)
 
-PR 템플릿에는 보통 아래 정보가 포함된다.
+Typical contents:
 
-- 변경 요약
-- 주요 변경점
-- 테스트 결과
-- 관련 문서 업데이트 여부
-
-TEST 요청과 PR은 역할이 다르다.
-
-- `Test Request`: 실행 요청
-- `Pull Request`: 코드 변경 제안
-
-필요하면 TEST Request issue 번호를 PR 본문에 연결할 수 있다.
-
-예:
-
-```md
-Related test request: #12
-```
+- change summary
+- key updates
+- test result summary
+- related document updates
 
 ---
 
-## Recommended Labeling
+## Recommended Labels
 
-TEST 요청 운영 시 함께 쓰기 좋은 label 예시:
-
-- `test-request`
+- `test-request-runner`
+- `test-request-direct`
 - `test-running`
 - `test-done`
 - `test-failed`
-
-일반 issue와 TEST issue를 구분하면 라우팅과 추적이 쉬워진다.
 
 ---
 
@@ -211,23 +254,25 @@ TEST 요청 운영 시 함께 쓰기 좋은 label 예시:
 
 ```text
 .github/
-├── ISSUE_TEMPLATE/
-│   ├── bug_report.md
-│   ├── documentation.md
-│   ├── feature_request.md
-│   ├── question.md
-│   ├── test_request_direct.yml
-│   └── test_request_runner.yml
-├── pull_request_template.md
-└── workflows/
-    └── github_pages.yaml
+  ISSUE_TEMPLATE/
+    bug_report.md
+    documentation.md
+    feature_request.md
+    question.md
+    test_request_direct.yml
+    test_request_runner.yml
+  pull_request_template.md
+  workflows/
+    github_pages.yaml
+    test_request_local.yaml
 ```
 
 ---
 
 ## Related
 
-- [github_self_hosted_runner.md](github_self_hosted_runner.md) — Target Runner와 self-hosted runner 개념 정리
-- [mcp_server_local.md](../mcp/mcp_server_local.md) — Local MCP Server와 TEST 요청 흐름
-- [mcp_server_github.md](../mcp/mcp_server_github.md) — GitHub MCP Server 역할
-- [mcp_gateway.md](../mcp/mcp_gateway.md) — VS Code MCP Gateway와 다중 MCP Server 연결
+- [GitHub Self Hosted Runner](github_self_hosted_runner.md)
+- [MCP Server-Local](../mcp/mcp_server_local.md)
+- [MCP Server-GitHub](../mcp/mcp_server_github.md)
+- [MCP Gateway](../mcp/mcp_gateway.md)
+- [System Design](../architecture/system-design.md)
