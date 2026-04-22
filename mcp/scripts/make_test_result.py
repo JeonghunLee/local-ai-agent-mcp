@@ -12,6 +12,7 @@ DEFAULT_SERVER_MODE = "runner"
 DEFAULT_TARGET_RUNNER = "local-dev"
 DEFAULT_RESULTS_DIR = r"actions-runner\_work\local-ai-agent-mcp\local-ai-agent-mcp\results"
 DEFAULT_EXECUTION_PLATFORM = "github-actions"
+TOOL_CATEGORY_ORDER = ("setup", "test", "log")
 
 
 def parse_args() -> argparse.Namespace:
@@ -63,6 +64,14 @@ def load_payload(result_path: Path) -> dict[str, Any] | None:
 
 def format_inline_json(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False)
+
+
+def group_tool_runs_by_category(tool_runs: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for tool_run in tool_runs:
+        category = str(tool_run.get("tool_category") or "").strip().lower() or "uncategorized"
+        grouped.setdefault(category, []).append(tool_run)
+    return grouped
 
 
 def parse_request_ref(request_ref: str) -> tuple[str, str]:
@@ -166,44 +175,95 @@ def render_payload(payload: dict[str, Any], execution_platform: str) -> str:
             "### 1.TEST Envs ",
             "",
             *resolve_test_env_lines(execution_platform, target_runner, server_name, server_log),
-            "",
-            "### 2.Tool Results ",
         ]
     )
 
     if not tool_runs:
-        lines.extend(["", "_No tool results found._"])
+        lines.extend(["", "### 2.Tool Results", "", "_No tool results found._"])
         return "\n".join(lines)
 
-    for tool_run in tool_runs:
-        tool_name = tool_run.get("tool_function", "n/a")
-        tool_args = tool_run.get("tool_args", {})
-        tool_result = tool_run.get("tool_result")
-        tool_log = "n/a"
-        if isinstance(tool_result, dict):
-            tool_log = tool_result.get("tool_log", "n/a")
+    grouped_tool_runs = group_tool_runs_by_category(tool_runs)
+    lines.extend(["", "### 2.Tool Results"])
 
-        category = tool_run.get("tool_category", "")
-        heading = f"{category}_{tool_name}" if category else tool_name
+    rendered_categories: list[str] = []
+    for category in TOOL_CATEGORY_ORDER:
+        category_tool_runs = grouped_tool_runs.get(category, [])
+        if not category_tool_runs:
+            continue
+
+        rendered_categories.append(category)
         lines.extend(
             [
                 "",
-                f"#### {heading}",
-                "",
-                f"- Tool Args: {format_inline_json(tool_args)}",
-                f"- Tool Log: {tool_log}",
+                f"### Tool Results-{category}",
             ]
         )
 
-        if tool_result:
+        for tool_run in category_tool_runs:
+            tool_name = tool_run.get("tool_function", "n/a")
+            tool_args = tool_run.get("tool_args", {})
+            tool_result = tool_run.get("tool_result")
+            tool_log = "n/a"
+            if isinstance(tool_result, dict):
+                tool_log = tool_result.get("tool_log", "n/a")
+
             lines.extend(
                 [
                     "",
-                    "```json",
-                    json.dumps(tool_result, ensure_ascii=False, indent=2),
-                    "```",
+                    f"#### {tool_name}",
+                    "",
+                    f"- Tool Args: {format_inline_json(tool_args)}",
+                    f"- Tool Log: {tool_log}",
                 ]
             )
+
+            if tool_result:
+                lines.extend(
+                    [
+                        "",
+                        "```json",
+                        json.dumps(tool_result, ensure_ascii=False, indent=2),
+                        "```",
+                    ]
+                )
+
+    for category, category_tool_runs in grouped_tool_runs.items():
+        if category in rendered_categories:
+            continue
+
+        lines.extend(
+            [
+                "",
+                f"### Tool Results-{category}",
+            ]
+        )
+        for tool_run in category_tool_runs:
+            tool_name = tool_run.get("tool_function", "n/a")
+            tool_args = tool_run.get("tool_args", {})
+            tool_result = tool_run.get("tool_result")
+            tool_log = "n/a"
+            if isinstance(tool_result, dict):
+                tool_log = tool_result.get("tool_log", "n/a")
+
+            lines.extend(
+                [
+                    "",
+                    f"#### {tool_name}",
+                    "",
+                    f"- Tool Args: {format_inline_json(tool_args)}",
+                    f"- Tool Log: {tool_log}",
+                ]
+            )
+
+            if tool_result:
+                lines.extend(
+                    [
+                        "",
+                        "```json",
+                        json.dumps(tool_result, ensure_ascii=False, indent=2),
+                        "```",
+                    ]
+                )
 
     return "\n".join(lines)
 
