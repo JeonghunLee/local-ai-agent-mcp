@@ -86,20 +86,42 @@ AI Agent or local client
 
 ### Runner Test Request Flow
 
-```text
-GitHub Issue
-  -> GitHub Actions workflow
-  -> self-hosted runner
-  -> mcp.scripts.run_test_request
-  -> mcp-server-local-runner
-  -> selected tools
-  -> results JSON + logs
-  -> GitHub Issue comment
-```
 
 Example:
 
+Issue publication flow:
+
+- A GitHub User or AI Agent prepares a GitHub Issue
+- The `test-request-runner` label selects the runner-based execution path
+
+```mermaid
+flowchart TD
+  A[GitHub User or AI Agent] --> B[Prepare GitHub Issue<br/>label: test-request-runner]
+  B --> C{GitHub Issue<br/>label: test-request-runner?}
+  C -->|Yes| D[GitHub Issue published]
+  C -->|No| X[Normal GitHub Issue flow]
+```
+
 ![](../imgs/github_issue_runner_00.png)
+
+Post-publication execution flow:
+
+- The GitHub Actions workflow is triggered
+- The self-hosted runner executes `mcp.scripts.run_test_request`
+- `mcp-server-local-runner` invokes the selected tools
+- Execution outputs are stored as JSON, logs, and a GitHub Issue comment
+
+```mermaid
+flowchart LR
+  D[GitHub Issue published] --> E[GitHub Actions workflow]
+  E --> F[self-hosted runner]
+  F --> G[mcp.scripts.run_test_request]
+  G --> H[mcp-server-local-runner]
+  H --> I[selected tools]
+  I --> J[results JSON + logs]
+  J --> K[GitHub Issue comment]
+```
+
 ![](../imgs/github_issue_runner_01.png)
 
 Related:
