@@ -1,0 +1,56 @@
+
+/* 
+    Mkdoc-Numbering Title Styles 
+    
+*/
+
+/* 본문 전체에서 H2 번호 시작 */
+/* Numbering starts at H2 */
+
+.md-typeset {
+  counter-reset: level1;
+}
+
+.md-typeset h2 {
+  counter-reset: level2;
+  counter-increment: level1;
+}
+
+.md-typeset h3 {
+  counter-reset: level3;
+  counter-increment: level2;
+}
+
+.md-typeset h4 {
+  counter-increment: level3;
+}
+
+.md-typeset h2::before {
+  content: counter(level1) ". ";
+}
+
+.md-typeset h3::before {
+  content: counter(level1) "." counter(level2) " ";
+}
+
+.md-typeset h4::before {
+  content: counter(level1) "." counter(level2) "." counter(level3) " ";
+}
+
+/* Mkdoc-Right ToC Styles */
+/* Right TOC title */
+/* Right TOC numbering */
+.md-sidebar--secondary .md-nav__list {
+  counter-reset: toc;
+}
+
+.md-sidebar--secondary .md-nav__item {
+  counter-increment: toc;
+}
+
+.md-sidebar--secondary
+.md-nav__item
+> .md-nav__link
+> .md-ellipsis::before {
+  content: counters(toc, ".") ". ";
+}

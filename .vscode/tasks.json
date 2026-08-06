@@ -1,0 +1,67 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "VENV mkdoc serve Local",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "RemoteSigned",
+                "-Command",
+                "& { .\\.venv\\Scripts\\Activate.ps1; mkdocs serve }"
+            ],
+        },
+        {
+            "label": "VENV mkdoc serve Remote",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "RemoteSigned",
+                "-Command",
+                "& { .\\.venv\\Scripts\\Activate.ps1; mkdocs serve -a 0.0.0.0:8000 }"
+            ],
+        },
+        {
+            "label": "VENV mkdoc build",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "RemoteSigned",
+                "-Command",
+                "& { .\\.venv\\Scripts\\Activate.ps1; mkdocs build  }"
+            ],
+        },       
+        {
+            "label": "VENV mkdoc build strict",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "RemoteSigned",
+                "-Command",
+                "& { .\\.venv\\Scripts\\Activate.ps1; mkdocs build --strict }"
+            ],
+        },
+        {
+            "label": "Package Electron",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/electron_package.ps1"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },        
+                    
+    ]
+}

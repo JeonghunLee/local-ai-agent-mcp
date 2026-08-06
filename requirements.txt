@@ -1,0 +1,6 @@
+# MkDocs Core & Theme
+mkdocs
+mkdocs-material
+# Plugins
+mkdocs-mermaid2-plugin
+pymdown-extensions

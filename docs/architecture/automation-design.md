@@ -4,7 +4,7 @@
 
 - CI automation
 - CD automation
-- **CT automation**
+- **CT automation based on Github Self-hosted runner**
 - GitHub Issue based execution paths
 - direct and runner flow split
 
@@ -32,9 +32,9 @@
 
 ### Automation Components
 
-- GitHub Actions
+- **GitHub Actions**
   - runner TEST Request execution
-  - self-hosted runner integration
+  - **self-hosted runner integration**
   - artifact and comment trace
 - Jenkins
   - direct TEST Request execution

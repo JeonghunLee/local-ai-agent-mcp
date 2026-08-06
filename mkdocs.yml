@@ -112,7 +112,13 @@ extra_javascript:
 
 # my custom CSS for overriding Material theme styles
 extra_css:
-  - stylesheets/extra.css
+#
+# My custom css files to override default styles of mkdocs-material theme
+#
+  - stylesheets/1_basic.css
+  - stylesheets/2_toc.css  
+  - stylesheets/3_admonition.css  
+  - stylesheets/4_numbering.css   
 
 #
 #  Setup for My Social Media Icons Links (FontAwesome Icons)
