@@ -792,26 +792,55 @@
 <article class="md-content__inner md-typeset">
 <h1 id="automation-design">Automation Design</h1>
 <h2 id="scope">Scope</h2>
+<p><br/></p>
 <ul>
-<li>CI automation</li>
-<li>CD automation</li>
-<li><strong>CT automation based on Github Self-hosted runner</strong></li>
-<li>GitHub Issue based execution paths</li>
-<li>direct and runner flow split</li>
+<li>Automation design   </li>
+<li>CI automation  </li>
+<li>CD automation   </li>
+<li><strong>CT automation based on Github Self-hosted runner</strong> <ul>
+<li>GitHub Issue based execution paths   </li>
+<li>direct and runner flow split   </li>
 </ul>
+</li>
+</ul>
+<p><br/></p>
 <hr/>
 <h2 id="cicdct-automation">CI/CD/CT Automation</h2>
-<h3 id="scope_1">Scope</h3>
+<p><br/></p>
 <ul>
-<li>CI automation</li>
+<li>Automation Design   <ul>
+<li>Github (Self-hosted runner) based on CI/CD/CT automation</li>
+<li>Jetson CI/CD pipeline</li>
+</ul>
+</li>
+</ul>
+<p><br/></p>
+<hr/>
+<h3 id="scope_1">Scope</h3>
+<p><br/></p>
+<p>Github Action and Github Self-hosted runner based CI/CD/CT automation</p>
+<ul>
+<li>CI automation (Github Action)<ul>
 <li>Pull Request, Review, and Actions follow-up</li>
-<li>CD automation</li>
+</ul>
+</li>
+<li>CD automation (Github Action)<ul>
 <li>workflow based delivery path</li>
-<li>CT automation</li>
+</ul>
+</li>
+<li><strong>CT automation(Self-hosted runner)</strong><ul>
 <li>Local MCP tool based test execution</li>
 <li>JSON, log, and comment trace</li>
 </ul>
+</li>
+</ul>
+<p><br/></p>
+<hr/>
 <h3 id="github-issue-based-entry">GitHub Issue Based Entry</h3>
+<p><br/></p>
+<ul>
+<li>Github Issue and Self-hosted runner based CT automation</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -846,53 +875,85 @@
 </tr>
 </tbody>
 </table>
+<p><br/></p>
+<hr/>
 <h3 id="automation-components">Automation Components</h3>
+<p><br/></p>
 <ul>
-<li><strong>GitHub Actions</strong></li>
+<li><strong>GitHub Actions</strong><ul>
 <li>runner TEST Request execution</li>
 <li><strong>self-hosted runner integration</strong></li>
 <li>artifact and comment trace</li>
-<li>Jenkins</li>
+</ul>
+</li>
+<li>Jenkins<ul>
 <li>direct TEST Request execution</li>
 <li>webhook trigger</li>
 <li>requested ref checkout</li>
-<li>Python Bridge</li>
+</ul>
+</li>
+<li><strong>Python Bridge</strong><ul>
 <li>issue body parsing</li>
 <li>selected tool mapping</li>
 <li>Local MCP Server call</li>
 <li>JSON and Markdown result generation</li>
 </ul>
+</li>
+</ul>
+<p><br/></p>
+<hr/>
 <h3 id="issue-based-flow">Issue Based Flow</h3>
+<p><br/></p>
+<ul>
+<li>
+<p>Github based on CI/CD/CT <br/>
 <div class="highlight"><pre><span></span><code>runner test request issue
   -&gt; GitHub Actions
   -&gt; self-hosted runner
   -&gt; Python bridge
   -&gt; mcp-server-local-runner
-
-direct test request issue
+</code></pre></div></p>
+</li>
+<li>
+<p>Jenkins based on CI/CD/CT </p>
+</li>
+</ul>
+<p><div class="highlight"><pre><span></span><code>direct test request issue
   -&gt; Jenkins
   -&gt; Python bridge
   -&gt; mcp-server-local-direct
 </code></pre></div>
+<br/></p>
+<ul>
+<li><strong>Github Issue (Request CT)</strong> <br/>
 <div class="highlight"><pre><span></span><code>GitHub Issue / PR
   -&gt; GitHub Actions or Jenkins
   -&gt; Python bridge
   -&gt; Local MCP Server
   -&gt; JSON / log / comment
   -&gt; GitHub traceability
-</code></pre></div>
+</code></pre></div></li>
+</ul>
+<p><br/></p>
 <hr/>
 <h2 id="main-flows">Main Flows</h2>
+<p><br/></p>
+<p>MCP and Github Issue based flows are described below.</p>
+<p><br/></p>
+<hr/>
 <h3 id="direct-mcp-flow">Direct MCP Flow</h3>
+<p><br/></p>
 <div class="highlight"><pre><span></span><code>AI Agent or local client
   -&gt; VS Code MCP Gateway
   -&gt; mcp-server-local-direct
   -&gt; local tools
   -&gt; log files + tool result payload
 </code></pre></div>
+<p><br/></p>
+<hr/>
 <h3 id="runner-test-request-flow">Runner Test Request Flow</h3>
 <p>Example:</p>
-<p>Issue publication flow:</p>
+<p><strong>Github Issue</strong> publication flow:</p>
 <ul>
 <li>A GitHub User or AI Agent prepares a GitHub Issue</li>
 <li>The <code>test-request-runner</code> label selects the runner-based execution path</li>
@@ -902,15 +963,22 @@ direct test request issue
   B --&gt; C{GitHub Issue&lt;br/&gt;label: test-request-runner?}
   C --&gt;|Yes| D[GitHub Issue published]
   C --&gt;|No| X[Normal GitHub Issue flow]</code></pre>
-<p><img alt="" src="../imgs/github_issue_runner_00.png"/></p>
-<p>Post-publication execution flow:</p>
+<p><br/></p>
+<ul>
+<li>Github Issue publication example:
+Request 3 Tests for ping/ping/ping 
+<img alt="" src="../imgs/github_issue_runner_00.png"/></li>
+</ul>
+<p><br/>
+<br/></p>
+<p><strong>Post-publication</strong> execution flow:</p>
 <ul>
 <li>The GitHub Actions workflow is triggered</li>
-<li>The self-hosted runner executes <code>mcp.scripts.run_test_request</code></li>
+<li>The <strong>self-hosted runner</strong> executes <code>mcp.scripts.run_test_request</code></li>
 <li><code>mcp-server-local-runner</code> invokes the selected tools</li>
 <li>Execution outputs are stored as JSON, logs, and a GitHub Issue comment</li>
 </ul>
-<pre class="mermaid"><code>flowchart LR
+<pre class="mermaid"><code>flowchart TD
   D[GitHub Issue published] --&gt; E[GitHub Actions workflow]
   E --&gt; F[self-hosted runner]
   F --&gt; G[mcp.scripts.run_test_request]
@@ -918,13 +986,23 @@ direct test request issue
   H --&gt; I[selected tools]
   I --&gt; J[results JSON + logs]
   J --&gt; K[GitHub Issue comment]</code></pre>
-<p><img alt="" src="../imgs/github_issue_runner_01.png"/></p>
+<p><br/></p>
+<ul>
+<li>Github Self-hosted Runner TEST Results Example: 
+<img alt="" src="../imgs/github_issue_runner_01.png"/></li>
+</ul>
+<p>Go to <a href="https://github.com/JeonghunLee/local-ai-agent-mcp/issues?q=is%3Aissue%20state%3Aclosed">This Sample Issue Results</a>
+Go to <a href="https://github.com/JeonghunLee/local-ai-agent-mcp/issues/21">example 1</a></p>
+<p><br/></p>
 <p>Related:</p>
 <ul>
 <li><code>.github/workflows/test_request_local.yaml</code></li>
 <li><code>.github/ISSUE_TEMPLATE/test_request_runner.yml</code></li>
 </ul>
+<p><br/></p>
+<hr/>
 <h3 id="direct-test-request-flow">Direct Test Request Flow</h3>
+<p><br/></p>
 <div class="highlight"><pre><span></span><code>GitHub Issue
   -&gt; Jenkins webhook trigger
   -&gt; mcp.scripts.run_test_request
@@ -938,6 +1016,7 @@ direct test request issue
 <li><code>Jenkinsfile</code></li>
 <li><code>.github/ISSUE_TEMPLATE/test_request_direct.yml</code></li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="component-details">Component Details</h2>
 <h3 id="vs-code-mcp-gateway">VS Code MCP Gateway</h3>
