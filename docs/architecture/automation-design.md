@@ -99,13 +99,13 @@ runner test request issue
 ```
 
 * Jenkins based on CI/CD/CT 
-
 ```text
 direct test request issue
   -> Jenkins
   -> Python bridge
   -> mcp-server-local-direct
 ```
+
 <br/>
 
 * **Github Issue (Request CT)**     
