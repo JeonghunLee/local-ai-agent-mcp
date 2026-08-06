@@ -2,6 +2,8 @@
 
 ## Scope
 
+<br/>
+
 - AI Agent structure
 - MCP connection model
 - GitHub integration model
