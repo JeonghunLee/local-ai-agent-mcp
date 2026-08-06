@@ -1,0 +1,58 @@
+/* 
+    Mkdoc ToC Nav Styles 
+     - Left/Right ToC Title/Styles 
+*/
+
+/* 
+    Mkdoc-Left ToC Title Styles
+    -  Left ToC title(drawer) : Table of Contents 
+*/
+.md-nav__title[for="__drawer"] {
+    font-size: 0;
+}
+
+.md-nav__title[for="__drawer"]::after {
+    content: "Table of Contents";
+    font-size: 0.9rem;
+}
+
+
+
+/* 
+    Mkdoc-Right ToC Title Styles
+    - Right TOC title : On this page
+*/
+.md-nav__title[for="__toc"] {
+    font-size: 0;
+}
+
+.md-nav__title[for="__toc"]::after {
+    content: "ℹ️ On this page";
+    font-size: 0.9rem;
+}
+
+/*
+    Mkdoc-Nav Styles (Left/Right ToC)
+    - Selected nav item style 
+      add | to the left of the selected nav item)    
+      e.g.  │ Overview
+*/
+
+.md-nav__link--active {
+    position: relative;
+    padding-left: 16px;
+}
+
+.md-nav__link--active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 15%;
+    width: 3px;
+    height: 70%;
+    background: var(--md-primary-fg-color);
+    border-radius: 2px;
+}
+
+
+
