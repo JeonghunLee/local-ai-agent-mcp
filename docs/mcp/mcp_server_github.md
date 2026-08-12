@@ -19,15 +19,25 @@
 
 <br/>
 
-GitHub MCP Server is the MCP Server used by MCP clients such as VS Code to read and update GitHub resources.
+GitHub MCP Server is an external MCP Server used by MCP clients such as VS Code to read and update GitHub resources.
 
 Current role in this repository:
 
-- Repository, Issue, Pull Request, and Actions access
-- Issue, comment, label, and assignee updates
-- GitHub-side integration for the Local MCP based TEST flow
+- AI Agent access to GitHub Issues
+- Issue creation, lookup, update, and follow-up
+- optional access to other GitHub resources when enabled
 
-It is not the component that directly executes local test tools.
+It is not included in this repository's Python MCP source and does not directly execute local TEST tools.
+
+!!! warning "Separate VS Code Installation Required"
+    * GitHub MCP Server must be installed or registered
+      separately in VS Code.
+    * GitHub authentication is also required before an
+      AI Agent can use its GitHub tools.
+    * The repository `.vscode/mcp.json` currently registers
+      only `mcp-server-local-direct`.
+    * Installing repository Python dependencies does not
+      install or configure GitHub MCP Server.
 
 <br/>
 
@@ -50,14 +60,16 @@ GitHub Issue
 
 Meaning:
 
-- GitHub MCP Server
-  - GitHub-side read and write operations
-- Local MCP Server
-  - actual tool execution
-- GitHub Actions
-  - Issue-based automation bridge
+- Local MCP Server performs the actual TEST tool execution.
+- GitHub Actions triggers the Self-hosted Runner CT flow.
+- `actions/github-script` posts the result comment.
+- Jenkins uses the GitHub REST API for its result comment.
 
-In the current structure, GitHub MCP Server does not host or trigger the local tool execution path directly. Its focus is GitHub integration.
+!!! note "Current Source Usage"
+    * The automated CT source does not call GitHub MCP Server.
+    * GitHub MCP Server is an optional AI Agent integration.
+    * Its primary project role is GitHub Issue interaction
+      from VS Code after separate installation.
 
 <br/>
 
@@ -68,7 +80,7 @@ In the current structure, GitHub MCP Server does not host or trigger the local t
 <br/>
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["GitHub Issue"] --> B["GitHub Actions"]
     B --> C["Python bridge<br/>mcp.scripts.run_test_request"]
     C --> D["Local MCP Server"]
@@ -84,7 +96,7 @@ flowchart LR
 
 <br/>
 
-Example:
+The following is an installation or registration example. It is not present in the current repository `.vscode/mcp.json`.
 
 ```json
 {
@@ -99,6 +111,13 @@ Example:
   "inputs": []
 }
 ```
+
+!!! tip "Configuration Separation"
+    * Local MCP Server configuration belongs to the repository
+      `.vscode/mcp.json`.
+    * GitHub MCP Server requires a separate VS Code installation
+      or configuration entry.
+    * Keep GitHub credentials outside repository source files.
 
 <br/>
 

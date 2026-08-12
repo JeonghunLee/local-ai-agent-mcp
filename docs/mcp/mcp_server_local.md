@@ -40,6 +40,79 @@ The key difference is the startup path, not the codebase.
 | `direct` | started directly by a VS Code MCP client | local development, direct MCP test |
 | `runner` | started through the GitHub Actions Issue flow on a self-hosted runner | GitHub Issue based automated test |
 
+!!! note "Local MCP Server Configuration Entry"
+    * The AI Agent Local MCP Server is configured in
+      `.vscode/mcp.json`.
+    * VS Code reads this file and starts the configured
+      Python MCP Server process.
+    * The current configuration registers only
+      `mcp-server-local-direct`.
+    * Issue-based Runner and Jenkins CT start their MCP Server
+      through the Python Bridge, not `.vscode/mcp.json`.
+
+<br/>
+
+---
+
+## Local MCP Server Configuration
+
+<br/>
+
+`.vscode/mcp.json` is the repository configuration used by VS Code to register and start the Local MCP Server for an AI Agent.
+
+Current configuration:
+
+```json
+{
+  "servers": {
+    "mcp-server-local-direct": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp.server_local_direct.server"
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}
+```
+
+| Field | Current Value | Role |
+|------|------|------|
+| Server ID | `mcp-server-local-direct` | name exposed to the VS Code MCP Gateway |
+| `command` | `python` | starts the Python interpreter |
+| `args` | `-m mcp.server_local_direct.server` | starts the Direct MCP entrypoint |
+| `cwd` | `${workspaceFolder}` | uses the repository root as the working directory |
+
+```mermaid
+flowchart TD
+    Agent["AI Agent"]
+    Gateway["VS Code MCP Gateway"]
+    Config[".vscode/mcp.json"]
+    DirectMCP["mcp-server-local-direct"]
+    Runtime["Shared MCP Runtime<br/>runtime.py"]
+    SharedTools["Shared TEST Tools<br/>toolsets.py"]
+    Result["MCP Tool Result"]
+
+    Agent -->|tool request| Gateway
+    Config -->|register and start| Gateway
+    Gateway --> DirectMCP --> Runtime --> SharedTools --> Result
+    Result -->|tool result| Gateway --> Agent
+
+    classDef config fill:#d0ebff,stroke:#1971c2,stroke-width:3px,color:#000;
+    classDef sharedTools fill:#fff3bf,stroke:#f08c00,stroke-width:4px,color:#000;
+    class Config config;
+    class SharedTools sharedTools;
+```
+
+!!! tip "Extending the Local MCP Configuration"
+    * Add another entry under `servers` when VS Code must
+      start an additional MCP Server.
+    * Keep the module path in `args` aligned with the intended
+      MCP Server entrypoint.
+    * Add third-party Shared TEST Tool packages to
+      `mcp_requirements.txt` before starting VS Code.
+
 <br/>
 
 ---
@@ -67,13 +140,16 @@ Entrypoint:
 
 - `python -m mcp.server_local_direct.server`
 
-VS Code configuration example:
+VS Code configuration source:
+
+- `.vscode/mcp.json`
+
+Current server entry:
 
 ```json
 {
   "servers": {
     "mcp-server-local-direct": {
-      "type": "stdio",
       "command": "python",
       "args": ["-m", "mcp.server_local_direct.server"],
       "cwd": "${workspaceFolder}"
@@ -91,7 +167,7 @@ VS Code configuration example:
 <br/>
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["VS Code MCP Gateway"] --> B["mcp-server-local-direct"]
     B --> C["Local tools"]
     C --> D["log files + tool result payload"]
@@ -111,7 +187,7 @@ This path requires GitHub Actions and a self-hosted runner.
 GitHub Issue
   -> GitHub Actions workflow
   -> Python bridge (mcp.scripts.run_test_request)
-  -> mcp-server-local-direct or mcp-server-local-runner
+  -> mcp-server-local-runner
   -> results/logs/mcp/server_local + results/*.json
   -> GitHub Issue comment
 ```
@@ -140,11 +216,11 @@ Important points:
 <br/>
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["GitHub Issue<br/>Test Request"] --> B["GitHub Actions"]
     B --> D["Self-hosted Runner<br/>[self-hosted, local-dev]"]
     D --> E["Python bridge<br/>mcp.scripts.run_test_request"]
-    E --> F["mcp-server-local-direct<br/>or<br/>mcp-server-local-runner"]
+    E --> F["mcp-server-local-runner"]
     F --> G["selected tools"]
     G --> I["results/logs/mcp/server_local<br/>results/*.json"]
     I --> C["GitHub MCP Server"]
@@ -267,7 +343,7 @@ run_test_request.py
 ```
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["run_test_request.py"] --> B["resolve_server_module()"]
     B --> C["mcp.server_local_runner.server<br/>subprocess"]
     A --> D["build JSON-RPC payload"]
