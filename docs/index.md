@@ -25,7 +25,10 @@
 <br/>
 
 !!! success "Summary"
-    Multi-agent workflow with MCP, Local MCP execution, GitHub Issue based TEST automation, and documentation-first project structure.
+    * Multi-agent workflow with MCP
+    * Local MCP execution
+    * GitHub Issue based TEST automation
+    * Documentation-first project structure
 
 <br/>
 

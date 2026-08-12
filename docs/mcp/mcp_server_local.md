@@ -1,8 +1,12 @@
 # Local MCP Server
 
+<br/>
+
 ![VS Code Extension -> MCP Servers](../imgs/mcp_server_local_00.png)
 
 ## Overview
+
+<br/>
 
 This document describes the Local MCP Server structure used in the local environment and the GitHub Issue based TEST request flow.
 
@@ -36,9 +40,13 @@ The key difference is the startup path, not the codebase.
 | `direct` | started directly by a VS Code MCP client | local development, direct MCP test |
 | `runner` | started through the GitHub Actions Issue flow on a self-hosted runner | GitHub Issue based automated test |
 
+<br/>
+
 ---
 
 ## Current Flows - direct
+
+<br/>
 
 This path does not require GitHub Actions or a self-hosted runner.
 
@@ -74,7 +82,13 @@ VS Code configuration example:
 }
 ```
 
+<br/>
+
+---
+
 ### Flow
+
+<br/>
 
 ```mermaid
 flowchart LR
@@ -83,9 +97,13 @@ flowchart LR
     C --> D["log files + tool result payload"]
 ```
 
+<br/>
+
 ---
 
 ## Current Flows - runner
+
+<br/>
 
 This path requires GitHub Actions and a self-hosted runner.
 
@@ -113,7 +131,13 @@ Important points:
 - `server_local_direct` can run without GitHub Actions
 - however, the `Issue -> Action -> result comment` path requires a self-hosted runner because the workflow executes there
 
+<br/>
+
+---
+
 ### Flow
+
+<br/>
 
 ```mermaid
 flowchart LR
@@ -127,9 +151,13 @@ flowchart LR
     C --> H["Comment result on issue"]
 ```
 
+<br/>
+
 ---
 
 ## Flow Decision
+
+<br/>
 
 Use `direct` when:
 
@@ -143,9 +171,13 @@ Use the Issue-based runner flow when:
 - results should remain as artifact, JSON, log, and Issue comment
 - routing to a specific self-hosted runner is required
 
+<br/>
+
 ---
 
 ## Test Request Flow
+
+<br/>
 
 Current automated TEST Request flow:
 
@@ -159,7 +191,13 @@ GitHub Issue
   -> GitHub Issue result comment
 ```
 
+<br/>
+
+---
+
 ### Request Source
+
+<br/>
 
 Issue body format source:
 
@@ -180,7 +218,13 @@ Reference:
 
 - [GitHub Templates](../envs/github_templates.md)
 
+<br/>
+
+---
+
 ### Python Bridge
+
+<br/>
 
 Bridge script:
 
@@ -236,7 +280,13 @@ flowchart LR
     H --> J["GitHub Issue comment payload"]
 ```
 
+<br/>
+
+---
+
 ### Server Resolution
+
+<br/>
 
 Current resolution logic:
 
@@ -248,9 +298,13 @@ Current server names:
 - `mcp-server-local-direct`
 - `mcp-server-local-runner`
 
+<br/>
+
 ---
 
 ## Tool Execution
+
+<br/>
 
 Current tool set definition:
 
@@ -283,9 +337,13 @@ Status rule:
 - `success` if all tools succeed
 - `error` if any tool fails
 
+<br/>
+
 ---
 
 ## Outputs
+
+<br/>
 
 Current output directories:
 
@@ -314,9 +372,13 @@ Current result JSON fields:
 
 The workflow uploads this file as an artifact and then formats it into an Issue comment.
 
+<br/>
+
 ---
 
 ## Current Limitations
+
+<br/>
 
 The current implementation is still closer to a test-focused local harness.
 
@@ -331,9 +393,13 @@ Current position:
 - GitHub Issue based test harness
 - expandable to real build, flash, and log analysis behavior
 
+<br/>
+
 ---
 
 ## Related Files
+
+<br/>
 
 - [MCP Gateway](mcp_gateway.md)
 - [MCP Server-GitHub](mcp_server_github.md)
@@ -341,3 +407,7 @@ Current position:
 - [GitHub Self Hosted Runner](../envs/github_self_hosted_runner.md)
 - `.github/ISSUE_TEMPLATE/test_request_direct.yml`
 - `.github/ISSUE_TEMPLATE/test_request_runner.yml`
+
+<br/>
+
+---

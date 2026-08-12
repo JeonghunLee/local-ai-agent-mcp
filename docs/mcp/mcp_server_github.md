@@ -1,15 +1,23 @@
 # GitHub MCP Server
 
+<br/>
+
 ![VS Code Extension -> MCP Servers](../imgs/mcp_server_github_00.png)
 
 ## References
 
+<br/>
+
 - Manual: <https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server>
 - Node.js server: <https://github.com/github/github-mcp-server>
+
+<br/>
 
 ---
 
 ## Overview
+
+<br/>
 
 GitHub MCP Server is the MCP Server used by MCP clients such as VS Code to read and update GitHub resources.
 
@@ -21,9 +29,13 @@ Current role in this repository:
 
 It is not the component that directly executes local test tools.
 
+<br/>
+
 ---
 
 ## Current Position In This Repository
+
+<br/>
 
 Current automated TEST flow:
 
@@ -47,7 +59,13 @@ Meaning:
 
 In the current structure, GitHub MCP Server does not host or trigger the local tool execution path directly. Its focus is GitHub integration.
 
+<br/>
+
+---
+
 ### Flow
+
+<br/>
 
 ```mermaid
 flowchart LR
@@ -58,9 +76,13 @@ flowchart LR
     B --> F["GitHub Issue comment"]
 ```
 
+<br/>
+
 ---
 
 ## VS Code Configuration
+
+<br/>
 
 Example:
 
@@ -78,9 +100,13 @@ Example:
 }
 ```
 
+<br/>
+
 ---
 
 ## Example Startup Log
+
+<br/>
 
 ```log
 2026-04-17 10:33:22.770 [info] Starting server io.github.github/github-mcp-server
@@ -93,9 +119,13 @@ Example:
 2026-04-17 10:33:33.737 [info] Discovered 44 tools
 ```
 
+<br/>
+
 ---
 
 ## Main Capabilities
+
+<br/>
 
 Capability groups:
 
@@ -107,7 +137,13 @@ Capability groups:
 
 Operationally, this is the GitHub control plane.
 
+<br/>
+
+---
+
 ### Roles
+
+<br/>
 
 | No. | Role Group | Example Tasks | Verification |
 |------|------|-----------|------|
@@ -156,7 +192,13 @@ Operationally, this is the GitHub control plane.
 | 43 | `Commit Create` | create Git commit | Inferred |
 | 44 | `Ref Update` | move branch ref or create branch | Inferred |
 
+<br/>
+
+---
+
 ### Practical Grouping
+
+<br/>
 
 | Group | Included Capabilities |
 |------|-----------|
@@ -166,9 +208,13 @@ Operationally, this is the GitHub control plane.
 | CI / Verification | `Actions` runs, jobs, steps, logs |
 | Write | file create, update, delete, branch, commit, merge |
 
+<br/>
+
 ---
 
 ## Role Separation
+
+<br/>
 
 Current separation:
 
@@ -183,11 +229,19 @@ Current separation:
 
 This distinction matters because even if GitHub MCP Server is available inside the IDE, Issue-based local TEST execution still depends on the workflow runner path.
 
+<br/>
+
 ---
 
 ## Related
+
+<br/>
 
 - [MCP Server-Local](mcp_server_local.md)
 - [MCP Gateway](mcp_gateway.md)
 - [GitHub Templates](../envs/github_templates.md)
 - [GitHub Self Hosted Runner](../envs/github_self_hosted_runner.md)
+
+<br/>
+
+---

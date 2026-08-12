@@ -1,15 +1,23 @@
 # Self-hosted Runner
 
+<br/>
+
 ## References
+
+<br/>
 
 - GitHub-hosted runners  
   https://docs.github.com/en/actions/reference/runners/github-hosted-runners
 - Self-hosted runners  
   https://docs.github.com/en/actions/reference/runners/self-hosted-runners
 
+<br/>
+
 ---
 
 ## Overview
+
+<br/>
 
 This document explains the relationship between `Target Runner` and a GitHub `self-hosted runner`.
 
@@ -27,9 +35,13 @@ Interpretation:
 - GitHub Actions view
   - `self-hosted runner` = execution node that receives the job from GitHub
 
+<br/>
+
 ---
 
 ## Quick Start
+
+<br/>
 
 1. Open `Settings > Actions > Runners` in the GitHub repository.
 2. Select `New self-hosted runner`.
@@ -51,9 +63,13 @@ Current runner version: '2.333.1'
 2026-04-20 05:30:21Z: Listening for Jobs
 ```
 
+<br/>
+
 ---
 
 ## Recommended Naming
+
+<br/>
 
 The simplest rule is to use the same value for the GitHub runner label and the TEST request `Target Runner`.
 
@@ -69,11 +85,19 @@ Benefits:
 - easier Actions routing
 - less naming ambiguity
 
+<br/>
+
 ---
 
 ## Connect My PC
 
+<br/>
+
+---
+
 ### 1. Prepare Runner Directory
+
+<br/>
 
 This document assumes the runner workspace is placed inside the repository root.
 
@@ -94,7 +118,13 @@ Notes:
 - `action-runner` is usually not tracked by Git
 - add it to `.gitignore` if needed
 
+<br/>
+
+---
+
 ### 2. Get Registration Commands from GitHub
+
+<br/>
 
 Repository path:
 
@@ -107,7 +137,13 @@ Runner release reference:
 
 - https://github.com/actions/runner/releases
 
+<br/>
+
+---
+
 ### 3. Set Runner Name and Labels
+
+<br/>
 
 During `config.cmd`, GitHub asks for:
 
@@ -168,7 +204,13 @@ labels: self-hosted, Windows, X64, local-dev
 
 The important part is adding a project-specific label such as `local-dev`.
 
+<br/>
+
+---
+
 ### 4. Choose How to Run It
+
+<br/>
 
 For a quick check, run it directly from the `action-runner` directory:
 
@@ -187,7 +229,13 @@ To keep it available after reboot, install it as a service:
 
 Running as a service keeps the runner available after logout.
 
+<br/>
+
+---
+
 ### 5. Verify Runner Status in GitHub
+
+<br/>
 
 After registration, the runner should appear as `Idle` or `Online` in `Settings > Actions > Runners`.
 
@@ -198,9 +246,13 @@ If not, check:
 - whether `run.cmd` or the service is actually running
 - whether the label matches the expected value
 
+<br/>
+
 ---
 
 ## Workflow Mapping
+
+<br/>
 
 Registering a runner is not enough. A workflow must explicitly target that runner.
 
@@ -218,9 +270,13 @@ jobs:
 
 `runs-on: [self-hosted, local-dev]` means GitHub selects only a runner that has both labels.
 
+<br/>
+
 ---
 
 ## Current Repository Status
+
+<br/>
 
 Current repository workflows:
 
@@ -232,9 +288,13 @@ Current TEST automation path:
 - `test_request_local.yaml` uses a self-hosted runner
 - current label expectation is `local-dev`
 
+<br/>
+
 ---
 
 ## Issue-Based Flow
+
+<br/>
 
 ```text
 GitHub Issue
@@ -247,9 +307,13 @@ GitHub Issue
 
 In this model, `Target Runner` is not just metadata. It is an execution ownership and routing key.
 
+<br/>
+
 ---
 
 ## Mapping Strategy
+
+<br/>
 
 Recommended mapping:
 
@@ -258,9 +322,13 @@ Recommended mapping:
 
 This keeps human routing and workflow routing aligned.
 
+<br/>
+
 ---
 
 ## Multiple Runners
+
+<br/>
 
 `Target Runner` can be a single value or a comma-separated candidate list.
 
@@ -281,9 +349,13 @@ Meaning:
 - either `qemu-runner` or `lab-node-01` may process the request
 - the first claimer handles it
 
+<br/>
+
 ---
 
 ## Ownership Rules
+
+<br/>
 
 When multiple runners exist, the minimum coordination rules are:
 
@@ -299,9 +371,13 @@ Suggested labels:
 - `test-done`
 - `test-failed`
 
+<br/>
+
 ---
 
 ## Relationship with MCP
+
+<br/>
 
 A self-hosted runner is not the same thing as an MCP Server.
 
@@ -325,9 +401,13 @@ GitHub Issue
   -> result reporting back to GitHub
 ```
 
+<br/>
+
 ---
 
 ## Recommended Position
+
+<br/>
 
 In this repository, the safest interpretation is:
 
@@ -338,10 +418,18 @@ In this repository, the safest interpretation is:
 
 For a local machine, a stable label such as `local-dev` is the simplest operating model.
 
+<br/>
+
 ---
 
 ## Related
 
+<br/>
+
 - [GitHub Templates](github_templates.md)
 - [MCP Server-Local](../mcp/mcp_server_local.md)
 - [MCP Server-GitHub](../mcp/mcp_server_github.md)
+
+<br/>
+
+---

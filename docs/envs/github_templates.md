@@ -1,6 +1,10 @@
 # GitHub Templates
 
+<br/>
+
 ## Overview
+
+<br/>
 
 - GitHub Issue templates
 - Pull Request template
@@ -12,11 +16,19 @@ Key point:
 - this document is not only about templates
 - the main purpose is GitHub Action Automation based on Issue input
 
+<br/>
+
 ---
 
 ## Automation First
 
+<br/>
+
+---
+
 ### Main Automation Paths
+
+<br/>
 
 | Path | Trigger | Main Engine | Purpose |
 |------|------|------|------|
@@ -25,7 +37,13 @@ Key point:
 | Docs Site Publish | repository event | GitHub Actions | GitHub Pages publish |
 | Tag Release Publish | Git tag `v*` | GitHub Actions | GitHub Release creation and asset upload |
 
+<br/>
+
+---
+
 ### Workflow Files
+
+<br/>
 
 | Workflow | File | Role |
 |------|------|------|
@@ -39,9 +57,13 @@ Notes:
 - the Pages workflow is the documentation delivery path
 - tag-based release publishing is handled in `github_pages.yaml`
 
+<br/>
+
 ---
 
 ## Template List
+
+<br/>
 
 | Template | File | Purpose |
 |------|------|------|
@@ -53,22 +75,42 @@ Notes:
 | Test Request Runner | `.github/ISSUE_TEMPLATE/test_request_runner.yml` | GitHub Actions runner based TEST request |
 | Pull Request | `.github/pull_request_template.md` | change summary and review context |
 
+<br/>
+
 ---
 
 ## TEST Request Templates
 
+<br/>
+
+---
+
 ### Purpose
+
+<br/>
 
 - TEST execution request
 - ref based execution request
 - result trace through JSON, log, and Issue comment
 
+<br/>
+
+---
+
 ### Files
+
+<br/>
 
 - `.github/ISSUE_TEMPLATE/test_request_direct.yml`
 - `.github/ISSUE_TEMPLATE/test_request_runner.yml`
 
+<br/>
+
+---
+
 ### Shared Fields
+
+<br/>
 
 - `Template Version`
 - `Target Runner`
@@ -78,7 +120,13 @@ Notes:
 - test tool checklist
 - log tool checklist
 
+<br/>
+
+---
+
 ### Current Split
+
+<br/>
 
 | Request Type | Label | Execution Path | Notes |
 |------|------|------|------|
@@ -87,7 +135,13 @@ Notes:
 
 ![](../imgs/github_issue_lable_00.png)
 
+<br/>
+
+---
+
 ### Examples
+
+<br/>
 
 ```md
 ## Request Ref
@@ -131,11 +185,19 @@ Direct example notes:
 ![](../imgs/github_issue_runner_00.png)
 ![](../imgs/github_issue_runner_01.png)
 
+<br/>
+
 ---
 
 ## Runner Automation
 
+<br/>
+
+---
+
 ### Flow
+
+<br/>
 
 ```text
 GitHub Issue
@@ -148,23 +210,43 @@ GitHub Issue
   -> issue comment
 ```
 
+<br/>
+
+---
+
 ### Related Files
+
+<br/>
 
 - `.github/workflows/test_request_local.yaml`
 - `.github/ISSUE_TEMPLATE/test_request_runner.yml`
 
+<br/>
+
+---
+
 ### Characteristics
+
+<br/>
 
 - GitHub Actions driven
 - self-hosted runner required
 - artifact upload included
 - result comment generation included
 
+<br/>
+
 ---
 
 ## Direct Execution
 
+<br/>
+
+---
+
 ### Flow
+
+<br/>
 
 ```text
 GitHub Issue
@@ -176,20 +258,36 @@ GitHub Issue
   -> issue comment
 ```
 
+<br/>
+
+---
+
 ### Related Files
+
+<br/>
 
 - `.github/ISSUE_TEMPLATE/test_request_direct.yml`
 - `Jenkinsfile`
 
+<br/>
+
+---
+
 ### Characteristics
+
+<br/>
 
 - direct MCP mode
 - execution owner selected by `Target Runner`
 - GitHub Actions workflow is not the main engine in this path
 
+<br/>
+
 ---
 
 ## Title Rule
+
+<br/>
 
 ```text
 [TEST] [runner]
@@ -214,15 +312,29 @@ Notes:
 - the current split is driven by two Issue labels
 - `Target Runner` is part of the Issue body, not the title
 
+<br/>
+
 ---
 
 ## Target Runner
 
+<br/>
+
+---
+
 ### Runner Template Examples
+
+<br/>
 
 - `local-dev`
 
+<br/>
+
+---
+
 ### Direct Template Examples
+
+<br/>
 
 - `jenkins`
 - `ai-agent`
@@ -236,19 +348,39 @@ Reference:
 
 - [GitHub Self Hosted Runner](github_self_hosted_runner.md)
 
+<br/>
+
 ---
 
 ## Usage Guidance
 
+<br/>
+
+---
+
 ### Use Bug Report When
+
+<br/>
 
 - a defect needs reproduction and tracking
 
+<br/>
+
+---
+
 ### Use Feature Request When
+
+<br/>
 
 - a change proposal or feature idea is needed
 
+<br/>
+
+---
+
 ### Use TEST Request When
+
+<br/>
 
 - a specific ref needs execution
 - logs and JSON output are needed
@@ -259,9 +391,13 @@ Key point:
 - TEST Request is an execution request
 - Pull Request is a code change request
 
+<br/>
+
 ---
 
 ## Pull Request Template
+
+<br/>
 
 File:
 
@@ -274,9 +410,13 @@ Typical contents:
 - test result summary
 - related document updates
 
+<br/>
+
 ---
 
 ## Release Publishing
+
+<br/>
 
 File:
 
@@ -298,9 +438,13 @@ Notes:
 - there is no separate release template file
 - the current workflow includes a release upload step using `softprops/action-gh-release`
 
+<br/>
+
 ---
 
 ## Recommended Labels
+
+<br/>
 
 - `test-request-runner`
 - `test-request-direct`
@@ -308,9 +452,13 @@ Notes:
 - `test-done`
 - `test-failed`
 
+<br/>
+
 ---
 
 ## Directory Structure
+
+<br/>
 
 ```text
 .github/
@@ -327,12 +475,20 @@ Notes:
     test_request_local.yaml
 ```
 
+<br/>
+
 ---
 
 ## Related
+
+<br/>
 
 - [GitHub Self Hosted Runner](github_self_hosted_runner.md)
 - [MCP Server-Local](../mcp/mcp_server_local.md)
 - [MCP Server-GitHub](../mcp/mcp_server_github.md)
 - [MCP Gateway](../mcp/mcp_gateway.md)
 - [System Design](../architecture/system-design.md)
+
+<br/>
+
+---
