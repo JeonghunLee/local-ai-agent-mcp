@@ -1,24 +1,36 @@
 # Agent: Claude
 
+<br/>
+
 ## Purpose
+
+<br/>
 
 - reasoning
 - long-context analysis
 - document writing
 - architecture discussion
 
+<br/>
+
 ---
 
 ## When to Use
+
+<br/>
 
 - structure design
 - long document review
 - workflow organization
 - change plan review before implementation
 
+<br/>
+
 ---
 
 ## Model
+
+<br/>
 
 | Item | Value |
 |------|------|
@@ -27,9 +39,13 @@
 | Higher Tier | `claude-opus-4-6` |
 | API | Anthropic Messages API |
 
+<br/>
+
 ---
 
 ## Configuration
+
+<br/>
 
 ```json
 {
@@ -40,18 +56,32 @@
 }
 ```
 
+<br/>
+
 ---
 
 ## Setup
 
+<br/>
+
+---
+
 ### Rule Files
+
+<br/>
 
 | Path | Role |
 |------|------|
 | `claude.md` | project rule file |
 | `C:\\Users\\<user>\\.claude\\projects\\d--works-projects-local-ai-agent-mcp\\memory` | project memory |
 
+<br/>
+
+---
+
 ### Authentication
+
+<br/>
 
 Method 1:
 
@@ -71,17 +101,31 @@ Method 3:
 $env:ANTHROPIC_API_KEY = "sk-ant-..."
 ```
 
+<br/>
+
+---
+
 ### Verify
+
+<br/>
 
 ```bash
 claude auth status
 claude -p "hello"
 ```
 
+<br/>
+
 ---
 
 ## MCP Notes
 
+<br/>
+
 - MCP tool usage available
 - strong on long-context reasoning work
 - better fit for analysis and design than local execution itself
+
+<br/>
+
+---

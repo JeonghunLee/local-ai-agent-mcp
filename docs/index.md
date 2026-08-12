@@ -1,19 +1,19 @@
 # AI Agent with MCP
 
-<br>
+<br/>
 
 * **Purpose**    
   AI Agent workflow based on MCP  
   Connect Claude, Codex, Ollama, and GitHub operations through MCP  
   Support Local MCP execution, GitHub Issue based TEST automation, and documentation-first project flow
 
-<br>
+<br/>
 
 * **Structure**     
     * [System Design](architecture/system-design.md)  
     * [Automation Design](architecture/automation-design.md) 
 
-<br>
+<br/>
 
 * **Scope**    
     * AI Agent usage
@@ -22,14 +22,16 @@
     * Local TEST execution
     * CI/CD/CT workflow
 
-<br>
+<br/>
 
 !!! success "Summary"
     Multi-agent workflow with MCP, Local MCP execution, GitHub Issue based TEST automation, and documentation-first project structure.
 
-<br>
+<br/>
 
 ## Entry Points
+
+<br/>
 
 | Area | Document |
 |------|------|
@@ -39,9 +41,13 @@
 | Local Tooling | [MCP Server-Local](mcp/mcp_server_local.md) |
 | GitHub Integration | [MCP Server-Github](mcp/mcp_server_github.md) |
 
+<br/>
+
 ---
 
 ## Document Groups
+
+<br/>
 
 | Group | Coverage |
 |------|------|
@@ -51,9 +57,13 @@
 | Envs | Windows, WSL2, GitHub operation docs |
 | Logs | run records |
 
+<br/>
+
 ---
 
 ## Reading Order
+
+<br/>
 
 1. [System Design](architecture/system-design.md)
 2. [Automation Design](architecture/automation-design.md)
@@ -62,3 +72,7 @@
 5. [MCP Server-Github](mcp/mcp_server_github.md)
 6. Agent documents
 7. Environment documents
+
+<br/>
+
+---
