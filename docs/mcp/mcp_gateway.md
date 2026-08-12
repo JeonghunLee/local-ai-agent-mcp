@@ -25,7 +25,7 @@ flowchart TD
     subgraph IssueTrigger["1. GitHub Issue Trigger"]
         direction TB
         Issue["GitHub Issue"]
-        Automation["Self-hosted Runner or Jenkins"]
+        Automation["Windows Automation<br/>Self-hosted Runner or Jenkins"]
         RequestBridge["Request Bridge<br/>GitHub Issue Request to Local MCP Request"]
         ResultBridge["Result Bridge<br/>Local MCP Result to GitHub Issue Report"]
         IssueComment["GitHub Issue<br/>TEST Result Comment"]

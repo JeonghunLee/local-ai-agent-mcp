@@ -30,11 +30,11 @@ The purpose of this document is CT automation. CI/CD remains part of the overall
 
 <br/>
 
-| Area | Orchestrator | Execution Entry | Purpose |
-|------|------|------|------|
-| GitHub CI/CD | GitHub Actions | `.github/workflows/github_pages.yaml` | build, deploy, release |
-| Runner CT | GitHub Actions | `.github/workflows/test_request_local.yaml` | Issue-based CT on a self-hosted runner |
-| Direct CT | Jenkins | `Jenkinsfile` | Issue-based direct CT on a Jenkins agent |
+| Area | Orchestrator | Execution Entry | Environment | Purpose |
+|------|------|------|------|------|
+| GitHub CI/CD | GitHub Actions | `.github/workflows/github_pages.yaml` | Ubuntu GitHub-hosted runner | build, deploy, release |
+| Runner CT | GitHub Actions | `.github/workflows/test_request_local.yaml` | Windows self-hosted runner | Issue-based CT |
+| Direct CT | Jenkins | `Jenkinsfile` | Windows Jenkins agent | Issue-based direct CT |
 
 GitHub Actions is responsible for both GitHub CI/CD orchestration and the runner CT workflow. The runner CT job itself is executed by the GitHub self-hosted runner.
 
@@ -42,6 +42,17 @@ GitHub Actions is responsible for both GitHub CI/CD orchestration and the runner
     * The CI/CD row above is boundary context only.
     * CI/CD flow details are intentionally omitted from the
       remaining sections and diagrams.
+
+!!! note "Current CT Operating System"
+    * Both CT Main Flows currently target Windows.
+    * `test_request_local.yaml` executes its local steps with
+      PowerShell on the self-hosted runner.
+    * `Jenkinsfile` also executes checkout and TEST stages with
+      PowerShell on the Jenkins agent.
+    * Shared TEST handlers currently use Windows command forms,
+      including `ping -n`.
+    * Linux support requires shell-independent handlers or
+      separate OS-specific tool implementations.
 
 <br/>
 
@@ -84,7 +95,7 @@ This flow is selected by the `test-request-runner` label.
 flowchart TD
     Issue["GitHub Issue<br/>test-request-runner"]
     Workflow["GitHub Actions<br/>test_request_local.yaml"]
-    Runner["GitHub Self-hosted Runner<br/>local-dev"]
+    Runner["GitHub Self-hosted Runner<br/>Windows / local-dev"]
 
     subgraph Bridge["Shared Python Bridge"]
         direction TB
@@ -160,7 +171,7 @@ This flow is selected by the `test-request-direct` label and the `jenkins` targe
 flowchart TD
     Issue["GitHub Issue<br/>test-request-direct<br/>Target Runner: jenkins"]
     Webhook["GitHub Webhook"]
-    Jenkins["Jenkins Pipeline<br/>requested ref checkout"]
+    Jenkins["Jenkins Pipeline<br/>Windows agent<br/>requested ref checkout"]
 
     subgraph Bridge["Shared Python Bridge"]
         direction TB
