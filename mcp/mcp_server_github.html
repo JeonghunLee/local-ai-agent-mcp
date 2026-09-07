@@ -209,7 +209,7 @@
 <span class="md-ellipsis">
     
   
-    Agents
+    Dev Environment
   
 
     
@@ -218,6 +218,68 @@
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Dev Environment
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
+<span class="md-ellipsis">
+    
+  
+    Setup OpenClaw WSL2
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_templates.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Templates
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Self Hosted Runner
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -266,8 +328,8 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -278,8 +340,8 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_4">
+<nav aria-expanded="true" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -454,68 +516,6 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Envs
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_5">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Envs
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
-<span class="md-ellipsis">
-    
-  
-    OpenClaw WSL2 Setup
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_templates.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Templates
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Self Hosted Runner
-  
-
-    
-  </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="https://jeonghunlee.github.io/project_ai.html#ai-agent-with-mcp">
 <span class="md-ellipsis">
@@ -675,24 +675,43 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="github-mcp-server">GitHub MCP Server</h1>
+<p><br/></p>
 <p><img alt="VS Code Extension -&gt; MCP Servers" src="../imgs/mcp_server_github_00.png"/></p>
 <h2 id="references">References</h2>
+<p><br/></p>
 <ul>
 <li>Manual: <a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server">https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server</a></li>
 <li>Node.js server: <a href="https://github.com/github/github-mcp-server">https://github.com/github/github-mcp-server</a></li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="overview">Overview</h2>
-<p>GitHub MCP Server is the MCP Server used by MCP clients such as VS Code to read and update GitHub resources.</p>
+<p><br/></p>
+<p>GitHub MCP Server is an external MCP Server used by MCP clients such as VS Code to read and update GitHub resources.</p>
 <p>Current role in this repository:</p>
 <ul>
-<li>Repository, Issue, Pull Request, and Actions access</li>
-<li>Issue, comment, label, and assignee updates</li>
-<li>GitHub-side integration for the Local MCP based TEST flow</li>
+<li>AI Agent access to GitHub Issues</li>
+<li>Issue creation, lookup, update, and follow-up</li>
+<li>optional access to other GitHub resources when enabled</li>
 </ul>
-<p>It is not the component that directly executes local test tools.</p>
+<p>It is not included in this repository's Python MCP source and does not directly execute local TEST tools.</p>
+<div class="admonition warning">
+<p class="admonition-title">Separate VS Code Installation Required</p>
+<ul>
+<li>GitHub MCP Server must be installed or registered
+  separately in VS Code.</li>
+<li>GitHub authentication is also required before an
+  AI Agent can use its GitHub tools.</li>
+<li>The repository <code>.vscode/mcp.json</code> currently registers
+  only <code>mcp-server-local-direct</code>.</li>
+<li>Installing repository Python dependencies does not
+  install or configure GitHub MCP Server.</li>
+</ul>
+</div>
+<p><br/></p>
 <hr/>
 <h2 id="current-position-in-this-repository">Current Position In This Repository</h2>
+<p><br/></p>
 <p>Current automated TEST flow:</p>
 <div class="highlight"><pre><span></span><code>GitHub Issue
   -&gt; GitHub Actions
@@ -703,24 +722,35 @@
 </code></pre></div>
 <p>Meaning:</p>
 <ul>
-<li>GitHub MCP Server</li>
-<li>GitHub-side read and write operations</li>
-<li>Local MCP Server</li>
-<li>actual tool execution</li>
-<li>GitHub Actions</li>
-<li>Issue-based automation bridge</li>
+<li>Local MCP Server performs the actual TEST tool execution.</li>
+<li>GitHub Actions triggers the Self-hosted Runner CT flow.</li>
+<li><code>actions/github-script</code> posts the result comment.</li>
+<li>Jenkins uses the GitHub REST API for its result comment.</li>
 </ul>
-<p>In the current structure, GitHub MCP Server does not host or trigger the local tool execution path directly. Its focus is GitHub integration.</p>
+<div class="admonition note">
+<p class="admonition-title">Current Source Usage</p>
+<ul>
+<li>The automated CT source does not call GitHub MCP Server.</li>
+<li>GitHub MCP Server is an optional AI Agent integration.</li>
+<li>Its primary project role is GitHub Issue interaction
+  from VS Code after separate installation.</li>
+</ul>
+</div>
+<p><br/></p>
+<hr/>
 <h3 id="flow">Flow</h3>
-<pre class="mermaid"><code>flowchart LR
+<p><br/></p>
+<pre class="mermaid"><code>flowchart TD
     A["GitHub Issue"] --&gt; B["GitHub Actions"]
     B --&gt; C["Python bridge&lt;br/&gt;mcp.scripts.run_test_request"]
     C --&gt; D["Local MCP Server"]
     D --&gt; E["results/logs/mcp/server_local&lt;br/&gt;results/*.json"]
     B --&gt; F["GitHub Issue comment"]</code></pre>
+<p><br/></p>
 <hr/>
 <h2 id="vs-code-configuration">VS Code Configuration</h2>
-<p>Example:</p>
+<p><br/></p>
+<p>The following is an installation or registration example. It is not present in the current repository <code>.vscode/mcp.json</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"servers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">"io.github.github/github-mcp-server"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -733,8 +763,20 @@
 <span class="w">  </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
 <span class="p">}</span>
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Configuration Separation</p>
+<ul>
+<li>Local MCP Server configuration belongs to the repository
+  <code>.vscode/mcp.json</code>.</li>
+<li>GitHub MCP Server requires a separate VS Code installation
+  or configuration entry.</li>
+<li>Keep GitHub credentials outside repository source files.</li>
+</ul>
+</div>
+<p><br/></p>
 <hr/>
 <h2 id="example-startup-log">Example Startup Log</h2>
+<p><br/></p>
 <div class="highlight"><pre><span></span><code>2026-04-17 10:33:22.770 [info] Starting server io.github.github/github-mcp-server
 2026-04-17 10:33:22.770 [info] Connection state: Starting
 2026-04-17 10:33:22.770 [info] Starting server from LocalProcess extension host
@@ -744,8 +786,10 @@
 2026-04-17 10:33:25.440 [info] Discovered authorization server metadata at https://github.com/.well-known/oauth-authorization-server/login/oauth
 2026-04-17 10:33:33.737 [info] Discovered 44 tools
 </code></pre></div>
+<p><br/></p>
 <hr/>
 <h2 id="main-capabilities">Main Capabilities</h2>
+<p><br/></p>
 <p>Capability groups:</p>
 <ul>
 <li>Repository lookup and search</li>
@@ -755,7 +799,10 @@
 <li>GitHub Actions runs, jobs, steps, and logs</li>
 </ul>
 <p>Operationally, this is the GitHub control plane.</p>
+<p><br/></p>
+<hr/>
 <h3 id="roles">Roles</h3>
+<p><br/></p>
 <table>
 <thead>
 <tr>
@@ -1032,7 +1079,10 @@
 </tr>
 </tbody>
 </table>
+<p><br/></p>
+<hr/>
 <h3 id="practical-grouping">Practical Grouping</h3>
+<p><br/></p>
 <table>
 <thead>
 <tr>
@@ -1063,8 +1113,10 @@
 </tr>
 </tbody>
 </table>
+<p><br/></p>
 <hr/>
 <h2 id="role-separation">Role Separation</h2>
+<p><br/></p>
 <p>Current separation:</p>
 <ul>
 <li>GitHub MCP Server</li>
@@ -1077,14 +1129,18 @@
 <li>bridge between Issue events and Local MCP execution</li>
 </ul>
 <p>This distinction matters because even if GitHub MCP Server is available inside the IDE, Issue-based local TEST execution still depends on the workflow runner path.</p>
+<p><br/></p>
 <hr/>
 <h2 id="related">Related</h2>
+<p><br/></p>
 <ul>
 <li><a href="mcp_server_local.html">MCP Server-Local</a></li>
 <li><a href="mcp_gateway.html">MCP Gateway</a></li>
 <li><a href="../envs/github_templates.html">GitHub Templates</a></li>
 <li><a href="../envs/github_self_hosted_runner.html">GitHub Self Hosted Runner</a></li>
 </ul>
+<p><br/></p>
+<hr/>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

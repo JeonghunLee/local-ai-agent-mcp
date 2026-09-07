@@ -8,7 +8,7 @@
 <meta content="AI Agent with MCP" name="description"/>
 <meta content="Jeonghun Lee" name="author"/>
 <link href="system-design.html" rel="prev"/>
-<link href="../agents/claude.html" rel="next"/>
+<link href="../envs/openclaw_wsl2_setup.html" rel="next"/>
 <link href="../imgs/logo.jpg" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.7" name="generator"/>
 <title>Automation Design - AI Agent with MCP</title>
@@ -227,47 +227,47 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cicdct-automation">
+<a class="md-nav__link" href="#cicd-and-ct-responsibility">
 <span class="md-ellipsis">
       
-        CI/CD/CT Automation
+        CI/CD and CT Responsibility
       
     </span>
 </a>
-<nav aria-label="CI/CD/CT Automation" class="md-nav">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ct-architecture">
+<span class="md-ellipsis">
+      
+        CT Architecture
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#main-flow-ct">
+<span class="md-ellipsis">
+      
+        Main Flow CT
+      
+    </span>
+</a>
+<nav aria-label="Main Flow CT" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#scope_1">
+<a class="md-nav__link" href="#github-runner-ct">
 <span class="md-ellipsis">
       
-        Scope
+        GitHub Runner CT
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#github-issue-based-entry">
+<a class="md-nav__link" href="#jenkins-direct-ct">
 <span class="md-ellipsis">
       
-        GitHub Issue Based Entry
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#automation-components">
-<span class="md-ellipsis">
-      
-        Automation Components
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#issue-based-flow">
-<span class="md-ellipsis">
-      
-        Issue Based Flow
+        Jenkins Direct CT
       
     </span>
 </a>
@@ -276,38 +276,29 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#main-flows">
+<a class="md-nav__link" href="#shared-python-bridge">
 <span class="md-ellipsis">
       
-        Main Flows
+        Shared Python Bridge
       
     </span>
 </a>
-<nav aria-label="Main Flows" class="md-nav">
+<nav aria-label="Shared Python Bridge" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#direct-mcp-flow">
+<a class="md-nav__link" href="#request-and-test-execution">
 <span class="md-ellipsis">
       
-        Direct MCP Flow
+        Request and TEST execution
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#runner-test-request-flow">
+<a class="md-nav__link" href="#test-result-reporting">
 <span class="md-ellipsis">
       
-        Runner Test Request Flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#direct-test-request-flow">
-<span class="md-ellipsis">
-      
-        Direct Test Request Flow
+        TEST result reporting
       
     </span>
 </a>
@@ -316,59 +307,28 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#component-details">
+<a class="md-nav__link" href="#two-local-mcp-servers">
 <span class="md-ellipsis">
       
-        Component Details
-      
-    </span>
-</a>
-<nav aria-label="Component Details" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#vs-code-mcp-gateway">
-<span class="md-ellipsis">
-      
-        VS Code MCP Gateway
+        Two Local MCP Servers
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#local-mcp-server">
+<a class="md-nav__link" href="#test-result-and-reporting">
 <span class="md-ellipsis">
       
-        Local MCP Server
+        TEST Result and Reporting
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#github-mcp-server">
+<a class="md-nav__link" href="#source-alignment-notes">
 <span class="md-ellipsis">
       
-        GitHub MCP Server
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#python-bridge">
-<span class="md-ellipsis">
-      
-        Python Bridge
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#installation-locations">
-<span class="md-ellipsis">
-      
-        Installation Locations
+        Source Alignment Notes
       
     </span>
 </a>
@@ -394,7 +354,7 @@
 <span class="md-ellipsis">
     
   
-    Agents
+    Dev Environment
   
 
     
@@ -403,6 +363,68 @@
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Dev Environment
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
+<span class="md-ellipsis">
+    
+  
+    Setup OpenClaw WSL2
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_templates.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Templates
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Self Hosted Runner
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -451,8 +473,8 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -463,8 +485,8 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_4">
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -512,68 +534,6 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Envs
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_5">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Envs
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
-<span class="md-ellipsis">
-    
-  
-    OpenClaw WSL2 Setup
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_templates.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Templates
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Self Hosted Runner
-  
-
-    
-  </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="https://jeonghunlee.github.io/project_ai.html#ai-agent-with-mcp">
 <span class="md-ellipsis">
@@ -610,47 +570,47 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cicdct-automation">
+<a class="md-nav__link" href="#cicd-and-ct-responsibility">
 <span class="md-ellipsis">
       
-        CI/CD/CT Automation
+        CI/CD and CT Responsibility
       
     </span>
 </a>
-<nav aria-label="CI/CD/CT Automation" class="md-nav">
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ct-architecture">
+<span class="md-ellipsis">
+      
+        CT Architecture
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#main-flow-ct">
+<span class="md-ellipsis">
+      
+        Main Flow CT
+      
+    </span>
+</a>
+<nav aria-label="Main Flow CT" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#scope_1">
+<a class="md-nav__link" href="#github-runner-ct">
 <span class="md-ellipsis">
       
-        Scope
+        GitHub Runner CT
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#github-issue-based-entry">
+<a class="md-nav__link" href="#jenkins-direct-ct">
 <span class="md-ellipsis">
       
-        GitHub Issue Based Entry
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#automation-components">
-<span class="md-ellipsis">
-      
-        Automation Components
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#issue-based-flow">
-<span class="md-ellipsis">
-      
-        Issue Based Flow
+        Jenkins Direct CT
       
     </span>
 </a>
@@ -659,38 +619,29 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#main-flows">
+<a class="md-nav__link" href="#shared-python-bridge">
 <span class="md-ellipsis">
       
-        Main Flows
+        Shared Python Bridge
       
     </span>
 </a>
-<nav aria-label="Main Flows" class="md-nav">
+<nav aria-label="Shared Python Bridge" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#direct-mcp-flow">
+<a class="md-nav__link" href="#request-and-test-execution">
 <span class="md-ellipsis">
       
-        Direct MCP Flow
+        Request and TEST execution
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#runner-test-request-flow">
+<a class="md-nav__link" href="#test-result-reporting">
 <span class="md-ellipsis">
       
-        Runner Test Request Flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#direct-test-request-flow">
-<span class="md-ellipsis">
-      
-        Direct Test Request Flow
+        TEST result reporting
       
     </span>
 </a>
@@ -699,59 +650,28 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#component-details">
+<a class="md-nav__link" href="#two-local-mcp-servers">
 <span class="md-ellipsis">
       
-        Component Details
-      
-    </span>
-</a>
-<nav aria-label="Component Details" class="md-nav">
-<ul class="md-nav__list">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#vs-code-mcp-gateway">
-<span class="md-ellipsis">
-      
-        VS Code MCP Gateway
+        Two Local MCP Servers
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#local-mcp-server">
+<a class="md-nav__link" href="#test-result-and-reporting">
 <span class="md-ellipsis">
       
-        Local MCP Server
+        TEST Result and Reporting
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#github-mcp-server">
+<a class="md-nav__link" href="#source-alignment-notes">
 <span class="md-ellipsis">
       
-        GitHub MCP Server
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#python-bridge">
-<span class="md-ellipsis">
-      
-        Python Bridge
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#installation-locations">
-<span class="md-ellipsis">
-      
-        Installation Locations
+        Source Alignment Notes
       
     </span>
 </a>
@@ -791,337 +711,414 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="automation-design">Automation Design</h1>
+<p><br/></p>
 <h2 id="scope">Scope</h2>
 <p><br/></p>
+<p>This document describes automation from a <strong>Continuous Testing (CT)</strong> point of view.</p>
+<p>The CT design has two main flows:</p>
+<ol>
+<li>GitHub Actions and a self-hosted runner</li>
+<li>Jenkins direct execution</li>
+</ol>
+<p>The purpose of this document is CT automation. CI/CD remains part of the overall automation boundary, but its flows and implementation details are omitted by default. GitHub Actions CI/CD is mentioned only to distinguish it from the Issue-based CT flows.</p>
+<div class="admonition tip">
+<p class="admonition-title">CT Documentation Scope</p>
 <ul>
-<li>Automation design   </li>
-<li>CI automation  </li>
-<li>CD automation   </li>
-<li><strong>CT automation based on Github Self-hosted runner</strong> <ul>
-<li>GitHub Issue based execution paths   </li>
-<li>direct and runner flow split   </li>
+<li>The default scope of this document is CT.</li>
+<li>Automation flows and diagrams describe CT unless a section
+  explicitly states otherwise.</li>
+<li>CI/CD flows and implementation details are omitted
+  by default.</li>
 </ul>
-</li>
-</ul>
+</div>
 <p><br/></p>
 <hr/>
-<h2 id="cicdct-automation">CI/CD/CT Automation</h2>
+<h2 id="cicd-and-ct-responsibility">CI/CD and CT Responsibility</h2>
 <p><br/></p>
-<ul>
-<li>Automation Design   <ul>
-<li>Github (Self-hosted runner) based on CI/CD/CT automation</li>
-<li>Jetson CI/CD pipeline</li>
-</ul>
-</li>
-</ul>
-<p><br/></p>
-<hr/>
-<h3 id="scope_1">Scope</h3>
-<p><br/></p>
-<p>Github Action and Github Self-hosted runner based CI/CD/CT automation</p>
-<ul>
-<li>CI automation (Github Action)<ul>
-<li>Pull Request, Review, and Actions follow-up</li>
-</ul>
-</li>
-<li>CD automation (Github Action)<ul>
-<li>workflow based delivery path</li>
-</ul>
-</li>
-<li><strong>CT automation(Self-hosted runner)</strong><ul>
-<li>Local MCP tool based test execution</li>
-<li>JSON, log, and comment trace</li>
-</ul>
-</li>
-</ul>
-<p><br/></p>
-<hr/>
-<h3 id="github-issue-based-entry">GitHub Issue Based Entry</h3>
-<p><br/></p>
-<ul>
-<li>Github Issue and Self-hosted runner based CT automation</li>
-</ul>
 <table>
 <thead>
 <tr>
-<th>Request Type</th>
-<th>Label</th>
-<th>Template</th>
-<th>Execution Path</th>
-<th>Main Purpose</th>
+<th>Area</th>
+<th>Orchestrator</th>
+<th>Execution Entry</th>
+<th>Environment</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Runner TEST Request</td>
-<td><code>test-request-runner</code></td>
-<td><code>test_request_runner.yml</code></td>
-<td>GitHub Actions -&gt; self-hosted runner</td>
-<td>runner based automated test execution</td>
+<td>GitHub CI/CD</td>
+<td>GitHub Actions</td>
+<td><code>.github/workflows/github_pages.yaml</code></td>
+<td>Ubuntu GitHub-hosted runner</td>
+<td>build, deploy, release</td>
 </tr>
 <tr>
-<td>Direct TEST Request</td>
-<td><code>test-request-direct</code></td>
-<td><code>test_request_direct.yml</code></td>
-<td>Jenkins -&gt; direct MCP execution</td>
-<td>direct local test execution</td>
+<td>Runner CT</td>
+<td>GitHub Actions</td>
+<td><code>.github/workflows/test_request_local.yaml</code></td>
+<td>Windows self-hosted runner</td>
+<td>Issue-based CT</td>
 </tr>
 <tr>
-<td>General Issue / PR</td>
-<td>normal workflow</td>
-<td>standard templates</td>
-<td>GitHub MCP Server, AI Agent, GitHub Actions</td>
-<td>review, update, tracking</td>
+<td>Direct CT</td>
+<td>Jenkins</td>
+<td><code>Jenkinsfile</code></td>
+<td>Windows Jenkins agent</td>
+<td>Issue-based direct CT</td>
 </tr>
 </tbody>
 </table>
+<p>GitHub Actions is responsible for both GitHub CI/CD orchestration and the runner CT workflow. The runner CT job itself is executed by the GitHub self-hosted runner.</p>
+<div class="admonition note">
+<p class="admonition-title">CI/CD Boundary</p>
+<ul>
+<li>The CI/CD row above is boundary context only.</li>
+<li>CI/CD flow details are intentionally omitted from the
+  remaining sections and diagrams.</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Current CT Operating System</p>
+<ul>
+<li>Both CT Main Flows currently target Windows.</li>
+<li><code>test_request_local.yaml</code> executes its local steps with
+  PowerShell on the self-hosted runner.</li>
+<li><code>Jenkinsfile</code> also executes checkout and TEST stages with
+  PowerShell on the Jenkins agent.</li>
+<li>Shared TEST handlers currently use Windows command forms,
+  including <code>ping -n</code>.</li>
+<li>Linux support requires shell-independent handlers or
+  separate OS-specific tool implementations.</li>
+</ul>
+</div>
 <p><br/></p>
 <hr/>
-<h3 id="automation-components">Automation Components</h3>
+<h2 id="ct-architecture">CT Architecture</h2>
 <p><br/></p>
-<ul>
-<li><strong>GitHub Actions</strong><ul>
-<li>runner TEST Request execution</li>
-<li><strong>self-hosted runner integration</strong></li>
-<li>artifact and comment trace</li>
-</ul>
-</li>
-<li>Jenkins<ul>
-<li>direct TEST Request execution</li>
-<li>webhook trigger</li>
-<li>requested ref checkout</li>
-</ul>
-</li>
-<li><strong>Python Bridge</strong><ul>
-<li>issue body parsing</li>
-<li>selected tool mapping</li>
-<li>Local MCP Server call</li>
-<li>JSON and Markdown result generation</li>
-</ul>
-</li>
-</ul>
-<p><br/></p>
-<hr/>
-<h3 id="issue-based-flow">Issue Based Flow</h3>
-<p><br/></p>
-<ul>
-<li>
-<p>Github based on CI/CD/CT <br/>
-<div class="highlight"><pre><span></span><code>runner test request issue
-  -&gt; GitHub Actions
-  -&gt; self-hosted runner
-  -&gt; Python bridge
-  -&gt; mcp-server-local-runner
-</code></pre></div></p>
-</li>
-<li>
-<p>Jenkins based on CI/CD/CT </p>
-</li>
-</ul>
-<p><div class="highlight"><pre><span></span><code>direct test request issue
-  -&gt; Jenkins
-  -&gt; Python bridge
-  -&gt; mcp-server-local-direct
-</code></pre></div>
-<br/></p>
-<ul>
-<li><strong>Github Issue (Request CT)</strong> <br/>
-<div class="highlight"><pre><span></span><code>GitHub Issue / PR
-  -&gt; GitHub Actions or Jenkins
-  -&gt; Python bridge
-  -&gt; Local MCP Server
-  -&gt; JSON / log / comment
-  -&gt; GitHub traceability
-</code></pre></div></li>
-</ul>
-<p><br/></p>
-<hr/>
-<h2 id="main-flows">Main Flows</h2>
-<p><br/></p>
-<p>MCP and Github Issue based flows are described below.</p>
-<p><br/></p>
-<hr/>
-<h3 id="direct-mcp-flow">Direct MCP Flow</h3>
-<p><br/></p>
-<div class="highlight"><pre><span></span><code>AI Agent or local client
-  -&gt; VS Code MCP Gateway
-  -&gt; mcp-server-local-direct
-  -&gt; local tools
-  -&gt; log files + tool result payload
-</code></pre></div>
-<p><br/></p>
-<hr/>
-<h3 id="runner-test-request-flow">Runner Test Request Flow</h3>
-<p>Example:</p>
-<p><strong>Github Issue</strong> publication flow:</p>
-<ul>
-<li>A GitHub User or AI Agent prepares a GitHub Issue</li>
-<li>The <code>test-request-runner</code> label selects the runner-based execution path</li>
-</ul>
-<pre class="mermaid"><code>flowchart TD
-  A[GitHub User or AI Agent] --&gt; B[Prepare GitHub Issue&lt;br/&gt;label: test-request-runner]
-  B --&gt; C{GitHub Issue&lt;br/&gt;label: test-request-runner?}
-  C --&gt;|Yes| D[GitHub Issue published]
-  C --&gt;|No| X[Normal GitHub Issue flow]</code></pre>
-<p><br/></p>
-<ul>
-<li>Github Issue publication example:
-Request 3 Tests for ping/ping/ping 
-<img alt="" src="../imgs/github_issue_runner_00.png"/></li>
-</ul>
-<p><br/>
-<br/></p>
-<p><strong>Post-publication</strong> execution flow:</p>
-<ul>
-<li>The GitHub Actions workflow is triggered</li>
-<li>The <strong>self-hosted runner</strong> executes <code>mcp.scripts.run_test_request</code></li>
-<li><code>mcp-server-local-runner</code> invokes the selected tools</li>
-<li>Execution outputs are stored as JSON, logs, and a GitHub Issue comment</li>
-</ul>
-<pre class="mermaid"><code>flowchart TD
-  D[GitHub Issue published] --&gt; E[GitHub Actions workflow]
-  E --&gt; F[self-hosted runner]
-  F --&gt; G[mcp.scripts.run_test_request]
-  G --&gt; H[mcp-server-local-runner]
-  H --&gt; I[selected tools]
-  I --&gt; J[results JSON + logs]
-  J --&gt; K[GitHub Issue comment]</code></pre>
-<p><br/></p>
-<ul>
-<li>Github Self-hosted Runner TEST Results Example: 
-<img alt="" src="../imgs/github_issue_runner_01.png"/></li>
-</ul>
-<p>Go to <a href="https://github.com/JeonghunLee/local-ai-agent-mcp/issues?q=is%3Aissue%20state%3Aclosed">This Sample Issue Results</a>
-Go to <a href="https://github.com/JeonghunLee/local-ai-agent-mcp/issues/21">example 1</a></p>
-<p><br/></p>
-<p>Related:</p>
-<ul>
-<li><code>.github/workflows/test_request_local.yaml</code></li>
-<li><code>.github/ISSUE_TEMPLATE/test_request_runner.yml</code></li>
-</ul>
-<p><br/></p>
-<hr/>
-<h3 id="direct-test-request-flow">Direct Test Request Flow</h3>
-<p><br/></p>
-<div class="highlight"><pre><span></span><code>GitHub Issue
-  -&gt; Jenkins webhook trigger
-  -&gt; mcp.scripts.run_test_request
-  -&gt; mcp-server-local-direct
-  -&gt; selected tools
-  -&gt; results JSON + logs
-  -&gt; GitHub Issue comment
-</code></pre></div>
-<p>Related:</p>
-<ul>
-<li><code>Jenkinsfile</code></li>
-<li><code>.github/ISSUE_TEMPLATE/test_request_direct.yml</code></li>
-</ul>
-<p><br/></p>
-<hr/>
-<h2 id="component-details">Component Details</h2>
-<h3 id="vs-code-mcp-gateway">VS Code MCP Gateway</h3>
-<ul>
-<li>VS Code internal</li>
-<li>MCP Server connection</li>
-<li>tool discovery</li>
-<li>tool routing</li>
-</ul>
-<p>Reference:</p>
-<ul>
-<li><a href="../mcp/mcp_gateway.html">MCP Gateway</a></li>
-</ul>
-<h3 id="local-mcp-server">Local MCP Server</h3>
-<ul>
-<li>local process</li>
-<li>build, flash, test, log tools</li>
-<li>direct mode</li>
-<li>runner mode</li>
-</ul>
-<p>Reference:</p>
-<ul>
-<li><a href="../mcp/mcp_server_local.html">MCP Server-Local</a></li>
-</ul>
-<h3 id="github-mcp-server">GitHub MCP Server</h3>
-<ul>
-<li>local process + GitHub API integration</li>
-<li>Issue, Pull Request, Review, Actions access</li>
-<li>no local execution hosting</li>
-</ul>
-<p>Reference:</p>
-<ul>
-<li><a href="../mcp/mcp_server_github.html">MCP Server-GitHub</a></li>
-</ul>
-<h3 id="python-bridge">Python Bridge</h3>
-<ul>
-<li>repository script layer</li>
-<li>issue body parsing</li>
-<li>tool mapping</li>
-<li>server mode selection</li>
-<li>result JSON generation</li>
-<li>Markdown comment generation</li>
-</ul>
-<p>Target scripts:</p>
-<ul>
-<li><code>mcp/scripts/run_test_request.py</code></li>
-<li><code>mcp/scripts/make_test_result.py</code></li>
-</ul>
-<hr/>
-<h2 id="installation-locations">Installation Locations</h2>
+<p>CT automation is divided into two independent Main Flows. They use different automation entrypoints and different Local MCP Server entrypoints.</p>
 <table>
 <thead>
 <tr>
-<th>Component</th>
-<th>Location</th>
-<th>Entry</th>
+<th>Main Flow</th>
+<th>Issue Label</th>
+<th>Automation</th>
+<th>Local MCP Server</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>VS Code MCP Gateway</td>
-<td>VS Code internal</td>
-<td>VS Code feature</td>
-</tr>
-<tr>
-<td>Local MCP Server</td>
-<td>Local process</td>
-<td>Python module</td>
-</tr>
-<tr>
-<td>GitHub MCP Server</td>
-<td>Local process</td>
-<td>GitHub API integration</td>
-</tr>
-<tr>
-<td>GitHub Actions</td>
-<td>GitHub runner</td>
-<td>workflow</td>
+<td>GitHub Self-hosted Runner</td>
+<td><code>test-request-runner</code></td>
+<td>GitHub Actions + self-hosted runner</td>
+<td><code>mcp-server-local-runner</code></td>
 </tr>
 <tr>
 <td>Jenkins</td>
-<td>Jenkins agent</td>
-<td>webhook trigger</td>
-</tr>
-<tr>
-<td>Local AI</td>
-<td>Local host</td>
-<td>runtime</td>
-</tr>
-<tr>
-<td>Remote AI</td>
-<td>cloud or local CLI</td>
-<td>provider dependent</td>
+<td><code>test-request-direct</code></td>
+<td>Jenkins webhook pipeline</td>
+<td><code>mcp-server-local-direct</code></td>
 </tr>
 </tbody>
 </table>
+<p>Both flows share the Python Bridge, MCP runtime, toolsets, TEST result format, and GitHub Issue reporting model.</p>
+<p><br/></p>
+<hr/>
+<h2 id="main-flow-ct">Main Flow CT</h2>
+<p><br/></p>
+<p><br/></p>
+<hr/>
+<h3 id="github-runner-ct">GitHub Runner CT</h3>
+<p><br/></p>
+<p>This flow is selected by the <code>test-request-runner</code> label.</p>
+<pre class="mermaid"><code>flowchart TD
+    Issue["GitHub Issue&lt;br/&gt;test-request-runner"]
+    Workflow["GitHub Actions&lt;br/&gt;test_request_local.yaml"]
+    Runner["GitHub Self-hosted Runner&lt;br/&gt;Windows / local-dev"]
+
+    subgraph Bridge["Shared Python Bridge"]
+        direction TB
+        RunBridge["Request Bridge: run_test_request.py&lt;br/&gt;GitHub Issue Request to Local MCP Request"]
+        ResultBridge["Result Bridge: make_test_result.py&lt;br/&gt;Local MCP Result to GitHub Issue Report"]
+    end
+
+    subgraph MCP["Local MCP"]
+        direction TB
+        RunnerMCP["mcp-server-local-runner"]
+        SharedRuntime["Shared MCP Runtime&lt;br/&gt;runtime.py"]
+        SharedTools["Shared TEST Tools&lt;br/&gt;Setup / Test / Log&lt;br/&gt;toolsets.py: extensible"]
+    end
+
+    Tools["Selected TEST Tools"]
+    Result["JSON + MCP Logs"]
+    Artifact["GitHub Actions Artifact"]
+    Comment["GitHub Issue TEST Result Comment"]
+
+    Issue --&gt; Workflow --&gt; Runner --&gt; RunBridge
+    RunBridge --&gt; RunnerMCP --&gt; SharedRuntime --&gt; SharedTools --&gt; Tools --&gt; Result
+    Result --&gt; Artifact
+    Result --&gt; ResultBridge --&gt; Comment
+
+    classDef sharedTools fill:#fff3bf,stroke:#f08c00,stroke-width:4px,color:#000;
+    class SharedTools sharedTools;</code></pre>
+<p>Source behavior:</p>
+<ul>
+<li>The workflow listens for Issue <code>opened</code>, <code>edited</code>, and <code>reopened</code> events.</li>
+<li>The job runs only when the Issue has the <code>test-request-runner</code> label.</li>
+<li><code>runs-on: [self-hosted, local-dev]</code> assigns the CT job to the local runner.</li>
+<li><code>run_test_request.py</code> selects <code>mcp-server-local-runner</code> from the Issue's <code>runner</code> mode.</li>
+<li>GitHub Actions uploads JSON and logs as an artifact.</li>
+<li><code>make_test_result.py</code> renders Markdown, and <code>actions/github-script</code> posts it to the Issue.</li>
+</ul>
+<p>Related sources:</p>
+<ul>
+<li><code>.github/ISSUE_TEMPLATE/test_request_runner.yml</code></li>
+<li><code>.github/workflows/test_request_local.yaml</code></li>
+<li><code>mcp/scripts/run_test_request.py</code></li>
+<li><code>mcp/server_local_runner/server.py</code></li>
+<li><code>mcp/scripts/make_test_result.py</code></li>
+</ul>
+<p><br/></p>
+<p>GitHub Issue created with the runner TEST request template:</p>
+<p><img alt="Runner TEST request Issue" src="../imgs/github_issue_runner_00.png"/></p>
+<p>TEST result reported back to the GitHub Issue:</p>
+<p><img alt="Runner TEST result comment" src="../imgs/github_issue_runner_01.png"/></p>
+<p>Sample results:</p>
+<ul>
+<li><a href="https://github.com/JeonghunLee/local-ai-agent-mcp/issues?q=is%3Aissue%20state%3Aclosed">Closed TEST request Issues</a></li>
+<li><a href="https://github.com/JeonghunLee/local-ai-agent-mcp/issues/21">TEST request example #21</a></li>
+</ul>
+<p><br/></p>
+<hr/>
+<h3 id="jenkins-direct-ct">Jenkins Direct CT</h3>
+<p><br/></p>
+<p>This flow is selected by the <code>test-request-direct</code> label and the <code>jenkins</code> target runner value.</p>
+<pre class="mermaid"><code>flowchart TD
+    Issue["GitHub Issue&lt;br/&gt;test-request-direct&lt;br/&gt;Target Runner: jenkins"]
+    Webhook["GitHub Webhook"]
+    Jenkins["Jenkins Pipeline&lt;br/&gt;Windows agent&lt;br/&gt;requested ref checkout"]
+
+    subgraph Bridge["Shared Python Bridge"]
+        direction TB
+        RunBridge["Request Bridge: run_test_request.py&lt;br/&gt;GitHub Issue Request to Local MCP Request"]
+        ResultBridge["Result Bridge: make_test_result.py&lt;br/&gt;Local MCP Result to GitHub Issue Report"]
+    end
+
+    subgraph MCP["Local MCP"]
+        direction TB
+        DirectMCP["mcp-server-local-direct"]
+        SharedRuntime["Shared MCP Runtime&lt;br/&gt;runtime.py"]
+        SharedTools["Shared TEST Tools&lt;br/&gt;Setup / Test / Log&lt;br/&gt;toolsets.py: extensible"]
+    end
+
+    Tools["Selected TEST Tools"]
+    Result["JSON + MCP Logs"]
+    Artifact["Jenkins Artifact"]
+    Comment["GitHub Issue TEST Result Comment"]
+
+    Issue --&gt; Webhook --&gt; Jenkins --&gt; RunBridge
+    RunBridge --&gt; DirectMCP --&gt; SharedRuntime --&gt; SharedTools --&gt; Tools --&gt; Result
+    Result --&gt; Artifact
+    Result --&gt; ResultBridge --&gt; Comment
+
+    classDef sharedTools fill:#fff3bf,stroke:#f08c00,stroke-width:4px,color:#000;
+    class SharedTools sharedTools;</code></pre>
+<p>Source behavior:</p>
+<ul>
+<li>Jenkins accepts the GitHub Issue webhook and reads its number, body, repository, and labels.</li>
+<li>The pipeline continues only for <code>test-request-direct</code> with <code>Target Runner: jenkins</code>.</li>
+<li>Jenkins checks out the ref requested in the Issue before executing CT.</li>
+<li><code>run_test_request.py</code> selects <code>mcp-server-local-direct</code> from the Issue's <code>direct</code> mode.</li>
+<li>Jenkins archives the generated result files and posts the Markdown report through the GitHub REST API.</li>
+</ul>
+<p>The direct Issue template also allows <code>Target Runner: ai-agent</code>. That is a manual AI Agent execution option, not the Jenkins automated flow described here.</p>
+<p>Related sources:</p>
+<ul>
+<li><code>.github/ISSUE_TEMPLATE/test_request_direct.yml</code></li>
+<li><code>Jenkinsfile</code></li>
+<li><code>mcp/scripts/run_test_request.py</code></li>
+<li><code>mcp/server_local_direct/server.py</code></li>
+<li><code>mcp/scripts/make_test_result.py</code></li>
+</ul>
+<p><br/></p>
+<hr/>
+<h2 id="shared-python-bridge">Shared Python Bridge</h2>
+<p><br/></p>
+<p>The Python Bridge is the common adapter between automation and MCP.</p>
+<p><br/></p>
+<hr/>
+<h3 id="request-and-test-execution">Request and TEST execution</h3>
+<p><br/></p>
+<p><code>mcp/scripts/run_test_request.py</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Request Bridge Direction</p>
+<ul>
+<li>The request source is a GitHub TEST Request Issue.</li>
+<li>GitHub Actions or Jenkins passes the Issue request to
+  <code>run_test_request.py</code>.</li>
+<li>The request destination is the Local MCP Server selected
+  by <code>MCP Server Mode</code>.</li>
+</ul>
+</div>
+<ol>
+<li>Parses the GitHub Issue Form fields and selected checklist tools.</li>
+<li>Validates the MCP mode and target runner.</li>
+<li>Resolves the requested Git branch, tag, or commit metadata.</li>
+<li>Selects the runner or direct MCP Server entrypoint.</li>
+<li>Sends MCP <code>initialize</code>, <code>tools/list</code>, and <code>tools/call</code> messages over stdio.</li>
+<li>Aggregates tool results and writes <code>results/Github-ISSUE-TR-&lt;number&gt;.json</code>.</li>
+</ol>
+<p><br/></p>
+<hr/>
+<h3 id="test-result-reporting">TEST result reporting</h3>
+<p><br/></p>
+<p><code>mcp/scripts/make_test_result.py</code>:</p>
+<div class="admonition note">
+<p class="admonition-title">Result Bridge Direction</p>
+<ul>
+<li>The result source is the Local MCP TEST result JSON
+  and MCP logs.</li>
+<li><code>make_test_result.py</code> converts the Local MCP result into
+  a GitHub Issue Markdown report.</li>
+<li>GitHub Actions or Jenkins delivers the report to the
+  original GitHub TEST Request Issue.</li>
+</ul>
+</div>
+<ol>
+<li>Loads the TEST result JSON.</li>
+<li>Groups tool results by Setup, Test, and Log category.</li>
+<li>Includes the MCP Server name and log paths.</li>
+<li>Renders <code>results/test-request-comment-&lt;number&gt;.md</code>.</li>
+<li>Returns the report to GitHub Actions or Jenkins for Issue commenting.</li>
+</ol>
+<p>The bridge does not replace the MCP Server. It selects an MCP Server, calls its tools, and transforms the result for automation reporting.</p>
+<p><br/></p>
+<hr/>
+<h2 id="two-local-mcp-servers">Two Local MCP Servers</h2>
+<p><br/></p>
+<table>
+<thead>
+<tr>
+<th>MCP Server</th>
+<th>Mode</th>
+<th>Automation Path</th>
+<th>Entrypoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mcp-server-local-runner</code></td>
+<td><code>runner</code></td>
+<td>GitHub Actions self-hosted runner</td>
+<td><code>mcp/server_local_runner/server.py</code></td>
+</tr>
+<tr>
+<td><code>mcp-server-local-direct</code></td>
+<td><code>direct</code></td>
+<td>Jenkins or direct AI Agent</td>
+<td><code>mcp/server_local_direct/server.py</code></td>
+</tr>
+</tbody>
+</table>
+<p>The two entrypoints share the same implementation:</p>
+<ul>
+<li><code>mcp/server_local/runtime.py</code></li>
+<li>MCP stdio transport</li>
+<li><code>initialize</code>, <code>tools/list</code>, and <code>tools/call</code></li>
+<li>server and per-tool logging</li>
+<li><code>mcp/server_local/toolsets.py</code></li>
+<li>common tool catalog and handlers</li>
+<li>Setup, Test, and Log tool execution</li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Shared TEST Tool Extension</p>
+<ul>
+<li>Setup, Test, and Log tools are defined once in
+  <code>mcp/server_local/toolsets.py</code>.</li>
+<li>New tool metadata and a handler extend the shared
+  <code>TOOL_CATALOG</code>.</li>
+<li><code>LOCAL_TOOLS</code> and <code>LOCAL_HANDLERS</code> are generated from
+  that catalog.</li>
+<li>Runner MCP and Direct MCP receive the extension together.</li>
+<li>Third-party tool dependencies are declared once in
+  <code>mcp_requirements.txt</code> and installed by both CT paths.</li>
+</ul>
+</div>
+<p>The server name determines the execution mode and log prefix, while the actual MCP runtime and tools remain shared.</p>
+<p><br/></p>
+<hr/>
+<h2 id="test-result-and-reporting">TEST Result and Reporting</h2>
+<p><br/></p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Producer</th>
+<th>Consumer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MCP server log</td>
+<td><code>runtime.py</code></td>
+<td>artifact and TEST report</td>
+</tr>
+<tr>
+<td>Per-tool log</td>
+<td><code>runtime.py</code></td>
+<td>artifact and TEST report</td>
+</tr>
+<tr>
+<td>TEST result JSON</td>
+<td><code>run_test_request.py</code></td>
+<td><code>make_test_result.py</code> and artifact storage</td>
+</tr>
+<tr>
+<td>Markdown report</td>
+<td><code>make_test_result.py</code></td>
+<td>GitHub Issue comment</td>
+</tr>
+<tr>
+<td>GitHub Issue comment</td>
+<td>GitHub Actions or Jenkins</td>
+<td>User and AI Agent</td>
+</tr>
+</tbody>
+</table>
+<p>The reporting path is deliberately separated from TEST execution:</p>
+<div class="highlight"><pre><span></span><code>TEST request
+  -&gt; Python Bridge
+  -&gt; MCP Server
+  -&gt; actual TEST tool
+  -&gt; JSON + logs
+  -&gt; Python Bridge
+  -&gt; Markdown report
+  -&gt; GitHub Issue comment
+</code></pre></div>
+<p><br/></p>
+<hr/>
+<h2 id="source-alignment-notes">Source Alignment Notes</h2>
+<p><br/></p>
+<ul>
+<li><code>github_pages.yaml</code> is the current GitHub CI/CD workflow and is separate from Issue-based CT. Its current job uses <code>ubuntu-latest</code>, not the <code>local-dev</code> self-hosted runner.</li>
+<li><code>test_request_local.yaml</code> is the GitHub Actions CT workflow and explicitly uses the <code>local-dev</code> self-hosted runner.</li>
+<li>The current <code>Jenkinsfile</code> passes <code>local-direct</code> to <code>make_test_result.py</code>, while the script accepts only <code>github-actions</code> or <code>jenkins</code>. The Jenkins argument must be changed to <code>jenkins</code> for the direct result-rendering step to complete.</li>
+<li>Several handlers in <code>toolsets.py</code> are currently stubs; the ping handlers execute subprocess-based smoke tests, while flash and log handlers return placeholder results.</li>
+</ul>
+<p><br/></p>
 <hr/>
 <h2 id="related">Related</h2>
+<p><br/></p>
 <ul>
 <li><a href="system-design.html">System Design</a></li>
 <li><a href="../mcp/mcp_gateway.html">MCP Gateway</a></li>
 <li><a href="../mcp/mcp_server_local.html">MCP Server-Local</a></li>
 <li><a href="../mcp/mcp_server_github.html">MCP Server-GitHub</a></li>
 <li><a href="../envs/github_templates.html">GitHub Templates</a></li>
+<li><a href="../envs/github_self_hosted_runner.html">GitHub Self-hosted Runner</a></li>
 </ul>
+<p><br/></p>
+<hr/>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
@@ -1147,13 +1144,13 @@ Go to <a href="https://github.com/JeonghunLee/local-ai-agent-mcp/issues/21">exam
               </div>
 </div>
 </a>
-<a aria-label="Next: Claude" class="md-footer__link md-footer__link--next" href="../agents/claude.html">
+<a aria-label="Next: Setup OpenClaw WSL2" class="md-footer__link md-footer__link--next" href="../envs/openclaw_wsl2_setup.html">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Claude
+                Setup OpenClaw WSL2
               </div>
 </div>
 <div class="md-footer__button md-icon">

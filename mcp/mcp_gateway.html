@@ -209,7 +209,7 @@
 <span class="md-ellipsis">
     
   
-    Agents
+    Dev Environment
   
 
     
@@ -218,6 +218,68 @@
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Dev Environment
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
+<span class="md-ellipsis">
+    
+  
+    Setup OpenClaw WSL2
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_templates.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Templates
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Self Hosted Runner
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -266,8 +328,8 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -278,8 +340,8 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_4">
+<nav aria-expanded="true" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -322,6 +384,15 @@
 <span class="md-ellipsis">
       
         Overview
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#current-mcp-source-mapping">
+<span class="md-ellipsis">
+      
+        Current MCP Source Mapping
       
     </span>
 </a>
@@ -481,68 +552,6 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Envs
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_5">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Envs
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
-<span class="md-ellipsis">
-    
-  
-    OpenClaw WSL2 Setup
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_templates.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Templates
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Self Hosted Runner
-  
-
-    
-  </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="https://jeonghunlee.github.io/project_ai.html#ai-agent-with-mcp">
 <span class="md-ellipsis">
@@ -574,6 +583,15 @@
 <span class="md-ellipsis">
       
         Overview
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#current-mcp-source-mapping">
+<span class="md-ellipsis">
+      
+        Current MCP Source Mapping
       
     </span>
 </a>
@@ -729,30 +747,251 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="mcp-gateway">MCP Gateway</h1>
+<p><br/></p>
 <h2 id="overview">Overview</h2>
+<p><br/></p>
+<p>The MCP-based system has two trigger paths.</p>
+<ol>
+<li><strong>GitHub Issue Trigger</strong></li>
+<li>A GitHub Issue requests CT execution.</li>
+<li>The Issue label selects the GitHub Self-hosted Runner
+     or Jenkins automation path.</li>
+<li>The shared Python Bridge calls <code>mcp-server-local-runner</code>
+     or <code>mcp-server-local-direct</code>.</li>
+<li><strong>AI Agent Trigger</strong></li>
+<li>An AI Agent requests a tool through the VS Code
+     MCP Gateway.</li>
+<li>The Gateway discovers and routes tools to the Local
+     MCP Server or GitHub MCP Server.</li>
+</ol>
+<pre class="mermaid"><code>flowchart TD
+    subgraph IssueTrigger["1. GitHub Issue Trigger"]
+        direction TB
+        Issue["GitHub Issue"]
+        Automation["Windows Automation&lt;br/&gt;Self-hosted Runner or Jenkins"]
+        RequestBridge["Request Bridge&lt;br/&gt;GitHub Issue Request to Local MCP Request"]
+        ResultBridge["Result Bridge&lt;br/&gt;Local MCP Result to GitHub Issue Report"]
+        IssueComment["GitHub Issue&lt;br/&gt;TEST Result Comment"]
+
+        Issue --&gt; Automation --&gt; RequestBridge
+    end
+
+    subgraph AgentTrigger["2. AI Agent Trigger"]
+        direction TB
+        AgentRequest["AI Agent&lt;br/&gt;Tool Request"]
+        RequestGateway["VS Code MCP Gateway&lt;br/&gt;Request Routing"]
+        GitHubMCP["GitHub MCP Server"]
+        ResultGateway["VS Code MCP Gateway&lt;br/&gt;Result Routing"]
+        AgentResult["AI Agent&lt;br/&gt;Tool Result"]
+
+        AgentRequest --&gt; RequestGateway
+        RequestGateway --&gt;|GitHub request| GitHubMCP
+        GitHubMCP --&gt;|GitHub result| ResultGateway --&gt; AgentResult
+    end
+
+    subgraph LocalMCP["Local MCP"]
+        direction TB
+        RunnerMCP["mcp-server-local-runner"]
+        DirectMCP["mcp-server-local-direct"]
+        SharedRuntime["Shared MCP Runtime&lt;br/&gt;runtime.py"]
+        SharedTools["Shared TEST Tools&lt;br/&gt;Setup / Test / Log&lt;br/&gt;toolsets.py: extensible"]
+        TestResult["MCP TEST Result&lt;br/&gt;JSON + Logs"]
+    end
+
+    RequestBridge --&gt;|mode: runner| RunnerMCP
+    RequestBridge --&gt;|mode: direct| DirectMCP
+    RequestGateway --&gt;|Local MCP request| DirectMCP
+
+    RunnerMCP --&gt; SharedRuntime
+    DirectMCP --&gt; SharedRuntime
+    SharedRuntime --&gt; SharedTools --&gt; TestResult
+
+    TestResult --&gt;|Issue execution result| ResultBridge --&gt; IssueComment
+    TestResult --&gt;|AI Agent tool result| ResultGateway
+
+    classDef sharedTools fill:#fff3bf,stroke:#f08c00,stroke-width:4px,color:#000;
+    class SharedTools sharedTools;</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Trigger Boundary</p>
 <ul>
-<li>VS Code internal MCP Gateway</li>
-<li>multiple MCP Server connections</li>
-<li>tool routing and tool discovery</li>
-<li>Local MCP Server + GitHub MCP Server bridge</li>
+<li>The AI Agent Trigger uses the VS Code MCP Gateway.</li>
+<li>The GitHub Issue Trigger does not pass through the
+  VS Code MCP Gateway.</li>
+<li>The GitHub Issue Trigger uses automation and the shared
+  Python Bridge to call a Local MCP Server.</li>
 </ul>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Shared TEST Tool Extensibility</p>
+<ul>
+<li><code>toolsets.py</code> owns the shared Setup, Test, and Log
+  tool catalogs.</li>
+<li>A new tool is added to the appropriate catalog with its
+  description, schema, default arguments, and handler.</li>
+<li><code>LOCAL_TOOLS</code> and <code>LOCAL_HANDLERS</code> are generated from
+  the shared catalog.</li>
+<li>Runner MCP and Direct MCP therefore expose the same
+  extended TEST tools without duplicated implementations.</li>
+<li>Third-party packages required by a new tool are added to
+  <code>mcp_requirements.txt</code> for both CT paths.</li>
+</ul>
+</div>
+<p><br/></p>
+<hr/>
+<h2 id="current-mcp-source-mapping">Current MCP Source Mapping</h2>
+<p><br/></p>
+<p>The two Trigger paths are implemented with the following repository sources.</p>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Source</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Issue</td>
+<td><code>.github/workflows/test_request_local.yaml</code></td>
+<td>starts Runner CT through GitHub Actions</td>
+</tr>
+<tr>
+<td>GitHub Issue</td>
+<td><code>Jenkinsfile</code></td>
+<td>starts Direct CT through a GitHub webhook</td>
+</tr>
+<tr>
+<td>Shared Bridge</td>
+<td><code>mcp/scripts/run_test_request.py</code></td>
+<td>parses the Issue and selects an MCP Server</td>
+</tr>
+<tr>
+<td>Shared Bridge</td>
+<td><code>mcp/scripts/make_test_result.py</code></td>
+<td>converts TEST results into Issue Markdown</td>
+</tr>
+<tr>
+<td>Runner MCP</td>
+<td><code>mcp/server_local_runner/server.py</code></td>
+<td>Runner mode MCP entrypoint</td>
+</tr>
+<tr>
+<td>Direct MCP</td>
+<td><code>mcp/server_local_direct/server.py</code></td>
+<td>Direct mode MCP entrypoint</td>
+</tr>
+<tr>
+<td>Shared MCP</td>
+<td><code>mcp/server_local/runtime.py</code></td>
+<td>MCP stdio protocol and logging</td>
+</tr>
+<tr>
+<td>Shared MCP</td>
+<td><code>mcp/server_local/toolsets.py</code></td>
+<td>Setup, Test, and Log tools</td>
+</tr>
+<tr>
+<td>MCP Dependencies</td>
+<td><code>mcp_requirements.txt</code></td>
+<td>shared Python packages for both CT paths</td>
+</tr>
+<tr>
+<td>AI Agent</td>
+<td><code>.vscode/mcp.json</code></td>
+<td>registers MCP Servers with VS Code</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code>mcp/
+  scripts/
+    run_test_request.py       # Request Bridge
+    make_test_result.py       # Result Bridge
+  server_local_runner/
+    server.py                 # Runner MCP entrypoint
+  server_local_direct/
+    server.py                 # Direct MCP entrypoint
+  server_local/
+    runtime.py                # Shared MCP runtime
+    toolsets.py               # Shared TEST tools
+</code></pre></div>
+<p>Current source execution paths:</p>
+<ol>
+<li><strong>GitHub Issue Trigger: Self-hosted Runner</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>test_request_local.yaml
+  -&gt; run_test_request.py
+  -&gt; server_local_runner/server.py
+  -&gt; runtime.py + toolsets.py
+  -&gt; make_test_result.py
+  -&gt; GitHub Issue comment
+</code></pre></div>
+<ol>
+<li><strong>GitHub Issue Trigger: Jenkins</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>Jenkinsfile
+  -&gt; run_test_request.py
+  -&gt; server_local_direct/server.py
+  -&gt; runtime.py + toolsets.py
+  -&gt; make_test_result.py
+  -&gt; GitHub Issue comment
+</code></pre></div>
+<ol>
+<li><strong>AI Agent Trigger: Current Local MCP</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>.vscode/mcp.json
+  -&gt; server_local_direct/server.py
+  -&gt; runtime.py + toolsets.py
+  -&gt; MCP tool result
+  -&gt; AI Agent
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Current VS Code MCP Configuration</p>
+<ul>
+<li><code>.vscode/mcp.json</code> currently registers only
+  <code>mcp-server-local-direct</code>.</li>
+<li>The configured module is
+  <code>mcp.server_local_direct.server</code>.</li>
+<li>The GitHub MCP Server is part of the Gateway design,
+  but it is not registered in the current repository
+  <code>.vscode/mcp.json</code>.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Shared MCP Implementation</p>
+<ul>
+<li>Runner and Direct are two MCP Server entrypoints.</li>
+<li>Both entrypoints import the same <code>MCPServer</code>,
+  <code>LOCAL_TOOLS</code>, and <code>LOCAL_HANDLERS</code> implementation.</li>
+<li>Setup, Test, and Log capabilities are extended in
+  <code>mcp/server_local/toolsets.py</code> and shared by both servers.</li>
+<li>The Python Bridge selects the entrypoint from the Issue
+  field <code>MCP Server Mode</code>.</li>
+</ul>
+</div>
+<p><br/></p>
 <hr/>
 <h2 id="mcp-purpose">MCP Purpose</h2>
+<p><br/></p>
 <ul>
 <li>AI Agent to Local Tool connection</li>
 <li>AI Agent to GitHub resource connection</li>
 <li>common tool call path</li>
 <li>execution layer and collaboration layer split</li>
 </ul>
+<p><br/></p>
+<hr/>
 <h3 id="ai-agent-connection-purpose">AI Agent Connection Purpose</h3>
+<p><br/></p>
 <ul>
 <li>shell command dependency reduction</li>
 <li>common interface for build, flash, test, log tools</li>
 <li>unified access to Issue, Pull Request, Review, Actions</li>
 <li>agent role based tool selection</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="deployment-note">Deployment Note</h2>
+<p><br/></p>
 <ul>
 <li>Reference model</li>
 <li>Main AI, Sub AI, Local AI role split</li>
@@ -763,8 +1002,10 @@
 <li>role split is a documentation model</li>
 <li>runtime deployment can use 1, 2, or 3 agents</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="role">Role</h2>
+<p><br/></p>
 <table>
 <thead>
 <tr>
@@ -791,8 +1032,10 @@
 </tr>
 </tbody>
 </table>
+<p><br/></p>
 <hr/>
 <h2 id="current-usage">Current Usage</h2>
+<p><br/></p>
 <ol>
 <li>VS Code reads <code>.vscode/mcp.json</code>.</li>
 <li>VS Code connects MCP servers.</li>
@@ -805,8 +1048,10 @@
 <li>It is not a full workflow engine.</li>
 <li>end-to-end CT orchestration still needs workflow logic outside the gateway.</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="routing-rules">Routing Rules</h2>
+<p><br/></p>
 <table>
 <thead>
 <tr>
@@ -833,8 +1078,10 @@
 </tr>
 </tbody>
 </table>
+<p><br/></p>
 <hr/>
 <h2 id="protocol-flow">Protocol Flow</h2>
+<p><br/></p>
 <pre class="mermaid"><code>sequenceDiagram
     participant A as AI Agent
     participant G as VS Code MCP Gateway
@@ -855,8 +1102,10 @@
     end
 
     G--&gt;&gt;A: result</code></pre>
+<p><br/></p>
 <hr/>
 <h2 id="gateway-scope">Gateway Scope</h2>
+<p><br/></p>
 <ul>
 <li>covered</li>
 <li>MCP Server connection</li>
@@ -868,8 +1117,10 @@
 <li>automatic result analysis chaining</li>
 <li>automatic final report posting</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="agent-tool-access">Agent Tool Access</h2>
+<p><br/></p>
 <table>
 <thead>
 <tr>
@@ -908,14 +1159,21 @@
 <li>A single Remote AI Agent can use GitHub tools and result analysis tools together.</li>
 <li>Local AI is an optional helper, not a mandatory deployment unit.</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="cicdct-relation">CI/CD/CT Relation</h2>
+<p><br/></p>
+<hr/>
 <h3 id="direct-mcp-path">Direct MCP Path</h3>
+<p><br/></p>
 <div class="highlight"><pre><span></span><code>AI Agent
   -&gt; VS Code MCP Gateway
   -&gt; Local MCP Server or GitHub MCP Server
 </code></pre></div>
+<p><br/></p>
+<hr/>
 <h3 id="github-issue-based-ct-path">GitHub Issue Based CT Path</h3>
+<p><br/></p>
 <div class="highlight"><pre><span></span><code>GitHub Issue
   -&gt; GitHub Actions or Jenkins
   -&gt; Python bridge
@@ -930,13 +1188,17 @@
 <li>Jenkins direct execution path</li>
 <li>both paths are outside the VS Code internal gateway scope</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="related">Related</h2>
+<p><br/></p>
 <ul>
 <li><a href="mcp_server_local.html">MCP Server-Local</a></li>
 <li><a href="mcp_server_github.html">MCP Server-GitHub</a></li>
 <li><a href="../architecture/system-design.html">System Design</a></li>
 </ul>
+<p><br/></p>
+<hr/>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>

@@ -381,7 +381,7 @@
 <span class="md-ellipsis">
     
   
-    Agents
+    Dev Environment
   
 
     
@@ -390,6 +390,68 @@
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Dev Environment
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
+<span class="md-ellipsis">
+    
+  
+    Setup OpenClaw WSL2
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_templates.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Templates
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
+<span class="md-ellipsis">
+    
+  
+    Setup GitHub Self Hosted Runner
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -438,8 +500,8 @@
 </nav>
 </li>
 <li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
-<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
 <span class="md-ellipsis">
     
   
@@ -450,8 +512,8 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_4">
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -490,68 +552,6 @@
     
   
     MCP Server-Local
-  
-
-    
-  </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
-<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Envs
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_5">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Envs
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/openclaw_wsl2_setup.html">
-<span class="md-ellipsis">
-    
-  
-    OpenClaw WSL2 Setup
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_templates.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Templates
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../envs/github_self_hosted_runner.html">
-<span class="md-ellipsis">
-    
-  
-    GitHub Self Hosted Runner
   
 
     
@@ -765,6 +765,7 @@
 </nav>
 <article class="md-content__inner md-typeset">
 <h1 id="system-design">System Design</h1>
+<p><br/></p>
 <h2 id="scope">Scope</h2>
 <p><br/></p>
 <ul>
@@ -773,15 +774,19 @@
 <li>GitHub integration model</li>
 <li>system level role split</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="document-split">Document Split</h2>
+<p><br/></p>
 <p>This document covers the top-level system structure.</p>
 <p>Execution flows and automation details are documented separately:</p>
 <ul>
 <li><a href="automation-design.html">Automation Design</a></li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="ai-agents">AI Agents</h2>
+<p><br/></p>
 <table>
 <thead>
 <tr>
@@ -816,9 +821,13 @@
 <li>Sub: Codex or Claude</li>
 <li>Local: Ollama</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="remote-ai-agents">Remote AI Agents</h2>
+<p><br/></p>
+<hr/>
 <h3 id="responsibility">Responsibility</h3>
+<p><br/></p>
 <ul>
 <li>code generation</li>
 <li>document writing</li>
@@ -827,93 +836,107 @@
 <li>test result analysis</li>
 <li>GitHub follow-up</li>
 </ul>
+<p><br/></p>
+<hr/>
 <h3 id="deployment">Deployment</h3>
+<p><br/></p>
 <ul>
 <li>baseline</li>
 <li>one Remote AI Agent</li>
 <li>optional extension</li>
 <li>add Local AI Agent</li>
 </ul>
+<p><br/></p>
+<hr/>
 <h3 id="practical-model">Practical Model</h3>
+<p><br/></p>
 <ul>
 <li>one Remote AI Agent can perform both Main AI and Sub AI roles</li>
 <li>separate Main AI and Sub AI is an operating model, not a hard requirement</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="local-ai-agents">Local AI Agents</h2>
+<p><br/></p>
+<hr/>
 <h3 id="characteristics">Characteristics</h3>
+<p><br/></p>
 <ul>
 <li>optional component</li>
 <li>local execution support</li>
 <li>partial Sub AI replacement possible</li>
 </ul>
+<p><br/></p>
+<hr/>
 <h3 id="examples">Examples</h3>
+<p><br/></p>
 <ul>
 <li>Ollama</li>
 <li>MLX</li>
 <li>vLLM</li>
 </ul>
+<p><br/></p>
+<hr/>
 <h3 id="usage">Usage</h3>
+<p><br/></p>
 <ul>
 <li>remote API cost reduction</li>
 <li>repeated local test support</li>
 <li>local log and file based analysis support</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="system-diagram">System Diagram</h2>
-<pre class="mermaid"><code>graph TD
+<p><br/></p>
+<pre class="mermaid"><code>flowchart TD
     subgraph UserLayer["User / IDE"]
         User["User"]
         VSCode["VS Code"]
     end
 
-    subgraph Agents["AI Agents"]
-        MainAI["Main AI Agent"]
-        SubAI["Sub AI Agent"]
-        LocalAI["Local AI Agent"]
-    end
-
-    subgraph MCP["MCP Layer"]
-        Gateway["VS Code MCP Gateway"]
+    subgraph AgentLayer["AI Agent / MCP"]
+        AIAgent["AI Agent"]
+        MCPGateway["MCP Gateway"]
         LocalMCP["Local MCP Server"]
         GitHubMCP["GitHub MCP Server"]
     end
 
-    subgraph Automation["Automation"]
-        GHA["GitHub Actions"]
-        Jenkins["Jenkins"]
-        Bridge["Python Bridge"]
+    subgraph GitHubRemote["GitHub Remote"]
+        Issue["GitHub Issue"]
+        Label{"Issue Label"}
+        GitHubActions["GitHub Actions&lt;br/&gt;CI/CD"]
     end
 
-    subgraph GitHub["GitHub"]
-        Issue["Issue"]
-        PR["Pull Request"]
-        Actions["Actions"]
+    subgraph Automation["Automation"]
+        SelfHosted["Self-hosted Runner"]
+        Jenkins["Jenkins"]
     end
+
+    CT["Continuous Testing"]
 
     User --&gt; VSCode
-    VSCode --&gt; MainAI
-    VSCode --&gt; SubAI
-    VSCode --&gt; LocalAI
+    VSCode --&gt; AIAgent --&gt; MCPGateway
+    MCPGateway --&gt; LocalMCP
+    MCPGateway --&gt; GitHubMCP --&gt; Issue
 
-    MainAI --&gt; Gateway
-    SubAI --&gt; Gateway
-    LocalAI --&gt; Gateway
+    Issue --&gt; Label
+    Label --&gt;|test-request-runner| SelfHosted
+    Label --&gt;|test-request-direct| Jenkins
+    SelfHosted --&gt; CT
+    Jenkins --&gt; CT
 
-    Gateway --&gt; LocalMCP
-    Gateway --&gt; GitHubMCP
-
-    Issue --&gt; GHA
-    Issue --&gt; Jenkins
-    GHA --&gt; Bridge
-    Jenkins --&gt; Bridge
-    Bridge --&gt; LocalMCP
-
-    GitHubMCP --&gt; Issue
-    GitHubMCP --&gt; PR
-    GitHubMCP --&gt; Actions</code></pre>
+    GitHubActions --&gt; SelfHosted</code></pre>
+<p>The system-level CT flow is selected by the GitHub Issue label:</p>
+<ul>
+<li><code>test-request-runner</code> routes CT to the GitHub self-hosted runner.</li>
+<li><code>test-request-direct</code> routes CT to Jenkins.</li>
+<li>GitHub Actions handles CI/CD jobs through the self-hosted runner.</li>
+</ul>
+<p>Workflow scripts, execution steps, and result handling are described in <a href="automation-design.html">Automation Design</a>.</p>
+<p><br/></p>
 <hr/>
 <h2 id="ai-agent-working">AI Agent Working</h2>
+<p><br/></p>
 <table>
 <thead>
 <tr>
@@ -965,8 +988,10 @@
 <li>execution layer and analysis layer split</li>
 <li>one Remote AI Agent can cover step 1, 2, 3, 5, and 6 together</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="agent-interference">Agent Interference</h2>
+<p><br/></p>
 <ul>
 <li>direct overlap minimization</li>
 <li>JSON, log, and comment based handoff</li>
@@ -978,8 +1003,10 @@
   -&gt; analysis
   -&gt; code or document update
 </code></pre></div>
+<p><br/></p>
 <hr/>
 <h2 id="design-principles">Design Principles</h2>
+<p><br/></p>
 <ul>
 <li>simple execution path first</li>
 <li>clear split between <code>direct</code> and <code>runner</code></li>
@@ -988,8 +1015,10 @@
 <li>Local AI stays optional</li>
 <li>role split does not require fixed process split</li>
 </ul>
+<p><br/></p>
 <hr/>
 <h2 id="related">Related</h2>
+<p><br/></p>
 <ul>
 <li><a href="automation-design.html">Automation Design</a></li>
 <li><a href="../agents/claude.html">Claude</a></li>
@@ -1000,6 +1029,8 @@
 <li><a href="../mcp/mcp_server_github.html">MCP Server-GitHub</a></li>
 <li><a href="../envs/openclaw_wsl2_setup.html">OpenClaw WSL2 Setup</a></li>
 </ul>
+<p><br/></p>
+<hr/>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
