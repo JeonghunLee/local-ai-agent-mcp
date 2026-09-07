@@ -19,6 +19,10 @@ nav:
   - Architecture:
       - System Design: architecture/system-design.md
       - Automation Design: architecture/automation-design.md
+  - Dev Environment:
+      - Setup OpenClaw WSL2 : envs/openclaw_wsl2_setup.md
+      - Setup GitHub Templates: envs/github_templates.md
+      - Setup GitHub Self Hosted Runner: envs/github_self_hosted_runner.md  
   - Agents:
       - Claude: agents/claude.md
       - Codex: agents/codex.md
@@ -27,10 +31,6 @@ nav:
       - Overview: mcp/mcp_gateway.md
       - MCP Server-Github: mcp/mcp_server_github.md
       - MCP Server-Local: mcp/mcp_server_local.md
-  - Envs:
-      - OpenClaw WSL2 Setup: envs/openclaw_wsl2_setup.md
-      - GitHub Templates: envs/github_templates.md
-      - GitHub Self Hosted Runner: envs/github_self_hosted_runner.md
   - Go To My Profile Page: https://jeonghunlee.github.io/project_ai.html#ai-agent-with-mcp   
 #
 # Plugins configuration

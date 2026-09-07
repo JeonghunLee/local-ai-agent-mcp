@@ -9,6 +9,27 @@ This repository focuses on:
 - GitHub Issue based TEST automation
 - documentation-first project structure
 
+## Setup Python Envs
+
+```
+python -m venv .venv
+```
+
+```
+.\.venv\Scripts\Activate.ps1
+```
+
+or
+
+```powershell 
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+.\.venv\Scripts\Activate.ps1
+```
+
+```
+(.venv) PS D:\Works\git\local-ai-agent-mcp> pip install -r requirements.txt
+```
+
 ## Documentation
 
 Most project details are maintained in the documentation site.

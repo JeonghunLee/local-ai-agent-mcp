@@ -95,7 +95,7 @@ Benefits:
 
 ---
 
-### 1. Prepare Runner Directory
+### Prepare Runner Directory
 
 <br/>
 
@@ -122,7 +122,7 @@ Notes:
 
 ---
 
-### 2. Get Registration Commands from GitHub
+### Get Registration Commands from GitHub
 
 <br/>
 
@@ -141,7 +141,7 @@ Runner release reference:
 
 ---
 
-### 3. Set Runner Name and Labels
+### Set Runner Name and Labels
 
 <br/>
 
@@ -208,7 +208,7 @@ The important part is adding a project-specific label such as `local-dev`.
 
 ---
 
-### 4. Choose How to Run It
+### Choose How to Run It
 
 <br/>
 
@@ -233,7 +233,7 @@ Running as a service keeps the runner available after logout.
 
 ---
 
-### 5. Verify Runner Status in GitHub
+### Verify Runner Status in GitHub
 
 <br/>
 
